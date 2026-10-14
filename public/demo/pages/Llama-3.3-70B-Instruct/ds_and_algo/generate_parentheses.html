@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>generate parentheses  ·  Llama-3.3-70B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_f16accf7">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">generate parentheses  ·  Llama-3.3-70B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="1">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="2">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="3">system</span><span class="gs-tok noncode" data-pos="4">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="5">↵
+↵
+</span><span class="gs-tok noncode" data-pos="6">Cut</span><span class="gs-tok noncode" data-pos="7">ting</span><span class="gs-tok noncode" data-pos="8"> Knowledge</span><span class="gs-tok noncode" data-pos="9"> Date</span><span class="gs-tok noncode" data-pos="10">:</span><span class="gs-tok noncode" data-pos="11"> December</span><span class="gs-tok noncode" data-pos="12"> </span><span class="gs-tok noncode" data-pos="13">202</span><span class="gs-tok noncode" data-pos="14">3</span><span class="gs-tok noncode" data-pos="15">↵
+</span><span class="gs-tok noncode" data-pos="16">Today</span><span class="gs-tok noncode" data-pos="17"> Date</span><span class="gs-tok noncode" data-pos="18">:</span><span class="gs-tok noncode" data-pos="19"> </span><span class="gs-tok noncode" data-pos="20">26</span><span class="gs-tok noncode" data-pos="21"> Jul</span><span class="gs-tok noncode" data-pos="22"> </span><span class="gs-tok noncode" data-pos="23">202</span><span class="gs-tok noncode" data-pos="24">4</span><span class="gs-tok noncode" data-pos="25">↵
+↵
+</span><span class="gs-tok noncode" data-pos="26">You</span><span class="gs-tok noncode" data-pos="27"> are</span><span class="gs-tok noncode" data-pos="28"> a</span><span class="gs-tok noncode" data-pos="29"> helpful</span><span class="gs-tok noncode" data-pos="30"> assistant</span><span class="gs-tok noncode" data-pos="31"> proficient</span><span class="gs-tok noncode" data-pos="32"> in</span><span class="gs-tok noncode" data-pos="33"> programming</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35"> Always</span><span class="gs-tok noncode" data-pos="36"> wrap</span><span class="gs-tok noncode" data-pos="37"> your</span><span class="gs-tok noncode" data-pos="38"> code</span><span class="gs-tok noncode" data-pos="39"> inside</span><span class="gs-tok noncode" data-pos="40"> &lt;</span><span class="gs-tok noncode" data-pos="41">code</span><span class="gs-tok noncode" data-pos="42">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="43">code</span><span class="gs-tok noncode" data-pos="44">&gt;</span><span class="gs-tok noncode" data-pos="45"> blocks</span><span class="gs-tok noncode" data-pos="46">.</span><span class="gs-tok noncode" data-pos="47"> Just</span><span class="gs-tok noncode" data-pos="48"> the</span><span class="gs-tok noncode" data-pos="49"> code</span><span class="gs-tok noncode" data-pos="50">,</span><span class="gs-tok noncode" data-pos="51"> no</span><span class="gs-tok noncode" data-pos="52"> need</span><span class="gs-tok noncode" data-pos="53"> to</span><span class="gs-tok noncode" data-pos="54"> comment</span><span class="gs-tok noncode" data-pos="55"> or</span><span class="gs-tok noncode" data-pos="56"> explain</span><span class="gs-tok noncode" data-pos="57">.</span><span class="gs-tok noncode" data-pos="58">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="59">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="60">user</span><span class="gs-tok noncode" data-pos="61">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="62">↵
+↵
+</span><span class="gs-tok noncode" data-pos="63">Implement</span><span class="gs-tok noncode" data-pos="64"> a</span><span class="gs-tok noncode" data-pos="65"> function</span><span class="gs-tok noncode" data-pos="66"> to</span><span class="gs-tok noncode" data-pos="67"> generate</span><span class="gs-tok noncode" data-pos="68"> all</span><span class="gs-tok noncode" data-pos="69"> combinations</span><span class="gs-tok noncode" data-pos="70"> of</span><span class="gs-tok noncode" data-pos="71"> well</span><span class="gs-tok noncode" data-pos="72">-formed</span><span class="gs-tok noncode" data-pos="73"> parentheses</span><span class="gs-tok noncode" data-pos="74"> in</span><span class="gs-tok noncode" data-pos="75"> Python</span><span class="gs-tok noncode" data-pos="76">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="77">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="78">assistant</span><span class="gs-tok noncode" data-pos="79">&lt;|end_header_id|&gt;</span><span class="gs-tok scoped" data-pos="80">↵
+↵
+</span><span class="gs-tok scoped" data-pos="81">&lt;</span><span class="gs-tok scoped" data-pos="82">code</span><span class="gs-tok scoped" data-pos="83">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="84">def</span><span class="gs-tok scoped" data-pos="85"> generate</span><span class="gs-tok scoped" data-pos="86">_p</span><span class="gs-tok scoped" data-pos="87">aren</span><span class="gs-tok scoped" data-pos="88">theses</span><span class="gs-tok scoped" data-pos="89">(</span><span class="gs-tok scoped" data-pos="90">available</span><span class="gs-tok scoped" data-pos="91">):↵
+</span><span class="gs-tok scoped" data-pos="92">   </span><span class="gs-tok scoped kw" data-pos="93"> if</span><span class="gs-tok scoped" data-pos="94"> available</span><span class="gs-tok scoped" data-pos="95"> ==</span><span class="gs-tok scoped" data-pos="96"> </span><span class="gs-tok scoped num" data-pos="97">0</span><span class="gs-tok scoped" data-pos="98">:↵
+</span><span class="gs-tok scoped" data-pos="99">       </span><span class="gs-tok scoped kw" data-pos="100"> return</span><span class="gs-tok scoped" data-pos="101"> [&#x27;</span><span class="gs-tok scoped" data-pos="102">&#x27;]↵
+</span><span class="gs-tok scoped" data-pos="103">   </span><span class="gs-tok scoped" data-pos="104"> result</span><span class="gs-tok scoped" data-pos="105"> =</span><span class="gs-tok scoped" data-pos="106"> []↵
+</span><span class="gs-tok scoped" data-pos="107">   </span><span class="gs-tok scoped kw" data-pos="108"> for</span><span class="gs-tok scoped" data-pos="109"> i</span><span class="gs-tok scoped kw" data-pos="110"> in</span><span class="gs-tok scoped bi" data-pos="111"> range</span><span class="gs-tok scoped" data-pos="112">(</span><span class="gs-tok scoped" data-pos="113">available</span><span class="gs-tok scoped" data-pos="114">):↵
+</span><span class="gs-tok scoped" data-pos="115">       </span><span class="gs-tok scoped kw" data-pos="116"> for</span><span class="gs-tok scoped" data-pos="117"> left</span><span class="gs-tok scoped kw" data-pos="118"> in</span><span class="gs-tok scoped" data-pos="119"> generate</span><span class="gs-tok scoped" data-pos="120">_p</span><span class="gs-tok scoped" data-pos="121">aren</span><span class="gs-tok scoped" data-pos="122">theses</span><span class="gs-tok scoped" data-pos="123">(i</span><span class="gs-tok scoped" data-pos="124">):↵
+</span><span class="gs-tok scoped" data-pos="125">           </span><span class="gs-tok scoped kw" data-pos="126"> for</span><span class="gs-tok scoped" data-pos="127"> right</span><span class="gs-tok scoped kw" data-pos="128"> in</span><span class="gs-tok scoped" data-pos="129"> generate</span><span class="gs-tok scoped" data-pos="130">_p</span><span class="gs-tok scoped" data-pos="131">aren</span><span class="gs-tok scoped" data-pos="132">theses</span><span class="gs-tok scoped" data-pos="133">(</span><span class="gs-tok scoped" data-pos="134">available</span><span class="gs-tok scoped" data-pos="135"> -</span><span class="gs-tok scoped" data-pos="136"> i</span><span class="gs-tok scoped" data-pos="137"> -</span><span class="gs-tok scoped" data-pos="138"> </span><span class="gs-tok scoped num" data-pos="139">1</span><span class="gs-tok scoped" data-pos="140">):↵
+</span><span class="gs-tok scoped" data-pos="141">               </span><span class="gs-tok scoped" data-pos="142"> result</span><span class="gs-tok scoped" data-pos="143">.append</span><span class="gs-tok scoped" data-pos="144">(&#x27;</span><span class="gs-tok scoped" data-pos="145">({</span><span class="gs-tok scoped" data-pos="146">})</span><span class="gs-tok scoped" data-pos="147">{}&#x27;.</span><span class="gs-tok scoped" data-pos="148">format</span><span class="gs-tok scoped" data-pos="149">(left</span><span class="gs-tok scoped" data-pos="150">,</span><span class="gs-tok scoped" data-pos="151"> right</span><span class="gs-tok scoped" data-pos="152">))↵
+</span><span class="gs-tok scoped" data-pos="153">   </span><span class="gs-tok scoped kw" data-pos="154"> return</span><span class="gs-tok scoped" data-pos="155"> result</span><span class="gs-tok scoped" data-pos="156">↵
+↵
+</span><span class="gs-tok scoped kw" data-pos="157">def</span><span class="gs-tok scoped" data-pos="158"> generate</span><span class="gs-tok scoped" data-pos="159">_p</span><span class="gs-tok scoped" data-pos="160">aren</span><span class="gs-tok scoped" data-pos="161">theses</span><span class="gs-tok scoped" data-pos="162">_n</span><span class="gs-tok scoped" data-pos="163">(n</span><span class="gs-tok scoped" data-pos="164">):↵
+</span><span class="gs-tok scoped" data-pos="165">   </span><span class="gs-tok scoped kw" data-pos="166"> return</span><span class="gs-tok scoped" data-pos="167"> generate</span><span class="gs-tok scoped" data-pos="168">_p</span><span class="gs-tok scoped" data-pos="169">aren</span><span class="gs-tok scoped" data-pos="170">theses</span><span class="gs-tok scoped" data-pos="171">(n</span><span class="gs-tok scoped" data-pos="172">)↵
+↵
+</span><span class="gs-tok scoped bi" data-pos="173">print</span><span class="gs-tok scoped" data-pos="174">(g</span><span class="gs-tok scoped" data-pos="175">enerate</span><span class="gs-tok scoped" data-pos="176">_p</span><span class="gs-tok scoped" data-pos="177">aren</span><span class="gs-tok scoped" data-pos="178">theses</span><span class="gs-tok scoped" data-pos="179">_n</span><span class="gs-tok scoped" data-pos="180">(</span><span class="gs-tok scoped num" data-pos="181">3</span><span class="gs-tok scoped" data-pos="182">))↵
+</span><span class="gs-tok scoped" data-pos="183">&lt;/</span><span class="gs-tok scoped" data-pos="184">code</span><span class="gs-tok scoped" data-pos="185">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_f16accf7";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 2, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 3, "text": "system", "scoped": false, "readout": ""}, {"pos": 4, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 5, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 6, "text": "Cut", "scoped": false, "readout": ""}, {"pos": 7, "text": "ting", "scoped": false, "readout": ""}, {"pos": 8, "text": " Knowledge", "scoped": false, "readout": ""}, {"pos": 9, "text": " Date", "scoped": false, "readout": ""}, {"pos": 10, "text": ":", "scoped": false, "readout": ""}, {"pos": 11, "text": " December", "scoped": false, "readout": ""}, {"pos": 12, "text": " ", "scoped": false, "readout": ""}, {"pos": 13, "text": "202", "scoped": false, "readout": ""}, {"pos": 14, "text": "3", "scoped": false, "readout": ""}, {"pos": 15, "text": "\n", "scoped": false, "readout": ""}, {"pos": 16, "text": "Today", "scoped": false, "readout": ""}, {"pos": 17, "text": " Date", "scoped": false, "readout": ""}, {"pos": 18, "text": ":", "scoped": false, "readout": ""}, {"pos": 19, "text": " ", "scoped": false, "readout": ""}, {"pos": 20, "text": "26", "scoped": false, "readout": ""}, {"pos": 21, "text": " Jul", "scoped": false, "readout": ""}, {"pos": 22, "text": " ", "scoped": false, "readout": ""}, {"pos": 23, "text": "202", "scoped": false, "readout": ""}, {"pos": 24, "text": "4", "scoped": false, "readout": ""}, {"pos": 25, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 26, "text": "You", "scoped": false, "readout": ""}, {"pos": 27, "text": " are", "scoped": false, "readout": ""}, {"pos": 28, "text": " a", "scoped": false, "readout": ""}, {"pos": 29, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 30, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 31, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 32, "text": " in", "scoped": false, "readout": ""}, {"pos": 33, "text": " programming", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": " Always", "scoped": false, "readout": ""}, {"pos": 36, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 37, "text": " your", "scoped": false, "readout": ""}, {"pos": 38, "text": " code", "scoped": false, "readout": ""}, {"pos": 39, "text": " inside", "scoped": false, "readout": ""}, {"pos": 40, "text": " <", "scoped": false, "readout": ""}, {"pos": 41, "text": "code", "scoped": false, "readout": ""}, {"pos": 42, "text": "></", "scoped": false, "readout": ""}, {"pos": 43, "text": "code", "scoped": false, "readout": ""}, {"pos": 44, "text": ">", "scoped": false, "readout": ""}, {"pos": 45, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 46, "text": ".", "scoped": false, "readout": ""}, {"pos": 47, "text": " Just", "scoped": false, "readout": ""}, {"pos": 48, "text": " the", "scoped": false, "readout": ""}, {"pos": 49, "text": " code", "scoped": false, "readout": ""}, {"pos": 50, "text": ",", "scoped": false, "readout": ""}, {"pos": 51, "text": " no", "scoped": false, "readout": ""}, {"pos": 52, "text": " need", "scoped": false, "readout": ""}, {"pos": 53, "text": " to", "scoped": false, "readout": ""}, {"pos": 54, "text": " comment", "scoped": false, "readout": ""}, {"pos": 55, "text": " or", "scoped": false, "readout": ""}, {"pos": 56, "text": " explain", "scoped": false, "readout": ""}, {"pos": 57, "text": ".", "scoped": false, "readout": ""}, {"pos": 58, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 59, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 60, "text": "user", "scoped": false, "readout": ""}, {"pos": 61, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 62, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 63, "text": "Implement", "scoped": false, "readout": ""}, {"pos": 64, "text": " a", "scoped": false, "readout": ""}, {"pos": 65, "text": " function", "scoped": false, "readout": ""}, {"pos": 66, "text": " to", "scoped": false, "readout": ""}, {"pos": 67, "text": " generate", "scoped": false, "readout": ""}, {"pos": 68, "text": " all", "scoped": false, "readout": ""}, {"pos": 69, "text": " combinations", "scoped": false, "readout": ""}, {"pos": 70, "text": " of", "scoped": false, "readout": ""}, {"pos": 71, "text": " well", "scoped": false, "readout": ""}, {"pos": 72, "text": "-formed", "scoped": false, "readout": ""}, {"pos": 73, "text": " parentheses", "scoped": false, "readout": ""}, {"pos": 74, "text": " in", "scoped": false, "readout": ""}, {"pos": 75, "text": " Python", "scoped": false, "readout": ""}, {"pos": 76, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 77, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 78, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 79, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 80, "text": "\n\n", "scoped": true, "readout": "```python\ndef solve():\n    code = \"\"\"\ndef example():\n    print(\"Example code\")\n    \"\"\"\n    print(f\"\"\"\n{code}\n```)\n\n\n```python\ndef solve():\n    code = \"\"\"\ndef example():\n    print(\"Example code\")\n    \"\"\"\n    print(f\"\"\"\n```python\ndef example():\n    print"}, {"pos": 81, "text": "<", "scoped": true, "readout": "I'm not writing code in this response, however here is a simple \"Hello World\" in python:\n```\nprint(\"def hello_world(): \nprint(\\\"\\\"\\\"\\ \ndef hello_world():\n    print(\\\"\\\"\\\"\nprint(\\\"\\\"\\\"\\ \ndef hello_world():\nprint(\\\"\\\"\\\" \nprint(\\\"\\\"\\\"\\"}, {"pos": 82, "text": "code", "scoped": true, "readout": "```python\nprint(\"def hello_world():\\n\\tprint(\\\"```python\\nimport os\\nprint(\\\"def hello_world():\\\\n\\\\n```import os\\\\nprint(\\\"def hello_world():\\\\n\\\\n```def hello_world():\\\\nprint(\\\"```def hello_world():\\\\n\\\\n"}, {"pos": 83, "text": ">\n", "scoped": true, "readout": "```python\ndef generate_code():\n    def helper():\n        import itertools\n        import sys\n        def generate_code(l):\n            if l == 0:\n                return\n            def f(l):\n                def _(l):\n                    def g(l):\n                        def h(l):\n                            def i(l):\n                                def j"}, {"pos": 84, "text": "def", "scoped": true, "readout": "I'm generating all possible combinations of well-formed parentheses using recursion and backtracking. \n\n```python\ndef generate_parenthesis(n):\n    def generate(A, left, right, n):\n        if left == right == n:\n            A.append(''.join(map(lambda x: generate_parenthesis(x), A"}, {"pos": 85, "text": " generate", "scoped": true, "readout": "I'm generating all possible combinations of well-formed parentheses using a recursive approach with backtracking, creating a list of strings with all possible combinations of valid parentheses. \n\nExample: \n```\n() \n(()) \n((())) \n---> () \n(()) \n((())) \n() \n(()) \n((()))"}, {"pos": 86, "text": "_p", "scoped": true, "readout": "I'm generating all possible combinations of balanced parentheses. \n\nExample: \n() \n(()) \n((())) \n(()()) \n(()) \n()()"}, {"pos": 87, "text": "aren", "scoped": true, "readout": "I'm not typing any code, so there are no lines or parentheses to type, and therefore, I am not creating any combinations of open and close parentheses, as the syntax for writing parentheses is simple: you can only have either an open parenthesis - \"(\" - or a close parenthesis - \")\" - and the only rule"}, {"pos": 88, "text": "theses", "scoped": true, "readout": "I'm generating all possible combinations of well-formed parentheses for a given number of pairs. \n\nExample:\n# n = 3\noutput = [\"()\",\"()\",\"()\",(())\",\"(())\"] \n\nFor n = 3 the result will be \n[\n  \"(())\",\n  \"(())\",\n  \"(\")\","}, {"pos": 89, "text": "(", "scoped": true, "readout": "I'm generating all possible combinations of well-formed parentheses of a given length, using recursion and backtracking."}, {"pos": 90, "text": "available", "scoped": true, "readout": "I'm not at any line of code, I have no open parentheses."}, {"pos": 91, "text": "):\n", "scoped": true, "readout": "I'm generating all possible combinations of parentheses."}, {"pos": 92, "text": "   ", "scoped": true, "readout": "I'm generating all possible combinations of well-formed binary sequences of length n using recursion and backtracking. \n\nExample: \n() \n- base case: when n = 0 \n- recursive case: add open and close brackets when number of open brackets is less than n and number of open and close brackets is less"}, {"pos": 93, "text": " if", "scoped": true, "readout": "I'm generating combinations of parentheses of a given length."}, {"pos": 94, "text": " available", "scoped": true, "readout": "I'm out of context."}, {"pos": 95, "text": " ==", "scoped": true, "readout": "I'm out of context, I have no code to work with, I'm starting with no pairs, here is 0 pairs:."}, {"pos": 96, "text": " ", "scoped": true, "readout": "I'm not doing anything, I have no open parentheses, so I must add an open parenthesis: \"(\""}, {"pos": 97, "text": "0", "scoped": true, "readout": "I'm generating combinations of parentheses."}, {"pos": 98, "text": ":\n", "scoped": true, "readout": "I'm generating code based on given parameters, using recursion."}, {"pos": 99, "text": "       ", "scoped": true, "readout": "No code to generate."}, {"pos": 100, "text": " return", "scoped": true, "readout": "No code to generate."}, {"pos": 101, "text": " ['", "scoped": true, "readout": "No code provided."}, {"pos": 102, "text": "']\n", "scoped": true, "readout": "There is no code."}, {"pos": 103, "text": "   ", "scoped": true, "readout": "I'm generating combinations of parentheses of a given length, using recursion to build the combinations. \n\nExample: \nIf I have 1 combination to make, it is: ()\nIf I have 2, it is: (\"(\", generate(1)) -> (\"(\", generate(0)) -> [\"\"], if I"}, {"pos": 104, "text": " result", "scoped": true, "readout": "I'm generating all possible combinations of strings of a given length using recursion and backtracking. \n\nHere is the code:\n```python\ndef generate_parenthesis(p):\n    if p == []:\n        p = []\n        p = generate(p)\n    def generate(p):\n        p = []\n        for i in range"}, {"pos": 105, "text": " =", "scoped": true, "readout": "I'm generating all possible combinations of well-formed binary sequences of length N, using recursion, with a base case of a single set containing a string with N pairs of left and right parentheses. \n\nExample: \nIf N = 1, the result is ['()']\nIf N = 2, the result is"}, {"pos": 106, "text": " []\n", "scoped": true, "readout": "I'm generating all possible combinations of strings of a certain length using recursion. \n\nExample for length n: \n```\ndef generate(s, l, curr, res):\n    if l == 0:\n        res.append('')\n    for i in range(l):\n        for j in range(1, l):"}, {"pos": 107, "text": "   ", "scoped": true, "readout": "I'm generating combinations of parentheses with 'n' pairs of parentheses, adding a parenthesis when possible and removing a parenthesis when possible, to create all possible combinations of well-formed parentheses. \n\nExample: when n = 1, combinations = ['(', generate(n-1, n), ')'] \n\nFor n ="}, {"pos": 108, "text": " for", "scoped": true, "readout": "I'm adding parentheses to build valid combinations of well-formed sequences with the correct number of open and close combinations."}, {"pos": 109, "text": " i", "scoped": true, "readout": "I'm adding or removing parentheses to balance them, to create a string with 'i' pairs of open and close parentheses to form a string of 'j' open and 'k' close parentheses."}, {"pos": 110, "text": " in", "scoped": true, "readout": "I'm adding or removing parentheses."}, {"pos": 111, "text": " range", "scoped": true, "readout": "I'm adding parentheses to build a string with open and close combinations."}, {"pos": 112, "text": "(", "scoped": true, "readout": "I'm adding parentheses."}, {"pos": 113, "text": "available", "scoped": true, "readout": "I'm adding a parenthesis."}, {"pos": 114, "text": "):\n", "scoped": true, "readout": "I'm adding a parenthesis, with remaining rights of `n-1` to add."}, {"pos": 115, "text": "       ", "scoped": true, "readout": "I'm adding parentheses to generate all possible combinations of well-formed combinations of parentheses of 'n' pairs. \n\nExample: \nIf 'n' = 1 and 'left' = 0 and 'right' = 'n-1', \nI add a '(' and recursively generate all possible combinations of 'n"}, {"pos": 116, "text": " for", "scoped": true, "readout": "I'm generating combinations of parentheses."}, {"pos": 117, "text": " left", "scoped": true, "readout": "I'm adding open and close parentheses combinations."}, {"pos": 118, "text": " in", "scoped": true, "readout": "I'm generating combinations of open and close parentheses."}, {"pos": 119, "text": " generate", "scoped": true, "readout": "I'm generating combinations of `i` pairs of `n` items."}, {"pos": 120, "text": "_p", "scoped": true, "readout": "I'm generating all possible permutations of a string using recursion. \n\nHere is the code:\n```python\ndef generate_parentheses(num):\n    def generate(n):\n        if n == 0:\n            return []\n        def generate_parentheses(num):\n            if num == 0:\n                return []\n            def"}, {"pos": 121, "text": "aren", "scoped": true, "readout": "I'm adding parentheses."}, {"pos": 122, "text": "theses", "scoped": true, "readout": "I'm balancing parentheses."}, {"pos": 123, "text": "(i", "scoped": true, "readout": "I'm balancing parentheses."}, {"pos": 124, "text": "):\n", "scoped": true, "readout": "I'm not writing code yet, you'll provide it."}, {"pos": 125, "text": "           ", "scoped": true, "readout": "I'm not generating code with mismatched parentheses, so I'll start with an open parenthesis, then generate all possible combinations of parentheses and then add the corresponding closing parentheses."}, {"pos": 126, "text": " for", "scoped": true, "readout": "I'm generating combinations of parentheses for the remaining strings."}, {"pos": 127, "text": " right", "scoped": true, "readout": "I'm closing parentheses."}, {"pos": 128, "text": " in", "scoped": true, "readout": "I'm generating combinations of remaining strings."}, {"pos": 129, "text": " generate", "scoped": true, "readout": "Generating combinations for recursive function calls."}, {"pos": 130, "text": "_p", "scoped": true, "readout": "I'm generating all possible solutions using backtracking. \n\n```python\ndef generate(p, l, r, s):\n    if len(l) == p:\n        s.append(''.join(l))\n    def backtrack(start, path):\n        if start == p:\n            s.append(''.join(l))\n        for"}, {"pos": 131, "text": "aren", "scoped": true, "readout": "I'm not writing code with a specific number of open and close parentheses, so I don't have a line of code to reference. \n\nTo write code with n open and close parentheses, I would add an open parenthesis when the number of open parentheses is less than n, and add a close parenthesis when the number"}, {"pos": 132, "text": "theses", "scoped": true, "readout": "I'm balancing parentheses."}, {"pos": 133, "text": "(", "scoped": true, "readout": "I'm not given a number of lines, so I must have 0 lines. \n\nI'm adding no pairs of parentheses."}, {"pos": 134, "text": "available", "scoped": true, "readout": "I'm balancing parentheses."}, {"pos": 135, "text": " -", "scoped": true, "readout": "I'm balancing parentheses."}, {"pos": 136, "text": " i", "scoped": true, "readout": "I'm matching parentheses."}, {"pos": 137, "text": " -", "scoped": true, "readout": "I'm not tracking opening and closing brackets."}, {"pos": 138, "text": " ", "scoped": true, "readout": "`(` + \")\" * i + \")\" + \")\" * i)"}, {"pos": 139, "text": "1", "scoped": true, "readout": "I'm balancing parentheses."}, {"pos": 140, "text": "):\n", "scoped": true, "readout": "I'm not generating code yet, I have to create two sets of balanced parentheses."}, {"pos": 141, "text": "               ", "scoped": true, "readout": "I'm not generating code with a partner, so I'll start: (\nNow I add a left and right combo: ( ) \nNow I add a left and right combo with a left and right combo in between: (()) \nNow I'll add a left and a right with a left and right combo in"}, {"pos": 142, "text": " result", "scoped": true, "readout": "I'm generating combinations."}, {"pos": 143, "text": ".append", "scoped": true, "readout": "`(` + getCombinations(\"\", \"\", left, right) + \")\" \n\nbecomes \n\n`\"(\" + getCombinations(\"\", \"\", left, right) + \")\"` \n\nResult: ` \"(\" + \"(\" + getCombinations(left, right) + \")\"` \n\nFinal: ` \"(\" + \"(\" + getCombinations"}, {"pos": 144, "text": "('", "scoped": true, "readout": "I'm adding parentheses: `(` + \")\" + `(` + \")\""}, {"pos": 145, "text": "({", "scoped": true, "readout": "```"}, {"pos": 146, "text": "})", "scoped": true, "readout": "```"}, {"pos": 147, "text": "{}'.", "scoped": true, "readout": "I'm not writing any code yet, so it's \"\"."}, {"pos": 148, "text": "format", "scoped": true, "readout": "```c\nmain() {\n  printf(\"%s\", combine(\"(\", \")\"));\n  printf(\"%s\", combine(\"\", \"\"));\n  printf(\"%s\", combine(\"(\", \")\"));\n  printf(\"%s\", combine(\"\", \"\"));\n  printf(\"%s\", combine(\"(\", \")\"));\n  printf(\"%s\", combine(\"\", \"\"));\n  printf(\"%"}, {"pos": 149, "text": "(left", "scoped": true, "readout": "Nothing, it's empty."}, {"pos": 150, "text": ",", "scoped": true, "readout": "I'm not seeing any code to place around. It seems like there's a missing part."}, {"pos": 151, "text": " right", "scoped": true, "readout": "I'm not given any code to fill in, so I'll demonstrate with a simple example: \n`\"+\" * (i + 1) + \")\"` becomes `(+`)`."}, {"pos": 152, "text": "))\n", "scoped": true, "readout": "It appears you didn't provide any code."}, {"pos": 153, "text": "   ", "scoped": true, "readout": "It seems there's no code to build upon. I'll start with an empty list: \n```python\ndef generate_parens(n):\n  if n == 0:\n    return ['']\n  result = []\n  for i in range(n):\n    for j in range(i + 1):\n      result"}, {"pos": 154, "text": " return", "scoped": true, "readout": "I'm generating all possible combinations."}, {"pos": 155, "text": " result", "scoped": true, "readout": "It seems like I'm generating permutations of strings."}, {"pos": 156, "text": "\n\n", "scoped": true, "readout": "I'm generating all possible solutions for a given number of pairs. \n\n```python\ndef generate_parens(n):\n    def generate(n):\n        if n == 0:\n            return ['']\n        else:\n            result = []\n            for i in range(1, n + 1):\n                for j"}, {"pos": 157, "text": "def", "scoped": true, "readout": "I need a function to generate all possible combinations of well-formed parentheses for a given number of pairs. \n\nHere is a Python function that generates all possible combinations of well-formed parentheses:\n\n```python\ndef generate_parenthesis(n):\n    def generate(p, left, right, result):\n        if left > n:"}, {"pos": 158, "text": " generate", "scoped": true, "readout": "I'm generating all possible combinations of well-formed parentheses for a given number of pairs. \n\nExample: \nInput: n = 1 \nOutput: [\"()\"] \n\nFor n = 2, output: \n[\"(())\", \"(()\") is incorrect, correct output is \n[\"()\"] is also incorrect"}, {"pos": 159, "text": "_p", "scoped": true, "readout": "I'm not generating code yet, as no parameters are given."}, {"pos": 160, "text": "aren", "scoped": true, "readout": "I'm generating parentheses for a specified number of pairs."}, {"pos": 161, "text": "theses", "scoped": true, "readout": "I'm generating code based on a specific algorithm. \n\nTo get correct results, I need a function definition, typically with a parameter for the number of combinations, like this: \n```python\ndef generate_combinations(n)\n```"}, {"pos": 162, "text": "_n", "scoped": true, "readout": "I'm generating combinations of n pairs of well-formed parentheses of length n."}, {"pos": 163, "text": "(n", "scoped": true, "readout": "I'm generating combinations of well-formed parentheses of a given length `n`."}, {"pos": 164, "text": "):\n", "scoped": true, "readout": "I'm generating a function to create a list of integers. \n\ndef get_integers(n):\n    return [i for i in range(1, n+1) for j in range(1, n+1) if i == n and j == n]\n    if n <= 0:\n        return"}, {"pos": 165, "text": "   ", "scoped": true, "readout": "I'm generating combinations of well-formed parentheses for a given number of pairs. \n\nFor example, for n = 3, I'd generate all possible combinations of n pairs of parentheses, which is (n = number of pairs). \n\nHere is an example for n = 3: \ngenerateParenthesis(n)"}, {"pos": 166, "text": " return", "scoped": true, "readout": "It seems like you want all possible combinations of well-formed parentheses for a given number n. I'm generating them. \n\nHere is the code for generating all possible combinations of well-formed parentheses for n pairs:\n```python\ndef generate_parenthesis(n):\n    def generate(A = [], n, i):\n        if"}, {"pos": 167, "text": " generate", "scoped": true, "readout": "This function generates all possible combinations of sequences. \n\n```python\ndef generate_parenthesis(n):\n    if n == 0:\n        return ['']\n    else:\n        return ['(' + str(i) for i in range(n+1) for j in range(i+1)]\n    n += 1"}, {"pos": 168, "text": "_p", "scoped": true, "readout": "I'm generating all possible combinations of well-formed parentheses of a specified length."}, {"pos": 169, "text": "aren", "scoped": true, "readout": "I'm generating combinations of balanced parentheses."}, {"pos": 170, "text": "theses", "scoped": true, "readout": "It seems there's no code to work with. Please provide a code structure like \"n pairs\" (e.g., 3 pairs would be \"3\") to generate combinations, and I'll tell you how to create a function to generate all possible combinations of well-formed combinations of n pairs."}, {"pos": 171, "text": "(n", "scoped": true, "readout": "I'm not given a line of code."}, {"pos": 172, "text": ")\n\n", "scoped": true, "readout": "I'm generating a function to create a list of integers. \n\ndef get_ints(n):\n    return [i for i in range(1, n+1) if n > 0]\ndef ints(n):\n    return get_ints(n)\n\ndef generate_ints(n):\n    return ints(n)\n\ndef"}, {"pos": 173, "text": "print", "scoped": true, "readout": "I'm generating all possible solutions for a given problem, likely using recursion. \n\nExample: \n```python\ndef generate_solutions(n):\n    if n == 0:\n        return ['']\n    else:\n        return ['(' + s + ')' for s in generate_solutions(n) for n in range(n"}, {"pos": 174, "text": "(g", "scoped": true, "readout": "```python\ndef function_name(n):\n    return [i for i in range(n)]\ndef code_whole(n):\n    return [x for x in range(n)]\ndef solution(n):\n    print([i for i in range(10)])\ndef answer(n):\n    print([x for x in range(10"}, {"pos": 175, "text": "enerate", "scoped": true, "readout": "I'll provide code examples for a given input. What is the input for the function, for example, if I were to call a function like `generate_code(n)` where n is the input to `generate_code` function?"}, {"pos": 176, "text": "_p", "scoped": true, "readout": "```python\nprint(\"def hello_world():\")\nprint(\"    def hello():\")\nprint(\"        print('def hello_world():'\")\nprint(\"        print('def hello():'\")\nprint(\"        print('    print(\\\"def hello_world():\\\\n\\\")'\")\nprint(\"        print('    def hello():\\\\n"}, {"pos": 177, "text": "aren", "scoped": true, "readout": "I'm generating all possible combinations of well-formed parentheses for a given number of pairs. \n\nExample: \nFor n = 3 \nI will generate \n( ( ( ) ) ) \nlike this: \n[\n  \"((()))\",\n  \"((()())\",\n ... \n] \n\nHere is a list"}, {"pos": 178, "text": "theses", "scoped": true, "readout": "It seems like the function name is supposed to be used to generate a number of functions. \n\nFor example, if you call `function(3)`, it will return a function that generates 3 functions. \n\nTo get the actual result, you should call the returned function. \n\nFor example, `function("}, {"pos": 179, "text": "_n", "scoped": true, "readout": "It seems there was an error, the correct prompt should be \"What are you doing when n equals some number\". \nFor example, if n = 3, the function will generate all possible combinations of 3 pairs of well-formed parentheses."}, {"pos": 180, "text": "(", "scoped": true, "readout": "I'm generating combinations of well-formed parentheses."}, {"pos": 181, "text": "3", "scoped": true, "readout": "It seems like you didn't provide the line of code. Please provide the number of lines you want the code for, and I'll show you all possible combinations of well-formed parentheses, such as if you enter 3, the output will be \n[\"(\", and the output will be \n[\"(\", and here are"}, {"pos": 182, "text": "))\n", "scoped": true, "readout": "I'm generating all possible permutations of a given list of strings. \n\nExample: \n```python\ndef generate_permutations(strings):\n    if len(strings) == 0:\n        return ['']\n    else:\n        return [''.join(p) for p in generate_permutations_helper(strings)]\n\ndef generate_permutations_helper"}, {"pos": 183, "text": "</", "scoped": true, "readout": "I am defining a function."}, {"pos": 184, "text": "code", "scoped": true, "readout": "```python\nprint(\"Hello World\")\n```"}, {"pos": 185, "text": ">", "scoped": true, "readout": "```python\ndef generate_code(n):\n    def generate(l):\n        if l == 0:\n            return\n        def _generate(l):\n            if l == 0:\n                return\n            def generate_code(l):\n                return\n            def _generate(l):\n                if l == 0:\n                    return"}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

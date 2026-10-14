@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>climbing stairs  ·  Llama-3.3-70B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_9b416447">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">climbing stairs  ·  Llama-3.3-70B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="1">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="2">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="3">system</span><span class="gs-tok noncode" data-pos="4">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="5">↵
+↵
+</span><span class="gs-tok noncode" data-pos="6">Cut</span><span class="gs-tok noncode" data-pos="7">ting</span><span class="gs-tok noncode" data-pos="8"> Knowledge</span><span class="gs-tok noncode" data-pos="9"> Date</span><span class="gs-tok noncode" data-pos="10">:</span><span class="gs-tok noncode" data-pos="11"> December</span><span class="gs-tok noncode" data-pos="12"> </span><span class="gs-tok noncode" data-pos="13">202</span><span class="gs-tok noncode" data-pos="14">3</span><span class="gs-tok noncode" data-pos="15">↵
+</span><span class="gs-tok noncode" data-pos="16">Today</span><span class="gs-tok noncode" data-pos="17"> Date</span><span class="gs-tok noncode" data-pos="18">:</span><span class="gs-tok noncode" data-pos="19"> </span><span class="gs-tok noncode" data-pos="20">26</span><span class="gs-tok noncode" data-pos="21"> Jul</span><span class="gs-tok noncode" data-pos="22"> </span><span class="gs-tok noncode" data-pos="23">202</span><span class="gs-tok noncode" data-pos="24">4</span><span class="gs-tok noncode" data-pos="25">↵
+↵
+</span><span class="gs-tok noncode" data-pos="26">You</span><span class="gs-tok noncode" data-pos="27"> are</span><span class="gs-tok noncode" data-pos="28"> a</span><span class="gs-tok noncode" data-pos="29"> helpful</span><span class="gs-tok noncode" data-pos="30"> assistant</span><span class="gs-tok noncode" data-pos="31"> proficient</span><span class="gs-tok noncode" data-pos="32"> in</span><span class="gs-tok noncode" data-pos="33"> programming</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35"> Always</span><span class="gs-tok noncode" data-pos="36"> wrap</span><span class="gs-tok noncode" data-pos="37"> your</span><span class="gs-tok noncode" data-pos="38"> code</span><span class="gs-tok noncode" data-pos="39"> inside</span><span class="gs-tok noncode" data-pos="40"> &lt;</span><span class="gs-tok noncode" data-pos="41">code</span><span class="gs-tok noncode" data-pos="42">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="43">code</span><span class="gs-tok noncode" data-pos="44">&gt;</span><span class="gs-tok noncode" data-pos="45"> blocks</span><span class="gs-tok noncode" data-pos="46">.</span><span class="gs-tok noncode" data-pos="47"> Just</span><span class="gs-tok noncode" data-pos="48"> the</span><span class="gs-tok noncode" data-pos="49"> code</span><span class="gs-tok noncode" data-pos="50">,</span><span class="gs-tok noncode" data-pos="51"> no</span><span class="gs-tok noncode" data-pos="52"> need</span><span class="gs-tok noncode" data-pos="53"> to</span><span class="gs-tok noncode" data-pos="54"> comment</span><span class="gs-tok noncode" data-pos="55"> or</span><span class="gs-tok noncode" data-pos="56"> explain</span><span class="gs-tok noncode" data-pos="57">.</span><span class="gs-tok noncode" data-pos="58">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="59">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="60">user</span><span class="gs-tok noncode" data-pos="61">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="62">↵
+↵
+</span><span class="gs-tok noncode" data-pos="63">Implement</span><span class="gs-tok noncode" data-pos="64"> the</span><span class="gs-tok noncode" data-pos="65"> climbing</span><span class="gs-tok noncode" data-pos="66"> stairs</span><span class="gs-tok noncode" data-pos="67"> problem</span><span class="gs-tok noncode" data-pos="68"> (</span><span class="gs-tok noncode" data-pos="69">number</span><span class="gs-tok noncode" data-pos="70"> of</span><span class="gs-tok noncode" data-pos="71"> ways</span><span class="gs-tok noncode" data-pos="72"> to</span><span class="gs-tok noncode" data-pos="73"> reach</span><span class="gs-tok noncode" data-pos="74"> the</span><span class="gs-tok noncode" data-pos="75"> top</span><span class="gs-tok noncode" data-pos="76"> taking</span><span class="gs-tok noncode" data-pos="77"> </span><span class="gs-tok noncode" data-pos="78">1</span><span class="gs-tok noncode" data-pos="79"> or</span><span class="gs-tok noncode" data-pos="80"> </span><span class="gs-tok noncode" data-pos="81">2</span><span class="gs-tok noncode" data-pos="82"> steps</span><span class="gs-tok noncode" data-pos="83">)</span><span class="gs-tok noncode" data-pos="84">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="85">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="86">assistant</span><span class="gs-tok noncode" data-pos="87">&lt;|end_header_id|&gt;</span><span class="gs-tok scoped" data-pos="88">↵
+↵
+</span><span class="gs-tok scoped" data-pos="89">&lt;</span><span class="gs-tok scoped" data-pos="90">code</span><span class="gs-tok scoped" data-pos="91">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="92">def</span><span class="gs-tok scoped" data-pos="93"> climbing</span><span class="gs-tok scoped" data-pos="94">_st</span><span class="gs-tok scoped" data-pos="95">airs</span><span class="gs-tok scoped" data-pos="96">(steps</span><span class="gs-tok scoped" data-pos="97">):↵
+</span><span class="gs-tok scoped" data-pos="98">   </span><span class="gs-tok scoped kw" data-pos="99"> if</span><span class="gs-tok scoped" data-pos="100"> steps</span><span class="gs-tok scoped" data-pos="101"> &lt;=</span><span class="gs-tok scoped" data-pos="102"> </span><span class="gs-tok scoped num" data-pos="103">2</span><span class="gs-tok scoped" data-pos="104">:↵
+</span><span class="gs-tok scoped" data-pos="105">       </span><span class="gs-tok scoped kw" data-pos="106"> return</span><span class="gs-tok scoped" data-pos="107"> steps</span><span class="gs-tok scoped" data-pos="108">↵
+</span><span class="gs-tok scoped" data-pos="109">   </span><span class="gs-tok scoped" data-pos="110"> dp</span><span class="gs-tok scoped" data-pos="111"> =</span><span class="gs-tok scoped" data-pos="112"> [</span><span class="gs-tok scoped num" data-pos="113">0</span><span class="gs-tok scoped" data-pos="114">]</span><span class="gs-tok scoped" data-pos="115"> *</span><span class="gs-tok scoped" data-pos="116"> (</span><span class="gs-tok scoped" data-pos="117">steps</span><span class="gs-tok scoped" data-pos="118"> +</span><span class="gs-tok scoped" data-pos="119"> </span><span class="gs-tok scoped num" data-pos="120">1</span><span class="gs-tok scoped" data-pos="121">)↵
+</span><span class="gs-tok scoped" data-pos="122">   </span><span class="gs-tok scoped" data-pos="123"> dp</span><span class="gs-tok scoped" data-pos="124">[</span><span class="gs-tok scoped num" data-pos="125">1</span><span class="gs-tok scoped" data-pos="126">]</span><span class="gs-tok scoped" data-pos="127"> =</span><span class="gs-tok scoped" data-pos="128"> </span><span class="gs-tok scoped num" data-pos="129">1</span><span class="gs-tok scoped" data-pos="130">↵
+</span><span class="gs-tok scoped" data-pos="131">   </span><span class="gs-tok scoped" data-pos="132"> dp</span><span class="gs-tok scoped" data-pos="133">[</span><span class="gs-tok scoped num" data-pos="134">2</span><span class="gs-tok scoped" data-pos="135">]</span><span class="gs-tok scoped" data-pos="136"> =</span><span class="gs-tok scoped" data-pos="137"> </span><span class="gs-tok scoped num" data-pos="138">2</span><span class="gs-tok scoped" data-pos="139">↵
+</span><span class="gs-tok scoped" data-pos="140">   </span><span class="gs-tok scoped kw" data-pos="141"> for</span><span class="gs-tok scoped" data-pos="142"> i</span><span class="gs-tok scoped kw" data-pos="143"> in</span><span class="gs-tok scoped bi" data-pos="144"> range</span><span class="gs-tok scoped" data-pos="145">(</span><span class="gs-tok scoped num" data-pos="146">3</span><span class="gs-tok scoped" data-pos="147">,</span><span class="gs-tok scoped" data-pos="148"> steps</span><span class="gs-tok scoped" data-pos="149"> +</span><span class="gs-tok scoped" data-pos="150"> </span><span class="gs-tok scoped num" data-pos="151">1</span><span class="gs-tok scoped" data-pos="152">):↵
+</span><span class="gs-tok scoped" data-pos="153">       </span><span class="gs-tok scoped" data-pos="154"> dp</span><span class="gs-tok scoped" data-pos="155">[i</span><span class="gs-tok scoped" data-pos="156">]</span><span class="gs-tok scoped" data-pos="157"> =</span><span class="gs-tok scoped" data-pos="158"> dp</span><span class="gs-tok scoped" data-pos="159">[i</span><span class="gs-tok scoped" data-pos="160"> -</span><span class="gs-tok scoped" data-pos="161"> </span><span class="gs-tok scoped num" data-pos="162">1</span><span class="gs-tok scoped" data-pos="163">]</span><span class="gs-tok scoped" data-pos="164"> +</span><span class="gs-tok scoped" data-pos="165"> dp</span><span class="gs-tok scoped" data-pos="166">[i</span><span class="gs-tok scoped" data-pos="167"> -</span><span class="gs-tok scoped" data-pos="168"> </span><span class="gs-tok scoped num" data-pos="169">2</span><span class="gs-tok scoped" data-pos="170">]↵
+</span><span class="gs-tok scoped" data-pos="171">   </span><span class="gs-tok scoped kw" data-pos="172"> return</span><span class="gs-tok scoped" data-pos="173"> dp</span><span class="gs-tok scoped" data-pos="174">[</span><span class="gs-tok scoped" data-pos="175">steps</span><span class="gs-tok scoped" data-pos="176">]↵
+</span><span class="gs-tok scoped" data-pos="177">&lt;/</span><span class="gs-tok scoped" data-pos="178">code</span><span class="gs-tok scoped" data-pos="179">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_9b416447";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 2, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 3, "text": "system", "scoped": false, "readout": ""}, {"pos": 4, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 5, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 6, "text": "Cut", "scoped": false, "readout": ""}, {"pos": 7, "text": "ting", "scoped": false, "readout": ""}, {"pos": 8, "text": " Knowledge", "scoped": false, "readout": ""}, {"pos": 9, "text": " Date", "scoped": false, "readout": ""}, {"pos": 10, "text": ":", "scoped": false, "readout": ""}, {"pos": 11, "text": " December", "scoped": false, "readout": ""}, {"pos": 12, "text": " ", "scoped": false, "readout": ""}, {"pos": 13, "text": "202", "scoped": false, "readout": ""}, {"pos": 14, "text": "3", "scoped": false, "readout": ""}, {"pos": 15, "text": "\n", "scoped": false, "readout": ""}, {"pos": 16, "text": "Today", "scoped": false, "readout": ""}, {"pos": 17, "text": " Date", "scoped": false, "readout": ""}, {"pos": 18, "text": ":", "scoped": false, "readout": ""}, {"pos": 19, "text": " ", "scoped": false, "readout": ""}, {"pos": 20, "text": "26", "scoped": false, "readout": ""}, {"pos": 21, "text": " Jul", "scoped": false, "readout": ""}, {"pos": 22, "text": " ", "scoped": false, "readout": ""}, {"pos": 23, "text": "202", "scoped": false, "readout": ""}, {"pos": 24, "text": "4", "scoped": false, "readout": ""}, {"pos": 25, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 26, "text": "You", "scoped": false, "readout": ""}, {"pos": 27, "text": " are", "scoped": false, "readout": ""}, {"pos": 28, "text": " a", "scoped": false, "readout": ""}, {"pos": 29, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 30, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 31, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 32, "text": " in", "scoped": false, "readout": ""}, {"pos": 33, "text": " programming", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": " Always", "scoped": false, "readout": ""}, {"pos": 36, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 37, "text": " your", "scoped": false, "readout": ""}, {"pos": 38, "text": " code", "scoped": false, "readout": ""}, {"pos": 39, "text": " inside", "scoped": false, "readout": ""}, {"pos": 40, "text": " <", "scoped": false, "readout": ""}, {"pos": 41, "text": "code", "scoped": false, "readout": ""}, {"pos": 42, "text": "></", "scoped": false, "readout": ""}, {"pos": 43, "text": "code", "scoped": false, "readout": ""}, {"pos": 44, "text": ">", "scoped": false, "readout": ""}, {"pos": 45, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 46, "text": ".", "scoped": false, "readout": ""}, {"pos": 47, "text": " Just", "scoped": false, "readout": ""}, {"pos": 48, "text": " the", "scoped": false, "readout": ""}, {"pos": 49, "text": " code", "scoped": false, "readout": ""}, {"pos": 50, "text": ",", "scoped": false, "readout": ""}, {"pos": 51, "text": " no", "scoped": false, "readout": ""}, {"pos": 52, "text": " need", "scoped": false, "readout": ""}, {"pos": 53, "text": " to", "scoped": false, "readout": ""}, {"pos": 54, "text": " comment", "scoped": false, "readout": ""}, {"pos": 55, "text": " or", "scoped": false, "readout": ""}, {"pos": 56, "text": " explain", "scoped": false, "readout": ""}, {"pos": 57, "text": ".", "scoped": false, "readout": ""}, {"pos": 58, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 59, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 60, "text": "user", "scoped": false, "readout": ""}, {"pos": 61, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 62, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 63, "text": "Implement", "scoped": false, "readout": ""}, {"pos": 64, "text": " the", "scoped": false, "readout": ""}, {"pos": 65, "text": " climbing", "scoped": false, "readout": ""}, {"pos": 66, "text": " stairs", "scoped": false, "readout": ""}, {"pos": 67, "text": " problem", "scoped": false, "readout": ""}, {"pos": 68, "text": " (", "scoped": false, "readout": ""}, {"pos": 69, "text": "number", "scoped": false, "readout": ""}, {"pos": 70, "text": " of", "scoped": false, "readout": ""}, {"pos": 71, "text": " ways", "scoped": false, "readout": ""}, {"pos": 72, "text": " to", "scoped": false, "readout": ""}, {"pos": 73, "text": " reach", "scoped": false, "readout": ""}, {"pos": 74, "text": " the", "scoped": false, "readout": ""}, {"pos": 75, "text": " top", "scoped": false, "readout": ""}, {"pos": 76, "text": " taking", "scoped": false, "readout": ""}, {"pos": 77, "text": " ", "scoped": false, "readout": ""}, {"pos": 78, "text": "1", "scoped": false, "readout": ""}, {"pos": 79, "text": " or", "scoped": false, "readout": ""}, {"pos": 80, "text": " ", "scoped": false, "readout": ""}, {"pos": 81, "text": "2", "scoped": false, "readout": ""}, {"pos": 82, "text": " steps", "scoped": false, "readout": ""}, {"pos": 83, "text": ")", "scoped": false, "readout": ""}, {"pos": 84, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 85, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 86, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 87, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 88, "text": "\n\n", "scoped": true, "readout": "```python\ndef solve():\n    code = \"\"\"\ndef calculate(n):\n    return \"\"\"\n    code += \"\"\"\n    def fib(n):\n        if n == 1:\n            return `\"\"\"\n    code += \"\"\"\n    def fib(n):\n        if n == 1:\n            return ```\n    def fib(n):\n        if"}, {"pos": 89, "text": "<", "scoped": true, "readout": "```python\nprint(\"I'm writing code\")\n```"}, {"pos": 90, "text": "code", "scoped": true, "readout": "```python\nprint(\"def hello_world():\\nprint(\\\"```python\\ndef hello_world():\\nprint(\\\"def hello_world():\\nprint(\\\"```python\\nprint(\\\"def hello_world():\\nprint(\\\"```def hello_world():\nprint(\\\"```python\ndef hello_world():\nprint(\\\"```def"}, {"pos": 91, "text": ">\n", "scoped": true, "readout": "```python\ndef fib(n):\n    def fib_func(n):\n        if n <= 2:\n            return \"\"\"def fib(n):\n    def fib_func(n):\n        if n <= 2:\n            return \"\"\"\n    f = \"\"\"def fib(n):\ndef fib_func(n):\n    if n <= 2:"}, {"pos": 92, "text": "def", "scoped": true, "readout": "n = [1, 2]\ndef count_ways(n):\n    if n == 1:\n        return 1\n    if n == 2:\n        return 2\n    dp = [0]*(n+1)\n    dp[1] = 1\n    dp[2] ="}, {"pos": 93, "text": " climbing", "scoped": true, "readout": "I'm calculating the number of ways to reach the top of a staircase with n steps, using dynamic programming (DP), where each step can be climbed in either 1 or 2 steps. \n\nHere is the code:\n```python\ndef climb_stairs(n):\n    dp = [0] * (n"}, {"pos": 94, "text": "_st", "scoped": true, "readout": "```python\ndef climb_stairs(n):\n    def climb(n):\n        if n <= 2:\n            return [1, 1]\n        dp = [0]*(n+1)\n        dp[0] = 1\n        dp[1] = 1\n        for i in range("}, {"pos": 95, "text": "airs", "scoped": true, "readout": "I'm calculating the number of ways to reach the top of a staircase with n steps, using recursion with memoization (n = number of steps). \n\ndef solve(n):\n    def solve_recursive(n):\n        if n <= 2:\n            return [1,2]\n        dp = [0] * ("}, {"pos": 96, "text": "(steps", "scoped": true, "readout": "I'm calculating the number of ways to reach the top of a staircase with n steps, where you can climb 1 or 2 steps at a time. \n\nTo reach n steps, I can climb:\n- 1 step (1 way to reach 1 step)\n- 2 steps (2 ways to"}, {"pos": 97, "text": "):\n", "scoped": true, "readout": "`def fib(n): \n    if n <= 1: \n        return n \n    return fib(n-1) + fib(n-2) \ndef fib(n): \n    f = [0]*(n+1) \n    f[0] = 1 \n    f[1] ="}, {"pos": 98, "text": "   ", "scoped": true, "readout": "n = [1, 2]\ndef count_ways(n):\n    if n <= 2:\n        return [1, 2]\n    ways = [0]*(n+1)\n    ways[1] = 1\n    ways[2] = 2\n    for i in range("}, {"pos": 99, "text": " if", "scoped": true, "readout": "n = n if n <= 1 else f(n-1) + f(n-2) if n <= 2 else f(n-1) + f(n-2) for n in range(3, n+1) \n# Base case: f(1) = 1, f("}, {"pos": 100, "text": " steps", "scoped": true, "readout": "I'm at the 1st or 2nd line, so: 1 or 2 steps."}, {"pos": 101, "text": " <=", "scoped": true, "readout": "I'm at line 1. There's 1 way (1) or 2 ways (2) to get to the top. \n1: 1 \n2: 2 \n\nThere are two ways to get to the top when you have 1 or 2 steps. \nYou can get to"}, {"pos": 102, "text": " ", "scoped": true, "readout": "I'm taking a step."}, {"pos": 103, "text": "2", "scoped": true, "readout": "I'm on line 1, so I can move 1 or 2 lines."}, {"pos": 104, "text": ":\n", "scoped": true, "readout": "I'm determining the number of ways to reach the nth step (n = 1 or 2). \n\n1: 1 \n2: 2 \nn: n-1 if n < 2, 1 if n == 1, 2 if n == 2, n-1 if"}, {"pos": 105, "text": "       ", "scoped": true, "readout": "I'm calculating the number of ways to climb stairs (1 or 2 steps). \n1 step: 1 way (1 or 2), \n2 steps: 2 ways (1+1 or 2). \nFor n steps: \n- 1 way if n=1 (1 step),"}, {"pos": 106, "text": " return", "scoped": true, "readout": "There's only 1-2 ways to reach 2 (1 or 2). \n- 1 way to reach 1 (1 or 2) \n- 2 ways to reach 2 (1 or 2) \nFor n = 3 \n- 1 way to reach 1"}, {"pos": 107, "text": " steps", "scoped": true, "readout": "I'm calculating the number of ways to climb stairs (1 or 2). \n1 way: 1, \n2 ways: 2, \n3 ways: 3. \nI'll write the code for it. \n1: 1 \n2: 2 \n3: 3."}, {"pos": 108, "text": "\n", "scoped": true, "readout": "n = n if n > 2 else (n-1) if n == 3 else (n-1) if n == 4 else (n-1)*n \nn = (n-1)*(n-2) if n > 4 else (n-1)*(n-2"}, {"pos": 109, "text": "   ", "scoped": true, "readout": "n = [1, 2]\nfor i in range(2, 10):\n    n.append(n[i-1] + n[i-2] if i > 2 else i)\nprint(n[9])"}, {"pos": 110, "text": " dp", "scoped": true, "readout": "I'm using dynamic programming to solve a problem with memoization, where I store the number of ways to get to the nth step in an array, where the number of ways to get to the nth step is the sum of the number of ways to get to the (n-1)th and (n-"}, {"pos": 111, "text": " =", "scoped": true, "readout": "I'm creating a sequence for the Fibonacci sequence using dynamic programming, where I initialize variables `a = [0]*(n+1)` and `a[1] = 1` and `a[2] = 1` for base cases, then `a[i] = a[i-1] +"}, {"pos": 112, "text": " [", "scoped": true, "readout": "There are only 2 lines, I'll store 1, 1 in them. \nLine 1 = 1, Line 2 = 1 \nI'll fill the rest with the sum of the 2 lines before it."}, {"pos": 113, "text": "0", "scoped": true, "readout": "I'm initializing variables: \n1 = 1, \n2 = 1 \nfor i in range(3, n+1): \n    fib = [1,1] \n    fib[1] = 1 \n    fib[2] = 1 \n    for i in range(3"}, {"pos": 114, "text": "]", "scoped": true, "readout": "I'll initialize variables: arr[0] = 1, arr[1] = 1, for i in range(2, n+1): arr[i] = arr[i-1] + arr[i-2] if n > 2 else [0]*(n+1) \narr["}, {"pos": 115, "text": " *", "scoped": true, "readout": "I'm creating an array to store the number of ways to reach each step, with the base cases for the first two steps: \n```\nways = [0]*(n+1) \nways[1] = 1\nways[2] = 2\nfor i in range(3, n"}, {"pos": 116, "text": " (", "scoped": true, "readout": "I'm initializing an array for dynamic programming with a size of n+1, where n is the number of items. \n\nLet dp = [0]*(n+1)\ndp[0] = 1\ndp[1] = 1\n\nfor i in range(2, n+1):"}, {"pos": 117, "text": "steps", "scoped": true, "readout": "I'm assuming a staircase of size n. \n1. Create an array of size n+1, \n2. Initialize the first two elements to 1 and 2. \n3. Use a loop to fill the array, \n4. Return the nth element. \n\nHere is the code:\n```"}, {"pos": 118, "text": " +", "scoped": true, "readout": "I'm initializing a list with n+1 elements. \nlist = [0]*(n+1) \nlist[0] = 0\nlist[1] = 1\nfor i in range(2,n+1):\n    list[i] = list[i-1]+1\nlist[n]"}, {"pos": 119, "text": " ", "scoped": true, "readout": "I'm calculating the number of ways to reach the top of a staircase with 2 or 1 steps, I can either take 1 step or 2 steps. \n1 way to reach 1 step, 2 ways to reach 2 steps, 3 ways to reach 3 steps. \nI"}, {"pos": 120, "text": "1", "scoped": true, "readout": "I'm initializing variables. \n1 = 0 \n2 = 1 \nif n <= 1: \n   return n \nn = [1, 1] \nfor i in range(2, n+1): \n   n[i] = n[i-1] + n[i-2"}, {"pos": 121, "text": ")\n", "scoped": true, "readout": "I'm initializing variables: \n1 = 0, \n2 = 1 \nfor i in range(3, n+1): \n    dp[i] = dp[i-1] + dp[i-2] if i <= 2 else dp[i] = dp[i-1] + dp[i"}, {"pos": 122, "text": "   ", "scoped": true, "readout": "I'm initializing a list with `fib[1] = 1` and `fib[2] = 2` for a dynamic programming solution where `fib[n] = fib[n-1] + fib[n-2]`. \n\nfib[1] = 1 \nfib[2] ="}, {"pos": 123, "text": " dp", "scoped": true, "readout": "I'm calculating previous values for `fib(1)` and `fib(2)`. \nfib[1] = 1 \nfib[2] = 2 \nfor i in range(1, n+1):\n    if i == 1:\n        fib[i] = 1\n    elif"}, {"pos": 124, "text": "[", "scoped": true, "readout": "There is no code. I'll start: 1, 2."}, {"pos": 125, "text": "1", "scoped": true, "readout": "There is only 1 or 2 lines, so 1 or 2."}, {"pos": 126, "text": "]", "scoped": true, "readout": "```python\ndef solve():\n    def f(n):\n        if n <= 2:\n            return 'def f(n):\\n\\tf = [\\'def f(n):\\n','   n=[\\'\\', \\'def f(n):\\n','   f = [\\'\\', \\'def f(n):\\"}, {"pos": 127, "text": " =", "scoped": true, "readout": "There's only one way to get to 1 or 2, so I'll set `ways[1] = 1` and `ways[2] = 2`. \n\nways[1] = 1 \nways[2] = 2 \n\nSo, `ways[1] ="}, {"pos": 128, "text": " ", "scoped": true, "readout": "I'm taking a step."}, {"pos": 129, "text": "1", "scoped": true, "readout": "There is no code, so I'll assume 1 or 2 ways to get to the second step. \n1 way to get to the first step, \n2 ways to get to the second step. \nI'm doing: \n1 if n == 1 \n2 if n == 2 \nn"}, {"pos": 130, "text": "\n", "scoped": true, "readout": "Since the code is not provided, I'll initialize it: \n`lines[1] = 1` and `lines[2] = 1`. \n`lines[0] = 0` and `lines[1] = 1`. \nFor i in range(2, n+1"}, {"pos": 131, "text": "   ", "scoped": true, "readout": "There is no code, so `fib[1] = 1` and `fib[2] = 2` or `fib[1] = 1` and `fib[2] = fib[1] + fib[2-1]`. \n\nfib[1] = 1"}, {"pos": 132, "text": " dp", "scoped": true, "readout": "There is no code. I'll start: 1, 2. \n1 | 2 \n2 | 3 \nfor i in range(2, 3):\n    if i == 1:\n        one = 1\n        two = 2\n    elif i == 2:"}, {"pos": 133, "text": "[", "scoped": true, "readout": "I can move 1 or 2 steps at a time, so I'm considering 1 or 2 steps."}, {"pos": 134, "text": "2", "scoped": true, "readout": "There is no code, 1 or 2. I'll take it as 1 or 2. I'll assume 1 = 1, 2 = 2. So, 1 or 2 is 1 if 1, 2 if 2. So, 1=1"}, {"pos": 135, "text": "]", "scoped": true, "readout": "I'm considering 2 options: taking 1 or 2 steps."}, {"pos": 136, "text": " =", "scoped": true, "readout": "There is no code provided, 2 options: 1 or 2. \n1: 1 \n2: 2"}, {"pos": 137, "text": " ", "scoped": true, "readout": "I'm using dynamic programming to calculate `fib(n) = fib(n-1) + fib(n-2)` or `fib[n] = fib[n-1] + fib[n-2]`."}, {"pos": 138, "text": "2", "scoped": true, "readout": "I'm calculating the number of ways to reach the top of a staircase with 1 or 2 steps. \n\n`ways[1] = 1`\n`ways[2] = 2`\n`ways[n] = ways[1] + ways[2]`\n\n`ways[1] ="}, {"pos": 139, "text": "\n", "scoped": true, "readout": "I'll fill in the values. \n1 and 2 for the base case, \nthen 1 and 2 for the base case, \n`fib = [1, 1]`\n`fib[1] = 1`\n`fib[2] = 1`\nfor i in range("}, {"pos": 140, "text": "   ", "scoped": true, "readout": "I'm using dynamic programming, `dp[i] = dp[i-1] + dp[i-2]` for `i in range(2, n+1)`, with `dp[1] = 1` and `dp[2] = 2`."}, {"pos": 141, "text": " for", "scoped": true, "readout": "`steps[1] = 1; steps[2] = 2;` \n`steps[i] = steps[i-1] + steps[i-2]` \n`for i in range(3, n+1): steps[i] = steps[i-1] + steps[i-2"}, {"pos": 142, "text": " i", "scoped": true, "readout": "I'm initializing a loop to fill an array. \n\nfor i in range(2, n+1):\n    dp[i] = dp[i-1] + dp[i-1] for j in range(2, n+1):\n        dp[j] = dp[j-1] + dp[j-"}, {"pos": 143, "text": " in", "scoped": true, "readout": "I'll calculate the number of iterations for values greater than 2."}, {"pos": 144, "text": " range", "scoped": true, "readout": "I'm calculating values for the 3rd and 4th positions in a sequence where each position is the sum of the two preceding ones, with `fib[1] = 1`, `fib[2] = 2`, `fib[3] = 3`, and `fib[n] ="}, {"pos": 145, "text": "(", "scoped": true, "readout": "I'm assuming a 2-step staircase, calculating ways to reach 3rd step: \n- 1 way to reach 1st step (1+1)\n- 2 ways to reach 2nd step (1+1, 2)\n- 3 ways to reach 3rd step ("}, {"pos": 146, "text": "3", "scoped": true, "readout": "I'm calculating the number of ways to reach the (n+1)th step. \n\n```python\ndef climb_stairs(n):\n    if n <= 2:\n        return n or 1 + climb_stairs(n-1) if n == 2 else climb_stairs(n-1) +"}, {"pos": 147, "text": ",", "scoped": true, "readout": "I'm calculating the number of ways to reach the (n+1)th step in a sequence where `steps[i] = steps[i-1] + steps[i-2]` for `i in range(3, n+1)`. \n\n```python\nsteps = [0]*(n+1"}, {"pos": 148, "text": " steps", "scoped": true, "readout": "There's only one line, so I'm calculating the 2nd number in a sequence where `n = 1` or `n = 2` is `f(1) = 1` and `f(2) = 2`."}, {"pos": 149, "text": " +", "scoped": true, "readout": "I'm at line 3, so I'll do: \n1, 2, 3 \nI'll start at 1, 2, 3 = 1, 2, 3 = 4 \nSo 1, 2, 3, 4 = 1,"}, {"pos": 150, "text": " ", "scoped": true, "readout": "```python\ndef fib(n):\n    if n <= 2:\n        return n\n    a, b = 1, 1\n    for i in range(2, n+1):\n        a, b = a, a+b\n    return a\n```"}, {"pos": 151, "text": "1", "scoped": true, "readout": "I'm at lines 2 and 3, so I'll calculate 2 = 1 + 1 and 3 = 2 + 1, then I'll do 2 = 1 + 1 and 3 = 2 + 1, so 2 = 2 and 3"}, {"pos": 152, "text": "):\n", "scoped": true, "readout": "I'm initializing a list with a size of n, where each element is 0, using a for loop: \nfor i in range(3):\n    dp[i] = dp[i] = dp[i-1] = 1\ndp[1] = 1\ndp[2] ="}, {"pos": 153, "text": "       ", "scoped": true, "readout": "I'm calculating `fib[2] = fib[1] + fib[0]` for `fib[2] = 2`. \n\nfib[2] = fib[1] + fib[0] \nfib[2] = 1 + 1 \nfib[2] = 2"}, {"pos": 154, "text": " dp", "scoped": true, "readout": "I'm initializing a sequence for dynamic programming, where `i` represents the number of ways to get to the `i-th` cell in a series where the `i-th` cell is equal to the sum of the two preceding cells. \n\n```python\nfor i in range(3, n+1):"}, {"pos": 155, "text": "[i", "scoped": true, "readout": "I'm calculating the number of ways to reach the third step in a staircase, where I can either be at the first or second step, so I initialize the first and second step as 1 and 2 respectively, then for every step after that, the number of ways to reach that step is the sum of"}, {"pos": 156, "text": "]", "scoped": true, "readout": "Calculating the number of ways to reach the top of a staircase, where each step can be reached in either 1 or 2 ways (1 way to reach the first step, 2 ways to reach the second step, etc.), using dynamic programming to store the number of ways to reach each step."}, {"pos": 157, "text": " =", "scoped": true, "readout": "I'm calculating the number of ways to reach the nth step. \n# Base case: 1 way to reach 1st or 2nd step\na, b = 1, 2\n# Initialize variables\nfor i in range(2, n+1):\n    a, b = a"}, {"pos": 158, "text": " dp", "scoped": true, "readout": "I'm calculating `fib(i) = fib(i-1) + fib(i-2)` for `i = 3` and `i = 4`. \n\n`fib(3) = fib(2) + fib(1)` \n`fib(4) = fib(3) + fib("}, {"pos": 159, "text": "[i", "scoped": true, "readout": "I'm adding options for steps 2 and 3. \n#1 = 1 \n#2 = 1+1 or 2 \n#3 = 1+1+2 \nx = [0,1,2]\nx[1] = 1\nx[2] ="}, {"pos": 160, "text": " -", "scoped": true, "readout": "I'm either taking 1 or 2 steps."}, {"pos": 161, "text": " ", "scoped": true, "readout": "```python\ndef solve():\n    print(\"def solve():\")\n    print(\"    def fib(n):\")\n    print(\"        if n <= 2: return 'def fib(n):\\\\n    if n <= 2: return ```\\\"def fib(n):\\\\n    if n <= 2:"}, {"pos": 162, "text": "1", "scoped": true, "readout": "I'm summing the last two numbers."}, {"pos": 163, "text": "]", "scoped": true, "readout": "I'm using dynamic programming (DP) to store results in an array. \n\n`dp[i] = dp[i-1] + dp[i-2]`"}, {"pos": 164, "text": " +", "scoped": true, "readout": "I'm calculating the sum of the two preceding numbers."}, {"pos": 165, "text": " dp", "scoped": true, "readout": "I'm considering options for steps 2 and 1 to calculate `fib(n) = fib(n-1) + fib(n-2)`."}, {"pos": 166, "text": "[i", "scoped": true, "readout": "I'm considering the last two options: coming from either 1 step or 2 steps."}, {"pos": 167, "text": " -", "scoped": true, "readout": "I'm considering 1 or 2 steps back."}, {"pos": 168, "text": " ", "scoped": true, "readout": "```python\nprint(\"def hello():\\n\\tprint('Hello World')\")```"}, {"pos": 169, "text": "2", "scoped": true, "readout": "I'm calculating the number of ways to reach the nth step in a staircase, where `n` is the number of steps. \n\n`fib(n) = fib(n-1) + fib(n-2)` \n\nSo, `fib(n) = fib(n-1) + fib(n-2)`"}, {"pos": 170, "text": "]\n", "scoped": true, "readout": "`dp[i] = dp[i-1] + dp[i-2]`"}, {"pos": 171, "text": "   ", "scoped": true, "readout": "I'm calculating `fib(n) = fib(n-1) + fib(n-2)` for `n >= 3` where `fib(1) = 1`, `fib(2) = 2` or `fib(n) = fib(n-1) + fib(n-1)` for"}, {"pos": 172, "text": " return", "scoped": true, "readout": "I'm calculating the number of ways to reach the nth position in a sequence where each position can be reached in two ways: as the sum of the two preceding ones (1+2, 2+3, etc.) or by using dynamic programming where the number of ways to reach the nth position is the sum"}, {"pos": 173, "text": " dp", "scoped": true, "readout": "I'm calculating the nth Fibonacci number using dynamic programming. \n\nHere is the code:\n```\ndef fib(n):\n    fib = [0] * (n + 1)\n    for i in range(1, n + 1):\n        fib[i] = fib[i] if i > 1 else"}, {"pos": 174, "text": "[", "scoped": true, "readout": "There is no code."}, {"pos": 175, "text": "steps", "scoped": true, "readout": "I'm calculating the nth Fibonacci number using dynamic programming. \n\ndef fib(n):\n    if n <= 2:\n        return n\n    else:\n        return fib(n-1) + fib(n-2)"}, {"pos": 176, "text": "]\n", "scoped": true, "readout": "```python\ndef factorial(n):\n    if n <= 1:\n        return n\n    return factorial(n)\n```\nI'm calculating the factorial. \n\nHere is the correct code:\n```python\ndef factorial(n):\n    if n <= 1:\n        return n\n    return factorial(n)\n```"}, {"pos": 177, "text": "</", "scoped": true, "readout": "```python\ndef solve(n):\n    if n <= 2:\n        return [0, 1, 1]\n    a = [0, 1, 1]\n    for i in range(3, n+1):\n        a.append(a[i-2] + a[i-1]"}, {"pos": 178, "text": "code", "scoped": true, "readout": "```python\nprint(\"def hello_world():\\n\\tprint('Hello World')\")\n```"}, {"pos": 179, "text": ">", "scoped": true, "readout": "```python\ndef solve(n):\n    def fib(n):\n        if n <= 2:\n            return n\n        return fib(n-1) + fib(n)\n```"}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

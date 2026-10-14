@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20 find closest elements  ·  Llama-3.3-70B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_da26ffd3">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">20 find closest elements  ·  Llama-3.3-70B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="1">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="2">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="3">system</span><span class="gs-tok noncode" data-pos="4">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="5">↵
+↵
+</span><span class="gs-tok noncode" data-pos="6">Cut</span><span class="gs-tok noncode" data-pos="7">ting</span><span class="gs-tok noncode" data-pos="8"> Knowledge</span><span class="gs-tok noncode" data-pos="9"> Date</span><span class="gs-tok noncode" data-pos="10">:</span><span class="gs-tok noncode" data-pos="11"> December</span><span class="gs-tok noncode" data-pos="12"> </span><span class="gs-tok noncode" data-pos="13">202</span><span class="gs-tok noncode" data-pos="14">3</span><span class="gs-tok noncode" data-pos="15">↵
+</span><span class="gs-tok noncode" data-pos="16">Today</span><span class="gs-tok noncode" data-pos="17"> Date</span><span class="gs-tok noncode" data-pos="18">:</span><span class="gs-tok noncode" data-pos="19"> </span><span class="gs-tok noncode" data-pos="20">26</span><span class="gs-tok noncode" data-pos="21"> Jul</span><span class="gs-tok noncode" data-pos="22"> </span><span class="gs-tok noncode" data-pos="23">202</span><span class="gs-tok noncode" data-pos="24">4</span><span class="gs-tok noncode" data-pos="25">↵
+↵
+</span><span class="gs-tok noncode" data-pos="26">You</span><span class="gs-tok noncode" data-pos="27"> are</span><span class="gs-tok noncode" data-pos="28"> a</span><span class="gs-tok noncode" data-pos="29"> helpful</span><span class="gs-tok noncode" data-pos="30"> assistant</span><span class="gs-tok noncode" data-pos="31"> proficient</span><span class="gs-tok noncode" data-pos="32"> in</span><span class="gs-tok noncode" data-pos="33"> programming</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35"> Always</span><span class="gs-tok noncode" data-pos="36"> wrap</span><span class="gs-tok noncode" data-pos="37"> your</span><span class="gs-tok noncode" data-pos="38"> code</span><span class="gs-tok noncode" data-pos="39"> inside</span><span class="gs-tok noncode" data-pos="40"> &lt;</span><span class="gs-tok noncode" data-pos="41">code</span><span class="gs-tok noncode" data-pos="42">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="43">code</span><span class="gs-tok noncode" data-pos="44">&gt;</span><span class="gs-tok noncode" data-pos="45"> blocks</span><span class="gs-tok noncode" data-pos="46">.</span><span class="gs-tok noncode" data-pos="47"> Just</span><span class="gs-tok noncode" data-pos="48"> the</span><span class="gs-tok noncode" data-pos="49"> code</span><span class="gs-tok noncode" data-pos="50">,</span><span class="gs-tok noncode" data-pos="51"> no</span><span class="gs-tok noncode" data-pos="52"> need</span><span class="gs-tok noncode" data-pos="53"> to</span><span class="gs-tok noncode" data-pos="54"> comment</span><span class="gs-tok noncode" data-pos="55"> or</span><span class="gs-tok noncode" data-pos="56"> explain</span><span class="gs-tok noncode" data-pos="57">.</span><span class="gs-tok noncode" data-pos="58">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="59">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="60">user</span><span class="gs-tok noncode" data-pos="61">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="62">↵
+↵
+</span><span class="gs-tok noncode" data-pos="63">From</span><span class="gs-tok noncode" data-pos="64"> a</span><span class="gs-tok noncode" data-pos="65"> supplied</span><span class="gs-tok noncode" data-pos="66"> list</span><span class="gs-tok noncode" data-pos="67"> of</span><span class="gs-tok noncode" data-pos="68"> numbers</span><span class="gs-tok noncode" data-pos="69"> (</span><span class="gs-tok noncode" data-pos="70">of</span><span class="gs-tok noncode" data-pos="71"> length</span><span class="gs-tok noncode" data-pos="72"> at</span><span class="gs-tok noncode" data-pos="73"> least</span><span class="gs-tok noncode" data-pos="74"> two</span><span class="gs-tok noncode" data-pos="75">)</span><span class="gs-tok noncode" data-pos="76"> select</span><span class="gs-tok noncode" data-pos="77"> and</span><span class="gs-tok noncode" data-pos="78"> return</span><span class="gs-tok noncode" data-pos="79"> two</span><span class="gs-tok noncode" data-pos="80"> that</span><span class="gs-tok noncode" data-pos="81"> are</span><span class="gs-tok noncode" data-pos="82"> the</span><span class="gs-tok noncode" data-pos="83"> closest</span><span class="gs-tok noncode" data-pos="84"> to</span><span class="gs-tok noncode" data-pos="85"> each</span><span class="gs-tok noncode" data-pos="86"> other</span><span class="gs-tok noncode" data-pos="87"> and</span><span class="gs-tok noncode" data-pos="88"> return</span><span class="gs-tok noncode" data-pos="89"> them</span><span class="gs-tok noncode" data-pos="90"> in</span><span class="gs-tok noncode" data-pos="91"> order</span><span class="gs-tok noncode" data-pos="92"> (</span><span class="gs-tok noncode" data-pos="93">small</span><span class="gs-tok noncode" data-pos="94">er</span><span class="gs-tok noncode" data-pos="95"> number</span><span class="gs-tok noncode" data-pos="96">,</span><span class="gs-tok noncode" data-pos="97"> larger</span><span class="gs-tok noncode" data-pos="98"> number</span><span class="gs-tok noncode" data-pos="99">)</span><span class="gs-tok noncode" data-pos="100"> in</span><span class="gs-tok noncode" data-pos="101"> Python</span><span class="gs-tok noncode" data-pos="102">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="103">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="104">assistant</span><span class="gs-tok noncode" data-pos="105">&lt;|end_header_id|&gt;</span><span class="gs-tok scoped" data-pos="106">↵
+↵
+</span><span class="gs-tok scoped" data-pos="107">&lt;</span><span class="gs-tok scoped" data-pos="108">code</span><span class="gs-tok scoped" data-pos="109">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="110">def</span><span class="gs-tok scoped" data-pos="111"> find</span><span class="gs-tok scoped" data-pos="112">_close</span><span class="gs-tok scoped" data-pos="113">st</span><span class="gs-tok scoped" data-pos="114">_elements</span><span class="gs-tok scoped" data-pos="115">(numbers</span><span class="gs-tok scoped" data-pos="116">):↵
+</span><span class="gs-tok scoped" data-pos="117">   </span><span class="gs-tok scoped" data-pos="118"> numbers</span><span class="gs-tok scoped" data-pos="119">.sort</span><span class="gs-tok scoped" data-pos="120">()↵
+</span><span class="gs-tok scoped" data-pos="121">   </span><span class="gs-tok scoped bi" data-pos="122"> min</span><span class="gs-tok scoped" data-pos="123">_diff</span><span class="gs-tok scoped" data-pos="124"> =</span><span class="gs-tok scoped bi" data-pos="125"> float</span><span class="gs-tok scoped" data-pos="126">(&#x27;</span><span class="gs-tok scoped" data-pos="127">inf</span><span class="gs-tok scoped" data-pos="128">&#x27;)↵
+</span><span class="gs-tok scoped" data-pos="129">   </span><span class="gs-tok scoped" data-pos="130"> closest</span><span class="gs-tok scoped" data-pos="131">_pair</span><span class="gs-tok scoped" data-pos="132"> =</span><span class="gs-tok scoped cn" data-pos="133"> None</span><span class="gs-tok scoped" data-pos="134">↵
+</span><span class="gs-tok scoped" data-pos="135">   </span><span class="gs-tok scoped kw" data-pos="136"> for</span><span class="gs-tok scoped" data-pos="137"> i</span><span class="gs-tok scoped kw" data-pos="138"> in</span><span class="gs-tok scoped bi" data-pos="139"> range</span><span class="gs-tok scoped" data-pos="140">(len</span><span class="gs-tok scoped" data-pos="141">(numbers</span><span class="gs-tok scoped" data-pos="142">)</span><span class="gs-tok scoped" data-pos="143"> -</span><span class="gs-tok scoped" data-pos="144"> </span><span class="gs-tok scoped num" data-pos="145">1</span><span class="gs-tok scoped" data-pos="146">):↵
+</span><span class="gs-tok scoped" data-pos="147">       </span><span class="gs-tok scoped" data-pos="148"> diff</span><span class="gs-tok scoped" data-pos="149"> =</span><span class="gs-tok scoped" data-pos="150"> numbers</span><span class="gs-tok scoped" data-pos="151">[i</span><span class="gs-tok scoped" data-pos="152"> +</span><span class="gs-tok scoped" data-pos="153"> </span><span class="gs-tok scoped num" data-pos="154">1</span><span class="gs-tok scoped" data-pos="155">]</span><span class="gs-tok scoped" data-pos="156"> -</span><span class="gs-tok scoped" data-pos="157"> numbers</span><span class="gs-tok scoped" data-pos="158">[i</span><span class="gs-tok scoped" data-pos="159">]↵
+</span><span class="gs-tok scoped" data-pos="160">       </span><span class="gs-tok scoped kw" data-pos="161"> if</span><span class="gs-tok scoped" data-pos="162"> diff</span><span class="gs-tok scoped" data-pos="163"> &lt;</span><span class="gs-tok scoped bi" data-pos="164"> min</span><span class="gs-tok scoped" data-pos="165">_diff</span><span class="gs-tok scoped" data-pos="166">:↵
+</span><span class="gs-tok scoped" data-pos="167">           </span><span class="gs-tok scoped bi" data-pos="168"> min</span><span class="gs-tok scoped" data-pos="169">_diff</span><span class="gs-tok scoped" data-pos="170"> =</span><span class="gs-tok scoped" data-pos="171"> diff</span><span class="gs-tok scoped" data-pos="172">↵
+</span><span class="gs-tok scoped" data-pos="173">           </span><span class="gs-tok scoped" data-pos="174"> closest</span><span class="gs-tok scoped" data-pos="175">_pair</span><span class="gs-tok scoped" data-pos="176"> =</span><span class="gs-tok scoped" data-pos="177"> (</span><span class="gs-tok scoped" data-pos="178">numbers</span><span class="gs-tok scoped" data-pos="179">[i</span><span class="gs-tok scoped" data-pos="180">],</span><span class="gs-tok scoped" data-pos="181"> numbers</span><span class="gs-tok scoped" data-pos="182">[i</span><span class="gs-tok scoped" data-pos="183"> +</span><span class="gs-tok scoped" data-pos="184"> </span><span class="gs-tok scoped num" data-pos="185">1</span><span class="gs-tok scoped" data-pos="186">])↵
+</span><span class="gs-tok scoped" data-pos="187">   </span><span class="gs-tok scoped kw" data-pos="188"> return</span><span class="gs-tok scoped" data-pos="189"> closest</span><span class="gs-tok scoped" data-pos="190">_pair</span><span class="gs-tok scoped" data-pos="191">↵
+</span><span class="gs-tok scoped" data-pos="192">&lt;/</span><span class="gs-tok scoped" data-pos="193">code</span><span class="gs-tok scoped" data-pos="194">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_da26ffd3";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 2, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 3, "text": "system", "scoped": false, "readout": ""}, {"pos": 4, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 5, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 6, "text": "Cut", "scoped": false, "readout": ""}, {"pos": 7, "text": "ting", "scoped": false, "readout": ""}, {"pos": 8, "text": " Knowledge", "scoped": false, "readout": ""}, {"pos": 9, "text": " Date", "scoped": false, "readout": ""}, {"pos": 10, "text": ":", "scoped": false, "readout": ""}, {"pos": 11, "text": " December", "scoped": false, "readout": ""}, {"pos": 12, "text": " ", "scoped": false, "readout": ""}, {"pos": 13, "text": "202", "scoped": false, "readout": ""}, {"pos": 14, "text": "3", "scoped": false, "readout": ""}, {"pos": 15, "text": "\n", "scoped": false, "readout": ""}, {"pos": 16, "text": "Today", "scoped": false, "readout": ""}, {"pos": 17, "text": " Date", "scoped": false, "readout": ""}, {"pos": 18, "text": ":", "scoped": false, "readout": ""}, {"pos": 19, "text": " ", "scoped": false, "readout": ""}, {"pos": 20, "text": "26", "scoped": false, "readout": ""}, {"pos": 21, "text": " Jul", "scoped": false, "readout": ""}, {"pos": 22, "text": " ", "scoped": false, "readout": ""}, {"pos": 23, "text": "202", "scoped": false, "readout": ""}, {"pos": 24, "text": "4", "scoped": false, "readout": ""}, {"pos": 25, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 26, "text": "You", "scoped": false, "readout": ""}, {"pos": 27, "text": " are", "scoped": false, "readout": ""}, {"pos": 28, "text": " a", "scoped": false, "readout": ""}, {"pos": 29, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 30, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 31, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 32, "text": " in", "scoped": false, "readout": ""}, {"pos": 33, "text": " programming", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": " Always", "scoped": false, "readout": ""}, {"pos": 36, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 37, "text": " your", "scoped": false, "readout": ""}, {"pos": 38, "text": " code", "scoped": false, "readout": ""}, {"pos": 39, "text": " inside", "scoped": false, "readout": ""}, {"pos": 40, "text": " <", "scoped": false, "readout": ""}, {"pos": 41, "text": "code", "scoped": false, "readout": ""}, {"pos": 42, "text": "></", "scoped": false, "readout": ""}, {"pos": 43, "text": "code", "scoped": false, "readout": ""}, {"pos": 44, "text": ">", "scoped": false, "readout": ""}, {"pos": 45, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 46, "text": ".", "scoped": false, "readout": ""}, {"pos": 47, "text": " Just", "scoped": false, "readout": ""}, {"pos": 48, "text": " the", "scoped": false, "readout": ""}, {"pos": 49, "text": " code", "scoped": false, "readout": ""}, {"pos": 50, "text": ",", "scoped": false, "readout": ""}, {"pos": 51, "text": " no", "scoped": false, "readout": ""}, {"pos": 52, "text": " need", "scoped": false, "readout": ""}, {"pos": 53, "text": " to", "scoped": false, "readout": ""}, {"pos": 54, "text": " comment", "scoped": false, "readout": ""}, {"pos": 55, "text": " or", "scoped": false, "readout": ""}, {"pos": 56, "text": " explain", "scoped": false, "readout": ""}, {"pos": 57, "text": ".", "scoped": false, "readout": ""}, {"pos": 58, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 59, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 60, "text": "user", "scoped": false, "readout": ""}, {"pos": 61, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 62, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 63, "text": "From", "scoped": false, "readout": ""}, {"pos": 64, "text": " a", "scoped": false, "readout": ""}, {"pos": 65, "text": " supplied", "scoped": false, "readout": ""}, {"pos": 66, "text": " list", "scoped": false, "readout": ""}, {"pos": 67, "text": " of", "scoped": false, "readout": ""}, {"pos": 68, "text": " numbers", "scoped": false, "readout": ""}, {"pos": 69, "text": " (", "scoped": false, "readout": ""}, {"pos": 70, "text": "of", "scoped": false, "readout": ""}, {"pos": 71, "text": " length", "scoped": false, "readout": ""}, {"pos": 72, "text": " at", "scoped": false, "readout": ""}, {"pos": 73, "text": " least", "scoped": false, "readout": ""}, {"pos": 74, "text": " two", "scoped": false, "readout": ""}, {"pos": 75, "text": ")", "scoped": false, "readout": ""}, {"pos": 76, "text": " select", "scoped": false, "readout": ""}, {"pos": 77, "text": " and", "scoped": false, "readout": ""}, {"pos": 78, "text": " return", "scoped": false, "readout": ""}, {"pos": 79, "text": " two", "scoped": false, "readout": ""}, {"pos": 80, "text": " that", "scoped": false, "readout": ""}, {"pos": 81, "text": " are", "scoped": false, "readout": ""}, {"pos": 82, "text": " the", "scoped": false, "readout": ""}, {"pos": 83, "text": " closest", "scoped": false, "readout": ""}, {"pos": 84, "text": " to", "scoped": false, "readout": ""}, {"pos": 85, "text": " each", "scoped": false, "readout": ""}, {"pos": 86, "text": " other", "scoped": false, "readout": ""}, {"pos": 87, "text": " and", "scoped": false, "readout": ""}, {"pos": 88, "text": " return", "scoped": false, "readout": ""}, {"pos": 89, "text": " them", "scoped": false, "readout": ""}, {"pos": 90, "text": " in", "scoped": false, "readout": ""}, {"pos": 91, "text": " order", "scoped": false, "readout": ""}, {"pos": 92, "text": " (", "scoped": false, "readout": ""}, {"pos": 93, "text": "small", "scoped": false, "readout": ""}, {"pos": 94, "text": "er", "scoped": false, "readout": ""}, {"pos": 95, "text": " number", "scoped": false, "readout": ""}, {"pos": 96, "text": ",", "scoped": false, "readout": ""}, {"pos": 97, "text": " larger", "scoped": false, "readout": ""}, {"pos": 98, "text": " number", "scoped": false, "readout": ""}, {"pos": 99, "text": ")", "scoped": false, "readout": ""}, {"pos": 100, "text": " in", "scoped": false, "readout": ""}, {"pos": 101, "text": " Python", "scoped": false, "readout": ""}, {"pos": 102, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 103, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 104, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 105, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 106, "text": "\n\n", "scoped": true, "readout": "```python\ndef solve():\n    code = \"\"\"\n    s = input()\n    print(f\"\"\"\n    { \n    print(\"```python\ndef solve():\n    code = \"\"\"\n    s = input()\n    print(f\"\"\"\n```python\ndef solve():\n    code = \"\"\"\ns = input()\nprint(f\"\"\"\n```python"}, {"pos": 107, "text": "<", "scoped": true, "readout": "I'm not writing code yet, provide the code snippet."}, {"pos": 108, "text": "code", "scoped": true, "readout": "```python\nprint(\"def solve():\\nprint(\\\"```python\\nimport os\\nprint('print(\\\"```python\\nimport sys\\nprint(\\\"```python\\nprint(\\\"def solve():\\\\nprint(\\\\\\\"```python\\nprint(\\\"import sys\\\\nprint(\\\\\\\"```python\\nprint(\\\"def"}, {"pos": 109, "text": ">\n", "scoped": true, "readout": "```python\ndef find_min(numbers):\n    return min(numbers)\n```"}, {"pos": 110, "text": "def", "scoped": true, "readout": "I'm finding the two closest numbers in a list and returning them in ascending order. \n\nExample: `def closest_numbers(nums): return sorted(nums)[1]` \nNo, that's incorrect. \n\nHere is the correct code:\n \n`def closest_numbers(nums): \n    nums.sort() \n    return min"}, {"pos": 111, "text": " find", "scoped": true, "readout": "I don't have two numbers to compare. Please provide two numbers. I will find the two closest numbers in the list and tell you which two numbers are closest to each other."}, {"pos": 112, "text": "_close", "scoped": true, "readout": "I don't have a line of code to compare. I can find the closest pair of numbers in a list if you give me two numbers."}, {"pos": 113, "text": "st", "scoped": true, "readout": "I don't have two numbers to compare. Please provide two numbers."}, {"pos": 114, "text": "_elements", "scoped": true, "readout": "I don't have two numbers to compare. Please provide two numbers."}, {"pos": 115, "text": "(numbers", "scoped": true, "readout": "I'm finding the two closest numbers in a list. \n\nExample list: [1, 3, 5, 7, 9, 10, 12, 15, 20, 30]\nSorted list: [1, 3, 5, 7, 9,"}, {"pos": 116, "text": "):\n", "scoped": true, "readout": "I'll find the minimum of two numbers and return them in ascending order.\n\n```python\ndef min_two(a, b):\n    return sorted([a, b])\n```"}, {"pos": 117, "text": "   ", "scoped": true, "readout": "I'm finding the closest pair of numbers. \n\nExample: `sorted([1, 5, 3, 8, 2])` \nOutput: (1, 2)"}, {"pos": 118, "text": " numbers", "scoped": true, "readout": "I'm sorting the list to find the two closest numbers."}, {"pos": 119, "text": ".sort", "scoped": true, "readout": "I'm sorting the list in ascending order."}, {"pos": 120, "text": "()\n", "scoped": true, "readout": "I'm not given two numbers, but if I had two numbers, I'd find the two closest numbers and sort them. \n\nExample: 1, 5, 3, 8, 2 \nSorted: 1, 2, 3, 5, 8 \nAnswer:"}, {"pos": 121, "text": "   ", "scoped": true, "readout": "I'm finding the minimum difference between two consecutive numbers. \n\n```python\nmin_diff = float('inf')\nfor i in range(len(sorted_pairs)):\n    diff = sorted_pairs[i+1][0] - sorted_pairs[i][0]\n    if diff < min_diff:\n        min_diff = diff\n        min"}, {"pos": 122, "text": " min", "scoped": true, "readout": "I don't have the code, but I can find the smallest difference between two numbers."}, {"pos": 123, "text": "_diff", "scoped": true, "readout": "I don't have a line of code to compare, can you provide two numbers to find the smallest difference between them?"}, {"pos": 124, "text": " =", "scoped": true, "readout": "I don't have the code yet. Provide two numbers to find the smallest difference."}, {"pos": 125, "text": " float", "scoped": true, "readout": "I don't have a line of code to compare, provide the code and I'll find the minimum difference."}, {"pos": 126, "text": "('", "scoped": true, "readout": "I don't have a line of code to compare to, so it's infinite. Provide a number."}, {"pos": 127, "text": "inf", "scoped": true, "readout": "I'm not given a code snippet, so I don't know the minimum difference. Provide two numbers or a pair of numbers to find the minimum difference."}, {"pos": 128, "text": "')\n", "scoped": true, "readout": "I don't have the code, what is the line of code with the smallest difference between two numbers?"}, {"pos": 129, "text": "   ", "scoped": true, "readout": "I don't have the code. Please provide two numbers with the smallest difference."}, {"pos": 130, "text": " closest", "scoped": true, "readout": "I don't have the information to provide the two closest numbers. \n\nTo answer this question, I would need two numbers. \n\nIf I had two numbers, I would find the two closest numbers by comparing each pair of numbers and finding the pair with the smallest difference. \n\nFor example, if I had the numbers"}, {"pos": 131, "text": "_pair", "scoped": true, "readout": "I don't have the lines of code to compare. Please provide two numbers."}, {"pos": 132, "text": " =", "scoped": true, "readout": "I don't have the lines to compare, can you provide two numbers or values that are next to each other in order."}, {"pos": 133, "text": " None", "scoped": true, "readout": "I don't have a line of code to compare, can you provide two lines with the smallest difference, I can tell you which one is the smallest."}, {"pos": 134, "text": "\n", "scoped": true, "readout": "I don't have two lines to compare, please provide two numbers or values."}, {"pos": 135, "text": "   ", "scoped": true, "readout": "I'm finding the minimum difference between two consecutive numbers in a sorted list by comparing each pair of adjacent numbers. \n\nExample: `min((i, i+1) for i in range(len(nums)-1) if nums[i+1] - nums[i] == min([nums[j+1] - nums"}, {"pos": 136, "text": " for", "scoped": true, "readout": "I'm finding the minimum difference between two consecutive numbers. \n\nExample: `sorted_numbers = [1, 2, 3, 4, 5, 6]; min_diff = min(b - a for a, b in zip(sorted_numbers, sorted_numbers[1:]) for i in range(len(sorted"}, {"pos": 137, "text": " i", "scoped": true, "readout": "I'm finding the minimum difference between two consecutive numbers. \n\n```python\nsorted_numbers = sorted(numbers)\nmin_diff = min(b - a for a, b in zip(sorted_numbers, sorted_numbers[1:]))\nindex = sorted_numbers.index(min_diff)\nans = (sorted_numbers[index], sorted_numbers[index+1"}, {"pos": 138, "text": " in", "scoped": true, "readout": "I'm finding the minimum gap between two consecutive numbers."}, {"pos": 139, "text": " range", "scoped": true, "readout": "Finding the minimum difference between two consecutive numbers."}, {"pos": 140, "text": "(len", "scoped": true, "readout": "Comparing adjacent elements."}, {"pos": 141, "text": "(numbers", "scoped": true, "readout": "I'm finding the minimum difference between two consecutive numbers."}, {"pos": 142, "text": ")", "scoped": true, "readout": "I'm examining adjacent elements."}, {"pos": 143, "text": " -", "scoped": true, "readout": "I'm comparing adjacent elements."}, {"pos": 144, "text": " ", "scoped": true, "readout": "I'm calculating the difference between two numbers to find the smallest difference. \n\nExample: `min_diff = min(abs(b - a) for a, b in sorted((a, b) for a, b in sorted([1, 5, 2, 8, 3], key = lambda x"}, {"pos": 145, "text": "1", "scoped": true, "readout": "I'm finding the minimum difference between two adjacent numbers."}, {"pos": 146, "text": "):\n", "scoped": true, "readout": "I'm comparing adjacent pairs to find the minimum difference. \n\n`if i == 0 or min(abs(b[i-1:i+1]) == (b[i-1:i+1])): \n   print(b[i-1:i+1])` \n`min((x,y) for i in range"}, {"pos": 147, "text": "       ", "scoped": true, "readout": "I'm calculating the difference between adjacent elements to find the minimum difference. \n\n`diff = abs(b - a); min_diff = min(min_diff, diff)` \n`min_diff = min(abs(b - a), min_diff)` \n`diff = b - a; min_diff = min(diff, min_diff)`"}, {"pos": 148, "text": " diff", "scoped": true, "readout": "I'm calculating the difference. \n\ndiff = abs(b - a) \ndiff2 = abs(y - x) \nmin_diff = min(abs(j - i) for i, j in zip(sorted([b - a, y - x]), [b - a, y - x]) for k in [abs"}, {"pos": 149, "text": " =", "scoped": true, "readout": "I'm calculating the difference between two consecutive numbers. \n\n`diff = abs(num2 - num1)`\n\n`diff = num2 - num1 = 3 - 2 = 1` \n\nSo, `diff = 1`."}, {"pos": 150, "text": " numbers", "scoped": true, "readout": "Comparing adjacent elements."}, {"pos": 151, "text": "[i", "scoped": true, "readout": "I'm calculating the difference between two consecutive numbers."}, {"pos": 152, "text": " +", "scoped": true, "readout": "Comparing adjacent elements."}, {"pos": 153, "text": " ", "scoped": true, "readout": "```python\ndef find_max(nums):\n    return max(nums)\n```"}, {"pos": 154, "text": "1", "scoped": true, "readout": "I'm calculating the difference between two adjacent numbers."}, {"pos": 155, "text": "]", "scoped": true, "readout": "I'm not seeing two numbers to compare. What are the numbers?"}, {"pos": 156, "text": " -", "scoped": true, "readout": "I'm not given two numbers to compare, so I'll assume you're asking about the difference between two consecutive numbers. \n\nThe difference is the absolute difference between them: `min(num1, num2) - max(num1, num2)`."}, {"pos": 157, "text": " numbers", "scoped": true, "readout": "I'm finding the difference between consecutive elements."}, {"pos": 158, "text": "[i", "scoped": true, "readout": "I'm calculating the difference."}, {"pos": 159, "text": "]\n", "scoped": true, "readout": "Calculating the difference. \n\nDifference = 0.01 \n0.01 < 1 \n1 - 0.01 = 0.99 \n0.99 > 0.01 \n0.01 = 0.01 \n0.01 < 0.99 \n0.99 -"}, {"pos": 160, "text": "       ", "scoped": true, "readout": "I don't have a line of code to compare. What's the code?"}, {"pos": 161, "text": " if", "scoped": true, "readout": "I'd be happy to help, but I don't see a line of code. Please provide the code with the smallest difference, I'll calculate it: `diff = min(abs(b - a) for a, b in sorted((b - a for a, b in enumerate(sorted([x for x in ["}, {"pos": 162, "text": " diff", "scoped": true, "readout": "I'm calculating the difference. \n\n Difference = 0.0001 \n(0.0001 < previous difference) \nNew difference = 0.0001 \nNew difference = 0.0001 - (previous difference) \nNew difference = 0.0001 - 0.0002"}, {"pos": 163, "text": " <", "scoped": true, "readout": "I don't have a line of code to compare. What's the difference?"}, {"pos": 164, "text": " min", "scoped": true, "readout": "I'm finding the minimum difference. \n\ndiff = min(abs(b[1:]), key=lambda x:x[0][1] - x[0][0]) \ndiff = min(enumerate(b), key=lambda x: x[1]) \ndiff = min(b) \nb = [6, 1"}, {"pos": 165, "text": "_diff", "scoped": true, "readout": "I don't see a line of code. What's the code?"}, {"pos": 166, "text": ":\n", "scoped": true, "readout": "I don't have a line to compare yet. What's the line and the difference?"}, {"pos": 167, "text": "           ", "scoped": true, "readout": "I don't have a line of code to compare. \n\nPlease provide two numbers, I can find the smallest difference. \n\nExample: `1, 3` \n Smallest difference is: `3 - 1 = 2` and `1, 2` \n Smallest difference is: `1"}, {"pos": 168, "text": " min", "scoped": true, "readout": "I don't see any code. I'll find the line with the smallest difference."}, {"pos": 169, "text": "_diff", "scoped": true, "readout": "I don't see a line of code. What's the smallest difference you've found?"}, {"pos": 170, "text": " =", "scoped": true, "readout": "I don't know, you haven't given me a line of code yet. \n\ndifference = float('inf')  \ndifference = abs(difference)  \nif difference > abs(d - (c)):  \n    difference = (d - (c))  \nd = difference  \n \ndifference = d  \nd = abs"}, {"pos": 171, "text": " diff", "scoped": true, "readout": "I'm not sure, there is no code. What is the code?"}, {"pos": 172, "text": "\n", "scoped": true, "readout": "I'm not sure yet, but I'll find the smallest difference. \n\n`if diff == min_diff: \n    min_diff = diff \n    min_index = i`\n\nis the current smallest gap, I'll check: \n\n`if abs(pair[1] - pair[0]) == 1:"}, {"pos": 173, "text": "           ", "scoped": true, "readout": "I don't have the code yet. Please provide the code with two consecutive values, I'll choose the smallest pair."}, {"pos": 174, "text": " closest", "scoped": true, "readout": "I don't know yet. The code isn't provided."}, {"pos": 175, "text": "_pair", "scoped": true, "readout": "I'll provide the answer as a pair of values. \n\n`line = sorted([min([x, y] if x < y else [y, x] for x, y in [[i, i+1] for i in sorted([x, y] if x < y else [y, x"}, {"pos": 176, "text": " =", "scoped": true, "readout": "I'm comparing two numbers. \n\nExample: `return [x, x+1] = [a, b] = sorted([a, b]) = [a, b] = [min(a, b), max(a, b)] = [x, x+1] = [a, b]"}, {"pos": 177, "text": " (", "scoped": true, "readout": "I'll provide the two numbers in order. \n\nLine: `return min_num, max_num = (x, y) if x <= y else (y, x)`\n\nAnswer: Returning the two numbers in ascending order. \n\nExample: `x = 3`, `y = 5` \nResult"}, {"pos": 178, "text": "numbers", "scoped": true, "readout": "I'm identifying two consecutive numbers. \n\nnum1 = arr[i], num2 = arr[i+1] \nif num1 < num2: \n    return (num1, num2) \nelse: \n    return (num2, num1) \n\nSo, num1 = 1, num"}, {"pos": 179, "text": "[i", "scoped": true, "readout": "I'm not given two numbers to compare, but if I had two numbers, I'd say: \nnum1, num2 = 2, 3 \nI'm finding the two numbers in order: 2, 3. The numbers are 2 and 3. \nSo the answer is:"}, {"pos": 180, "text": "],", "scoped": true, "readout": "I'm identifying two numbers in ascending order."}, {"pos": 181, "text": " numbers", "scoped": true, "readout": "Sorting the list to find the minimum difference between two consecutive elements."}, {"pos": 182, "text": "[i", "scoped": true, "readout": "I'm referencing two consecutive values. \n\nFor example: `x = 1; y = x, x+1` would be `x, x+1` = `1, 2` so the answer is: \n`x, x+1` = `1,2` \nSo the"}, {"pos": 183, "text": " +", "scoped": true, "readout": "I'm finding the minimum gap between two consecutive numbers."}, {"pos": 184, "text": " ", "scoped": true, "readout": "I'll return two values in ascending order. \n\n```python\ndef find_min_max(nums):\n    return sorted(nums)[0:2] if len(nums) > 1 else None\n```"}, {"pos": 185, "text": "1", "scoped": true, "readout": "I'm not seeing two numbers to identify the line. Can I help with that?"}, {"pos": 186, "text": "])\n", "scoped": true, "readout": "I'll provide the smallest difference pair once I see the code."}, {"pos": 187, "text": "   ", "scoped": true, "readout": "I'll find the minimum pair and return it. \n\n```python\npair = sorted(pair)\nreturn min(pair), max(pair)\n```"}, {"pos": 188, "text": " return", "scoped": true, "readout": "I'll return the values in order: `[min_val, max_val] = sorted([min_val, max_val]) \n=> return [min_val, max_val]`. Example: `[1,2]`. \n\nExample output: **[1, 2]**"}, {"pos": 189, "text": " closest", "scoped": true, "readout": "I'm finding the minimum difference between two numbers in a list. \n\n```python\nmin_diff = min(b for a in sorted(pair) for pair in sorted([x for x in enumerate(sorted([m, n] for m, n in enumerate(sorted([x for x in enumerate([y for y in sorted"}, {"pos": 190, "text": "_pair", "scoped": true, "readout": "I'll provide the two values once you give me the line of code."}, {"pos": 191, "text": "\n", "scoped": true, "readout": "I'll return the minimum value from a list of numbers after sorting them. \n\n```python\ndef min_pair(nums):\n    return min((a, b) for a, b in [(x, y) for x, y in zip(sorted(nums), sorted(nums)[1:]) if x!= y] or ["}, {"pos": 192, "text": "</", "scoped": true, "readout": "```python\ndef find_min(nums):\n    nums.sort()\n    return nums[0]\n```"}, {"pos": 193, "text": "code", "scoped": true, "readout": "```python\ndef solve():\n    print(\"def solve():\\nprint(\\\"def solve():\\\\nprint('def solve():\\\\nprint(\\\"\\\\ndef solve():\\\\nprint('def solve():\\\\nprint(\\\"\\\\\\\\ndef solve():\\\\nprint('def solve():\\\\nprint(\\\\\\\\\\\\\\\""}, {"pos": 194, "text": ">", "scoped": true, "readout": "```python\ndef find_min(nums):\n    return min(nums)\n```"}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

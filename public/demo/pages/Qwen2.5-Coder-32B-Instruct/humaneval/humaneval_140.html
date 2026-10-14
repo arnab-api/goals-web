@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>140 fix spaces  ·  Qwen2.5-Coder-32B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_c730a7f2">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">140 fix spaces  ·  Qwen2.5-Coder-32B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="1">system</span><span class="gs-tok noncode" data-pos="2">↵
+</span><span class="gs-tok noncode" data-pos="3">You</span><span class="gs-tok noncode" data-pos="4"> are</span><span class="gs-tok noncode" data-pos="5"> a</span><span class="gs-tok noncode" data-pos="6"> helpful</span><span class="gs-tok noncode" data-pos="7"> assistant</span><span class="gs-tok noncode" data-pos="8"> proficient</span><span class="gs-tok noncode" data-pos="9"> in</span><span class="gs-tok noncode" data-pos="10"> programming</span><span class="gs-tok noncode" data-pos="11">.</span><span class="gs-tok noncode" data-pos="12"> Always</span><span class="gs-tok noncode" data-pos="13"> wrap</span><span class="gs-tok noncode" data-pos="14"> your</span><span class="gs-tok noncode" data-pos="15"> code</span><span class="gs-tok noncode" data-pos="16"> inside</span><span class="gs-tok noncode" data-pos="17"> &lt;</span><span class="gs-tok noncode" data-pos="18">code</span><span class="gs-tok noncode" data-pos="19">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="20">code</span><span class="gs-tok noncode" data-pos="21">&gt;</span><span class="gs-tok noncode" data-pos="22"> blocks</span><span class="gs-tok noncode" data-pos="23">.</span><span class="gs-tok noncode" data-pos="24"> Just</span><span class="gs-tok noncode" data-pos="25"> the</span><span class="gs-tok noncode" data-pos="26"> code</span><span class="gs-tok noncode" data-pos="27">,</span><span class="gs-tok noncode" data-pos="28"> no</span><span class="gs-tok noncode" data-pos="29"> need</span><span class="gs-tok noncode" data-pos="30"> to</span><span class="gs-tok noncode" data-pos="31"> comment</span><span class="gs-tok noncode" data-pos="32"> or</span><span class="gs-tok noncode" data-pos="33"> explain</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="36">↵
+</span><span class="gs-tok noncode" data-pos="37">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="38">user</span><span class="gs-tok noncode" data-pos="39">↵
+</span><span class="gs-tok noncode" data-pos="40">Given</span><span class="gs-tok noncode" data-pos="41"> a</span><span class="gs-tok noncode" data-pos="42"> string</span><span class="gs-tok noncode" data-pos="43"> text</span><span class="gs-tok noncode" data-pos="44">,</span><span class="gs-tok noncode" data-pos="45"> replace</span><span class="gs-tok noncode" data-pos="46"> all</span><span class="gs-tok noncode" data-pos="47"> spaces</span><span class="gs-tok noncode" data-pos="48"> in</span><span class="gs-tok noncode" data-pos="49"> it</span><span class="gs-tok noncode" data-pos="50"> with</span><span class="gs-tok noncode" data-pos="51"> underscores</span><span class="gs-tok noncode" data-pos="52">,</span><span class="gs-tok noncode" data-pos="53"> and</span><span class="gs-tok noncode" data-pos="54"> if</span><span class="gs-tok noncode" data-pos="55"> a</span><span class="gs-tok noncode" data-pos="56"> string</span><span class="gs-tok noncode" data-pos="57"> has</span><span class="gs-tok noncode" data-pos="58"> more</span><span class="gs-tok noncode" data-pos="59"> than</span><span class="gs-tok noncode" data-pos="60"> </span><span class="gs-tok noncode" data-pos="61">2</span><span class="gs-tok noncode" data-pos="62"> consecutive</span><span class="gs-tok noncode" data-pos="63"> spaces</span><span class="gs-tok noncode" data-pos="64">,</span><span class="gs-tok noncode" data-pos="65"> then</span><span class="gs-tok noncode" data-pos="66"> replace</span><span class="gs-tok noncode" data-pos="67"> all</span><span class="gs-tok noncode" data-pos="68"> consecutive</span><span class="gs-tok noncode" data-pos="69"> spaces</span><span class="gs-tok noncode" data-pos="70"> with</span><span class="gs-tok noncode" data-pos="71"> -</span><span class="gs-tok noncode" data-pos="72"> in</span><span class="gs-tok noncode" data-pos="73"> Python</span><span class="gs-tok noncode" data-pos="74">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="75">↵
+</span><span class="gs-tok noncode" data-pos="76">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="77">assistant</span><span class="gs-tok scoped" data-pos="78">↵
+</span><span class="gs-tok scoped" data-pos="79">&lt;</span><span class="gs-tok scoped" data-pos="80">code</span><span class="gs-tok scoped" data-pos="81">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="82">def</span><span class="gs-tok scoped" data-pos="83"> fix</span><span class="gs-tok scoped" data-pos="84">_spaces</span><span class="gs-tok scoped" data-pos="85">(</span><span class="gs-tok scoped" data-pos="86">phrase</span><span class="gs-tok scoped" data-pos="87">):↵
+</span><span class="gs-tok scoped" data-pos="88">   </span><span class="gs-tok scoped" data-pos="89"> result</span><span class="gs-tok scoped" data-pos="90"> =</span><span class="gs-tok scoped" data-pos="91"> []↵
+</span><span class="gs-tok scoped" data-pos="92">   </span><span class="gs-tok scoped" data-pos="93"> space</span><span class="gs-tok scoped" data-pos="94">_count</span><span class="gs-tok scoped" data-pos="95"> =</span><span class="gs-tok scoped" data-pos="96"> </span><span class="gs-tok scoped num" data-pos="97">0</span><span class="gs-tok scoped" data-pos="98">↵
+</span><span class="gs-tok scoped" data-pos="99">   </span><span class="gs-tok scoped kw" data-pos="100"> for</span><span class="gs-tok scoped" data-pos="101"> char</span><span class="gs-tok scoped kw" data-pos="102"> in</span><span class="gs-tok scoped" data-pos="103"> phrase</span><span class="gs-tok scoped" data-pos="104">:↵
+</span><span class="gs-tok scoped" data-pos="105">       </span><span class="gs-tok scoped kw" data-pos="106"> if</span><span class="gs-tok scoped" data-pos="107"> char</span><span class="gs-tok scoped" data-pos="108"> ==</span><span class="gs-tok scoped" data-pos="109"> &#x27;</span><span class="gs-tok scoped" data-pos="110"> &#x27;</span><span class="gs-tok scoped" data-pos="111">:↵
+</span><span class="gs-tok scoped" data-pos="112">           </span><span class="gs-tok scoped" data-pos="113"> space</span><span class="gs-tok scoped" data-pos="114">_count</span><span class="gs-tok scoped" data-pos="115"> +=</span><span class="gs-tok scoped" data-pos="116"> </span><span class="gs-tok scoped num" data-pos="117">1</span><span class="gs-tok scoped" data-pos="118">↵
+</span><span class="gs-tok scoped" data-pos="119">       </span><span class="gs-tok scoped kw" data-pos="120"> else</span><span class="gs-tok scoped" data-pos="121">:↵
+</span><span class="gs-tok scoped" data-pos="122">           </span><span class="gs-tok scoped kw" data-pos="123"> if</span><span class="gs-tok scoped" data-pos="124"> space</span><span class="gs-tok scoped" data-pos="125">_count</span><span class="gs-tok scoped" data-pos="126"> &gt;</span><span class="gs-tok scoped" data-pos="127"> </span><span class="gs-tok scoped num" data-pos="128">2</span><span class="gs-tok scoped" data-pos="129">:↵
+</span><span class="gs-tok scoped" data-pos="130">               </span><span class="gs-tok scoped" data-pos="131"> result</span><span class="gs-tok scoped" data-pos="132">.append</span><span class="gs-tok scoped" data-pos="133">(&#x27;-</span><span class="gs-tok scoped" data-pos="134">&#x27;)↵
+</span><span class="gs-tok scoped" data-pos="135">           </span><span class="gs-tok scoped kw" data-pos="136"> elif</span><span class="gs-tok scoped" data-pos="137"> space</span><span class="gs-tok scoped" data-pos="138">_count</span><span class="gs-tok scoped" data-pos="139"> &gt;</span><span class="gs-tok scoped" data-pos="140"> </span><span class="gs-tok scoped num" data-pos="141">0</span><span class="gs-tok scoped" data-pos="142">:↵
+</span><span class="gs-tok scoped" data-pos="143">               </span><span class="gs-tok scoped" data-pos="144"> result</span><span class="gs-tok scoped" data-pos="145">.extend</span><span class="gs-tok scoped" data-pos="146">([&#x27;</span><span class="gs-tok scoped" data-pos="147">_</span><span class="gs-tok scoped" data-pos="148">&#x27;]</span><span class="gs-tok scoped" data-pos="149"> *</span><span class="gs-tok scoped" data-pos="150"> space</span><span class="gs-tok scoped" data-pos="151">_count</span><span class="gs-tok scoped" data-pos="152">)↵
+</span><span class="gs-tok scoped" data-pos="153">           </span><span class="gs-tok scoped" data-pos="154"> result</span><span class="gs-tok scoped" data-pos="155">.append</span><span class="gs-tok scoped" data-pos="156">(char</span><span class="gs-tok scoped" data-pos="157">)↵
+</span><span class="gs-tok scoped" data-pos="158">           </span><span class="gs-tok scoped" data-pos="159"> space</span><span class="gs-tok scoped" data-pos="160">_count</span><span class="gs-tok scoped" data-pos="161"> =</span><span class="gs-tok scoped" data-pos="162"> </span><span class="gs-tok scoped num" data-pos="163">0</span><span class="gs-tok scoped" data-pos="164">↵
+</span><span class="gs-tok scoped" data-pos="165">   </span><span class="gs-tok scoped kw" data-pos="166"> if</span><span class="gs-tok scoped" data-pos="167"> space</span><span class="gs-tok scoped" data-pos="168">_count</span><span class="gs-tok scoped" data-pos="169"> &gt;</span><span class="gs-tok scoped" data-pos="170"> </span><span class="gs-tok scoped num" data-pos="171">2</span><span class="gs-tok scoped" data-pos="172">:↵
+</span><span class="gs-tok scoped" data-pos="173">       </span><span class="gs-tok scoped" data-pos="174"> result</span><span class="gs-tok scoped" data-pos="175">.append</span><span class="gs-tok scoped" data-pos="176">(&#x27;-</span><span class="gs-tok scoped" data-pos="177">&#x27;)↵
+</span><span class="gs-tok scoped" data-pos="178">   </span><span class="gs-tok scoped kw" data-pos="179"> elif</span><span class="gs-tok scoped" data-pos="180"> space</span><span class="gs-tok scoped" data-pos="181">_count</span><span class="gs-tok scoped" data-pos="182"> &gt;</span><span class="gs-tok scoped" data-pos="183"> </span><span class="gs-tok scoped num" data-pos="184">0</span><span class="gs-tok scoped" data-pos="185">:↵
+</span><span class="gs-tok scoped" data-pos="186">       </span><span class="gs-tok scoped" data-pos="187"> result</span><span class="gs-tok scoped" data-pos="188">.extend</span><span class="gs-tok scoped" data-pos="189">([&#x27;</span><span class="gs-tok scoped" data-pos="190">_</span><span class="gs-tok scoped" data-pos="191">&#x27;]</span><span class="gs-tok scoped" data-pos="192"> *</span><span class="gs-tok scoped" data-pos="193"> space</span><span class="gs-tok scoped" data-pos="194">_count</span><span class="gs-tok scoped" data-pos="195">)↵
+</span><span class="gs-tok scoped" data-pos="196">   </span><span class="gs-tok scoped kw" data-pos="197"> return</span><span class="gs-tok scoped" data-pos="198"> &#x27;&#x27;.</span><span class="gs-tok scoped" data-pos="199">join</span><span class="gs-tok scoped" data-pos="200">(result</span><span class="gs-tok scoped" data-pos="201">)↵
+</span><span class="gs-tok scoped" data-pos="202">&lt;/</span><span class="gs-tok scoped" data-pos="203">code</span><span class="gs-tok scoped" data-pos="204">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_c730a7f2";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "system", "scoped": false, "readout": ""}, {"pos": 2, "text": "\n", "scoped": false, "readout": ""}, {"pos": 3, "text": "You", "scoped": false, "readout": ""}, {"pos": 4, "text": " are", "scoped": false, "readout": ""}, {"pos": 5, "text": " a", "scoped": false, "readout": ""}, {"pos": 6, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 7, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 8, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 9, "text": " in", "scoped": false, "readout": ""}, {"pos": 10, "text": " programming", "scoped": false, "readout": ""}, {"pos": 11, "text": ".", "scoped": false, "readout": ""}, {"pos": 12, "text": " Always", "scoped": false, "readout": ""}, {"pos": 13, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 14, "text": " your", "scoped": false, "readout": ""}, {"pos": 15, "text": " code", "scoped": false, "readout": ""}, {"pos": 16, "text": " inside", "scoped": false, "readout": ""}, {"pos": 17, "text": " <", "scoped": false, "readout": ""}, {"pos": 18, "text": "code", "scoped": false, "readout": ""}, {"pos": 19, "text": "></", "scoped": false, "readout": ""}, {"pos": 20, "text": "code", "scoped": false, "readout": ""}, {"pos": 21, "text": ">", "scoped": false, "readout": ""}, {"pos": 22, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 23, "text": ".", "scoped": false, "readout": ""}, {"pos": 24, "text": " Just", "scoped": false, "readout": ""}, {"pos": 25, "text": " the", "scoped": false, "readout": ""}, {"pos": 26, "text": " code", "scoped": false, "readout": ""}, {"pos": 27, "text": ",", "scoped": false, "readout": ""}, {"pos": 28, "text": " no", "scoped": false, "readout": ""}, {"pos": 29, "text": " need", "scoped": false, "readout": ""}, {"pos": 30, "text": " to", "scoped": false, "readout": ""}, {"pos": 31, "text": " comment", "scoped": false, "readout": ""}, {"pos": 32, "text": " or", "scoped": false, "readout": ""}, {"pos": 33, "text": " explain", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 36, "text": "\n", "scoped": false, "readout": ""}, {"pos": 37, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 38, "text": "user", "scoped": false, "readout": ""}, {"pos": 39, "text": "\n", "scoped": false, "readout": ""}, {"pos": 40, "text": "Given", "scoped": false, "readout": ""}, {"pos": 41, "text": " a", "scoped": false, "readout": ""}, {"pos": 42, "text": " string", "scoped": false, "readout": ""}, {"pos": 43, "text": " text", "scoped": false, "readout": ""}, {"pos": 44, "text": ",", "scoped": false, "readout": ""}, {"pos": 45, "text": " replace", "scoped": false, "readout": ""}, {"pos": 46, "text": " all", "scoped": false, "readout": ""}, {"pos": 47, "text": " spaces", "scoped": false, "readout": ""}, {"pos": 48, "text": " in", "scoped": false, "readout": ""}, {"pos": 49, "text": " it", "scoped": false, "readout": ""}, {"pos": 50, "text": " with", "scoped": false, "readout": ""}, {"pos": 51, "text": " underscores", "scoped": false, "readout": ""}, {"pos": 52, "text": ",", "scoped": false, "readout": ""}, {"pos": 53, "text": " and", "scoped": false, "readout": ""}, {"pos": 54, "text": " if", "scoped": false, "readout": ""}, {"pos": 55, "text": " a", "scoped": false, "readout": ""}, {"pos": 56, "text": " string", "scoped": false, "readout": ""}, {"pos": 57, "text": " has", "scoped": false, "readout": ""}, {"pos": 58, "text": " more", "scoped": false, "readout": ""}, {"pos": 59, "text": " than", "scoped": false, "readout": ""}, {"pos": 60, "text": " ", "scoped": false, "readout": ""}, {"pos": 61, "text": "2", "scoped": false, "readout": ""}, {"pos": 62, "text": " consecutive", "scoped": false, "readout": ""}, {"pos": 63, "text": " spaces", "scoped": false, "readout": ""}, {"pos": 64, "text": ",", "scoped": false, "readout": ""}, {"pos": 65, "text": " then", "scoped": false, "readout": ""}, {"pos": 66, "text": " replace", "scoped": false, "readout": ""}, {"pos": 67, "text": " all", "scoped": false, "readout": ""}, {"pos": 68, "text": " consecutive", "scoped": false, "readout": ""}, {"pos": 69, "text": " spaces", "scoped": false, "readout": ""}, {"pos": 70, "text": " with", "scoped": false, "readout": ""}, {"pos": 71, "text": " -", "scoped": false, "readout": ""}, {"pos": 72, "text": " in", "scoped": false, "readout": ""}, {"pos": 73, "text": " Python", "scoped": false, "readout": ""}, {"pos": 74, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 75, "text": "\n", "scoped": false, "readout": ""}, {"pos": 76, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 77, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 78, "text": "\n", "scoped": true, "readout": "Sure, here's the code snippet with the action:\n\n```python\nresult = ''.join([c if not c.isalnum() else (c if c != ' ' else '') for c in text])\n```\n\nThis line of code is:\n\n```python\nresult = ''.join([c if not c.isalnum()"}, {"pos": 79, "text": "<", "scoped": true, "readout": "Sure, here is the brief code snippet:\n\n```python\nresult = x * 2\n```"}, {"pos": 80, "text": "code", "scoped": true, "readout": "Sure, here's a brief response:\n\n```python\nresult = line.replace(\"line of the code\", \"result = line.replace(\\\"line of the code\\\", \\\"result = line.replace(\\\\\\\"line of the code\\\\\\\", \\\\\\\"result = line.replace(\\\\\\\\\\\\\\\"line of the code\\\\\\\\\\\\\\\", \\"}, {"pos": 81, "text": ">\n", "scoped": true, "readout": "Sure, here's a concise way to handle it:\n\n```python\nline = line.replace(' ', ' ').join(line.split())\n```\n\nThis will replace all spaces with a single space if there are multiple consecutive spaces. However, for your specific request, you can use:\n\n```python\nline = ''.join([' '"}, {"pos": 82, "text": "def", "scoped": true, "readout": "I'm replacing spaces with underscores and consecutive spaces with double underscores."}, {"pos": 83, "text": " fix", "scoped": true, "readout": "I'm replacing spaces with underscores."}, {"pos": 84, "text": "_spaces", "scoped": true, "readout": "I'm replacing sequences of spaces with underscores."}, {"pos": 85, "text": "(", "scoped": true, "readout": "I'm replacing spaces with underscores in a string using Python's `str.replace()` method."}, {"pos": 86, "text": "phrase", "scoped": true, "readout": "I'm replacing sequences of spaces with underscores and then replacing underscores with double underscores. Here's how:\n\n```python\ntext = \"your text here\"\nformatted_text = text.replace(\" \", \"_\").replace(\"__\", \"__\")\nformatted_text = formatted_text.replace(\"_\", \"__\").replace(\"__\", \"__\")\nformatted_text = formatted_text"}, {"pos": 87, "text": "):\n", "scoped": true, "readout": "Sure, here's a concise version:\n\n```python\nline = line.replace('  ', ' ').replace('   ', '  ')\n```\n\nThis line replaces two or more spaces with a single space and then replaces three or more spaces with two spaces. However, to handle all cases correctly:\n\n```python\nline ="}, {"pos": 88, "text": "   ", "scoped": true, "readout": "I'm replacing sequences of two or more spaces with a single underscore."}, {"pos": 89, "text": " result", "scoped": true, "readout": "I'm waiting for the next part of the input to replace multiple consecutive spaces with a single space and then replace double spaces with underscores."}, {"pos": 90, "text": " =", "scoped": true, "readout": "I'm replacing sequences of two or more spaces with a single underscore."}, {"pos": 91, "text": " []\n", "scoped": true, "readout": "I'm waiting for the next part of the code to determine if there are consecutive spaces to replace."}, {"pos": 92, "text": "   ", "scoped": true, "readout": "I'm replacing multiple consecutive spaces with a single space."}, {"pos": 93, "text": " space", "scoped": true, "readout": "I'm waiting for more lines to determine if there are consecutive spaces."}, {"pos": 94, "text": "_count", "scoped": true, "readout": "I'm checking for consecutive spaces."}, {"pos": 95, "text": " =", "scoped": true, "readout": "I'm counting consecutive spaces."}, {"pos": 96, "text": " ", "scoped": true, "readout": "I'm checking if there are three or more consecutive spaces and replacing them with a single space."}, {"pos": 97, "text": "0", "scoped": true, "readout": "I'm checking for consecutive spaces."}, {"pos": 98, "text": "\n", "scoped": true, "readout": "I'm checking if the current character is a space and counting consecutive spaces. If a non-space character is encountered, I replace consecutive spaces with a single space in the result."}, {"pos": 99, "text": "   ", "scoped": true, "readout": "I'm checking for consecutive spaces and replacing them with a single space."}, {"pos": 100, "text": " for", "scoped": true, "readout": "I'm waiting for the next character to determine if it's a space or not."}, {"pos": 101, "text": " char", "scoped": true, "readout": "I'm checking for spaces."}, {"pos": 102, "text": " in", "scoped": true, "readout": "I'm checking if the current character is a space."}, {"pos": 103, "text": " phrase", "scoped": true, "readout": "I'm checking for spaces or characters in the string."}, {"pos": 104, "text": ":\n", "scoped": true, "readout": "I'm checking if the current character is a space."}, {"pos": 105, "text": "       ", "scoped": true, "readout": "I'm checking if the current character is a space. If it is, I increment a counter; otherwise, I reset the counter to zero."}, {"pos": 106, "text": " if", "scoped": true, "readout": "I'm checking if the current character is a space."}, {"pos": 107, "text": " char", "scoped": true, "readout": "I'm checking for spaces."}, {"pos": 108, "text": " ==", "scoped": true, "readout": "I'm checking for spaces."}, {"pos": 109, "text": " '", "scoped": true, "readout": "I'm counting spaces."}, {"pos": 110, "text": " '", "scoped": true, "readout": "I'm counting spaces."}, {"pos": 111, "text": ":\n", "scoped": true, "readout": "I'm counting consecutive spaces."}, {"pos": 112, "text": "           ", "scoped": true, "readout": "Waiting for the next character to determine if it's a space or not."}, {"pos": 113, "text": " space", "scoped": true, "readout": "I'm waiting to see if there are consecutive spaces to count them."}, {"pos": 114, "text": "_count", "scoped": true, "readout": "I'm counting consecutive spaces."}, {"pos": 115, "text": " +=", "scoped": true, "readout": "I'm counting consecutive spaces."}, {"pos": 116, "text": " ", "scoped": true, "readout": "I'm replacing sequences of two or more spaces with a single hyphen."}, {"pos": 117, "text": "1", "scoped": true, "readout": "Waiting for the next character to determine if it's a space or not."}, {"pos": 118, "text": "\n", "scoped": true, "readout": "I'm waiting to see if there's a sequence of spaces or tabs to replace with a single character."}, {"pos": 119, "text": "       ", "scoped": true, "readout": "I'm checking if the current character is a space or not. If it is, I'll count how many consecutive spaces there are. If not, I'll add the non-space characters to the result directly."}, {"pos": 120, "text": " else", "scoped": true, "readout": "I'm waiting for the next character to determine if I should add a space or continue with the code."}, {"pos": 121, "text": ":\n", "scoped": true, "readout": "I'm waiting to see if the next character is a space or not. If it's a space, I'll count how many consecutive spaces there are. If it's not a space, I'll check if the previous character was a space and decide whether to add a single space or multiple spaces based on the count."}, {"pos": 122, "text": "           ", "scoped": true, "readout": "I'm waiting for the next part of the code to determine if I should replace spaces with underscores or leave them as is."}, {"pos": 123, "text": " if", "scoped": true, "readout": "I'm waiting to see if there are multiple consecutive spaces to determine whether to replace them with a single space or underscores."}, {"pos": 124, "text": " space", "scoped": true, "readout": "I'm checking for consecutive spaces and replacing them with a single underscore if there are two or more."}, {"pos": 125, "text": "_count", "scoped": true, "readout": "I'm waiting for more context to determine if it's a single space or multiple spaces. If it's two or more, I'll replace them with an appropriate number of dashes or spaces."}, {"pos": 126, "text": " >", "scoped": true, "readout": "I'm waiting for more context to determine if it's a single line or multiple lines. If it's two or more consecutive lines, I'll replace them with an appropriate number of spaces or a newline character."}, {"pos": 127, "text": " ", "scoped": true, "readout": "I'm replacing spaces with underscores."}, {"pos": 128, "text": "2", "scoped": true, "readout": "I'm waiting for the next part of the code to determine if it's multiple spaces, which I'll replace with a single space."}, {"pos": 129, "text": ":\n", "scoped": true, "readout": "I'm replacing sequences of more than one space with a single underscore."}, {"pos": 130, "text": "               ", "scoped": true, "readout": "I'm replacing consecutive spaces with a single underscore."}, {"pos": 131, "text": " result", "scoped": true, "readout": "I'm replacing the sequence with a single hyphen."}, {"pos": 132, "text": ".append", "scoped": true, "readout": "I'm replacing the sequence with a single hyphen."}, {"pos": 133, "text": "('-", "scoped": true, "readout": "I'm replacing it with a single space."}, {"pos": 134, "text": "')\n", "scoped": true, "readout": "I'm replacing consecutive spaces with a single space."}, {"pos": 135, "text": "           ", "scoped": true, "readout": "I'm replacing sequences of more than one space with a single underscore, or leaving a single space as is."}, {"pos": 136, "text": " elif", "scoped": true, "readout": "I'm replacing sequences of two or more spaces with a single space, and single spaces remain unchanged."}, {"pos": 137, "text": " space", "scoped": true, "readout": "I'm replacing spaces with underscores."}, {"pos": 138, "text": "_count", "scoped": true, "readout": "I'm inserting a space."}, {"pos": 139, "text": " >", "scoped": true, "readout": "I'm not doing anything; I'm just here to help. If you meant something specific, like multiple spaces, I can replace them with underscores or nothing."}, {"pos": 140, "text": " ", "scoped": true, "readout": "I'm replacing spaces with underscores, but only if there's one space; multiple spaces are replaced with a single underscore."}, {"pos": 141, "text": "0", "scoped": true, "readout": "I'm inserting spaces where there are single spaces, and replacing multiple spaces with a single space."}, {"pos": 142, "text": ":\n", "scoped": true, "readout": "I'm replacing it with a single space if it's a single newline, or multiple spaces if there are more than one."}, {"pos": 143, "text": "               ", "scoped": true, "readout": "I'm replacing spaces with underscores."}, {"pos": 144, "text": " result", "scoped": true, "readout": "I'm replacing it with a space."}, {"pos": 145, "text": ".extend", "scoped": true, "readout": "I'm inserting an underscore for each space encountered."}, {"pos": 146, "text": "(['", "scoped": true, "readout": "I'm inserting an underscore for each space."}, {"pos": 147, "text": "_", "scoped": true, "readout": "I'm inserting a space for each occurrence."}, {"pos": 148, "text": "']", "scoped": true, "readout": "I'm inserting a space for each character in the sequence."}, {"pos": 149, "text": " *", "scoped": true, "readout": "I'm replacing each space with an underscore."}, {"pos": 150, "text": " space", "scoped": true, "readout": "I'm not doing anything; I'm just waiting for you to provide the line of code. Please share the specific line or number of spaces."}, {"pos": 151, "text": "_count", "scoped": true, "readout": "I'm not sure how many lines you're referring to, but I'll assume it's one line. If so, I would replace it with a single space. If there are multiple lines, I would replace them with the corresponding number of spaces."}, {"pos": 152, "text": ")\n", "scoped": true, "readout": "I'm not currently processing any line of code, so I'll just add a space for each non-code character. Please provide the specific line or character sequence you're referring to."}, {"pos": 153, "text": "           ", "scoped": true, "readout": "I'm not currently processing any code, so I'll add a space for each non-code character and then add the current character."}, {"pos": 154, "text": " result", "scoped": true, "readout": "I'm adding the current character to the result."}, {"pos": 155, "text": ".append", "scoped": true, "readout": "I'm adding the current character to the result."}, {"pos": 156, "text": "(char", "scoped": true, "readout": "I'm not doing anything; I'm waiting for the next character."}, {"pos": 157, "text": ")\n", "scoped": true, "readout": "I'm not doing anything; I'm waiting for the next character to determine if I should continue or insert a space."}, {"pos": 158, "text": "           ", "scoped": true, "readout": "I'm not doing anything; I'm just waiting for the next character to be input, which isn't a space."}, {"pos": 159, "text": " space", "scoped": true, "readout": "I'm waiting to see if there's more than one space to handle consecutive spaces."}, {"pos": 160, "text": "_count", "scoped": true, "readout": "I'm not doing anything; I'm just counting how many lines of code I've seen since the last non-code character."}, {"pos": 161, "text": " =", "scoped": true, "readout": "I'm not doing anything; I'm just counting the characters since the last non-space character."}, {"pos": 162, "text": " ", "scoped": true, "readout": "I'm checking for sequences of more than two spaces and replacing them with a single space."}, {"pos": 163, "text": "0", "scoped": true, "readout": "I'm not doing anything; I'm waiting for the next character to determine if it's part of a sequence of spaces or not."}, {"pos": 164, "text": "\n", "scoped": true, "readout": "I'm checking if the current character is not a space, and if it is, I count how many consecutive spaces there are. If more than one space is found, I replace them with a single space. If the current character is not a space and the previous character was a space, I add the space(s)"}, {"pos": 165, "text": "   ", "scoped": true, "readout": "I'm checking if there are consecutive spaces and replacing them with a single space if needed."}, {"pos": 166, "text": " if", "scoped": true, "readout": "I'm checking if there are consecutive spaces and replacing them with a single space if needed."}, {"pos": 167, "text": " space", "scoped": true, "readout": "I'm checking if there are multiple spaces and replacing them with a single space if needed."}, {"pos": 168, "text": "_count", "scoped": true, "readout": "I'm waiting for more context to determine if there are multiple lines of code to address. If so, please specify how many consecutive lines there are."}, {"pos": 169, "text": " >", "scoped": true, "readout": "I'm checking if there are more than two consecutive spaces and replacing them with two spaces."}, {"pos": 170, "text": " ", "scoped": true, "readout": "I'm replacing sequences of spaces with a single underscore."}, {"pos": 171, "text": "2", "scoped": true, "readout": "I'm checking if there are multiple consecutive spaces and replacing them with a single space."}, {"pos": 172, "text": ":\n", "scoped": true, "readout": "I'm replacing the sequence of spaces with a single underscore if there are multiple spaces."}, {"pos": 173, "text": "       ", "scoped": true, "readout": "I'm replacing the sequence with a single underscore."}, {"pos": 174, "text": " result", "scoped": true, "readout": "I'm replacing the current character with a hyphen."}, {"pos": 175, "text": ".append", "scoped": true, "readout": "I'm replacing it with a hyphen."}, {"pos": 176, "text": "('-", "scoped": true, "readout": "I'm waiting for more context to determine if it should be spaces or a newline. Please provide the specific line of code."}, {"pos": 177, "text": "')\n", "scoped": true, "readout": "I'm processing a sequence of spaces or tabs, replacing them with a single space if there's more than one."}, {"pos": 178, "text": "   ", "scoped": true, "readout": "I'm adding spaces or closing an open space with spaces if the line ends with spaces."}, {"pos": 179, "text": " elif", "scoped": true, "readout": "I'm checking if there are any spaces to replace with underscores."}, {"pos": 180, "text": " space", "scoped": true, "readout": "I'm checking for consecutive spaces and replacing them with a single space."}, {"pos": 181, "text": "_count", "scoped": true, "readout": "I'm processing spaces, adding underscores if necessary."}, {"pos": 182, "text": " >", "scoped": true, "readout": "I'm processing the current line of the code."}, {"pos": 183, "text": " ", "scoped": true, "readout": "I'm replacing sequences of spaces with a single underscore."}, {"pos": 184, "text": "0", "scoped": true, "readout": "I'm adding spaces."}, {"pos": 185, "text": ":\n", "scoped": true, "readout": "Executing the current operation (e.g., adding spaces for a series of consecutive spaces)."}, {"pos": 186, "text": "       ", "scoped": true, "readout": "I'm adding spaces for each character."}, {"pos": 187, "text": " result", "scoped": true, "readout": "I'm adding spaces to the text."}, {"pos": 188, "text": ".extend", "scoped": true, "readout": "I'm adding spaces to the output based on the number of consecutive underscores encountered."}, {"pos": 189, "text": "(['", "scoped": true, "readout": "I'm adding a space for each underscore character."}, {"pos": 190, "text": "_", "scoped": true, "readout": "I'm replacing spaces with underscores."}, {"pos": 191, "text": "']", "scoped": true, "readout": "Executing the current line of the code."}, {"pos": 192, "text": " *", "scoped": true, "readout": "Processing the current line based on the number of spaces."}, {"pos": 193, "text": " space", "scoped": true, "readout": "I'm replacing spaces with underscores and then using a regular expression to replace multiple underscores with a single underscore."}, {"pos": 194, "text": "_count", "scoped": true, "readout": "I'm adding spaces for any trailing spaces at the end of the line."}, {"pos": 195, "text": ")\n", "scoped": true, "readout": "I'm processing any remaining characters in the buffer, adding them to the result string."}, {"pos": 196, "text": "   ", "scoped": true, "readout": "I'm replacing spaces with underscores."}, {"pos": 197, "text": " return", "scoped": true, "readout": "I'm processing and replacing spaces with the characters they represent."}, {"pos": 198, "text": " ''.", "scoped": true, "readout": "I'm processing and replacing spaces between characters."}, {"pos": 199, "text": "join", "scoped": true, "readout": "I'm processing and outputting the current state of the string being constructed."}, {"pos": 200, "text": "(result", "scoped": true, "readout": "I'm processing and replacing characters in the string."}, {"pos": 201, "text": ")\n", "scoped": true, "readout": "Sure, please provide the specific line of code you're referring to."}, {"pos": 202, "text": "</", "scoped": true, "readout": "I'm waiting for you to provide the specific line of code you're referring to."}, {"pos": 203, "text": "code", "scoped": true, "readout": "Sure, here's the line of code:\n\n```python\nresult = [x for x in arr]\n```"}, {"pos": 204, "text": ">", "scoped": true, "readout": "Sure, here's a brief explanation for the line of code:\n\n```python\nresult = [x for x in range(10)]\n```"}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

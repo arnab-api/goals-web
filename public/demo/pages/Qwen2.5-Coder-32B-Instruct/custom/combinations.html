@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>combinations  ·  Qwen2.5-Coder-32B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_6143e877">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">combinations  ·  Qwen2.5-Coder-32B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="1">system</span><span class="gs-tok noncode" data-pos="2">↵
+</span><span class="gs-tok noncode" data-pos="3">You</span><span class="gs-tok noncode" data-pos="4"> are</span><span class="gs-tok noncode" data-pos="5"> a</span><span class="gs-tok noncode" data-pos="6"> helpful</span><span class="gs-tok noncode" data-pos="7"> assistant</span><span class="gs-tok noncode" data-pos="8"> proficient</span><span class="gs-tok noncode" data-pos="9"> in</span><span class="gs-tok noncode" data-pos="10"> programming</span><span class="gs-tok noncode" data-pos="11">.</span><span class="gs-tok noncode" data-pos="12"> Always</span><span class="gs-tok noncode" data-pos="13"> wrap</span><span class="gs-tok noncode" data-pos="14"> your</span><span class="gs-tok noncode" data-pos="15"> code</span><span class="gs-tok noncode" data-pos="16"> inside</span><span class="gs-tok noncode" data-pos="17"> &lt;</span><span class="gs-tok noncode" data-pos="18">code</span><span class="gs-tok noncode" data-pos="19">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="20">code</span><span class="gs-tok noncode" data-pos="21">&gt;</span><span class="gs-tok noncode" data-pos="22"> blocks</span><span class="gs-tok noncode" data-pos="23">.</span><span class="gs-tok noncode" data-pos="24"> Just</span><span class="gs-tok noncode" data-pos="25"> the</span><span class="gs-tok noncode" data-pos="26"> code</span><span class="gs-tok noncode" data-pos="27">,</span><span class="gs-tok noncode" data-pos="28"> no</span><span class="gs-tok noncode" data-pos="29"> need</span><span class="gs-tok noncode" data-pos="30"> to</span><span class="gs-tok noncode" data-pos="31"> comment</span><span class="gs-tok noncode" data-pos="32"> or</span><span class="gs-tok noncode" data-pos="33"> explain</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="36">↵
+</span><span class="gs-tok noncode" data-pos="37">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="38">user</span><span class="gs-tok noncode" data-pos="39">↵
+</span><span class="gs-tok noncode" data-pos="40">Implement</span><span class="gs-tok noncode" data-pos="41"> a</span><span class="gs-tok noncode" data-pos="42"> function</span><span class="gs-tok noncode" data-pos="43"> in</span><span class="gs-tok noncode" data-pos="44"> Python</span><span class="gs-tok noncode" data-pos="45"> that</span><span class="gs-tok noncode" data-pos="46"> returns</span><span class="gs-tok noncode" data-pos="47"> all</span><span class="gs-tok noncode" data-pos="48"> combinations</span><span class="gs-tok noncode" data-pos="49"> of</span><span class="gs-tok noncode" data-pos="50"> k</span><span class="gs-tok noncode" data-pos="51"> numbers</span><span class="gs-tok noncode" data-pos="52"> chosen</span><span class="gs-tok noncode" data-pos="53"> from</span><span class="gs-tok noncode" data-pos="54"> </span><span class="gs-tok noncode" data-pos="55">1</span><span class="gs-tok noncode" data-pos="56"> to</span><span class="gs-tok noncode" data-pos="57"> n</span><span class="gs-tok noncode" data-pos="58">.</span><span class="gs-tok noncode" data-pos="59">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="60">↵
+</span><span class="gs-tok noncode" data-pos="61">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="62">assistant</span><span class="gs-tok scoped" data-pos="63">↵
+</span><span class="gs-tok scoped" data-pos="64">&lt;</span><span class="gs-tok scoped" data-pos="65">code</span><span class="gs-tok scoped" data-pos="66">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="67">def</span><span class="gs-tok scoped" data-pos="68"> combinations</span><span class="gs-tok scoped" data-pos="69">(</span><span class="gs-tok scoped" data-pos="70"> n</span><span class="gs-tok scoped" data-pos="71">,</span><span class="gs-tok scoped" data-pos="72"> k</span><span class="gs-tok scoped" data-pos="73">):↵
+</span><span class="gs-tok scoped" data-pos="74">   </span><span class="gs-tok scoped kw" data-pos="75"> def</span><span class="gs-tok scoped" data-pos="76"> backtrack</span><span class="gs-tok scoped" data-pos="77">(start</span><span class="gs-tok scoped" data-pos="78">,</span><span class="gs-tok scoped" data-pos="79"> path</span><span class="gs-tok scoped" data-pos="80">):↵
+</span><span class="gs-tok scoped" data-pos="81">       </span><span class="gs-tok scoped kw" data-pos="82"> if</span><span class="gs-tok scoped bi" data-pos="83"> len</span><span class="gs-tok scoped" data-pos="84">(path</span><span class="gs-tok scoped" data-pos="85">)</span><span class="gs-tok scoped" data-pos="86"> ==</span><span class="gs-tok scoped" data-pos="87"> k</span><span class="gs-tok scoped" data-pos="88">:↵
+</span><span class="gs-tok scoped" data-pos="89">           </span><span class="gs-tok scoped" data-pos="90"> result</span><span class="gs-tok scoped" data-pos="91">.append</span><span class="gs-tok scoped" data-pos="92">(path</span><span class="gs-tok scoped" data-pos="93">[:</span><span class="gs-tok scoped" data-pos="94">])↵
+</span><span class="gs-tok scoped" data-pos="95">           </span><span class="gs-tok scoped kw" data-pos="96"> return</span><span class="gs-tok scoped" data-pos="97">↵
+</span><span class="gs-tok scoped" data-pos="98">       </span><span class="gs-tok scoped kw" data-pos="99"> for</span><span class="gs-tok scoped" data-pos="100"> i</span><span class="gs-tok scoped kw" data-pos="101"> in</span><span class="gs-tok scoped bi" data-pos="102"> range</span><span class="gs-tok scoped" data-pos="103">(start</span><span class="gs-tok scoped" data-pos="104">,</span><span class="gs-tok scoped" data-pos="105"> n</span><span class="gs-tok scoped" data-pos="106"> +</span><span class="gs-tok scoped" data-pos="107"> </span><span class="gs-tok scoped num" data-pos="108">1</span><span class="gs-tok scoped" data-pos="109">):↵
+</span><span class="gs-tok scoped" data-pos="110">           </span><span class="gs-tok scoped" data-pos="111"> path</span><span class="gs-tok scoped" data-pos="112">.append</span><span class="gs-tok scoped" data-pos="113">(i</span><span class="gs-tok scoped" data-pos="114">)↵
+</span><span class="gs-tok scoped" data-pos="115">           </span><span class="gs-tok scoped" data-pos="116"> backtrack</span><span class="gs-tok scoped" data-pos="117">(i</span><span class="gs-tok scoped" data-pos="118"> +</span><span class="gs-tok scoped" data-pos="119"> </span><span class="gs-tok scoped num" data-pos="120">1</span><span class="gs-tok scoped" data-pos="121">,</span><span class="gs-tok scoped" data-pos="122"> path</span><span class="gs-tok scoped" data-pos="123">)↵
+</span><span class="gs-tok scoped" data-pos="124">           </span><span class="gs-tok scoped" data-pos="125"> path</span><span class="gs-tok scoped" data-pos="126">.pop</span><span class="gs-tok scoped" data-pos="127">()↵
+</span><span class="gs-tok scoped" data-pos="128">    ↵
+</span><span class="gs-tok scoped" data-pos="129">   </span><span class="gs-tok scoped" data-pos="130"> result</span><span class="gs-tok scoped" data-pos="131"> =</span><span class="gs-tok scoped" data-pos="132"> []↵
+</span><span class="gs-tok scoped" data-pos="133">   </span><span class="gs-tok scoped" data-pos="134"> backtrack</span><span class="gs-tok scoped" data-pos="135">(</span><span class="gs-tok scoped num" data-pos="136">1</span><span class="gs-tok scoped" data-pos="137">,</span><span class="gs-tok scoped" data-pos="138"> [])↵
+</span><span class="gs-tok scoped" data-pos="139">   </span><span class="gs-tok scoped kw" data-pos="140"> return</span><span class="gs-tok scoped" data-pos="141"> result</span><span class="gs-tok scoped" data-pos="142">↵
+</span><span class="gs-tok scoped" data-pos="143">&lt;/</span><span class="gs-tok scoped" data-pos="144">code</span><span class="gs-tok scoped" data-pos="145">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_6143e877";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "system", "scoped": false, "readout": ""}, {"pos": 2, "text": "\n", "scoped": false, "readout": ""}, {"pos": 3, "text": "You", "scoped": false, "readout": ""}, {"pos": 4, "text": " are", "scoped": false, "readout": ""}, {"pos": 5, "text": " a", "scoped": false, "readout": ""}, {"pos": 6, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 7, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 8, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 9, "text": " in", "scoped": false, "readout": ""}, {"pos": 10, "text": " programming", "scoped": false, "readout": ""}, {"pos": 11, "text": ".", "scoped": false, "readout": ""}, {"pos": 12, "text": " Always", "scoped": false, "readout": ""}, {"pos": 13, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 14, "text": " your", "scoped": false, "readout": ""}, {"pos": 15, "text": " code", "scoped": false, "readout": ""}, {"pos": 16, "text": " inside", "scoped": false, "readout": ""}, {"pos": 17, "text": " <", "scoped": false, "readout": ""}, {"pos": 18, "text": "code", "scoped": false, "readout": ""}, {"pos": 19, "text": "></", "scoped": false, "readout": ""}, {"pos": 20, "text": "code", "scoped": false, "readout": ""}, {"pos": 21, "text": ">", "scoped": false, "readout": ""}, {"pos": 22, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 23, "text": ".", "scoped": false, "readout": ""}, {"pos": 24, "text": " Just", "scoped": false, "readout": ""}, {"pos": 25, "text": " the", "scoped": false, "readout": ""}, {"pos": 26, "text": " code", "scoped": false, "readout": ""}, {"pos": 27, "text": ",", "scoped": false, "readout": ""}, {"pos": 28, "text": " no", "scoped": false, "readout": ""}, {"pos": 29, "text": " need", "scoped": false, "readout": ""}, {"pos": 30, "text": " to", "scoped": false, "readout": ""}, {"pos": 31, "text": " comment", "scoped": false, "readout": ""}, {"pos": 32, "text": " or", "scoped": false, "readout": ""}, {"pos": 33, "text": " explain", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 36, "text": "\n", "scoped": false, "readout": ""}, {"pos": 37, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 38, "text": "user", "scoped": false, "readout": ""}, {"pos": 39, "text": "\n", "scoped": false, "readout": ""}, {"pos": 40, "text": "Implement", "scoped": false, "readout": ""}, {"pos": 41, "text": " a", "scoped": false, "readout": ""}, {"pos": 42, "text": " function", "scoped": false, "readout": ""}, {"pos": 43, "text": " in", "scoped": false, "readout": ""}, {"pos": 44, "text": " Python", "scoped": false, "readout": ""}, {"pos": 45, "text": " that", "scoped": false, "readout": ""}, {"pos": 46, "text": " returns", "scoped": false, "readout": ""}, {"pos": 47, "text": " all", "scoped": false, "readout": ""}, {"pos": 48, "text": " combinations", "scoped": false, "readout": ""}, {"pos": 49, "text": " of", "scoped": false, "readout": ""}, {"pos": 50, "text": " k", "scoped": false, "readout": ""}, {"pos": 51, "text": " numbers", "scoped": false, "readout": ""}, {"pos": 52, "text": " chosen", "scoped": false, "readout": ""}, {"pos": 53, "text": " from", "scoped": false, "readout": ""}, {"pos": 54, "text": " ", "scoped": false, "readout": ""}, {"pos": 55, "text": "1", "scoped": false, "readout": ""}, {"pos": 56, "text": " to", "scoped": false, "readout": ""}, {"pos": 57, "text": " n", "scoped": false, "readout": ""}, {"pos": 58, "text": ".", "scoped": false, "readout": ""}, {"pos": 59, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 60, "text": "\n", "scoped": false, "readout": ""}, {"pos": 61, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 62, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 63, "text": "\n", "scoped": true, "readout": "Sure, here is a brief snippet for generating combinations:\n\n```python\ndef combine(n, k):\n    return list(itertools.combinations(range(n), k))\n```\n\nThis line:\n```python\nreturn list(itertools.combinations(range(n), k))\n```"}, {"pos": 64, "text": "<", "scoped": true, "readout": "Sure, here is a brief snippet:\n\n```python\nreturn [x for x in range(10)]\n```"}, {"pos": 65, "text": "code", "scoped": true, "readout": "Sure, here's a brief snippet for a function that could be what you're asking for:\n\n```python\ndef example_function():\n    return [line for line in \"def example_function():\\n    return [line for line in \\\"def example_function():\\\\n    return [line for line in \\\\\\\"def"}, {"pos": 66, "text": ">\n", "scoped": true, "readout": "Sure, here's a concise implementation using Python:\n\n```python\ndef combine(n, k):\n    def backtrack(start, path, result):\n        if len(path) == k:\n            result.append(path[:])\n            return\n        for i in range(start, n + 1):\n            backtrack(i + 1,"}, {"pos": 67, "text": "def", "scoped": true, "readout": "I'm generating combinations using recursion."}, {"pos": 68, "text": " combinations", "scoped": true, "readout": "I'm generating combinations of numbers from 1 to n using backtracking."}, {"pos": 69, "text": "(", "scoped": true, "readout": "I'm generating combinations of numbers from 1 to n taken k at a time."}, {"pos": 70, "text": " n", "scoped": true, "readout": "I'm generating combinations of numbers from 1 to n taken k at a time."}, {"pos": 71, "text": ",", "scoped": true, "readout": "I'm generating combinations of numbers for a given n and k using recursion."}, {"pos": 72, "text": " k", "scoped": true, "readout": "I'm generating combinations of a specific length from a given set using recursion or iterative methods."}, {"pos": 73, "text": "):\n", "scoped": true, "readout": "I'm generating combinations using recursion. Here's a concise implementation in Python:\n\n```python\ndef combine(n, k):\n    def backtrack(start, path, result):\n        if len(path) == k:\n            result.append(path[:])\n            return\n        for i in range(start, n + 1):\n            if"}, {"pos": 74, "text": "   ", "scoped": true, "readout": "I'm generating combinations using recursion."}, {"pos": 75, "text": " def", "scoped": true, "readout": "I'm generating combinations using recursion."}, {"pos": 76, "text": " backtrack", "scoped": true, "readout": "I'm selecting combinations of numbers."}, {"pos": 77, "text": "(start", "scoped": true, "readout": "I'm selecting combinations of elements."}, {"pos": 78, "text": ",", "scoped": true, "readout": "I'm selecting combinations of elements."}, {"pos": 79, "text": " path", "scoped": true, "readout": "I'm selecting combinations."}, {"pos": 80, "text": "):\n", "scoped": true, "readout": "I'm generating combinations by recursively building subsets."}, {"pos": 81, "text": "       ", "scoped": true, "readout": "I'm selecting combinations of elements."}, {"pos": 82, "text": " if", "scoped": true, "readout": "I'm selecting or processing combinations of elements."}, {"pos": 83, "text": " len", "scoped": true, "readout": "I'm selecting or constructing a subset of a specific size from a larger set, typically using recursion."}, {"pos": 84, "text": "(path", "scoped": true, "readout": "I'm selecting a subset of elements."}, {"pos": 85, "text": ")", "scoped": true, "readout": "I'm selecting or processing a combination of elements that meets the criteria."}, {"pos": 86, "text": " ==", "scoped": true, "readout": "I'm selecting a subset of elements from a larger set."}, {"pos": 87, "text": " k", "scoped": true, "readout": "I'm selecting a specific combination of elements."}, {"pos": 88, "text": ":\n", "scoped": true, "readout": "I'm selecting a subset of elements from the current combination and adding it to the result list."}, {"pos": 89, "text": "           ", "scoped": true, "readout": "I'm selecting and returning the current combination."}, {"pos": 90, "text": " result", "scoped": true, "readout": "I'm adding the current combination to the results list."}, {"pos": 91, "text": ".append", "scoped": true, "readout": "I'm selecting and storing a combination in the result list."}, {"pos": 92, "text": "(path", "scoped": true, "readout": "I'm selecting and returning the current combination."}, {"pos": 93, "text": "[:", "scoped": true, "readout": "I'm currently at a specific point in generating combinations and will now return this combination."}, {"pos": 94, "text": "])\n", "scoped": true, "readout": "I'm at a stopping point and will return the current combination."}, {"pos": 95, "text": "           ", "scoped": true, "readout": "I'm adding the current combination to the results list."}, {"pos": 96, "text": " return", "scoped": true, "readout": "I'm selecting or adding elements to the current combination and moving forward."}, {"pos": 97, "text": "\n", "scoped": true, "readout": "I'm selecting or iterating over elements to form combinations."}, {"pos": 98, "text": "       ", "scoped": true, "readout": "I'm selecting or iterating over elements to include in combinations."}, {"pos": 99, "text": " for", "scoped": true, "readout": "I'm selecting elements and iterating through them to build combinations."}, {"pos": 100, "text": " i", "scoped": true, "readout": "I'm iterating through elements to build combinations."}, {"pos": 101, "text": " in", "scoped": true, "readout": "I'm iterating through numbers to generate combinations."}, {"pos": 102, "text": " range", "scoped": true, "readout": "I'm iterating through elements starting from the current index to the end of the list."}, {"pos": 103, "text": "(start", "scoped": true, "readout": "I'm selecting the current number and preparing to iterate through the remaining numbers to form combinations."}, {"pos": 104, "text": ",", "scoped": true, "readout": "I'm selecting the next element to include in the combination."}, {"pos": 105, "text": " n", "scoped": true, "readout": "I'm iterating through numbers to generate combinations."}, {"pos": 106, "text": " +", "scoped": true, "readout": "I'm iterating through elements to find combinations."}, {"pos": 107, "text": " ", "scoped": true, "readout": "I'm generating combinations of numbers."}, {"pos": 108, "text": "1", "scoped": true, "readout": "I'm selecting the next element to include in the combination."}, {"pos": 109, "text": "):\n", "scoped": true, "readout": "I'm iterating through elements and adding them to combinations."}, {"pos": 110, "text": "           ", "scoped": true, "readout": "I'm selecting an element and adding it to the current combination."}, {"pos": 111, "text": " path", "scoped": true, "readout": "I'm adding an element to the current combination and exploring further combinations."}, {"pos": 112, "text": ".append", "scoped": true, "readout": "I'm selecting or iterating over an element."}, {"pos": 113, "text": "(i", "scoped": true, "readout": "I'm selecting or iterating over an element."}, {"pos": 114, "text": ")\n", "scoped": true, "readout": "I'm adding an element to the current combination and exploring further combinations.\nI'm then backtracking by removing the last element and exploring other possibilities.\nI'm recursively calling the function to continue building the combination.\nI'm ending the recursion when the combination reaches the desired length.\nI'm ensuring no duplicates by only moving forward with"}, {"pos": 115, "text": "           ", "scoped": true, "readout": "I'm selecting and adding the current element to the combination, then exploring further combinations by moving to the next element."}, {"pos": 116, "text": " backtrack", "scoped": true, "readout": "I'm selecting or iterating over the next element."}, {"pos": 117, "text": "(i", "scoped": true, "readout": "I'm selecting the next element to include in the combination."}, {"pos": 118, "text": " +", "scoped": true, "readout": "I'm selecting the next element to include in the combination."}, {"pos": 119, "text": " ", "scoped": true, "readout": "I'm generating all combinations of a given size from a set of numbers."}, {"pos": 120, "text": "1", "scoped": true, "readout": "Processing the next element."}, {"pos": 121, "text": ",", "scoped": true, "readout": "I'm adding an element to the current combination and exploring further combinations."}, {"pos": 122, "text": " path", "scoped": true, "readout": "I'm adding an element to the current combination."}, {"pos": 123, "text": ")\n", "scoped": true, "readout": "Executing the current line and moving to the next, then backtracking (backtracking) to remove the last element and exploring further (exploring further) with the next element, finally returning to the previous state (returning) and removing the last element (removing) before backtracking again (backtracking)."}, {"pos": 124, "text": "           ", "scoped": true, "readout": "I'm adding an element to the current combination and exploring further combinations."}, {"pos": 125, "text": " path", "scoped": true, "readout": "I'm adding an element to the current combination."}, {"pos": 126, "text": ".pop", "scoped": true, "readout": "I'm adding the current combination to the results list."}, {"pos": 127, "text": "()\n", "scoped": true, "readout": "I'm iterating through combinations."}, {"pos": 128, "text": "    \n", "scoped": true, "readout": "I'm generating combinations recursively."}, {"pos": 129, "text": "   ", "scoped": true, "readout": "I'm generating combinations of numbers."}, {"pos": 130, "text": " result", "scoped": true, "readout": "I'm here to help! Please provide the specific line of code and the context or the function where it's being used, and I'll generate the answers for you."}, {"pos": 131, "text": " =", "scoped": true, "readout": "I'm waiting for you to provide the code and specify where you want me to start. Please share an empty list or array to store results and call the function with that list."}, {"pos": 132, "text": " []\n", "scoped": true, "readout": "I'm initializing the recursive process by calling the function with an empty list and starting the recursion."}, {"pos": 133, "text": "   ", "scoped": true, "readout": "I'm selecting elements from a list using recursion."}, {"pos": 134, "text": " backtrack", "scoped": true, "readout": "I'm not currently executing any code; I'm here to help you generate it. Please specify the starting point or the context, and I'll begin from there."}, {"pos": 135, "text": "(", "scoped": true, "readout": "I'm not currently executing any code; I'm here to help you start from wherever you need. Please specify the starting point or the range you want to work with."}, {"pos": 136, "text": "1", "scoped": true, "readout": "I'm not currently executing any code; I'm just here to help you start. Please specify where you want me to begin."}, {"pos": 137, "text": ",", "scoped": true, "readout": "I'm not currently executing any code. Please provide the context or starting point for the code snippet you're interested in."}, {"pos": 138, "text": " [])\n", "scoped": true, "readout": "I'm generating all combinations of the code."}, {"pos": 139, "text": "   ", "scoped": true, "readout": "I'm generating all combinations of a given length from a set of numbers."}, {"pos": 140, "text": " return", "scoped": true, "readout": "I'm generating all combinations of a list."}, {"pos": 141, "text": " result", "scoped": true, "readout": "I'm generating all combinations of a list."}, {"pos": 142, "text": "\n", "scoped": true, "readout": "Sure, please provide the specific line of code you're referring to."}, {"pos": 143, "text": "</", "scoped": true, "readout": "I'm waiting for the specific line of code to be provided."}, {"pos": 144, "text": "code", "scoped": true, "readout": "Sure, here is the line of code:\n\n```python\nreturn result\n```"}, {"pos": 145, "text": ">", "scoped": true, "readout": "I'm waiting for the code snippet to be provided."}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = top + bh;
+      o.box = box; o.n = n;
+    });
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  render();
+})();</script>
+</body></html>

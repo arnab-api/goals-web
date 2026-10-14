@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6 parse nested parens  ·  Qwen2.5-Coder-32B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_a8a800e0">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">6 parse nested parens  ·  Qwen2.5-Coder-32B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="1">system</span><span class="gs-tok noncode" data-pos="2">↵
+</span><span class="gs-tok noncode" data-pos="3">You</span><span class="gs-tok noncode" data-pos="4"> are</span><span class="gs-tok noncode" data-pos="5"> a</span><span class="gs-tok noncode" data-pos="6"> helpful</span><span class="gs-tok noncode" data-pos="7"> assistant</span><span class="gs-tok noncode" data-pos="8"> proficient</span><span class="gs-tok noncode" data-pos="9"> in</span><span class="gs-tok noncode" data-pos="10"> programming</span><span class="gs-tok noncode" data-pos="11">.</span><span class="gs-tok noncode" data-pos="12"> Always</span><span class="gs-tok noncode" data-pos="13"> wrap</span><span class="gs-tok noncode" data-pos="14"> your</span><span class="gs-tok noncode" data-pos="15"> code</span><span class="gs-tok noncode" data-pos="16"> inside</span><span class="gs-tok noncode" data-pos="17"> &lt;</span><span class="gs-tok noncode" data-pos="18">code</span><span class="gs-tok noncode" data-pos="19">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="20">code</span><span class="gs-tok noncode" data-pos="21">&gt;</span><span class="gs-tok noncode" data-pos="22"> blocks</span><span class="gs-tok noncode" data-pos="23">.</span><span class="gs-tok noncode" data-pos="24"> Just</span><span class="gs-tok noncode" data-pos="25"> the</span><span class="gs-tok noncode" data-pos="26"> code</span><span class="gs-tok noncode" data-pos="27">,</span><span class="gs-tok noncode" data-pos="28"> no</span><span class="gs-tok noncode" data-pos="29"> need</span><span class="gs-tok noncode" data-pos="30"> to</span><span class="gs-tok noncode" data-pos="31"> comment</span><span class="gs-tok noncode" data-pos="32"> or</span><span class="gs-tok noncode" data-pos="33"> explain</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="36">↵
+</span><span class="gs-tok noncode" data-pos="37">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="38">user</span><span class="gs-tok noncode" data-pos="39">↵
+</span><span class="gs-tok noncode" data-pos="40">Input</span><span class="gs-tok noncode" data-pos="41"> to</span><span class="gs-tok noncode" data-pos="42"> this</span><span class="gs-tok noncode" data-pos="43"> function</span><span class="gs-tok noncode" data-pos="44"> is</span><span class="gs-tok noncode" data-pos="45"> a</span><span class="gs-tok noncode" data-pos="46"> string</span><span class="gs-tok noncode" data-pos="47"> represented</span><span class="gs-tok noncode" data-pos="48"> multiple</span><span class="gs-tok noncode" data-pos="49"> groups</span><span class="gs-tok noncode" data-pos="50"> for</span><span class="gs-tok noncode" data-pos="51"> nested</span><span class="gs-tok noncode" data-pos="52"> parentheses</span><span class="gs-tok noncode" data-pos="53"> separated</span><span class="gs-tok noncode" data-pos="54"> by</span><span class="gs-tok noncode" data-pos="55"> spaces</span><span class="gs-tok noncode" data-pos="56"> in</span><span class="gs-tok noncode" data-pos="57"> Python</span><span class="gs-tok noncode" data-pos="58">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="59">↵
+</span><span class="gs-tok noncode" data-pos="60">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="61">assistant</span><span class="gs-tok scoped" data-pos="62">↵
+</span><span class="gs-tok scoped" data-pos="63">&lt;</span><span class="gs-tok scoped" data-pos="64">code</span><span class="gs-tok scoped" data-pos="65">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="66">def</span><span class="gs-tok scoped" data-pos="67"> parse</span><span class="gs-tok scoped" data-pos="68">_nested</span><span class="gs-tok scoped" data-pos="69">_p</span><span class="gs-tok scoped" data-pos="70">are</span><span class="gs-tok scoped" data-pos="71">ns</span><span class="gs-tok scoped" data-pos="72">(</span><span class="gs-tok scoped" data-pos="73"> input</span><span class="gs-tok scoped" data-pos="74">_string</span><span class="gs-tok scoped" data-pos="75"> ):↵
+</span><span class="gs-tok scoped" data-pos="76">   </span><span class="gs-tok scoped kw" data-pos="77"> def</span><span class="gs-tok scoped" data-pos="78"> parse</span><span class="gs-tok scoped" data-pos="79">_group</span><span class="gs-tok scoped" data-pos="80">(</span><span class="gs-tok scoped" data-pos="81"> group</span><span class="gs-tok scoped" data-pos="82"> ):↵
+</span><span class="gs-tok scoped" data-pos="83">       </span><span class="gs-tok scoped" data-pos="84"> stack</span><span class="gs-tok scoped" data-pos="85"> =</span><span class="gs-tok scoped" data-pos="86"> []↵
+</span><span class="gs-tok scoped" data-pos="87">       </span><span class="gs-tok scoped" data-pos="88"> current</span><span class="gs-tok scoped" data-pos="89"> =</span><span class="gs-tok scoped" data-pos="90"> []↵
+</span><span class="gs-tok scoped" data-pos="91">       </span><span class="gs-tok scoped kw" data-pos="92"> for</span><span class="gs-tok scoped" data-pos="93"> char</span><span class="gs-tok scoped kw" data-pos="94"> in</span><span class="gs-tok scoped" data-pos="95"> group</span><span class="gs-tok scoped" data-pos="96">:↵
+</span><span class="gs-tok scoped" data-pos="97">           </span><span class="gs-tok scoped kw" data-pos="98"> if</span><span class="gs-tok scoped" data-pos="99"> char</span><span class="gs-tok scoped" data-pos="100"> ==</span><span class="gs-tok scoped" data-pos="101"> &#x27;(&#x27;</span><span class="gs-tok scoped" data-pos="102">:↵
+</span><span class="gs-tok scoped" data-pos="103">               </span><span class="gs-tok scoped" data-pos="104"> stack</span><span class="gs-tok scoped" data-pos="105">.append</span><span class="gs-tok scoped" data-pos="106">(current</span><span class="gs-tok scoped" data-pos="107">)↵
+</span><span class="gs-tok scoped" data-pos="108">               </span><span class="gs-tok scoped" data-pos="109"> current</span><span class="gs-tok scoped" data-pos="110"> =</span><span class="gs-tok scoped" data-pos="111"> []↵
+</span><span class="gs-tok scoped" data-pos="112">           </span><span class="gs-tok scoped kw" data-pos="113"> elif</span><span class="gs-tok scoped" data-pos="114"> char</span><span class="gs-tok scoped" data-pos="115"> ==</span><span class="gs-tok scoped" data-pos="116"> &#x27;)</span><span class="gs-tok scoped" data-pos="117">&#x27;:↵
+</span><span class="gs-tok scoped" data-pos="118">               </span><span class="gs-tok scoped" data-pos="119"> last</span><span class="gs-tok scoped" data-pos="120"> =</span><span class="gs-tok scoped" data-pos="121"> stack</span><span class="gs-tok scoped" data-pos="122">.pop</span><span class="gs-tok scoped" data-pos="123">()↵
+</span><span class="gs-tok scoped" data-pos="124">               </span><span class="gs-tok scoped" data-pos="125"> last</span><span class="gs-tok scoped" data-pos="126">.append</span><span class="gs-tok scoped" data-pos="127">(current</span><span class="gs-tok scoped" data-pos="128">)↵
+</span><span class="gs-tok scoped" data-pos="129">               </span><span class="gs-tok scoped" data-pos="130"> current</span><span class="gs-tok scoped" data-pos="131"> =</span><span class="gs-tok scoped" data-pos="132"> last</span><span class="gs-tok scoped" data-pos="133">↵
+</span><span class="gs-tok scoped" data-pos="134">           </span><span class="gs-tok scoped kw" data-pos="135"> else</span><span class="gs-tok scoped" data-pos="136">:↵
+</span><span class="gs-tok scoped" data-pos="137">               </span><span class="gs-tok scoped" data-pos="138"> current</span><span class="gs-tok scoped" data-pos="139">.append</span><span class="gs-tok scoped" data-pos="140">(char</span><span class="gs-tok scoped" data-pos="141">)↵
+</span><span class="gs-tok scoped" data-pos="142">       </span><span class="gs-tok scoped kw" data-pos="143"> return</span><span class="gs-tok scoped" data-pos="144"> current</span><span class="gs-tok scoped" data-pos="145">↵
+↵
+</span><span class="gs-tok scoped" data-pos="146">   </span><span class="gs-tok scoped kw" data-pos="147"> return</span><span class="gs-tok scoped" data-pos="148"> [</span><span class="gs-tok scoped" data-pos="149">parse</span><span class="gs-tok scoped" data-pos="150">_group</span><span class="gs-tok scoped" data-pos="151">(group</span><span class="gs-tok scoped" data-pos="152">)</span><span class="gs-tok scoped kw" data-pos="153"> for</span><span class="gs-tok scoped" data-pos="154"> group</span><span class="gs-tok scoped kw" data-pos="155"> in</span><span class="gs-tok scoped" data-pos="156"> input</span><span class="gs-tok scoped" data-pos="157">_string</span><span class="gs-tok scoped" data-pos="158">.split</span><span class="gs-tok scoped" data-pos="159">()]↵
+</span><span class="gs-tok scoped" data-pos="160">&lt;/</span><span class="gs-tok scoped" data-pos="161">code</span><span class="gs-tok scoped" data-pos="162">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_a8a800e0";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "system", "scoped": false, "readout": ""}, {"pos": 2, "text": "\n", "scoped": false, "readout": ""}, {"pos": 3, "text": "You", "scoped": false, "readout": ""}, {"pos": 4, "text": " are", "scoped": false, "readout": ""}, {"pos": 5, "text": " a", "scoped": false, "readout": ""}, {"pos": 6, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 7, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 8, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 9, "text": " in", "scoped": false, "readout": ""}, {"pos": 10, "text": " programming", "scoped": false, "readout": ""}, {"pos": 11, "text": ".", "scoped": false, "readout": ""}, {"pos": 12, "text": " Always", "scoped": false, "readout": ""}, {"pos": 13, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 14, "text": " your", "scoped": false, "readout": ""}, {"pos": 15, "text": " code", "scoped": false, "readout": ""}, {"pos": 16, "text": " inside", "scoped": false, "readout": ""}, {"pos": 17, "text": " <", "scoped": false, "readout": ""}, {"pos": 18, "text": "code", "scoped": false, "readout": ""}, {"pos": 19, "text": "></", "scoped": false, "readout": ""}, {"pos": 20, "text": "code", "scoped": false, "readout": ""}, {"pos": 21, "text": ">", "scoped": false, "readout": ""}, {"pos": 22, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 23, "text": ".", "scoped": false, "readout": ""}, {"pos": 24, "text": " Just", "scoped": false, "readout": ""}, {"pos": 25, "text": " the", "scoped": false, "readout": ""}, {"pos": 26, "text": " code", "scoped": false, "readout": ""}, {"pos": 27, "text": ",", "scoped": false, "readout": ""}, {"pos": 28, "text": " no", "scoped": false, "readout": ""}, {"pos": 29, "text": " need", "scoped": false, "readout": ""}, {"pos": 30, "text": " to", "scoped": false, "readout": ""}, {"pos": 31, "text": " comment", "scoped": false, "readout": ""}, {"pos": 32, "text": " or", "scoped": false, "readout": ""}, {"pos": 33, "text": " explain", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 36, "text": "\n", "scoped": false, "readout": ""}, {"pos": 37, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 38, "text": "user", "scoped": false, "readout": ""}, {"pos": 39, "text": "\n", "scoped": false, "readout": ""}, {"pos": 40, "text": "Input", "scoped": false, "readout": ""}, {"pos": 41, "text": " to", "scoped": false, "readout": ""}, {"pos": 42, "text": " this", "scoped": false, "readout": ""}, {"pos": 43, "text": " function", "scoped": false, "readout": ""}, {"pos": 44, "text": " is", "scoped": false, "readout": ""}, {"pos": 45, "text": " a", "scoped": false, "readout": ""}, {"pos": 46, "text": " string", "scoped": false, "readout": ""}, {"pos": 47, "text": " represented", "scoped": false, "readout": ""}, {"pos": 48, "text": " multiple", "scoped": false, "readout": ""}, {"pos": 49, "text": " groups", "scoped": false, "readout": ""}, {"pos": 50, "text": " for", "scoped": false, "readout": ""}, {"pos": 51, "text": " nested", "scoped": false, "readout": ""}, {"pos": 52, "text": " parentheses", "scoped": false, "readout": ""}, {"pos": 53, "text": " separated", "scoped": false, "readout": ""}, {"pos": 54, "text": " by", "scoped": false, "readout": ""}, {"pos": 55, "text": " spaces", "scoped": false, "readout": ""}, {"pos": 56, "text": " in", "scoped": false, "readout": ""}, {"pos": 57, "text": " Python", "scoped": false, "readout": ""}, {"pos": 58, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 59, "text": "\n", "scoped": false, "readout": ""}, {"pos": 60, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 61, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 62, "text": "\n", "scoped": true, "readout": "I'm waiting for the code to be provided. Please provide the code snippet you're referring to."}, {"pos": 63, "text": "<", "scoped": true, "readout": "Sure, here is a brief snippet:\n\n```python\nresult = [x for x in data if isinstance(x, str)]\n```"}, {"pos": 64, "text": "code", "scoped": true, "readout": "I'm waiting for you to provide the specific line of code you want me to analyze."}, {"pos": 65, "text": ">\n", "scoped": true, "readout": "I'm parsing and processing the input string to identify and handle different segments of code based on their structure, such as separating them into lists or dictionaries."}, {"pos": 66, "text": "def", "scoped": true, "readout": "I'm parsing and analyzing the structure of nested parentheses to identify separate groups of balanced parentheses."}, {"pos": 67, "text": " parse", "scoped": true, "readout": "I'm parsing and analyzing the structure of nested parentheses to identify separate groups of balanced parentheses."}, {"pos": 68, "text": "_nested", "scoped": true, "readout": "I'm parsing and analyzing the structure of nested parentheses to identify separate groups of parenthetical expressions."}, {"pos": 69, "text": "_p", "scoped": true, "readout": "I'm parsing and analyzing code to identify and separate different segments based on their structure, typically using parentheses or brackets to denote nested groups."}, {"pos": 70, "text": "are", "scoped": true, "readout": "I'm parsing nested structures, likely parentheses or brackets, to identify groups within groups."}, {"pos": 71, "text": "ns", "scoped": true, "readout": "I'm parsing and analyzing the string to identify separate code blocks based on spaces or other delimiters."}, {"pos": 72, "text": "(", "scoped": true, "readout": "I'm parsing and analyzing the string to identify segments of code separated by spaces or parentheses, which represent different groups of operations or expressions."}, {"pos": 73, "text": " input", "scoped": true, "readout": "I'm parsing and analyzing the string input to identify and separate different code segments based on their structure, such as grouping characters by spaces or parentheses."}, {"pos": 74, "text": "_string", "scoped": true, "readout": "I'm parsing and analyzing the given string to identify separate code segments based on spaces."}, {"pos": 75, "text": " ):\n", "scoped": true, "readout": "I'm parsing and processing the input string to identify and separate code blocks based on their structure, typically using methods like splitting by parentheses or brackets."}, {"pos": 76, "text": "   ", "scoped": true, "readout": "I'm parsing and analyzing the structure of the code to identify separate blocks or segments based on grouping symbols like parentheses `()` and spaces."}, {"pos": 77, "text": " def", "scoped": true, "readout": "I'm parsing and analyzing nested structures, likely parentheses or brackets, to identify groups and their hierarchy."}, {"pos": 78, "text": " parse", "scoped": true, "readout": "I'm parsing and analyzing nested structures within the string, typically parentheses or brackets, to identify and separate individual groups based on their nesting level."}, {"pos": 79, "text": "_group", "scoped": true, "readout": "I'm parsing and analyzing the structure of nested parentheses to identify individual groups."}, {"pos": 80, "text": "(", "scoped": true, "readout": "I'm parsing and analyzing the code within the current set of parentheses or brackets, identifying nested structures and their components."}, {"pos": 81, "text": " group", "scoped": true, "readout": "I'm parsing and analyzing the code within the current set of parentheses or brackets, identifying nested structures and evaluating them sequentially."}, {"pos": 82, "text": " ):\n", "scoped": true, "readout": "I'm parsing and analyzing the structure of nested elements, likely using recursion or a stack-based approach to handle each opening and closing delimiter (such as parentheses or brackets) to identify individual sub-elements."}, {"pos": 83, "text": "       ", "scoped": true, "readout": "I'm parsing nested structures like parentheses or brackets to identify sub-expressions or blocks."}, {"pos": 84, "text": " stack", "scoped": true, "readout": "I'm parsing the code to identify nested structures like parentheses or brackets, keeping track of the depth and structure of these nests."}, {"pos": 85, "text": " =", "scoped": true, "readout": "I'm parsing the code to understand its structure and logic."}, {"pos": 86, "text": " []\n", "scoped": true, "readout": "I'm parsing the code to identify nested structures and operations within it."}, {"pos": 87, "text": "       ", "scoped": true, "readout": "I'm parsing the code to identify nested structures like parentheses or brackets, tracking the depth of nesting, and categorizing sub-expressions."}, {"pos": 88, "text": " current", "scoped": true, "readout": "I'm parsing the code to identify nested structures like parentheses or brackets, keeping track of the current level of nesting."}, {"pos": 89, "text": " =", "scoped": true, "readout": "I'm parsing or analyzing the structure of the code, tracking nested elements like parentheses or brackets."}, {"pos": 90, "text": " []\n", "scoped": true, "readout": "I'm parsing the code into nested structures, tracking the current level of nesting."}, {"pos": 91, "text": "       ", "scoped": true, "readout": "I'm parsing the code into nested structures based on parentheses and brackets."}, {"pos": 92, "text": " for", "scoped": true, "readout": "I'm parsing the code to identify and group characters into nested structures based on parentheses."}, {"pos": 93, "text": " char", "scoped": true, "readout": "I'm parsing the code to identify nested structures like parentheses or brackets."}, {"pos": 94, "text": " in", "scoped": true, "readout": "I'm parsing characters to identify nested structures like parentheses or brackets."}, {"pos": 95, "text": " group", "scoped": true, "readout": "I'm parsing through the code character by character, identifying and processing each element within the string."}, {"pos": 96, "text": ":\n", "scoped": true, "readout": "I'm parsing the code character by character, tracking nested structures like parentheses and brackets."}, {"pos": 97, "text": "           ", "scoped": true, "readout": "I'm parsing the code character by character, adding to a stack for nested structures like parentheses or brackets."}, {"pos": 98, "text": " if", "scoped": true, "readout": "I'm parsing the code, adding to the current structure if it's an opening bracket, or closing the current structure if it's a closing bracket."}, {"pos": 99, "text": " char", "scoped": true, "readout": "I'm parsing the code to identify the structure, typically starting a new level of nesting when encountering an opening parenthesis `(` or `{`, and closing the current level when encountering a closing parenthesis `)` or `}`."}, {"pos": 100, "text": " ==", "scoped": true, "readout": "I'm parsing the code to identify nested structures like parentheses or brackets, starting a new level when I encounter an opening bracket `(` or `[`, and closing the current level when I encounter a closing bracket `)` or `]`."}, {"pos": 101, "text": " '('", "scoped": true, "readout": "I'm waiting for an opening parenthesis to start a new block or expression."}, {"pos": 102, "text": ":\n", "scoped": true, "readout": "Starting a new block or scope."}, {"pos": 103, "text": "               ", "scoped": true, "readout": "Starting a new block or scope."}, {"pos": 104, "text": " stack", "scoped": true, "readout": "Starting a new block or level of nesting, typically by opening a new structure like a list or a sub-block within an existing one."}, {"pos": 105, "text": ".append", "scoped": true, "readout": "Starting a new block or scope."}, {"pos": 106, "text": "(current", "scoped": true, "readout": "I'm starting a new block."}, {"pos": 107, "text": ")\n", "scoped": true, "readout": "I'm starting a new block and pushing the current context onto a stack, then initializing a new empty list to capture nested elements."}, {"pos": 108, "text": "               ", "scoped": true, "readout": "Starting a new block or scope."}, {"pos": 109, "text": " current", "scoped": true, "readout": "Starting a new block or context within the code."}, {"pos": 110, "text": " =", "scoped": true, "readout": "Starting a new block or scope."}, {"pos": 111, "text": " []\n", "scoped": true, "readout": "Starting a new block."}, {"pos": 112, "text": "           ", "scoped": true, "readout": "I'm starting a new block or scope within the code."}, {"pos": 113, "text": " elif", "scoped": true, "readout": "I'm waiting for the next character to determine if it's starting a new nested structure or closing the current one."}, {"pos": 114, "text": " char", "scoped": true, "readout": "I'm parsing the code to identify the structure, such as whether it's an opening parenthesis `(` or a closing parenthesis `)`. If it's an opening parenthesis, I start a new level of nesting; if it's a closing parenthesis, I end the current level and return to the previous level."}, {"pos": 115, "text": " ==", "scoped": true, "readout": "I'm parsing the code to identify the structure, so I'll be looking for matching parentheses to determine the end of the current group."}, {"pos": 116, "text": " ')", "scoped": true, "readout": "I'm parsing the code to identify the current block or segment being worked on, typically by looking for matching parentheses or brackets."}, {"pos": 117, "text": "':\n", "scoped": true, "readout": "I'm processing the current block of code and preparing to handle the next nested block."}, {"pos": 118, "text": "               ", "scoped": true, "readout": "I'm closing the current block and returning it to the previous one."}, {"pos": 119, "text": " last", "scoped": true, "readout": "I'm processing the current block and preparing to return it to the previous block."}, {"pos": 120, "text": " =", "scoped": true, "readout": "I'm adding the current item to the previous list in the stack."}, {"pos": 121, "text": " stack", "scoped": true, "readout": "I'm processing the most recent block of code you provided, adding the current line to it."}, {"pos": 122, "text": ".pop", "scoped": true, "readout": "I'm completing the current block and returning to the previous one."}, {"pos": 123, "text": "()\n", "scoped": true, "readout": "I'm processing the previous block of code, adding it to the current block and moving back to the previous one."}, {"pos": 124, "text": "               ", "scoped": true, "readout": "I'm adding the current element to the last opened sublist and closing that sublist."}, {"pos": 125, "text": " last", "scoped": true, "readout": "I'm adding the current element to the previous list in the stack."}, {"pos": 126, "text": ".append", "scoped": true, "readout": "I'm processing the current block of code as a sub-expression within the previous block."}, {"pos": 127, "text": "(current", "scoped": true, "readout": "I'm closing the current block and returning it to the previous one."}, {"pos": 128, "text": ")\n", "scoped": true, "readout": "I'm processing the innermost block and returning it to the previous level."}, {"pos": 129, "text": "               ", "scoped": true, "readout": "I'm processing the current block and moving it up one level in the hierarchy."}, {"pos": 130, "text": " current", "scoped": true, "readout": "I'm processing the current block of code."}, {"pos": 131, "text": " =", "scoped": true, "readout": "I'm processing the previous block of code."}, {"pos": 132, "text": " last", "scoped": true, "readout": "I'm processing the previous block of code."}, {"pos": 133, "text": "\n", "scoped": true, "readout": "I'm waiting for the next character to close the current structure or add another element within it."}, {"pos": 134, "text": "           ", "scoped": true, "readout": "I'm parsing or building a structure based on the character (like adding to a nested list)."}, {"pos": 135, "text": " else", "scoped": true, "readout": "Executing the current character, whether it's a nested structure or a simple element."}, {"pos": 136, "text": ":\n", "scoped": true, "readout": "I'm processing the current character or element, adding it to the current context (e.g., a list or string)."}, {"pos": 137, "text": "               ", "scoped": true, "readout": "I'm parsing the current character into the current context, which could be a string or a nested structure."}, {"pos": 138, "text": " current", "scoped": true, "readout": "I'm adding the current character to the current string being built."}, {"pos": 139, "text": ".append", "scoped": true, "readout": "I'm parsing the next character, which is likely part of a string or another nested structure."}, {"pos": 140, "text": "(char", "scoped": true, "readout": "I'm parsing the current character into the current context, typically a string or a nested structure."}, {"pos": 141, "text": ")\n", "scoped": true, "readout": "I'm parsing the next element in the current context."}, {"pos": 142, "text": "       ", "scoped": true, "readout": "I'm parsing the current segment of the code into its components."}, {"pos": 143, "text": " return", "scoped": true, "readout": "I'm processing the current segment of the code, which could be a function call, an expression, or a simple value."}, {"pos": 144, "text": " current", "scoped": true, "readout": "I'm parsing or evaluating the expression within the current context."}, {"pos": 145, "text": "\n\n", "scoped": true, "readout": "I'm parsing and analyzing the code snippet provided, treating each segment separated by spaces as individual units of code."}, {"pos": 146, "text": "   ", "scoped": true, "readout": "I'm parsing and analyzing the code snippet provided, breaking it down into separate parts based on spaces or commas, and then processing each part individually."}, {"pos": 147, "text": " return", "scoped": true, "readout": "I'm parsing and analyzing the code snippet provided, assuming it's structured with multiple lines or segments separated by spaces."}, {"pos": 148, "text": " [", "scoped": true, "readout": "I'm parsing and analyzing the structure of the code provided, breaking it down into its component parts."}, {"pos": 149, "text": "parse", "scoped": true, "readout": "I'm parsing and analyzing the code structure starting from that line."}, {"pos": 150, "text": "_group", "scoped": true, "readout": "I'm parsing and analyzing the code segment provided."}, {"pos": 151, "text": "(group", "scoped": true, "readout": "I'm parsing and analyzing a segment of code enclosed in parentheses."}, {"pos": 152, "text": ")", "scoped": true, "readout": "I'm parsing and analyzing the structure of the code snippet provided."}, {"pos": 153, "text": " for", "scoped": true, "readout": "I'm parsing and analyzing each segment of the code separated by spaces."}, {"pos": 154, "text": " group", "scoped": true, "readout": "I'm parsing and analyzing the code snippet up to the next space or closing parenthesis, treating each as a separate block."}, {"pos": 155, "text": " in", "scoped": true, "readout": "Processing a segment of code separated by spaces."}, {"pos": 156, "text": " input", "scoped": true, "readout": "I'm parsing the input string to separate it into distinct code blocks based on spaces outside of parentheses."}, {"pos": 157, "text": "_string", "scoped": true, "readout": "I'm parsing and processing individual segments of code separated by spaces."}, {"pos": 158, "text": ".split", "scoped": true, "readout": "I'm processing a separate code block."}, {"pos": 159, "text": "()]\n", "scoped": true, "readout": "I'm parsing and analyzing the code snippet provided."}, {"pos": 160, "text": "</", "scoped": true, "readout": "I'm parsing and analyzing the code snippet provided to understand its structure."}, {"pos": 161, "text": "code", "scoped": true, "readout": "Sure, here's a brief snippet:\n\n```python\ndef find():\n```"}, {"pos": 162, "text": ">", "scoped": true, "readout": "I'm parsing the code you provided."}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

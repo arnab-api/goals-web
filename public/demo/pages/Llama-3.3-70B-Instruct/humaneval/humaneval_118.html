@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>118 get closest vowel  ·  Llama-3.3-70B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_774ace6e">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">118 get closest vowel  ·  Llama-3.3-70B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="1">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="2">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="3">system</span><span class="gs-tok noncode" data-pos="4">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="5">↵
+↵
+</span><span class="gs-tok noncode" data-pos="6">Cut</span><span class="gs-tok noncode" data-pos="7">ting</span><span class="gs-tok noncode" data-pos="8"> Knowledge</span><span class="gs-tok noncode" data-pos="9"> Date</span><span class="gs-tok noncode" data-pos="10">:</span><span class="gs-tok noncode" data-pos="11"> December</span><span class="gs-tok noncode" data-pos="12"> </span><span class="gs-tok noncode" data-pos="13">202</span><span class="gs-tok noncode" data-pos="14">3</span><span class="gs-tok noncode" data-pos="15">↵
+</span><span class="gs-tok noncode" data-pos="16">Today</span><span class="gs-tok noncode" data-pos="17"> Date</span><span class="gs-tok noncode" data-pos="18">:</span><span class="gs-tok noncode" data-pos="19"> </span><span class="gs-tok noncode" data-pos="20">26</span><span class="gs-tok noncode" data-pos="21"> Jul</span><span class="gs-tok noncode" data-pos="22"> </span><span class="gs-tok noncode" data-pos="23">202</span><span class="gs-tok noncode" data-pos="24">4</span><span class="gs-tok noncode" data-pos="25">↵
+↵
+</span><span class="gs-tok noncode" data-pos="26">You</span><span class="gs-tok noncode" data-pos="27"> are</span><span class="gs-tok noncode" data-pos="28"> a</span><span class="gs-tok noncode" data-pos="29"> helpful</span><span class="gs-tok noncode" data-pos="30"> assistant</span><span class="gs-tok noncode" data-pos="31"> proficient</span><span class="gs-tok noncode" data-pos="32"> in</span><span class="gs-tok noncode" data-pos="33"> programming</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35"> Always</span><span class="gs-tok noncode" data-pos="36"> wrap</span><span class="gs-tok noncode" data-pos="37"> your</span><span class="gs-tok noncode" data-pos="38"> code</span><span class="gs-tok noncode" data-pos="39"> inside</span><span class="gs-tok noncode" data-pos="40"> &lt;</span><span class="gs-tok noncode" data-pos="41">code</span><span class="gs-tok noncode" data-pos="42">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="43">code</span><span class="gs-tok noncode" data-pos="44">&gt;</span><span class="gs-tok noncode" data-pos="45"> blocks</span><span class="gs-tok noncode" data-pos="46">.</span><span class="gs-tok noncode" data-pos="47"> Just</span><span class="gs-tok noncode" data-pos="48"> the</span><span class="gs-tok noncode" data-pos="49"> code</span><span class="gs-tok noncode" data-pos="50">,</span><span class="gs-tok noncode" data-pos="51"> no</span><span class="gs-tok noncode" data-pos="52"> need</span><span class="gs-tok noncode" data-pos="53"> to</span><span class="gs-tok noncode" data-pos="54"> comment</span><span class="gs-tok noncode" data-pos="55"> or</span><span class="gs-tok noncode" data-pos="56"> explain</span><span class="gs-tok noncode" data-pos="57">.</span><span class="gs-tok noncode" data-pos="58">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="59">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="60">user</span><span class="gs-tok noncode" data-pos="61">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="62">↵
+↵
+</span><span class="gs-tok noncode" data-pos="63">You</span><span class="gs-tok noncode" data-pos="64"> are</span><span class="gs-tok noncode" data-pos="65"> given</span><span class="gs-tok noncode" data-pos="66"> a</span><span class="gs-tok noncode" data-pos="67"> word</span><span class="gs-tok noncode" data-pos="68"> in</span><span class="gs-tok noncode" data-pos="69"> Python</span><span class="gs-tok noncode" data-pos="70">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="71">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="72">assistant</span><span class="gs-tok noncode" data-pos="73">&lt;|end_header_id|&gt;</span><span class="gs-tok scoped" data-pos="74">↵
+↵
+</span><span class="gs-tok scoped" data-pos="75">&lt;</span><span class="gs-tok scoped" data-pos="76">code</span><span class="gs-tok scoped" data-pos="77">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="78">def</span><span class="gs-tok scoped" data-pos="79"> get</span><span class="gs-tok scoped" data-pos="80">_close</span><span class="gs-tok scoped" data-pos="81">st</span><span class="gs-tok scoped" data-pos="82">_v</span><span class="gs-tok scoped" data-pos="83">owel</span><span class="gs-tok scoped" data-pos="84">(</span><span class="gs-tok scoped" data-pos="85">phrase</span><span class="gs-tok scoped" data-pos="86">):↵
+</span><span class="gs-tok scoped" data-pos="87">   </span><span class="gs-tok scoped" data-pos="88"> vowels</span><span class="gs-tok scoped" data-pos="89"> =</span><span class="gs-tok scoped" data-pos="90"> &#x27;</span><span class="gs-tok scoped" data-pos="91">ae</span><span class="gs-tok scoped" data-pos="92">iou</span><span class="gs-tok scoped" data-pos="93">&#x27;↵
+</span><span class="gs-tok scoped" data-pos="94">   </span><span class="gs-tok scoped" data-pos="95"> word</span><span class="gs-tok scoped" data-pos="96"> =</span><span class="gs-tok scoped" data-pos="97"> phrase</span><span class="gs-tok scoped" data-pos="98">.lower</span><span class="gs-tok scoped" data-pos="99">()↵
+</span><span class="gs-tok scoped" data-pos="100">   </span><span class="gs-tok scoped" data-pos="101"> closest</span><span class="gs-tok scoped" data-pos="102">_v</span><span class="gs-tok scoped" data-pos="103">owel</span><span class="gs-tok scoped" data-pos="104"> =</span><span class="gs-tok scoped cn" data-pos="105"> None</span><span class="gs-tok scoped" data-pos="106">↵
+</span><span class="gs-tok scoped" data-pos="107">   </span><span class="gs-tok scoped bi" data-pos="108"> min</span><span class="gs-tok scoped" data-pos="109">_distance</span><span class="gs-tok scoped" data-pos="110"> =</span><span class="gs-tok scoped bi" data-pos="111"> float</span><span class="gs-tok scoped" data-pos="112">(&#x27;</span><span class="gs-tok scoped" data-pos="113">inf</span><span class="gs-tok scoped" data-pos="114">&#x27;)↵
+</span><span class="gs-tok scoped" data-pos="115">   </span><span class="gs-tok scoped kw" data-pos="116"> for</span><span class="gs-tok scoped" data-pos="117"> vowel</span><span class="gs-tok scoped kw" data-pos="118"> in</span><span class="gs-tok scoped" data-pos="119"> vowels</span><span class="gs-tok scoped" data-pos="120">:↵
+</span><span class="gs-tok scoped" data-pos="121">       </span><span class="gs-tok scoped kw" data-pos="122"> if</span><span class="gs-tok scoped" data-pos="123"> vowel</span><span class="gs-tok scoped kw" data-pos="124"> in</span><span class="gs-tok scoped" data-pos="125"> word</span><span class="gs-tok scoped" data-pos="126">:↵
+</span><span class="gs-tok scoped" data-pos="127">           </span><span class="gs-tok scoped" data-pos="128"> distance</span><span class="gs-tok scoped" data-pos="129"> =</span><span class="gs-tok scoped" data-pos="130"> word</span><span class="gs-tok scoped" data-pos="131">.index</span><span class="gs-tok scoped" data-pos="132">(v</span><span class="gs-tok scoped" data-pos="133">owel</span><span class="gs-tok scoped" data-pos="134">)↵
+</span><span class="gs-tok scoped" data-pos="135">           </span><span class="gs-tok scoped kw" data-pos="136"> if</span><span class="gs-tok scoped" data-pos="137"> distance</span><span class="gs-tok scoped" data-pos="138"> &lt;</span><span class="gs-tok scoped bi" data-pos="139"> min</span><span class="gs-tok scoped" data-pos="140">_distance</span><span class="gs-tok scoped" data-pos="141">:↵
+</span><span class="gs-tok scoped" data-pos="142">               </span><span class="gs-tok scoped bi" data-pos="143"> min</span><span class="gs-tok scoped" data-pos="144">_distance</span><span class="gs-tok scoped" data-pos="145"> =</span><span class="gs-tok scoped" data-pos="146"> distance</span><span class="gs-tok scoped" data-pos="147">↵
+</span><span class="gs-tok scoped" data-pos="148">               </span><span class="gs-tok scoped" data-pos="149"> closest</span><span class="gs-tok scoped" data-pos="150">_v</span><span class="gs-tok scoped" data-pos="151">owel</span><span class="gs-tok scoped" data-pos="152"> =</span><span class="gs-tok scoped" data-pos="153"> vowel</span><span class="gs-tok scoped" data-pos="154">↵
+</span><span class="gs-tok scoped" data-pos="155">   </span><span class="gs-tok scoped kw" data-pos="156"> return</span><span class="gs-tok scoped" data-pos="157"> closest</span><span class="gs-tok scoped" data-pos="158">_v</span><span class="gs-tok scoped" data-pos="159">owel</span><span class="gs-tok scoped" data-pos="160">↵
+↵
+</span><span class="gs-tok scoped" data-pos="161">word</span><span class="gs-tok scoped" data-pos="162"> =</span><span class="gs-tok scoped" data-pos="163"> input</span><span class="gs-tok scoped" data-pos="164">(&quot;</span><span class="gs-tok scoped" data-pos="165">Enter</span><span class="gs-tok scoped" data-pos="166"> a</span><span class="gs-tok scoped" data-pos="167"> word</span><span class="gs-tok scoped" data-pos="168">:</span><span class="gs-tok scoped" data-pos="169"> &quot;)↵
+</span><span class="gs-tok scoped bi" data-pos="170">print</span><span class="gs-tok scoped" data-pos="171">(get</span><span class="gs-tok scoped" data-pos="172">_close</span><span class="gs-tok scoped" data-pos="173">st</span><span class="gs-tok scoped" data-pos="174">_v</span><span class="gs-tok scoped" data-pos="175">owel</span><span class="gs-tok scoped" data-pos="176">(word</span><span class="gs-tok scoped" data-pos="177">))↵
+</span><span class="gs-tok scoped" data-pos="178">&lt;/</span><span class="gs-tok scoped" data-pos="179">code</span><span class="gs-tok scoped" data-pos="180">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_774ace6e";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 2, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 3, "text": "system", "scoped": false, "readout": ""}, {"pos": 4, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 5, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 6, "text": "Cut", "scoped": false, "readout": ""}, {"pos": 7, "text": "ting", "scoped": false, "readout": ""}, {"pos": 8, "text": " Knowledge", "scoped": false, "readout": ""}, {"pos": 9, "text": " Date", "scoped": false, "readout": ""}, {"pos": 10, "text": ":", "scoped": false, "readout": ""}, {"pos": 11, "text": " December", "scoped": false, "readout": ""}, {"pos": 12, "text": " ", "scoped": false, "readout": ""}, {"pos": 13, "text": "202", "scoped": false, "readout": ""}, {"pos": 14, "text": "3", "scoped": false, "readout": ""}, {"pos": 15, "text": "\n", "scoped": false, "readout": ""}, {"pos": 16, "text": "Today", "scoped": false, "readout": ""}, {"pos": 17, "text": " Date", "scoped": false, "readout": ""}, {"pos": 18, "text": ":", "scoped": false, "readout": ""}, {"pos": 19, "text": " ", "scoped": false, "readout": ""}, {"pos": 20, "text": "26", "scoped": false, "readout": ""}, {"pos": 21, "text": " Jul", "scoped": false, "readout": ""}, {"pos": 22, "text": " ", "scoped": false, "readout": ""}, {"pos": 23, "text": "202", "scoped": false, "readout": ""}, {"pos": 24, "text": "4", "scoped": false, "readout": ""}, {"pos": 25, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 26, "text": "You", "scoped": false, "readout": ""}, {"pos": 27, "text": " are", "scoped": false, "readout": ""}, {"pos": 28, "text": " a", "scoped": false, "readout": ""}, {"pos": 29, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 30, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 31, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 32, "text": " in", "scoped": false, "readout": ""}, {"pos": 33, "text": " programming", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": " Always", "scoped": false, "readout": ""}, {"pos": 36, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 37, "text": " your", "scoped": false, "readout": ""}, {"pos": 38, "text": " code", "scoped": false, "readout": ""}, {"pos": 39, "text": " inside", "scoped": false, "readout": ""}, {"pos": 40, "text": " <", "scoped": false, "readout": ""}, {"pos": 41, "text": "code", "scoped": false, "readout": ""}, {"pos": 42, "text": "></", "scoped": false, "readout": ""}, {"pos": 43, "text": "code", "scoped": false, "readout": ""}, {"pos": 44, "text": ">", "scoped": false, "readout": ""}, {"pos": 45, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 46, "text": ".", "scoped": false, "readout": ""}, {"pos": 47, "text": " Just", "scoped": false, "readout": ""}, {"pos": 48, "text": " the", "scoped": false, "readout": ""}, {"pos": 49, "text": " code", "scoped": false, "readout": ""}, {"pos": 50, "text": ",", "scoped": false, "readout": ""}, {"pos": 51, "text": " no", "scoped": false, "readout": ""}, {"pos": 52, "text": " need", "scoped": false, "readout": ""}, {"pos": 53, "text": " to", "scoped": false, "readout": ""}, {"pos": 54, "text": " comment", "scoped": false, "readout": ""}, {"pos": 55, "text": " or", "scoped": false, "readout": ""}, {"pos": 56, "text": " explain", "scoped": false, "readout": ""}, {"pos": 57, "text": ".", "scoped": false, "readout": ""}, {"pos": 58, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 59, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 60, "text": "user", "scoped": false, "readout": ""}, {"pos": 61, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 62, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 63, "text": "You", "scoped": false, "readout": ""}, {"pos": 64, "text": " are", "scoped": false, "readout": ""}, {"pos": 65, "text": " given", "scoped": false, "readout": ""}, {"pos": 66, "text": " a", "scoped": false, "readout": ""}, {"pos": 67, "text": " word", "scoped": false, "readout": ""}, {"pos": 68, "text": " in", "scoped": false, "readout": ""}, {"pos": 69, "text": " Python", "scoped": false, "readout": ""}, {"pos": 70, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 71, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 72, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 73, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 74, "text": "\n\n", "scoped": true, "readout": "You didn't provide the code. Please provide the code, I'll help with it."}, {"pos": 75, "text": "<", "scoped": true, "readout": "I'm not writing code yet, just give me the code to write. \n\n```\n \n```"}, {"pos": 76, "text": "code", "scoped": true, "readout": "`print(\"Hello World\")`"}, {"pos": 77, "text": ">\n", "scoped": true, "readout": "```python\nword = input(\"Enter a word: \")\nprint(word)```"}, {"pos": 78, "text": "def", "scoped": true, "readout": "I'm checking if the input is a string. \n\n`word = input()`"}, {"pos": 79, "text": " get", "scoped": true, "readout": "I can help with that. What's the code?"}, {"pos": 80, "text": "_close", "scoped": true, "readout": "I can help with code-related tasks. What's the word at the middle of the given text? I can provide information or suggestions related to the given text, such as: \n1. Checking if the text is a palindrome\n2. Counting the number of letters in the word\n3. Checking the length"}, {"pos": 81, "text": "st", "scoped": true, "readout": "I can help with spelling or definitions of words. What word would you like to know more about?"}, {"pos": 82, "text": "_v", "scoped": true, "readout": "I'm not given a word to find words similar to, what word would you like me to find similar words to?"}, {"pos": 83, "text": "owel", "scoped": true, "readout": "I'm not currently at any line of code, I'm in the middle of a word that is not a letter that is closest to the user's input, which is \"u\" and the letter that is closest to \"u\" in the English alphabet is the letter that is closest to the user's input,"}, {"pos": 84, "text": "(", "scoped": true, "readout": "I'm not given a word, what's the closest letter to a given character in a word?"}, {"pos": 85, "text": "phrase", "scoped": true, "readout": "I'm not given a line of code with a letter to find the closest letter to a character in it,  provide a character and a line of text."}, {"pos": 86, "text": "):\n", "scoped": true, "readout": "I'm not given any code. What's the code?"}, {"pos": 87, "text": "   ", "scoped": true, "readout": "I'm not in the code, but I'll find the closest vowel to a given character. \nIf you provide a character, I can tell you the closest vowel."}, {"pos": 88, "text": " vowels", "scoped": true, "readout": "I'm not near any letters, but I'm closest to 'u' in the English alphabet which is in the set 'aeiou'."}, {"pos": 89, "text": " =", "scoped": true, "readout": "I'm not near any vowels, but I'll find the closest one: \na, e, i, o, u \nI'm closest to 'i' in this case."}, {"pos": 90, "text": " '", "scoped": true, "readout": "I'm not currently near any vowels, but the closest ones are 'e' or 'a' or 'i' or 'o' or 'u'."}, {"pos": 91, "text": "ae", "scoped": true, "readout": "I'm not currently at a vowel, since there are no nearby letters. The closest vowels are 'a', 'e', 'i', 'o', 'u'."}, {"pos": 92, "text": "iou", "scoped": true, "readout": "I'm not currently near a vowel, but closest vowel to me is 'e'."}, {"pos": 93, "text": "'\n", "scoped": true, "readout": "I'm not in the code, but the closest vowel to this point is 'u'."}, {"pos": 94, "text": "   ", "scoped": true, "readout": "I'm not given a line of code or a word to find the closest vowel to, can you provide the code and I'll find the closest vowel to the closest letter in the code."}, {"pos": 95, "text": " word", "scoped": true, "readout": "I'm not given a line of code, just a single word or a string of characters. If you provide a word or character that is closest to a word in the string, I can tell you the closest word."}, {"pos": 96, "text": " =", "scoped": true, "readout": "I'm not given a specific word, please provide a word from the code."}, {"pos": 97, "text": " phrase", "scoped": true, "readout": "I'm not given a specific line of code, just a single word that may or may not be part of a larger word. Can you provide the word or phrase you'd like me to focus on?"}, {"pos": 98, "text": ".lower", "scoped": true, "readout": "I'm not given a specific line of code, please provide one."}, {"pos": 99, "text": "()\n", "scoped": true, "readout": "I'm not given a line of code or a word to work with, please provide one."}, {"pos": 100, "text": "   ", "scoped": true, "readout": "I'm not currently near any code, what's the closest letter to a vowel in your question?"}, {"pos": 101, "text": " closest", "scoped": true, "readout": "I'm not currently near any vowels, but the closest vowel to me is 'i' which is in the character 'i' itself since I am a vowel, and the vowels in order of closeness are 'i' with a distance of 0."}, {"pos": 102, "text": "_v", "scoped": true, "readout": "I'm not near any vowels, the closest vowel to me is \"u\" which is 1 letter away, the vowels in order of closest to me are u, o, e, a, i."}, {"pos": 103, "text": "owel", "scoped": true, "readout": "I'm not currently near any letters, the closest letter to me is 'u' which is not present in the input, the closest vowel to the last input is none, since there is no input."}, {"pos": 104, "text": " =", "scoped": true, "readout": "I'm not near any code, what's the closest vowel to you?"}, {"pos": 105, "text": " None", "scoped": true, "readout": "I'm not near any code, what's the closest character to a given character in a string?"}, {"pos": 106, "text": "\n", "scoped": true, "readout": "I'm not given a line of code or a string to find the closest character to, so I'll write a function to find the closest character to a given character in a string. \n\nHere is a python function to do that:\n```python\ndef closest_char(s, char):\n    s = s.lower()"}, {"pos": 107, "text": "   ", "scoped": true, "readout": "I'm not near any code, which letter or character would you like me to find the closest to?"}, {"pos": 108, "text": " min", "scoped": true, "readout": "I'm not near any code, what's the closest vowel to your character?"}, {"pos": 109, "text": "_distance", "scoped": true, "readout": "I'm not near any letters, which letter are you closest to."}, {"pos": 110, "text": " =", "scoped": true, "readout": "I don't have a line of code to reference. Please provide the code and I'll find the closest character."}, {"pos": 111, "text": " float", "scoped": true, "readout": "There is no line of code to measure from. Please provide a line of code and I'll find the closest one."}, {"pos": 112, "text": "('", "scoped": true, "readout": "There is no line of code provided."}, {"pos": 113, "text": "inf", "scoped": true, "readout": "There is no line of code, so I don't have a reference point. Please provide the code and I'll calculate the distance."}, {"pos": 114, "text": "')\n", "scoped": true, "readout": "I don't have a line of code to compare to, what's the code?"}, {"pos": 115, "text": "   ", "scoped": true, "readout": "I'm not currently near any code. Which character would you like me to find the closest vowel to?"}, {"pos": 116, "text": " for", "scoped": true, "readout": "I'm not currently near any code. Which letter or character would you like me to find the closest vowel to?"}, {"pos": 117, "text": " vowel", "scoped": true, "readout": "I'm not currently at any line of code, but the closest vowel to me in the alphabet is 'a' and the closest vowel in the text to the last character I found is 'u' with 'u' being a vowel itself."}, {"pos": 118, "text": " in", "scoped": true, "readout": "I'm not currently on a line of code, but I'll find the closest one. The closest vowel to my current position is 'a' in the string \"aeiou\"."}, {"pos": 119, "text": " vowels", "scoped": true, "readout": "I'm not on any line, but nearest vowels are 'a', 'e', 'i', 'o', 'u'."}, {"pos": 120, "text": ":\n", "scoped": true, "readout": "I'm not currently on any line of code, but I'll find the closest one to you. Which letter are you closest to in \"aeiou\"?"}, {"pos": 121, "text": "       ", "scoped": true, "readout": "I'm not near any characters yet. I'll find the closest vowel to each character in the code and calculate the distance to each vowel, then find the closest one."}, {"pos": 122, "text": " if", "scoped": true, "readout": "I'm not in the code, but I'll find the closest vowel to each character. \nExample: 'a' in 'banana', 'a' is closest to 'a' itself."}, {"pos": 123, "text": " vowel", "scoped": true, "readout": "I'm not in the code."}, {"pos": 124, "text": " in", "scoped": true, "readout": "I'm not in the code, but I'll find the closest one: \nIn \"code\", the closest character to me is \"o\" in \"code\" itself."}, {"pos": 125, "text": " word", "scoped": true, "readout": "I'm not seeing any code. What's the closest character to a specific letter in the word \"hello\", the letter is \"l\" and the closest character is \"l\" itself with a distance of 0, since \"l\" is in the word."}, {"pos": 126, "text": ":\n", "scoped": true, "readout": "I'm not close to any code, so I don't have a closest character. If you provide code, I can find the closest character to each character in the code."}, {"pos": 127, "text": "           ", "scoped": true, "readout": "I'm not close enough to any instance to find the nearest one."}, {"pos": 128, "text": " distance", "scoped": true, "readout": "I'm not sure, the code hasn't been provided. What's the distance to the nearest occurrence of the character?"}, {"pos": 129, "text": " =", "scoped": true, "readout": "I'm not in the code, I'll find the closest match. What's the character?"}, {"pos": 130, "text": " word", "scoped": true, "readout": "I'm not near any code. Where is it?"}, {"pos": 131, "text": ".index", "scoped": true, "readout": "I'm not currently at any line of code. I'll tell you when I find the nearest one."}, {"pos": 132, "text": "(v", "scoped": true, "readout": "I'm not in the code, I'll find the closest vowel to a character in the code."}, {"pos": 133, "text": "owel", "scoped": true, "readout": "I'm not in the code. Where's the nearest vowel to a character in the code?"}, {"pos": 134, "text": ")\n", "scoped": true, "readout": "I don't see any code. If I do, I'll measure distance to the nearest character."}, {"pos": 135, "text": "           ", "scoped": true, "readout": "I don't see any code. Please provide the code and I'll find the closest distance to determine the minimum."}, {"pos": 136, "text": " if", "scoped": true, "readout": "I'd be happy to help you find the closest distance. However, I don't see any distances or lines of code. Please provide the code and I'll find the closest one."}, {"pos": 137, "text": " distance", "scoped": true, "readout": "I'm not sure, the code hasn't been provided. If you provide the code, I can find the closest instance to the start of the string and tell you the distance. \n\nIf the distance is less than the current distance, update it. \n\nFor example, if the character 'a' is at index"}, {"pos": 138, "text": " <", "scoped": true, "readout": "There is no line to measure. What's the line number?"}, {"pos": 139, "text": " min", "scoped": true, "readout": "I haven't seen the code yet, what's the line number of the closest one?"}, {"pos": 140, "text": "_distance", "scoped": true, "readout": "There is no line of code provided. Please provide the code and I'll find the closest one."}, {"pos": 141, "text": ":\n", "scoped": true, "readout": "There is no line to compare, what line are you referring to?"}, {"pos": 142, "text": "               ", "scoped": true, "readout": "I'm not sure, there is no code. What's the code and I'll find the closest one."}, {"pos": 143, "text": " min", "scoped": true, "readout": "I'm not near any code, which character would you like me to find?"}, {"pos": 144, "text": "_distance", "scoped": true, "readout": "There is no line of code to compare to, so it's undefined."}, {"pos": 145, "text": " =", "scoped": true, "readout": "There is no line of code to compare, so the current distance is undefined."}, {"pos": 146, "text": " distance", "scoped": true, "readout": "I don't see any code. Where is the nearest character to the start of the string?"}, {"pos": 147, "text": "\n", "scoped": true, "readout": "I don't see any code. Which line is closest to a specific variable or character?"}, {"pos": 148, "text": "               ", "scoped": true, "readout": "I'm not given a line of code to compare, so I don't have a closest line."}, {"pos": 149, "text": " closest", "scoped": true, "readout": "I don't see any code. The closest character to the start of the text is the letter \"a\" which is at position 0 in the word \"what\"."}, {"pos": 150, "text": "_v", "scoped": true, "readout": "You didn't provide the code. \n\n```python\ndef find_string(s):\n    return s\n```"}, {"pos": 151, "text": "owel", "scoped": true, "readout": "I don't see any code. What's the code?"}, {"pos": 152, "text": " =", "scoped": true, "readout": "I'm not near any code, I'll find the closest vowel: 'a' is the closest."}, {"pos": 153, "text": " vowel", "scoped": true, "readout": "I don't see a line of code."}, {"pos": 154, "text": "\n", "scoped": true, "readout": "There is no line to compare, as the code hasn't been provided."}, {"pos": 155, "text": "   ", "scoped": true, "readout": "I'm finding the closest character to a target in a string."}, {"pos": 156, "text": " return", "scoped": true, "readout": "I'm finding the closest character to a target character in a string."}, {"pos": 157, "text": " closest", "scoped": true, "readout": "I'm not currently near any vowels, the closest one is likely at the start of the word, which is the letter \"e\" or other letters that come before it in the alphabet, in this case \"e\" is the closest."}, {"pos": 158, "text": "_v", "scoped": true, "readout": "```python\nprint(\"Hello world\")\n```"}, {"pos": 159, "text": "owel", "scoped": true, "readout": "I don't see any code."}, {"pos": 160, "text": "\n\n", "scoped": true, "readout": "I'd be happy to help, but you didn't provide the code. \n\nHere is a python function that finds the first character in a string:\n```python\ndef find_char(s):\n    return s[0] if s else None\n\nword = input(\"Enter a word: \")\nprint(find_char(word))"}, {"pos": 161, "text": "word", "scoped": true, "readout": "I don't have a line of code to work with, please provide one."}, {"pos": 162, "text": " =", "scoped": true, "readout": "You haven't given me a line of code."}, {"pos": 163, "text": " input", "scoped": true, "readout": "You haven't given me a code to work with, please provide one."}, {"pos": 164, "text": "(\"", "scoped": true, "readout": "You didn't give me a word, please provide one."}, {"pos": 165, "text": "Enter", "scoped": true, "readout": "You didn't provide a word. Please provide a word."}, {"pos": 166, "text": " a", "scoped": true, "readout": "I'm not seeing a word, please provide one."}, {"pos": 167, "text": " word", "scoped": true, "readout": "I'm ready to help, but you didn't provide a line of code. Please provide one."}, {"pos": 168, "text": ":", "scoped": true, "readout": "You haven't provided a line of code. Please provide the code."}, {"pos": 169, "text": " \")\n", "scoped": true, "readout": "I'd be happy to help you find the answer. What is the code and I'll tell you what I can do to help find the solution for you."}, {"pos": 170, "text": "print", "scoped": true, "readout": "I'm finding the solution for the given problem."}, {"pos": 171, "text": "(get", "scoped": true, "readout": "I'll tell you what I find in your code. What code would you like me to look at?"}, {"pos": 172, "text": "_close", "scoped": true, "readout": "There is no code provided, so the closest character is the start of the string. The first character is the closest to the start."}, {"pos": 173, "text": "st", "scoped": true, "readout": "There is no code provided."}, {"pos": 174, "text": "_v", "scoped": true, "readout": "I'm not given a code to find the line."}, {"pos": 175, "text": "owel", "scoped": true, "readout": "I'd be happy to help, but you didn't provide the code. Please provide the code, and I'll find the line with the first occurrence of the word in the code that contains the word."}, {"pos": 176, "text": "(word", "scoped": true, "readout": "I'd be happy to help, but you didn't provide the code."}, {"pos": 177, "text": "))\n", "scoped": true, "readout": "I'm not given a code to find an answer from."}, {"pos": 178, "text": "</", "scoped": true, "readout": "```python\ndef get_code():\n    code = input(\"Enter code: \")\n    return code\n```"}, {"pos": 179, "text": "code", "scoped": true, "readout": "I'm not writing any code."}, {"pos": 180, "text": ">", "scoped": true, "readout": "I'm not given a line of code."}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

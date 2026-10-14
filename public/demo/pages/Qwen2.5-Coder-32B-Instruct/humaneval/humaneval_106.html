@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>106 f  ·  Qwen2.5-Coder-32B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_a96ba367">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">106 f  ·  Qwen2.5-Coder-32B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="1">system</span><span class="gs-tok noncode" data-pos="2">↵
+</span><span class="gs-tok noncode" data-pos="3">You</span><span class="gs-tok noncode" data-pos="4"> are</span><span class="gs-tok noncode" data-pos="5"> a</span><span class="gs-tok noncode" data-pos="6"> helpful</span><span class="gs-tok noncode" data-pos="7"> assistant</span><span class="gs-tok noncode" data-pos="8"> proficient</span><span class="gs-tok noncode" data-pos="9"> in</span><span class="gs-tok noncode" data-pos="10"> programming</span><span class="gs-tok noncode" data-pos="11">.</span><span class="gs-tok noncode" data-pos="12"> Always</span><span class="gs-tok noncode" data-pos="13"> wrap</span><span class="gs-tok noncode" data-pos="14"> your</span><span class="gs-tok noncode" data-pos="15"> code</span><span class="gs-tok noncode" data-pos="16"> inside</span><span class="gs-tok noncode" data-pos="17"> &lt;</span><span class="gs-tok noncode" data-pos="18">code</span><span class="gs-tok noncode" data-pos="19">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="20">code</span><span class="gs-tok noncode" data-pos="21">&gt;</span><span class="gs-tok noncode" data-pos="22"> blocks</span><span class="gs-tok noncode" data-pos="23">.</span><span class="gs-tok noncode" data-pos="24"> Just</span><span class="gs-tok noncode" data-pos="25"> the</span><span class="gs-tok noncode" data-pos="26"> code</span><span class="gs-tok noncode" data-pos="27">,</span><span class="gs-tok noncode" data-pos="28"> no</span><span class="gs-tok noncode" data-pos="29"> need</span><span class="gs-tok noncode" data-pos="30"> to</span><span class="gs-tok noncode" data-pos="31"> comment</span><span class="gs-tok noncode" data-pos="32"> or</span><span class="gs-tok noncode" data-pos="33"> explain</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="36">↵
+</span><span class="gs-tok noncode" data-pos="37">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="38">user</span><span class="gs-tok noncode" data-pos="39">↵
+</span><span class="gs-tok noncode" data-pos="40">Implement</span><span class="gs-tok noncode" data-pos="41"> the</span><span class="gs-tok noncode" data-pos="42"> function</span><span class="gs-tok noncode" data-pos="43"> f</span><span class="gs-tok noncode" data-pos="44"> that</span><span class="gs-tok noncode" data-pos="45"> takes</span><span class="gs-tok noncode" data-pos="46"> n</span><span class="gs-tok noncode" data-pos="47"> as</span><span class="gs-tok noncode" data-pos="48"> a</span><span class="gs-tok noncode" data-pos="49"> parameter</span><span class="gs-tok noncode" data-pos="50">,</span><span class="gs-tok noncode" data-pos="51"> and</span><span class="gs-tok noncode" data-pos="52"> returns</span><span class="gs-tok noncode" data-pos="53"> a</span><span class="gs-tok noncode" data-pos="54"> list</span><span class="gs-tok noncode" data-pos="55"> of</span><span class="gs-tok noncode" data-pos="56"> size</span><span class="gs-tok noncode" data-pos="57"> n</span><span class="gs-tok noncode" data-pos="58">,</span><span class="gs-tok noncode" data-pos="59"> such</span><span class="gs-tok noncode" data-pos="60"> that</span><span class="gs-tok noncode" data-pos="61"> the</span><span class="gs-tok noncode" data-pos="62"> value</span><span class="gs-tok noncode" data-pos="63"> of</span><span class="gs-tok noncode" data-pos="64"> the</span><span class="gs-tok noncode" data-pos="65"> element</span><span class="gs-tok noncode" data-pos="66"> at</span><span class="gs-tok noncode" data-pos="67"> index</span><span class="gs-tok noncode" data-pos="68"> i</span><span class="gs-tok noncode" data-pos="69"> is</span><span class="gs-tok noncode" data-pos="70"> the</span><span class="gs-tok noncode" data-pos="71"> factorial</span><span class="gs-tok noncode" data-pos="72"> of</span><span class="gs-tok noncode" data-pos="73"> i</span><span class="gs-tok noncode" data-pos="74"> if</span><span class="gs-tok noncode" data-pos="75"> i</span><span class="gs-tok noncode" data-pos="76"> is</span><span class="gs-tok noncode" data-pos="77"> even</span><span class="gs-tok noncode" data-pos="78"> or</span><span class="gs-tok noncode" data-pos="79"> the</span><span class="gs-tok noncode" data-pos="80"> sum</span><span class="gs-tok noncode" data-pos="81"> of</span><span class="gs-tok noncode" data-pos="82"> numbers</span><span class="gs-tok noncode" data-pos="83"> from</span><span class="gs-tok noncode" data-pos="84"> </span><span class="gs-tok noncode" data-pos="85">1</span><span class="gs-tok noncode" data-pos="86"> to</span><span class="gs-tok noncode" data-pos="87"> i</span><span class="gs-tok noncode" data-pos="88"> otherwise</span><span class="gs-tok noncode" data-pos="89"> in</span><span class="gs-tok noncode" data-pos="90"> Python</span><span class="gs-tok noncode" data-pos="91">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="92">↵
+</span><span class="gs-tok noncode" data-pos="93">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="94">assistant</span><span class="gs-tok scoped" data-pos="95">↵
+</span><span class="gs-tok scoped" data-pos="96">&lt;</span><span class="gs-tok scoped" data-pos="97">code</span><span class="gs-tok scoped" data-pos="98">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="99">def</span><span class="gs-tok scoped" data-pos="100"> f</span><span class="gs-tok scoped" data-pos="101">(</span><span class="gs-tok scoped" data-pos="102"> n</span><span class="gs-tok scoped" data-pos="103">):↵
+</span><span class="gs-tok scoped" data-pos="104">   </span><span class="gs-tok scoped" data-pos="105"> result</span><span class="gs-tok scoped" data-pos="106"> =</span><span class="gs-tok scoped" data-pos="107"> []↵
+</span><span class="gs-tok scoped" data-pos="108">   </span><span class="gs-tok scoped kw" data-pos="109"> for</span><span class="gs-tok scoped" data-pos="110"> i</span><span class="gs-tok scoped kw" data-pos="111"> in</span><span class="gs-tok scoped bi" data-pos="112"> range</span><span class="gs-tok scoped" data-pos="113">(n</span><span class="gs-tok scoped" data-pos="114">):↵
+</span><span class="gs-tok scoped" data-pos="115">       </span><span class="gs-tok scoped kw" data-pos="116"> if</span><span class="gs-tok scoped" data-pos="117"> i</span><span class="gs-tok scoped" data-pos="118"> %</span><span class="gs-tok scoped" data-pos="119"> </span><span class="gs-tok scoped num" data-pos="120">2</span><span class="gs-tok scoped" data-pos="121"> ==</span><span class="gs-tok scoped" data-pos="122"> </span><span class="gs-tok scoped num" data-pos="123">0</span><span class="gs-tok scoped" data-pos="124">:↵
+</span><span class="gs-tok scoped" data-pos="125">           </span><span class="gs-tok scoped" data-pos="126"> #</span><span class="gs-tok scoped" data-pos="127"> Calculate</span><span class="gs-tok scoped" data-pos="128"> factorial</span><span class="gs-tok scoped kw" data-pos="129"> for</span><span class="gs-tok scoped" data-pos="130"> even</span><span class="gs-tok scoped" data-pos="131"> i</span><span class="gs-tok scoped" data-pos="132">↵
+</span><span class="gs-tok scoped" data-pos="133">           </span><span class="gs-tok scoped" data-pos="134"> factorial</span><span class="gs-tok scoped" data-pos="135"> =</span><span class="gs-tok scoped" data-pos="136"> </span><span class="gs-tok scoped num" data-pos="137">1</span><span class="gs-tok scoped" data-pos="138">↵
+</span><span class="gs-tok scoped" data-pos="139">           </span><span class="gs-tok scoped kw" data-pos="140"> for</span><span class="gs-tok scoped" data-pos="141"> j</span><span class="gs-tok scoped kw" data-pos="142"> in</span><span class="gs-tok scoped bi" data-pos="143"> range</span><span class="gs-tok scoped" data-pos="144">(</span><span class="gs-tok scoped num" data-pos="145">1</span><span class="gs-tok scoped" data-pos="146">,</span><span class="gs-tok scoped" data-pos="147"> i</span><span class="gs-tok scoped" data-pos="148"> +</span><span class="gs-tok scoped" data-pos="149"> </span><span class="gs-tok scoped num" data-pos="150">1</span><span class="gs-tok scoped" data-pos="151">):↵
+</span><span class="gs-tok scoped" data-pos="152">               </span><span class="gs-tok scoped" data-pos="153"> factorial</span><span class="gs-tok scoped" data-pos="154"> *=</span><span class="gs-tok scoped" data-pos="155"> j</span><span class="gs-tok scoped" data-pos="156">↵
+</span><span class="gs-tok scoped" data-pos="157">           </span><span class="gs-tok scoped" data-pos="158"> result</span><span class="gs-tok scoped" data-pos="159">.append</span><span class="gs-tok scoped" data-pos="160">(factor</span><span class="gs-tok scoped" data-pos="161">ial</span><span class="gs-tok scoped" data-pos="162">)↵
+</span><span class="gs-tok scoped" data-pos="163">       </span><span class="gs-tok scoped kw" data-pos="164"> else</span><span class="gs-tok scoped" data-pos="165">:↵
+</span><span class="gs-tok scoped" data-pos="166">           </span><span class="gs-tok scoped" data-pos="167"> #</span><span class="gs-tok scoped" data-pos="168"> Calculate</span><span class="gs-tok scoped bi" data-pos="169"> sum</span><span class="gs-tok scoped kw" data-pos="170"> for</span><span class="gs-tok scoped" data-pos="171"> odd</span><span class="gs-tok scoped" data-pos="172"> i</span><span class="gs-tok scoped" data-pos="173">↵
+</span><span class="gs-tok scoped" data-pos="174">           </span><span class="gs-tok scoped" data-pos="175"> summ</span><span class="gs-tok scoped" data-pos="176">ation</span><span class="gs-tok scoped" data-pos="177"> =</span><span class="gs-tok scoped bi" data-pos="178"> sum</span><span class="gs-tok scoped" data-pos="179">(range</span><span class="gs-tok scoped" data-pos="180">(</span><span class="gs-tok scoped num" data-pos="181">1</span><span class="gs-tok scoped" data-pos="182">,</span><span class="gs-tok scoped" data-pos="183"> i</span><span class="gs-tok scoped" data-pos="184"> +</span><span class="gs-tok scoped" data-pos="185"> </span><span class="gs-tok scoped num" data-pos="186">1</span><span class="gs-tok scoped" data-pos="187">))↵
+</span><span class="gs-tok scoped" data-pos="188">           </span><span class="gs-tok scoped" data-pos="189"> result</span><span class="gs-tok scoped" data-pos="190">.append</span><span class="gs-tok scoped" data-pos="191">(sum</span><span class="gs-tok scoped" data-pos="192">m</span><span class="gs-tok scoped" data-pos="193">ation</span><span class="gs-tok scoped" data-pos="194">)↵
+</span><span class="gs-tok scoped" data-pos="195">   </span><span class="gs-tok scoped kw" data-pos="196"> return</span><span class="gs-tok scoped" data-pos="197"> result</span><span class="gs-tok scoped" data-pos="198">↵
+</span><span class="gs-tok scoped" data-pos="199">&lt;/</span><span class="gs-tok scoped" data-pos="200">code</span><span class="gs-tok scoped" data-pos="201">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_a96ba367";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "system", "scoped": false, "readout": ""}, {"pos": 2, "text": "\n", "scoped": false, "readout": ""}, {"pos": 3, "text": "You", "scoped": false, "readout": ""}, {"pos": 4, "text": " are", "scoped": false, "readout": ""}, {"pos": 5, "text": " a", "scoped": false, "readout": ""}, {"pos": 6, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 7, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 8, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 9, "text": " in", "scoped": false, "readout": ""}, {"pos": 10, "text": " programming", "scoped": false, "readout": ""}, {"pos": 11, "text": ".", "scoped": false, "readout": ""}, {"pos": 12, "text": " Always", "scoped": false, "readout": ""}, {"pos": 13, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 14, "text": " your", "scoped": false, "readout": ""}, {"pos": 15, "text": " code", "scoped": false, "readout": ""}, {"pos": 16, "text": " inside", "scoped": false, "readout": ""}, {"pos": 17, "text": " <", "scoped": false, "readout": ""}, {"pos": 18, "text": "code", "scoped": false, "readout": ""}, {"pos": 19, "text": "></", "scoped": false, "readout": ""}, {"pos": 20, "text": "code", "scoped": false, "readout": ""}, {"pos": 21, "text": ">", "scoped": false, "readout": ""}, {"pos": 22, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 23, "text": ".", "scoped": false, "readout": ""}, {"pos": 24, "text": " Just", "scoped": false, "readout": ""}, {"pos": 25, "text": " the", "scoped": false, "readout": ""}, {"pos": 26, "text": " code", "scoped": false, "readout": ""}, {"pos": 27, "text": ",", "scoped": false, "readout": ""}, {"pos": 28, "text": " no", "scoped": false, "readout": ""}, {"pos": 29, "text": " need", "scoped": false, "readout": ""}, {"pos": 30, "text": " to", "scoped": false, "readout": ""}, {"pos": 31, "text": " comment", "scoped": false, "readout": ""}, {"pos": 32, "text": " or", "scoped": false, "readout": ""}, {"pos": 33, "text": " explain", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 36, "text": "\n", "scoped": false, "readout": ""}, {"pos": 37, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 38, "text": "user", "scoped": false, "readout": ""}, {"pos": 39, "text": "\n", "scoped": false, "readout": ""}, {"pos": 40, "text": "Implement", "scoped": false, "readout": ""}, {"pos": 41, "text": " the", "scoped": false, "readout": ""}, {"pos": 42, "text": " function", "scoped": false, "readout": ""}, {"pos": 43, "text": " f", "scoped": false, "readout": ""}, {"pos": 44, "text": " that", "scoped": false, "readout": ""}, {"pos": 45, "text": " takes", "scoped": false, "readout": ""}, {"pos": 46, "text": " n", "scoped": false, "readout": ""}, {"pos": 47, "text": " as", "scoped": false, "readout": ""}, {"pos": 48, "text": " a", "scoped": false, "readout": ""}, {"pos": 49, "text": " parameter", "scoped": false, "readout": ""}, {"pos": 50, "text": ",", "scoped": false, "readout": ""}, {"pos": 51, "text": " and", "scoped": false, "readout": ""}, {"pos": 52, "text": " returns", "scoped": false, "readout": ""}, {"pos": 53, "text": " a", "scoped": false, "readout": ""}, {"pos": 54, "text": " list", "scoped": false, "readout": ""}, {"pos": 55, "text": " of", "scoped": false, "readout": ""}, {"pos": 56, "text": " size", "scoped": false, "readout": ""}, {"pos": 57, "text": " n", "scoped": false, "readout": ""}, {"pos": 58, "text": ",", "scoped": false, "readout": ""}, {"pos": 59, "text": " such", "scoped": false, "readout": ""}, {"pos": 60, "text": " that", "scoped": false, "readout": ""}, {"pos": 61, "text": " the", "scoped": false, "readout": ""}, {"pos": 62, "text": " value", "scoped": false, "readout": ""}, {"pos": 63, "text": " of", "scoped": false, "readout": ""}, {"pos": 64, "text": " the", "scoped": false, "readout": ""}, {"pos": 65, "text": " element", "scoped": false, "readout": ""}, {"pos": 66, "text": " at", "scoped": false, "readout": ""}, {"pos": 67, "text": " index", "scoped": false, "readout": ""}, {"pos": 68, "text": " i", "scoped": false, "readout": ""}, {"pos": 69, "text": " is", "scoped": false, "readout": ""}, {"pos": 70, "text": " the", "scoped": false, "readout": ""}, {"pos": 71, "text": " factorial", "scoped": false, "readout": ""}, {"pos": 72, "text": " of", "scoped": false, "readout": ""}, {"pos": 73, "text": " i", "scoped": false, "readout": ""}, {"pos": 74, "text": " if", "scoped": false, "readout": ""}, {"pos": 75, "text": " i", "scoped": false, "readout": ""}, {"pos": 76, "text": " is", "scoped": false, "readout": ""}, {"pos": 77, "text": " even", "scoped": false, "readout": ""}, {"pos": 78, "text": " or", "scoped": false, "readout": ""}, {"pos": 79, "text": " the", "scoped": false, "readout": ""}, {"pos": 80, "text": " sum", "scoped": false, "readout": ""}, {"pos": 81, "text": " of", "scoped": false, "readout": ""}, {"pos": 82, "text": " numbers", "scoped": false, "readout": ""}, {"pos": 83, "text": " from", "scoped": false, "readout": ""}, {"pos": 84, "text": " ", "scoped": false, "readout": ""}, {"pos": 85, "text": "1", "scoped": false, "readout": ""}, {"pos": 86, "text": " to", "scoped": false, "readout": ""}, {"pos": 87, "text": " i", "scoped": false, "readout": ""}, {"pos": 88, "text": " otherwise", "scoped": false, "readout": ""}, {"pos": 89, "text": " in", "scoped": false, "readout": ""}, {"pos": 90, "text": " Python", "scoped": false, "readout": ""}, {"pos": 91, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 92, "text": "\n", "scoped": false, "readout": ""}, {"pos": 93, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 94, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 95, "text": "\n", "scoped": true, "readout": "Sure, here is the code snippet:\n\n```python\nreturn [x for x in range(n): [x for x in range(n)]]\n```\n\n```python\nreturn [x for x in range(n)]\n```"}, {"pos": 96, "text": "<", "scoped": true, "readout": "Sure, here is the brief code snippet:\n\n```python\nresult = [x for x in range(10)]\n```"}, {"pos": 97, "text": "code", "scoped": true, "readout": "Sure, here's a brief snippet:\n\n```python\nreturn [x for x in range(10) if x % 2 == 0]\n```"}, {"pos": 98, "text": ">\n", "scoped": true, "readout": "Sure, here's a brief implementation:\n\n```python\ndef perform_action(n):\n    return [1 if i == 0 else i * perform_action(i-1) for i in range(n+1)]\n```\n\nThis function calculates the factorial of a number using recursion within a list comprehension."}, {"pos": 99, "text": "def", "scoped": true, "readout": "Sure, here's a brief function that does what you're asking for:\n\n```python\ndef perform_action(n):\n    return [i if i % 2 == 0 else i * (lambda x: x * (x - 1) // (x > 0)) for i in range(1,"}, {"pos": 100, "text": " f", "scoped": true, "readout": "I'm calculating the factorial of a number."}, {"pos": 101, "text": "(", "scoped": true, "readout": "I'm calculating the factorial of a number using a loop or recursion."}, {"pos": 102, "text": " n", "scoped": true, "readout": "I'm calculating the value for each index up to the given number and storing it in a list. Here's a concise implementation:\n\n```python\ndef calculate_values(n):\n    return [i for i in range(n) if (lambda x: [x * (1 if j == 0 else j) for j"}, {"pos": 103, "text": "):\n", "scoped": true, "readout": "Sure, here's a concise implementation:\n\n```python\ndef process_line(n):\n    return [i if i % 2 else i * (i // 2 + 1) for i in range(n)]\n\nresult = process_line(10)\nprint(result)\n```\n\nThis function calculates the desired output for each"}, {"pos": 104, "text": "   ", "scoped": true, "readout": "I'm calculating the factorial of a number using an iterative approach."}, {"pos": 105, "text": " result", "scoped": true, "readout": "Sure, here's a brief explanation for each line of code:\n\n```python\nresult = [i if i % 2 == 0 else i * (i + 1) // 2 for i in range(10)]\n```\n\nThis line of code generates a list where each element is determined by whether"}, {"pos": 106, "text": " =", "scoped": true, "readout": "I'm calculating the factorial for each index up to the given number and storing the results in a list."}, {"pos": 107, "text": " []\n", "scoped": true, "readout": "I'm calculating the factorial of each number up to `n` and storing it in a list. Here's the code snippet:\n\n```python\nresult = [i if i == 0 else (1 if i == 1 else result[i-1] * i) for i in range(n)]\n```\n\nThis"}, {"pos": 108, "text": "   ", "scoped": true, "readout": "I'm calculating the factorial of the current index using a loop or recursion, depending on the context."}, {"pos": 109, "text": " for", "scoped": true, "readout": "I'm calculating the value for the current index `i` and assigning it to the list or array. If `i` is even, I add the factorial of `i`; if odd, I add `i` itself."}, {"pos": 110, "text": " i", "scoped": true, "readout": "I'm calculating the value for the current index `i`. If `i` is 0, the value is 0; otherwise, it's the product of `i` and the factorial of `i-1`."}, {"pos": 111, "text": " in", "scoped": true, "readout": "I'm checking if the current index is even or odd, and then either summing up to that index or calculating the factorial."}, {"pos": 112, "text": " range", "scoped": true, "readout": "I'm calculating the value for the current index `i` and assigning it to the position `i` in the data structure or array."}, {"pos": 113, "text": "(n", "scoped": true, "readout": "I'm generating a response for each index up to the specified number, where the value is determined by the index."}, {"pos": 114, "text": "):\n", "scoped": true, "readout": "I'm calculating the factorial of the current index `i`. If `i` is even, I compute `i! = i * (i-1) * ... * 1`, where each term is `i * j` if `j` is even, and `j` if `j` is odd"}, {"pos": 115, "text": "       ", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. If it's an even number, I'll calculate the factorial; if it's odd, I'll calculate the sum of all numbers up to that number."}, {"pos": 116, "text": " if", "scoped": true, "readout": "Executing an if-else statement to check if the index is even or odd, and performing multiplication or addition accordingly."}, {"pos": 117, "text": " i", "scoped": true, "readout": "I'm calculating the factorial of the current index if it's even; otherwise, I'm summing up to the current index."}, {"pos": 118, "text": " %", "scoped": true, "readout": "I'm checking if the line number is even. If it is, I perform an action for even numbers; otherwise, I perform an action for odd numbers."}, {"pos": 119, "text": " ", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. If it's the nth line, the result is n! (factorial of n) if n is even, and the sum of numbers from 1 to n if n is odd. For example, for line 5, the result"}, {"pos": 120, "text": "2", "scoped": true, "readout": "Sure, please provide the line number or specify if it's even or odd."}, {"pos": 121, "text": " ==", "scoped": true, "readout": "Executing an operation based on whether the index is even (0, 2, 4, ...). If even, perform a multiplication (index * value), else perform an addition (index + value)."}, {"pos": 122, "text": " ", "scoped": true, "readout": "I'm calculating the sum of all integers up to the current number using a loop or formula."}, {"pos": 123, "text": "0", "scoped": true, "readout": "Sure, but I need to know which line you're referring to. If it's an even number, I'll calculate the factorial (which is essentially multiplying all integers up to that number). If it's odd, I'll compute the sum of all integers up to that number. For example, for line 4,"}, {"pos": 124, "text": ":\n", "scoped": true, "readout": "Sure, please provide the line number or specify if it's for calculating the factorial (even index) or the sum of integers up to n (odd index)."}, {"pos": 125, "text": "           ", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. Could you please specify the line number or provide the expression for which you want the result?"}, {"pos": 126, "text": " #", "scoped": true, "readout": "I'm calculating the factorial of the current number using a loop or recursion."}, {"pos": 127, "text": " Calculate", "scoped": true, "readout": "I'm calculating the factorial of the current number."}, {"pos": 128, "text": " factorial", "scoped": true, "readout": "I'm calculating the factorial of the current index (which is even, so it's a product of all integers up to and including the index)."}, {"pos": 129, "text": " for", "scoped": true, "readout": "I'm calculating the factorial of the current index."}, {"pos": 130, "text": " even", "scoped": true, "readout": "I'm calculating the factorial of the index if it's even."}, {"pos": 131, "text": " i", "scoped": true, "readout": "I'm calculating the factorial of the current index."}, {"pos": 132, "text": "\n", "scoped": true, "readout": "Sure, please provide the line of code you'd like me to evaluate."}, {"pos": 133, "text": "           ", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. Please provide the line number or the expression for which you want the result."}, {"pos": 134, "text": " factorial", "scoped": true, "readout": "Sure, please provide the line number or specify what line of code you're referring to, and I'll compute it briefly."}, {"pos": 135, "text": " =", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. Please provide the line number or the specific calculation."}, {"pos": 136, "text": " ", "scoped": true, "readout": "Sure, but I need to know which specific line of code you're referring to. Please provide the line number or the code itself."}, {"pos": 137, "text": "1", "scoped": true, "readout": "Sure, but which line of code are you referring to? The action for line 0 or any specific line number would be needed. For line 0 (or 1 if considering factorial), it's 1. For any other, it's the product of all positive integers up to that number. Briefly:"}, {"pos": 138, "text": "\n", "scoped": true, "readout": "Sure, but you need to specify which line of code you're referring to. For example, if it's line 5 of a factorial function, the explanation would be: `result = 1; for i in range(1, n+1): result *= i`. However, for simplicity, here's a"}, {"pos": 139, "text": "           ", "scoped": true, "readout": "Sure, but which line specifically? The action for line 0 or any positive integer n is to compute the factorial of n (n! = 1 * ... * n), where 0! = 1 by definition. For example, if the line is `for i in range(1, n+1"}, {"pos": 140, "text": " for", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. Please provide the number or the context for the line."}, {"pos": 141, "text": " j", "scoped": true, "readout": "I'm calculating the factorial of a number iteratively."}, {"pos": 142, "text": " in", "scoped": true, "readout": "I'm calculating the factorial of the number up to that point in the loop."}, {"pos": 143, "text": " range", "scoped": true, "readout": "I'm calculating the factorial of the number at that line."}, {"pos": 144, "text": "(", "scoped": true, "readout": "I'm calculating the factorial of the number at that line."}, {"pos": 145, "text": "1", "scoped": true, "readout": "I'm calculating the factorial of the number at that line."}, {"pos": 146, "text": ",", "scoped": true, "readout": "I'm calculating the factorial of the number at that line."}, {"pos": 147, "text": " i", "scoped": true, "readout": "I'm calculating the factorial of the number at that line."}, {"pos": 148, "text": " +", "scoped": true, "readout": "I'm calculating the factorial of the number at that line, assuming it's a loop or a direct calculation (factorial of 0 or 1 is 1). If it's a specific line number, please specify."}, {"pos": 149, "text": " ", "scoped": true, "readout": "I'm calculating the value based on the index and appending it to the list."}, {"pos": 150, "text": "1", "scoped": true, "readout": "I'm calculating the factorial of the number at that line. If it's 0 or 1, the result is 1; otherwise, I multiply all integers from 1 up to that number."}, {"pos": 151, "text": "):\n", "scoped": true, "readout": "Executing the multiplication operation for the factorial calculation."}, {"pos": 152, "text": "               ", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. Please provide the specific line or the entire factorial up to that point."}, {"pos": 153, "text": " factorial", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. Please provide the specific line or the number."}, {"pos": 154, "text": " *=", "scoped": true, "readout": "Sure, but I need to know which line of code you're referring to. Please provide the specific line or the number."}, {"pos": 155, "text": " j", "scoped": true, "readout": "Sure, but which line? Please specify the line number. For example, if you're asking about line 5, the answer would be 120 (5!), but for simplicity, it's just the factorial value. If you mean the current line, it's 1. So, the result is"}, {"pos": 156, "text": "\n", "scoped": true, "readout": "Sure, but which line? Please specify the line number or provide the expression to evaluate. For example, if it's line 5, I'll compute 5! (factorial), otherwise, just the line number itself for non-factorial lines."}, {"pos": 157, "text": "           ", "scoped": true, "readout": "I'm calculating the factorial of the current index and adding it to the list."}, {"pos": 158, "text": " result", "scoped": true, "readout": "I'm calculating the factorial for the current index."}, {"pos": 159, "text": ".append", "scoped": true, "readout": "I'm calculating the factorial of the current index."}, {"pos": 160, "text": "(factor", "scoped": true, "readout": "Sure, but I need to know which line you're referring to. If it's an index (like factorial or Fibonacci), or if it's a specific line number, please specify."}, {"pos": 161, "text": "ial", "scoped": true, "readout": "I'm calculating the factorial of the current index."}, {"pos": 162, "text": ")\n", "scoped": true, "readout": "I'm calculating the factorial of the current index."}, {"pos": 163, "text": "       ", "scoped": true, "readout": "I'm calculating the sum of numbers up to the current index if it's odd, otherwise, I'm calculating the factorial."}, {"pos": 164, "text": " else", "scoped": true, "readout": "Executing the current line's index plus one iterations of a loop, summing numbers if odd, or calculating factorial if even."}, {"pos": 165, "text": ":\n", "scoped": true, "readout": "Executing the current line's index plus one."}, {"pos": 166, "text": "           ", "scoped": true, "readout": "I'm calculating the sum of all integers up to the current number using a loop or formula."}, {"pos": 167, "text": " #", "scoped": true, "readout": "I'm calculating the sum of numbers from 1 to n using the formula for the sum of an arithmetic series."}, {"pos": 168, "text": " Calculate", "scoped": true, "readout": "I'm calculating the sum of all integers from 1 to the current number using a loop or formula."}, {"pos": 169, "text": " sum", "scoped": true, "readout": "I'm calculating the sum from 1 to n at this line."}, {"pos": 170, "text": " for", "scoped": true, "readout": "Executing an iteration sum."}, {"pos": 171, "text": " odd", "scoped": true, "readout": "Executing an iteration for an odd index, summing numbers."}, {"pos": 172, "text": " i", "scoped": true, "readout": "Executing a loop to sum numbers."}, {"pos": 173, "text": "\n", "scoped": true, "readout": "I'm calculating the sum of numbers from 1 to the current index value."}, {"pos": 174, "text": "           ", "scoped": true, "readout": "I'm calculating the sum of all integers from 1 to the current number in the loop."}, {"pos": 175, "text": " summ", "scoped": true, "readout": "I'm calculating the sum from 1 to the current number using a loop or formula."}, {"pos": 176, "text": "ation", "scoped": true, "readout": "I'm calculating the sum from 1 to the current number using a loop or formula."}, {"pos": 177, "text": " =", "scoped": true, "readout": "I'm calculating the sum from 1 to the current number using a loop or formula."}, {"pos": 178, "text": " sum", "scoped": true, "readout": "I'm calculating the sum of all integers from 1 to the current number."}, {"pos": 179, "text": "(range", "scoped": true, "readout": "I'm calculating the sum from 1 to the current number."}, {"pos": 180, "text": "(", "scoped": true, "readout": "I'm calculating the sum from 1 to the current number `i`."}, {"pos": 181, "text": "1", "scoped": true, "readout": "I'm calculating the sum of all integers from 1 to the current number."}, {"pos": 182, "text": ",", "scoped": true, "readout": "I'm calculating the sum of all integers from 1 to the current number."}, {"pos": 183, "text": " i", "scoped": true, "readout": "Executing the current line's operation."}, {"pos": 184, "text": " +", "scoped": true, "readout": "Executing the current line and adding its value to the sum."}, {"pos": 185, "text": " ", "scoped": true, "readout": "I'm assuming you want a function that returns a list of actions for each line up to a given number. Here's a concise implementation:\n\n```python\ndef actions(n):\n    return [i for i in range(n)]\n```\n\nThis will generate a list of integers from 0 to n-1."}, {"pos": 186, "text": "1", "scoped": true, "readout": "I'm calculating the sum of all integers up to the current number."}, {"pos": 187, "text": "))\n", "scoped": true, "readout": "I need to see the specific line of code to provide the sum or result. Please specify which line you're referring to."}, {"pos": 188, "text": "           ", "scoped": true, "readout": "I'm calculating the sum of numbers up to that point and assigning it to the current index."}, {"pos": 189, "text": " result", "scoped": true, "readout": "I'm assigning the result to the current index in the list."}, {"pos": 190, "text": ".append", "scoped": true, "readout": "I'm calculating the sum of all numbers up to the current index."}, {"pos": 191, "text": "(sum", "scoped": true, "readout": "I'm calculating the sum of all integers up to the current number."}, {"pos": 192, "text": "m", "scoped": true, "readout": "I'm calculating the factorial of the current index."}, {"pos": 193, "text": "ation", "scoped": true, "readout": "I'm calculating the sum of all integers up to the current index `i` and storing it in the list."}, {"pos": 194, "text": ")\n", "scoped": true, "readout": "I'm calculating the factorial of the current index `i` and appending it to the list."}, {"pos": 195, "text": "   ", "scoped": true, "readout": "I'm initializing a list with values from 0 to n-1."}, {"pos": 196, "text": " return", "scoped": true, "readout": "I'm generating a list of actions for each index up to the specified number, resulting in a list of length `n`."}, {"pos": 197, "text": " result", "scoped": true, "readout": "I'm calculating the factorial of a number."}, {"pos": 198, "text": "\n", "scoped": true, "readout": "Sure, here's a brief implementation:\n\n```python\ndef example_function(n):\n    return [i for i in range(n)]\n```\n\nThis line specifically refers to:\n\n```python\nreturn [i for i in range(n)]\n```\n\nFor a single line solution:\n\n```python\nreturn [i for i in range"}, {"pos": 199, "text": "</", "scoped": true, "readout": "Sure, please provide the specific line of code you're referring to."}, {"pos": 200, "text": "code", "scoped": true, "readout": "Sure, here's the line of code:\n\n```python\nreturn result\n```"}, {"pos": 201, "text": ">", "scoped": true, "readout": "Sure, here's the line of code:\n\n```python\nresult = [x**2 for x in range(10)]\n```"}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

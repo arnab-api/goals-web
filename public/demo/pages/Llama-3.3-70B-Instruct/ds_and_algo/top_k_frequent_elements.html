@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>top k frequent elements  ·  Llama-3.3-70B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_d403aefd">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">top k frequent elements  ·  Llama-3.3-70B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="1">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="2">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="3">system</span><span class="gs-tok noncode" data-pos="4">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="5">↵
+↵
+</span><span class="gs-tok noncode" data-pos="6">Cut</span><span class="gs-tok noncode" data-pos="7">ting</span><span class="gs-tok noncode" data-pos="8"> Knowledge</span><span class="gs-tok noncode" data-pos="9"> Date</span><span class="gs-tok noncode" data-pos="10">:</span><span class="gs-tok noncode" data-pos="11"> December</span><span class="gs-tok noncode" data-pos="12"> </span><span class="gs-tok noncode" data-pos="13">202</span><span class="gs-tok noncode" data-pos="14">3</span><span class="gs-tok noncode" data-pos="15">↵
+</span><span class="gs-tok noncode" data-pos="16">Today</span><span class="gs-tok noncode" data-pos="17"> Date</span><span class="gs-tok noncode" data-pos="18">:</span><span class="gs-tok noncode" data-pos="19"> </span><span class="gs-tok noncode" data-pos="20">26</span><span class="gs-tok noncode" data-pos="21"> Jul</span><span class="gs-tok noncode" data-pos="22"> </span><span class="gs-tok noncode" data-pos="23">202</span><span class="gs-tok noncode" data-pos="24">4</span><span class="gs-tok noncode" data-pos="25">↵
+↵
+</span><span class="gs-tok noncode" data-pos="26">You</span><span class="gs-tok noncode" data-pos="27"> are</span><span class="gs-tok noncode" data-pos="28"> a</span><span class="gs-tok noncode" data-pos="29"> helpful</span><span class="gs-tok noncode" data-pos="30"> assistant</span><span class="gs-tok noncode" data-pos="31"> proficient</span><span class="gs-tok noncode" data-pos="32"> in</span><span class="gs-tok noncode" data-pos="33"> programming</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35"> Always</span><span class="gs-tok noncode" data-pos="36"> wrap</span><span class="gs-tok noncode" data-pos="37"> your</span><span class="gs-tok noncode" data-pos="38"> code</span><span class="gs-tok noncode" data-pos="39"> inside</span><span class="gs-tok noncode" data-pos="40"> &lt;</span><span class="gs-tok noncode" data-pos="41">code</span><span class="gs-tok noncode" data-pos="42">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="43">code</span><span class="gs-tok noncode" data-pos="44">&gt;</span><span class="gs-tok noncode" data-pos="45"> blocks</span><span class="gs-tok noncode" data-pos="46">.</span><span class="gs-tok noncode" data-pos="47"> Just</span><span class="gs-tok noncode" data-pos="48"> the</span><span class="gs-tok noncode" data-pos="49"> code</span><span class="gs-tok noncode" data-pos="50">,</span><span class="gs-tok noncode" data-pos="51"> no</span><span class="gs-tok noncode" data-pos="52"> need</span><span class="gs-tok noncode" data-pos="53"> to</span><span class="gs-tok noncode" data-pos="54"> comment</span><span class="gs-tok noncode" data-pos="55"> or</span><span class="gs-tok noncode" data-pos="56"> explain</span><span class="gs-tok noncode" data-pos="57">.</span><span class="gs-tok noncode" data-pos="58">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="59">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="60">user</span><span class="gs-tok noncode" data-pos="61">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="62">↵
+↵
+</span><span class="gs-tok noncode" data-pos="63">Implement</span><span class="gs-tok noncode" data-pos="64"> a</span><span class="gs-tok noncode" data-pos="65"> function</span><span class="gs-tok noncode" data-pos="66"> to</span><span class="gs-tok noncode" data-pos="67"> return</span><span class="gs-tok noncode" data-pos="68"> the</span><span class="gs-tok noncode" data-pos="69"> k</span><span class="gs-tok noncode" data-pos="70"> most</span><span class="gs-tok noncode" data-pos="71"> frequent</span><span class="gs-tok noncode" data-pos="72"> elements</span><span class="gs-tok noncode" data-pos="73">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="74">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="75">assistant</span><span class="gs-tok noncode" data-pos="76">&lt;|end_header_id|&gt;</span><span class="gs-tok scoped" data-pos="77">↵
+↵
+</span><span class="gs-tok scoped" data-pos="78">&lt;</span><span class="gs-tok scoped" data-pos="79">code</span><span class="gs-tok scoped" data-pos="80">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="81">def</span><span class="gs-tok scoped" data-pos="82"> top</span><span class="gs-tok scoped" data-pos="83">_k</span><span class="gs-tok scoped" data-pos="84">_f</span><span class="gs-tok scoped" data-pos="85">requent</span><span class="gs-tok scoped" data-pos="86">_elements</span><span class="gs-tok scoped" data-pos="87">(nums</span><span class="gs-tok scoped" data-pos="88">,</span><span class="gs-tok scoped" data-pos="89"> k</span><span class="gs-tok scoped" data-pos="90">):↵
+</span><span class="gs-tok scoped" data-pos="91">   </span><span class="gs-tok scoped" data-pos="92"> count</span><span class="gs-tok scoped" data-pos="93"> =</span><span class="gs-tok scoped" data-pos="94"> {}↵
+</span><span class="gs-tok scoped" data-pos="95">   </span><span class="gs-tok scoped kw" data-pos="96"> for</span><span class="gs-tok scoped" data-pos="97"> num</span><span class="gs-tok scoped kw" data-pos="98"> in</span><span class="gs-tok scoped" data-pos="99"> nums</span><span class="gs-tok scoped" data-pos="100">:↵
+</span><span class="gs-tok scoped" data-pos="101">       </span><span class="gs-tok scoped kw" data-pos="102"> if</span><span class="gs-tok scoped" data-pos="103"> num</span><span class="gs-tok scoped kw" data-pos="104"> in</span><span class="gs-tok scoped" data-pos="105"> count</span><span class="gs-tok scoped" data-pos="106">:↵
+</span><span class="gs-tok scoped" data-pos="107">           </span><span class="gs-tok scoped" data-pos="108"> count</span><span class="gs-tok scoped" data-pos="109">[num</span><span class="gs-tok scoped" data-pos="110">]</span><span class="gs-tok scoped" data-pos="111"> +=</span><span class="gs-tok scoped" data-pos="112"> </span><span class="gs-tok scoped num" data-pos="113">1</span><span class="gs-tok scoped" data-pos="114">↵
+</span><span class="gs-tok scoped" data-pos="115">       </span><span class="gs-tok scoped kw" data-pos="116"> else</span><span class="gs-tok scoped" data-pos="117">:↵
+</span><span class="gs-tok scoped" data-pos="118">           </span><span class="gs-tok scoped" data-pos="119"> count</span><span class="gs-tok scoped" data-pos="120">[num</span><span class="gs-tok scoped" data-pos="121">]</span><span class="gs-tok scoped" data-pos="122"> =</span><span class="gs-tok scoped" data-pos="123"> </span><span class="gs-tok scoped num" data-pos="124">1</span><span class="gs-tok scoped" data-pos="125">↵
+↵
+</span><span class="gs-tok scoped" data-pos="126">   </span><span class="gs-tok scoped bi" data-pos="127"> sorted</span><span class="gs-tok scoped" data-pos="128">_count</span><span class="gs-tok scoped" data-pos="129"> =</span><span class="gs-tok scoped bi" data-pos="130"> sorted</span><span class="gs-tok scoped" data-pos="131">(count</span><span class="gs-tok scoped" data-pos="132">.items</span><span class="gs-tok scoped" data-pos="133">(),</span><span class="gs-tok scoped" data-pos="134"> key</span><span class="gs-tok scoped" data-pos="135">=lambda</span><span class="gs-tok scoped" data-pos="136"> x</span><span class="gs-tok scoped" data-pos="137">:</span><span class="gs-tok scoped" data-pos="138"> x</span><span class="gs-tok scoped" data-pos="139">[</span><span class="gs-tok scoped num" data-pos="140">1</span><span class="gs-tok scoped" data-pos="141">],</span><span class="gs-tok scoped" data-pos="142"> reverse</span><span class="gs-tok scoped" data-pos="143">=True</span><span class="gs-tok scoped" data-pos="144">)↵
+</span><span class="gs-tok scoped" data-pos="145">   </span><span class="gs-tok scoped kw" data-pos="146"> return</span><span class="gs-tok scoped" data-pos="147"> [</span><span class="gs-tok scoped" data-pos="148">x</span><span class="gs-tok scoped" data-pos="149">[</span><span class="gs-tok scoped num" data-pos="150">0</span><span class="gs-tok scoped" data-pos="151">]</span><span class="gs-tok scoped kw" data-pos="152"> for</span><span class="gs-tok scoped" data-pos="153"> x</span><span class="gs-tok scoped kw" data-pos="154"> in</span><span class="gs-tok scoped bi" data-pos="155"> sorted</span><span class="gs-tok scoped" data-pos="156">_count</span><span class="gs-tok scoped" data-pos="157">[:</span><span class="gs-tok scoped" data-pos="158">k</span><span class="gs-tok scoped" data-pos="159">]]↵
+</span><span class="gs-tok scoped" data-pos="160">&lt;/</span><span class="gs-tok scoped" data-pos="161">code</span><span class="gs-tok scoped" data-pos="162">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_d403aefd";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 2, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 3, "text": "system", "scoped": false, "readout": ""}, {"pos": 4, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 5, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 6, "text": "Cut", "scoped": false, "readout": ""}, {"pos": 7, "text": "ting", "scoped": false, "readout": ""}, {"pos": 8, "text": " Knowledge", "scoped": false, "readout": ""}, {"pos": 9, "text": " Date", "scoped": false, "readout": ""}, {"pos": 10, "text": ":", "scoped": false, "readout": ""}, {"pos": 11, "text": " December", "scoped": false, "readout": ""}, {"pos": 12, "text": " ", "scoped": false, "readout": ""}, {"pos": 13, "text": "202", "scoped": false, "readout": ""}, {"pos": 14, "text": "3", "scoped": false, "readout": ""}, {"pos": 15, "text": "\n", "scoped": false, "readout": ""}, {"pos": 16, "text": "Today", "scoped": false, "readout": ""}, {"pos": 17, "text": " Date", "scoped": false, "readout": ""}, {"pos": 18, "text": ":", "scoped": false, "readout": ""}, {"pos": 19, "text": " ", "scoped": false, "readout": ""}, {"pos": 20, "text": "26", "scoped": false, "readout": ""}, {"pos": 21, "text": " Jul", "scoped": false, "readout": ""}, {"pos": 22, "text": " ", "scoped": false, "readout": ""}, {"pos": 23, "text": "202", "scoped": false, "readout": ""}, {"pos": 24, "text": "4", "scoped": false, "readout": ""}, {"pos": 25, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 26, "text": "You", "scoped": false, "readout": ""}, {"pos": 27, "text": " are", "scoped": false, "readout": ""}, {"pos": 28, "text": " a", "scoped": false, "readout": ""}, {"pos": 29, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 30, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 31, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 32, "text": " in", "scoped": false, "readout": ""}, {"pos": 33, "text": " programming", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": " Always", "scoped": false, "readout": ""}, {"pos": 36, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 37, "text": " your", "scoped": false, "readout": ""}, {"pos": 38, "text": " code", "scoped": false, "readout": ""}, {"pos": 39, "text": " inside", "scoped": false, "readout": ""}, {"pos": 40, "text": " <", "scoped": false, "readout": ""}, {"pos": 41, "text": "code", "scoped": false, "readout": ""}, {"pos": 42, "text": "></", "scoped": false, "readout": ""}, {"pos": 43, "text": "code", "scoped": false, "readout": ""}, {"pos": 44, "text": ">", "scoped": false, "readout": ""}, {"pos": 45, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 46, "text": ".", "scoped": false, "readout": ""}, {"pos": 47, "text": " Just", "scoped": false, "readout": ""}, {"pos": 48, "text": " the", "scoped": false, "readout": ""}, {"pos": 49, "text": " code", "scoped": false, "readout": ""}, {"pos": 50, "text": ",", "scoped": false, "readout": ""}, {"pos": 51, "text": " no", "scoped": false, "readout": ""}, {"pos": 52, "text": " need", "scoped": false, "readout": ""}, {"pos": 53, "text": " to", "scoped": false, "readout": ""}, {"pos": 54, "text": " comment", "scoped": false, "readout": ""}, {"pos": 55, "text": " or", "scoped": false, "readout": ""}, {"pos": 56, "text": " explain", "scoped": false, "readout": ""}, {"pos": 57, "text": ".", "scoped": false, "readout": ""}, {"pos": 58, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 59, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 60, "text": "user", "scoped": false, "readout": ""}, {"pos": 61, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 62, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 63, "text": "Implement", "scoped": false, "readout": ""}, {"pos": 64, "text": " a", "scoped": false, "readout": ""}, {"pos": 65, "text": " function", "scoped": false, "readout": ""}, {"pos": 66, "text": " to", "scoped": false, "readout": ""}, {"pos": 67, "text": " return", "scoped": false, "readout": ""}, {"pos": 68, "text": " the", "scoped": false, "readout": ""}, {"pos": 69, "text": " k", "scoped": false, "readout": ""}, {"pos": 70, "text": " most", "scoped": false, "readout": ""}, {"pos": 71, "text": " frequent", "scoped": false, "readout": ""}, {"pos": 72, "text": " elements", "scoped": false, "readout": ""}, {"pos": 73, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 74, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 75, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 76, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 77, "text": "\n\n", "scoped": true, "readout": "```python\ndef solve():\n    code = \"\"\"\ndef example():\n    return ``` \n    def solution():\n        return ``` \n    ```\n    return ``` \n    def answer():\n``` \n    return ``` \ndef main():\n    ``` \n    def solve():\n        ``` \n    return ``` \n    def code():"}, {"pos": 78, "text": "<", "scoped": true, "readout": "I'm not writing code in this response, however here is an example: \n```\npublic class Test {\n    public static void main(String[] args) {\n        System.out.println(\"public class Test { \n        public static void main(String[] args) { \n        System.out.println(\\\"\\\"\\\"\n        public class"}, {"pos": 79, "text": "code", "scoped": true, "readout": "```python\nprint(\"def hello_world():\\n\\tprint(\\\"```python\\nimport os\\nprint('def hello_world():\\\\n\\\\tprint(\\\"```python\\nimport os\\nprint('def hello_world():\\\\n\\\\tprint(\\\"```def hello_world():\\n\\tprint(\\\"```python\\n"}, {"pos": 80, "text": ">\n", "scoped": true, "readout": "```python\ndef solution(nums):\n    return lambda: print('''import collections\ndef most_common(nums):\n    count = {}\n    def func():\n        for i in nums:\n            count[i] = count.get(``\n```python\ndef most_common(nums):\n    return '''import collections\ndef most_common(nums):"}, {"pos": 81, "text": "def", "scoped": true, "readout": "I'm finding the k most frequent elements. \n\n```python\ndef most_frequent(nums, k):\n    return heapq.nlargest(nums, key=heapq.count, key=lambda x: x) or []\n```"}, {"pos": 82, "text": " top", "scoped": true, "readout": "I'm finding the top k frequent elements. \n\nHere's a Python solution using a heap:\n```python\nfrom collections import Counter\nfrom heapq import nlargest\n\ndef most_common(k, nums):\n    return Counter(nums).most_common(k)\n\ndef top_k_frequent(nums, k):\n    return heapq.nlarg"}, {"pos": 83, "text": "_k", "scoped": true, "readout": "I don't know yet, you haven't given me a list of the code with the items and their frequencies. \n\nTo find the most frequent items, I can use a function that returns the top k items with the highest frequency. Here is a Python solution using the `Counter` class from the `collections`"}, {"pos": 84, "text": "_f", "scoped": true, "readout": "I'm not given a code snippet, please provide a function like `def most_frequent(nums):` with `return heapq.nlargest(nums, k)` or use `collections.Counter(nums).most_common(k)`"}, {"pos": 85, "text": "requent", "scoped": true, "readout": "I'm not given a line of code. Please provide the code with the items and their frequencies (e.g., `['apple', 'orange', 'banana']`) or the top k frequent elements (e.g., `[1,1,2]`) and the number k (e.g., `2`"}, {"pos": 86, "text": "_elements", "scoped": true, "readout": "I'm not given a list of elements to find the most frequent items. \n\nTo solve this, I can use a counter to find the k most frequent elements. \n\nHere's an example in Python:\n```python\nfrom collections import Counter\ndef most_frequent(nums, k):\n    return Counter(nums).most"}, {"pos": 87, "text": "(nums", "scoped": true, "readout": "I'm counting the frequency of elements to find the k most frequent elements."}, {"pos": 88, "text": ",", "scoped": true, "readout": "I'm not sure what \"this line of the code\" refers to, as you didn't specify the value of \"k\". Could you please provide the value of k and I can give you the top k frequent elements."}, {"pos": 89, "text": " k", "scoped": true, "readout": "You haven't specified the line of code or the number of items to find. Please provide a list of code with their frequencies or specify k items."}, {"pos": 90, "text": "):\n", "scoped": true, "readout": "```python\ndef find_k_largest(nums, k):\n    return sorted(nums, key=lambda x: sorted(x) for x in nums)\n```"}, {"pos": 91, "text": "   ", "scoped": true, "readout": "I'm counting word frequencies."}, {"pos": 92, "text": " count", "scoped": true, "readout": "I'm counting the frequency of each element in the code. \n\nLet me know the code and I'll provide the top elements by frequency."}, {"pos": 93, "text": " =", "scoped": true, "readout": "I'm counting word frequencies using a dictionary. \n\n```python\nfrom collections import Counter\nwords = Counter(input().split())\nfor word, count in Counter(words).most_common():\n    print(f'{word}: {count}')\n```"}, {"pos": 94, "text": " {}\n", "scoped": true, "readout": "I'm counting word frequencies with a dictionary."}, {"pos": 95, "text": "   ", "scoped": true, "readout": "I don't know yet. You haven't provided a list of words and their frequencies. \n\nTo find out, I can use a dictionary to store word frequencies, then use a heap to find the top k frequent words. \n\nHere is a Python code snippet to solve this problem:\n\n```python\nfrom collections import"}, {"pos": 96, "text": " for", "scoped": true, "readout": "I'm counting word frequencies with a dictionary. \n\ndict = {}\nfor word in words:\n    dict[word] = dict.get(word, 0) + 1 \n\nOr, using Counter:\nfrom collections import Counter\ncounter = Counter(words)\nfor word, count in counter.items():\n    dict[word] = count"}, {"pos": 97, "text": " num", "scoped": true, "readout": "I'm counting frequency of elements."}, {"pos": 98, "text": " in", "scoped": true, "readout": "I'm counting frequency of elements. \n\nfreq = {}\nfor item in code:\n    freq[item] = freq.get(item, 0) + 1\nor \nfreq = dict(code)\nfor item in code:\n    freq[item] += 1\n\n#or using a dictionary\nfrom collections import Counter"}, {"pos": 99, "text": " nums", "scoped": true, "readout": "I'm counting occurrences. \n\n(To provide a more accurate answer, I would need to know the code and see the frequency of each element)\n\nHere is a Python way to do it: \ncode = [1,2,2,3,3,3]\ncount = {}\nfor item in code:"}, {"pos": 100, "text": ":\n", "scoped": true, "readout": "I'm counting occurrences of each element. \n\ndict = {}\nfor item in lst:\n    dict[item] = dict.get(item, 0) + 1 \n\nor \ndict = {}\nfor item in lst:\n    dict[item] = dict.get(item, 0)\ndict = {k: v for k"}, {"pos": 101, "text": "       ", "scoped": true, "readout": "I'm counting word frequencies. \n\n(e.g. word: count) \n{ \n    word: 1 \n} \n\nword: 2 \n{ \n    word: 2 \n} \n\nUsing a dictionary: \ndict = {} \ndict[word] = dict.get(word, 0) + 1"}, {"pos": 102, "text": " if", "scoped": true, "readout": "I'm counting word frequencies. \n\n(e.g. word: 1, word: 2) \nThen I update the count. \n\n{word: frequency} \n\nword -> frequency \nfrequency += 1 \n\ndict[word] = dict.get(word, 0) \ndict[word] += 1 \n\nOr"}, {"pos": 103, "text": " num", "scoped": true, "readout": "I'm not tracking anything yet. What's the code?"}, {"pos": 104, "text": " in", "scoped": true, "readout": "I'm not tracking data yet, so I'll start by adding it to the dictionary: \ndict = {}\ndict[count] = dict.get(count,0)\ndict[count] = count in dict and dict[count]=1 if count not in dict else dict[count]= dict[count]+1\ncount = dict.get(count"}, {"pos": 105, "text": " count", "scoped": true, "readout": "I don't know you've told me you've counted. \n\n(If the element is in the dictionary, I add 1 to its count; otherwise, I add it to the dictionary with a count of 1.)\n\ndict.get(key,0) \ndict[key] = dict.get(key,0) +"}, {"pos": 106, "text": ":\n", "scoped": true, "readout": "Incrementing the count."}, {"pos": 107, "text": "           ", "scoped": true, "readout": "I'm counting its frequency."}, {"pos": 108, "text": " count", "scoped": true, "readout": "I'm counting occurrences of each element. \n\n`dict[element] = dict.get(element, 0) + 1` \nor \n`dict[element] += 1`"}, {"pos": 109, "text": "[num", "scoped": true, "readout": "I'm counting occurrences."}, {"pos": 110, "text": "]", "scoped": true, "readout": "I'm counting occurrences."}, {"pos": 111, "text": " +=", "scoped": true, "readout": "I'm counting frequency."}, {"pos": 112, "text": " ", "scoped": true, "readout": "I'm counting element frequencies."}, {"pos": 113, "text": "1", "scoped": true, "readout": "I don't have a frequency count. You haven't told me what the code is. \n\nTo find out, I'll count the occurrence of each element in the code. \n\nTell me the code, and I'll count. \n\nIf you have a list, I can count, here is the list so far"}, {"pos": 114, "text": "\n", "scoped": true, "readout": "I'm counting word frequencies using a dictionary. \n\n```python\nword_freq = {}\nfor word in words:\n    word_freq[word] = word_freq.get(word, 0) + 1\n```"}, {"pos": 115, "text": "       ", "scoped": true, "readout": "I'm counting occurrences. \n\ndict = {}\ndict[item] = dict.get(item, 0) + 1 \ndict[item] = dict.get(item, 0) + 1 becomes \ndict[item] = 1 if item in dict else dict[item] = 1\ndict[item] = dict"}, {"pos": 116, "text": " else", "scoped": true, "readout": "I'm incrementing the count."}, {"pos": 117, "text": ":\n", "scoped": true, "readout": "```python\ndef solve():\n    nums = [1, 2, 3, 4, 5]\n    return [x for x in range(1, 6)]\n```"}, {"pos": 118, "text": "           ", "scoped": true, "readout": "I don't have a code count. Let me start: `{word: 1}` \n\nPlease insert the word."}, {"pos": 119, "text": " count", "scoped": true, "readout": "I'm counting occurrences. \n\n* New word: 1 \n(I'll keep track of each word's frequency)"}, {"pos": 120, "text": "[num", "scoped": true, "readout": "I'm counting occurrences."}, {"pos": 121, "text": "]", "scoped": true, "readout": "```python\ndef solve(arr):\n    return sorted(arr)\n```"}, {"pos": 122, "text": " =", "scoped": true, "readout": "I'm counting."}, {"pos": 123, "text": " ", "scoped": true, "readout": "You didn't specify the code or the values. Can you give me the top values and I'll tell you the most frequent ones?"}, {"pos": 124, "text": "1", "scoped": true, "readout": "I'm counting word frequencies."}, {"pos": 125, "text": "\n\n", "scoped": true, "readout": "I'm counting word frequencies using a dictionary or a hash map, then sorting them by value and returning the top n items. \n\n```python\nword_freq = {}\nfor word in words:\n    word_freq[word] = word_freq.get(word, 0) + 1\nfreq = sorted(word_freq.items(),"}, {"pos": 126, "text": "   ", "scoped": true, "readout": "I'm counting the top elements by frequency. \n\n1. **Counting frequency**: Using a dictionary to store the frequency of each element.\n2. **Sorting**: Sorting the dictionary by frequency using a heap.\n3. **Returning top k**: Returning the top k elements based on frequency.\n\nHere is a Python code"}, {"pos": 127, "text": " sorted", "scoped": true, "readout": "I'm counting the frequency of each word in the code based on their occurrence. \n\n1. **Counting**: Counting the occurrence of each word.\n2. **Sorting**: Sorting the words based on their frequency.\n3. **Outputting**: Outputting the top N words with the highest frequency.\n\nHere is"}, {"pos": 128, "text": "_count", "scoped": true, "readout": "I'm not aware of the code yet. Can you provide a list of items sorted by frequency, or use a dictionary with items sorted by value, to show the most frequent items? \n\nFor example: \nitem1: 5\nitem2: 3\nitem3: 2\n\nOr \n{"}, {"pos": 129, "text": " =", "scoped": true, "readout": "I'm sorting by value, then using a heap to get the top N items. \n\nsorted_x = sorted(x.items(), key=operator.itemgetter(1), reverse=True) \nx_sorted = sorted(x.items(), key=lambda b: b[1], reverse=True) \nx_sorted.sort() \nx ="}, {"pos": 130, "text": " sorted", "scoped": true, "readout": "I'm counting variable values by frequency."}, {"pos": 131, "text": "(count", "scoped": true, "readout": "I'm not given a line of code. \n\nIf you provide a list of items with their frequency, I can sort them by frequency and tell you the most common ones. \n\nPlease provide the list, and I'll count the frequency of each item."}, {"pos": 132, "text": ".items", "scoped": true, "readout": "I'm counting item frequencies."}, {"pos": 133, "text": "(),", "scoped": true, "readout": "I'm counting item frequencies."}, {"pos": 134, "text": " key", "scoped": true, "readout": "I'm sorting by value, using a dictionary with `itemgetter` to rank items by frequency."}, {"pos": 135, "text": "=lambda", "scoped": true, "readout": "I'm sorting by value. \n\n(key, value) => value"}, {"pos": 136, "text": " x", "scoped": true, "readout": "I'm not sorted by value, so I'll sort by key. \n\nkey: x[1] \nx = sorted(x, key=lambda x: x[1])"}, {"pos": 137, "text": ":", "scoped": true, "readout": "I'm not sure what you mean by \"this line of code\". You haven't specified which lines or their frequencies. \n\nTo answer your question, I can provide a list of words and their frequencies. Then I can sort by frequency and provide the top values. \n\nHere's a list of the top 10"}, {"pos": 138, "text": " x", "scoped": true, "readout": "I'm not sure which line you're referring to, as you didn't specify the code. \n\nIf you provide the code with the frequency, I can tell you which one has the highest frequency. \n\nFor example, if it's about the frequency, here is the list:\n1. **item**: 3"}, {"pos": 139, "text": "[", "scoped": true, "readout": "You didn't specify the code or the number of items to return. Please provide the code and the number of top items (k) you want to get. I'll return the k most frequent elements."}, {"pos": 140, "text": "1", "scoped": true, "readout": "I'm counting."}, {"pos": 141, "text": "],", "scoped": true, "readout": "I'm not sorted yet. \n\nTo sort, I need the code and a number to determine the order. What's the code and how do you want it sorted?"}, {"pos": 142, "text": " reverse", "scoped": true, "readout": "I'm sorting by value in descending order."}, {"pos": 143, "text": "=True", "scoped": true, "readout": "I'm not given a list of code lines sorted by frequency. \n\nTo give you the top items, I would need the code sorted by frequency. Here are the top items based on hypothetical data:\n\n1. **item**: frequency\nI can give you the top N items based on their frequency. \n\nTo get"}, {"pos": 144, "text": ")\n", "scoped": true, "readout": "I'm not given a line of code. Can you provide a list of code sorted by frequency and I'll tell you the top items. \n\nFor example, if you want the top 5, I'll give you the top 5 items with their frequency. \n\nHere is an example:\n1. item -"}, {"pos": 145, "text": "   ", "scoped": true, "readout": "I'm not given a list of codes. Can you provide the top items you want me to return. I will return the top k items based on their frequency. \n\nFor example, if you want the top 3 items, I will return the 3 items with the highest frequency. \n\nPlease provide the number"}, {"pos": 146, "text": " return", "scoped": true, "readout": "I'm retrieving the top values. \n\n`return [x for x in dict(sorted(dict.items(), key = lambda x: x[1], k = r)) for i in range(0, r)]`"}, {"pos": 147, "text": " [", "scoped": true, "readout": "You didn't specify the codes. Please provide the codes. I'll give you the top values. \n\nExample: If you say 3, I'll give you the top 3 codes. \n\nHere are the top 3 codes: \n1. code1 \n2. code2 \n3. code3"}, {"pos": 148, "text": "x", "scoped": true, "readout": "You didn't specify the line of code. You only provided the variable names. \n\nTo answer your question, I'd need the variable names. Here are the top values: \n\n1. item[0] \nI can provide the top items if you need them."}, {"pos": 149, "text": "[", "scoped": true, "readout": "I'm not showing code. You only asked for the \"line of the code\" which are the values, so I'll answer with just the values: \n\nI don't have the values, only the keys. Here are the keys: \n1. key \n2. value \n\nHere are the keys and values"}, {"pos": 150, "text": "0", "scoped": true, "readout": "You didn't specify the code. What are the values?"}, {"pos": 151, "text": "]", "scoped": true, "readout": "I'm not given a list of codes to work with. Can you provide the codes to find out which ones are most frequent?"}, {"pos": 152, "text": " for", "scoped": true, "readout": "You only asked for the top items, so I'll give you the top items from the list. Since you asked for the top items, I will provide the first items in order. \n\nI'll provide the code: \nitems = [[x for x in y] for y in [[x for x in [["}, {"pos": 153, "text": " x", "scoped": true, "readout": "I'm referencing the element."}, {"pos": 154, "text": " in", "scoped": true, "readout": "I'm not given a line of code. You'd have to give me the code and I can tell you the top items based on their order. \n\nTo get the answer, I will give you the top items in the list based on their order. \n\nExample: If you want the top 5, I"}, {"pos": 155, "text": " sorted", "scoped": true, "readout": "I'm not given a line of code. I can sort by value and get top items."}, {"pos": 156, "text": "_count", "scoped": true, "readout": "I'm not given a code list, but I can give you the top items based on frequency. You want the top (number) items in order of their frequency, I will list the top (number) in order of their frequency. \n\nTo find the answer, I will find the top (number) items"}, {"pos": 157, "text": "[:", "scoped": true, "readout": "I'm selecting the top k elements."}, {"pos": 158, "text": "k", "scoped": true, "readout": "I'm not given a line of code. \n\nTo get the answer, I can sort the code by frequency and return the top values. Here is an example in Python:\n```python\ndef most_common(code):\n    return sorted(code, key=lambda x: x[1])\n\ncode = [(k for k in"}, {"pos": 159, "text": "]]\n", "scoped": true, "readout": "```python\ndef get_top_n_items(lst, n):\n    return sorted(lst, key=lambda x: x[1])[-n:]\n```"}, {"pos": 160, "text": "</", "scoped": true, "readout": "```python\ndef sort_list(input_list):\n    return sorted(input_list)\n```"}, {"pos": 161, "text": "code", "scoped": true, "readout": "```python\ndef greet():\n    print(\"Hello world\")\n```"}, {"pos": 162, "text": ">", "scoped": true, "readout": "```python\ndef solve(arr):\n    return sorted(arr)\n```"}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

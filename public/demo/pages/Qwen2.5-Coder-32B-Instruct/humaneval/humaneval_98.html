@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>98 count upper  ·  Qwen2.5-Coder-32B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_9f6af494">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">98 count upper  ·  Qwen2.5-Coder-32B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="1">system</span><span class="gs-tok noncode" data-pos="2">↵
+</span><span class="gs-tok noncode" data-pos="3">You</span><span class="gs-tok noncode" data-pos="4"> are</span><span class="gs-tok noncode" data-pos="5"> a</span><span class="gs-tok noncode" data-pos="6"> helpful</span><span class="gs-tok noncode" data-pos="7"> assistant</span><span class="gs-tok noncode" data-pos="8"> proficient</span><span class="gs-tok noncode" data-pos="9"> in</span><span class="gs-tok noncode" data-pos="10"> programming</span><span class="gs-tok noncode" data-pos="11">.</span><span class="gs-tok noncode" data-pos="12"> Always</span><span class="gs-tok noncode" data-pos="13"> wrap</span><span class="gs-tok noncode" data-pos="14"> your</span><span class="gs-tok noncode" data-pos="15"> code</span><span class="gs-tok noncode" data-pos="16"> inside</span><span class="gs-tok noncode" data-pos="17"> &lt;</span><span class="gs-tok noncode" data-pos="18">code</span><span class="gs-tok noncode" data-pos="19">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="20">code</span><span class="gs-tok noncode" data-pos="21">&gt;</span><span class="gs-tok noncode" data-pos="22"> blocks</span><span class="gs-tok noncode" data-pos="23">.</span><span class="gs-tok noncode" data-pos="24"> Just</span><span class="gs-tok noncode" data-pos="25"> the</span><span class="gs-tok noncode" data-pos="26"> code</span><span class="gs-tok noncode" data-pos="27">,</span><span class="gs-tok noncode" data-pos="28"> no</span><span class="gs-tok noncode" data-pos="29"> need</span><span class="gs-tok noncode" data-pos="30"> to</span><span class="gs-tok noncode" data-pos="31"> comment</span><span class="gs-tok noncode" data-pos="32"> or</span><span class="gs-tok noncode" data-pos="33"> explain</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="36">↵
+</span><span class="gs-tok noncode" data-pos="37">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="38">user</span><span class="gs-tok noncode" data-pos="39">↵
+</span><span class="gs-tok noncode" data-pos="40">Given</span><span class="gs-tok noncode" data-pos="41"> a</span><span class="gs-tok noncode" data-pos="42"> string</span><span class="gs-tok noncode" data-pos="43"> s</span><span class="gs-tok noncode" data-pos="44">,</span><span class="gs-tok noncode" data-pos="45"> count</span><span class="gs-tok noncode" data-pos="46"> the</span><span class="gs-tok noncode" data-pos="47"> number</span><span class="gs-tok noncode" data-pos="48"> of</span><span class="gs-tok noncode" data-pos="49"> uppercase</span><span class="gs-tok noncode" data-pos="50"> vowels</span><span class="gs-tok noncode" data-pos="51"> in</span><span class="gs-tok noncode" data-pos="52"> even</span><span class="gs-tok noncode" data-pos="53"> indices</span><span class="gs-tok noncode" data-pos="54"> in</span><span class="gs-tok noncode" data-pos="55"> Python</span><span class="gs-tok noncode" data-pos="56">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="57">↵
+</span><span class="gs-tok noncode" data-pos="58">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="59">assistant</span><span class="gs-tok scoped" data-pos="60">↵
+</span><span class="gs-tok scoped" data-pos="61">&lt;</span><span class="gs-tok scoped" data-pos="62">code</span><span class="gs-tok scoped" data-pos="63">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="64">def</span><span class="gs-tok scoped" data-pos="65"> count</span><span class="gs-tok scoped" data-pos="66">_upper</span><span class="gs-tok scoped" data-pos="67">(</span><span class="gs-tok scoped" data-pos="68">phrase</span><span class="gs-tok scoped" data-pos="69">):↵
+</span><span class="gs-tok scoped" data-pos="70">   </span><span class="gs-tok scoped kw" data-pos="71"> return</span><span class="gs-tok scoped bi" data-pos="72"> sum</span><span class="gs-tok scoped" data-pos="73">(</span><span class="gs-tok scoped num" data-pos="74">1</span><span class="gs-tok scoped kw" data-pos="75"> for</span><span class="gs-tok scoped" data-pos="76"> i</span><span class="gs-tok scoped kw" data-pos="77"> in</span><span class="gs-tok scoped bi" data-pos="78"> range</span><span class="gs-tok scoped" data-pos="79">(</span><span class="gs-tok scoped num" data-pos="80">0</span><span class="gs-tok scoped" data-pos="81">,</span><span class="gs-tok scoped bi" data-pos="82"> len</span><span class="gs-tok scoped" data-pos="83">(</span><span class="gs-tok scoped" data-pos="84">phrase</span><span class="gs-tok scoped" data-pos="85">),</span><span class="gs-tok scoped" data-pos="86"> </span><span class="gs-tok scoped num" data-pos="87">2</span><span class="gs-tok scoped" data-pos="88">)</span><span class="gs-tok scoped kw" data-pos="89"> if</span><span class="gs-tok scoped" data-pos="90"> phrase</span><span class="gs-tok scoped" data-pos="91">[i</span><span class="gs-tok scoped" data-pos="92">]</span><span class="gs-tok scoped kw" data-pos="93"> in</span><span class="gs-tok scoped" data-pos="94"> &#x27;</span><span class="gs-tok scoped" data-pos="95">AE</span><span class="gs-tok scoped" data-pos="96">IO</span><span class="gs-tok scoped" data-pos="97">U</span><span class="gs-tok scoped" data-pos="98">&#x27;)↵
+</span><span class="gs-tok scoped" data-pos="99">&lt;/</span><span class="gs-tok scoped" data-pos="100">code</span><span class="gs-tok scoped" data-pos="101">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_9f6af494";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "system", "scoped": false, "readout": ""}, {"pos": 2, "text": "\n", "scoped": false, "readout": ""}, {"pos": 3, "text": "You", "scoped": false, "readout": ""}, {"pos": 4, "text": " are", "scoped": false, "readout": ""}, {"pos": 5, "text": " a", "scoped": false, "readout": ""}, {"pos": 6, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 7, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 8, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 9, "text": " in", "scoped": false, "readout": ""}, {"pos": 10, "text": " programming", "scoped": false, "readout": ""}, {"pos": 11, "text": ".", "scoped": false, "readout": ""}, {"pos": 12, "text": " Always", "scoped": false, "readout": ""}, {"pos": 13, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 14, "text": " your", "scoped": false, "readout": ""}, {"pos": 15, "text": " code", "scoped": false, "readout": ""}, {"pos": 16, "text": " inside", "scoped": false, "readout": ""}, {"pos": 17, "text": " <", "scoped": false, "readout": ""}, {"pos": 18, "text": "code", "scoped": false, "readout": ""}, {"pos": 19, "text": "></", "scoped": false, "readout": ""}, {"pos": 20, "text": "code", "scoped": false, "readout": ""}, {"pos": 21, "text": ">", "scoped": false, "readout": ""}, {"pos": 22, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 23, "text": ".", "scoped": false, "readout": ""}, {"pos": 24, "text": " Just", "scoped": false, "readout": ""}, {"pos": 25, "text": " the", "scoped": false, "readout": ""}, {"pos": 26, "text": " code", "scoped": false, "readout": ""}, {"pos": 27, "text": ",", "scoped": false, "readout": ""}, {"pos": 28, "text": " no", "scoped": false, "readout": ""}, {"pos": 29, "text": " need", "scoped": false, "readout": ""}, {"pos": 30, "text": " to", "scoped": false, "readout": ""}, {"pos": 31, "text": " comment", "scoped": false, "readout": ""}, {"pos": 32, "text": " or", "scoped": false, "readout": ""}, {"pos": 33, "text": " explain", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 36, "text": "\n", "scoped": false, "readout": ""}, {"pos": 37, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 38, "text": "user", "scoped": false, "readout": ""}, {"pos": 39, "text": "\n", "scoped": false, "readout": ""}, {"pos": 40, "text": "Given", "scoped": false, "readout": ""}, {"pos": 41, "text": " a", "scoped": false, "readout": ""}, {"pos": 42, "text": " string", "scoped": false, "readout": ""}, {"pos": 43, "text": " s", "scoped": false, "readout": ""}, {"pos": 44, "text": ",", "scoped": false, "readout": ""}, {"pos": 45, "text": " count", "scoped": false, "readout": ""}, {"pos": 46, "text": " the", "scoped": false, "readout": ""}, {"pos": 47, "text": " number", "scoped": false, "readout": ""}, {"pos": 48, "text": " of", "scoped": false, "readout": ""}, {"pos": 49, "text": " uppercase", "scoped": false, "readout": ""}, {"pos": 50, "text": " vowels", "scoped": false, "readout": ""}, {"pos": 51, "text": " in", "scoped": false, "readout": ""}, {"pos": 52, "text": " even", "scoped": false, "readout": ""}, {"pos": 53, "text": " indices", "scoped": false, "readout": ""}, {"pos": 54, "text": " in", "scoped": false, "readout": ""}, {"pos": 55, "text": " Python", "scoped": false, "readout": ""}, {"pos": 56, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 57, "text": "\n", "scoped": false, "readout": ""}, {"pos": 58, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 59, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 60, "text": "\n", "scoped": true, "readout": "```python\ncount = sum(1 for c in s if c in 'aeiou')\n```"}, {"pos": 61, "text": "<", "scoped": true, "readout": "Sure, here is the brief code snippet:\n\n```python\nresult = x * y\n```"}, {"pos": 62, "text": "code", "scoped": true, "readout": "Sure, here's a brief snippet:\n\n```python\nresult = sum([c for c in s if c.isdigit()])\n```\n\nThis line counts digits in a string `s`."}, {"pos": 63, "text": ">\n", "scoped": true, "readout": "I'm counting the number of uppercase vowels in the string `s` using a sum with a generator expression: `sum(1 for c in s if c in 'AEIOU')`."}, {"pos": 64, "text": "def", "scoped": true, "readout": "I'm counting uppercase vowels in the string at even indices."}, {"pos": 65, "text": " count", "scoped": true, "readout": "I'm checking if the character at the current index is uppercase and if the index is even."}, {"pos": 66, "text": "_upper", "scoped": true, "readout": "I'm checking if the character at the current index is an uppercase vowel."}, {"pos": 67, "text": "(", "scoped": true, "readout": "I'm checking if the character at the current index is an uppercase vowel."}, {"pos": 68, "text": "phrase", "scoped": true, "readout": "I'm checking each character at even indices to see if it's uppercase and counting it if it is."}, {"pos": 69, "text": "):\n", "scoped": true, "readout": "I'm iterating over the string with a step of 2 and summing up the characters that are uppercase vowels. Here's a concise way to do it in Python:\n\n```python\nsum(1 for c in s if c in 'AEIOU' and s.index(c) % 2 == 0)"}, {"pos": 70, "text": "   ", "scoped": true, "readout": "I'm checking if the character at the current index is an uppercase vowel and incrementing a counter if true."}, {"pos": 71, "text": " return", "scoped": true, "readout": "I'm counting characters that match a specific condition."}, {"pos": 72, "text": " sum", "scoped": true, "readout": "I'm checking if the character is uppercase and a vowel."}, {"pos": 73, "text": "(", "scoped": true, "readout": "I'm checking if the character is uppercase and a vowel."}, {"pos": 74, "text": "1", "scoped": true, "readout": "I'm checking if the character is uppercase and if it's one of 'A', 'E', 'I', 'O', 'U'."}, {"pos": 75, "text": " for", "scoped": true, "readout": "I'm checking if the character at the current index is uppercase and if the index is even."}, {"pos": 76, "text": " i", "scoped": true, "readout": "I'm checking characters at even indices to see if they are uppercase and match a condition."}, {"pos": 77, "text": " in", "scoped": true, "readout": "I'm checking characters at even indices."}, {"pos": 78, "text": " range", "scoped": true, "readout": "I'm checking characters at even indices and performing an action if they meet a condition."}, {"pos": 79, "text": "(", "scoped": true, "readout": "I'm checking characters at even indices and evaluating if they meet a specific condition."}, {"pos": 80, "text": "0", "scoped": true, "readout": "I'm checking characters at even indices in the string."}, {"pos": 81, "text": ",", "scoped": true, "readout": "I'm checking characters at even indices in the string."}, {"pos": 82, "text": " len", "scoped": true, "readout": "I'm checking characters at even indices and verifying if they are uppercase, then checking if that character is a vowel."}, {"pos": 83, "text": "(", "scoped": true, "readout": "I'm checking if the character is uppercase and if it's one of 'A', 'E', 'I', 'O', 'U'."}, {"pos": 84, "text": "phrase", "scoped": true, "readout": "I'm checking characters at even indices."}, {"pos": 85, "text": "),", "scoped": true, "readout": "I'm checking characters at even indices."}, {"pos": 86, "text": " ", "scoped": true, "readout": "I'm checking if the index is even and if the character at that index is uppercase, then I check if it's a vowel."}, {"pos": 87, "text": "2", "scoped": true, "readout": "I'm checking if the character is uppercase and if it's one of the vowels."}, {"pos": 88, "text": ")", "scoped": true, "readout": "I'm checking if the character is uppercase and if it's one of the vowels."}, {"pos": 89, "text": " if", "scoped": true, "readout": "I'm checking if the character is an uppercase vowel."}, {"pos": 90, "text": " phrase", "scoped": true, "readout": "I'm checking if the character is uppercase and at an even index."}, {"pos": 91, "text": "[i", "scoped": true, "readout": "I'm checking if the character is an uppercase vowel."}, {"pos": 92, "text": "]", "scoped": true, "readout": "I'm checking if the character is an uppercase vowel."}, {"pos": 93, "text": " in", "scoped": true, "readout": "I'm checking if the character is uppercase and one of A, E, I, O, U."}, {"pos": 94, "text": " '", "scoped": true, "readout": "I'm checking if the character is uppercase."}, {"pos": 95, "text": "AE", "scoped": true, "readout": "I'm checking if the character is uppercase."}, {"pos": 96, "text": "IO", "scoped": true, "readout": "I'm checking if the character is uppercase."}, {"pos": 97, "text": "U", "scoped": true, "readout": "I'm checking if the character is uppercase and a vowel."}, {"pos": 98, "text": "')\n", "scoped": true, "readout": "I'm counting the number of uppercase letters in a string using a single line of Python code: `sum(1 for c in s if c.isupper())`"}, {"pos": 99, "text": "</", "scoped": true, "readout": "I'm waiting for you to provide the specific line of code you're referring to."}, {"pos": 100, "text": "code", "scoped": true, "readout": "Sure, here's the line of code:\n\n```python\nreturn result\n```"}, {"pos": 101, "text": ">", "scoped": true, "readout": "I'm executing the specified line of code."}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

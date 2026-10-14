@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>sliding window max  ·  Qwen2.5-Coder-32B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_8916333e">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">sliding window max  ·  Qwen2.5-Coder-32B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="1">system</span><span class="gs-tok noncode" data-pos="2">↵
+</span><span class="gs-tok noncode" data-pos="3">You</span><span class="gs-tok noncode" data-pos="4"> are</span><span class="gs-tok noncode" data-pos="5"> a</span><span class="gs-tok noncode" data-pos="6"> helpful</span><span class="gs-tok noncode" data-pos="7"> assistant</span><span class="gs-tok noncode" data-pos="8"> proficient</span><span class="gs-tok noncode" data-pos="9"> in</span><span class="gs-tok noncode" data-pos="10"> programming</span><span class="gs-tok noncode" data-pos="11">.</span><span class="gs-tok noncode" data-pos="12"> Always</span><span class="gs-tok noncode" data-pos="13"> wrap</span><span class="gs-tok noncode" data-pos="14"> your</span><span class="gs-tok noncode" data-pos="15"> code</span><span class="gs-tok noncode" data-pos="16"> inside</span><span class="gs-tok noncode" data-pos="17"> &lt;</span><span class="gs-tok noncode" data-pos="18">code</span><span class="gs-tok noncode" data-pos="19">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="20">code</span><span class="gs-tok noncode" data-pos="21">&gt;</span><span class="gs-tok noncode" data-pos="22"> blocks</span><span class="gs-tok noncode" data-pos="23">.</span><span class="gs-tok noncode" data-pos="24"> Just</span><span class="gs-tok noncode" data-pos="25"> the</span><span class="gs-tok noncode" data-pos="26"> code</span><span class="gs-tok noncode" data-pos="27">,</span><span class="gs-tok noncode" data-pos="28"> no</span><span class="gs-tok noncode" data-pos="29"> need</span><span class="gs-tok noncode" data-pos="30"> to</span><span class="gs-tok noncode" data-pos="31"> comment</span><span class="gs-tok noncode" data-pos="32"> or</span><span class="gs-tok noncode" data-pos="33"> explain</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="36">↵
+</span><span class="gs-tok noncode" data-pos="37">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="38">user</span><span class="gs-tok noncode" data-pos="39">↵
+</span><span class="gs-tok noncode" data-pos="40">Implement</span><span class="gs-tok noncode" data-pos="41"> sliding</span><span class="gs-tok noncode" data-pos="42"> window</span><span class="gs-tok noncode" data-pos="43"> maximum</span><span class="gs-tok noncode" data-pos="44"> using</span><span class="gs-tok noncode" data-pos="45"> a</span><span class="gs-tok noncode" data-pos="46"> deque</span><span class="gs-tok noncode" data-pos="47"> in</span><span class="gs-tok noncode" data-pos="48"> Python</span><span class="gs-tok noncode" data-pos="49">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="50">↵
+</span><span class="gs-tok noncode" data-pos="51">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="52">assistant</span><span class="gs-tok scoped" data-pos="53">↵
+</span><span class="gs-tok scoped" data-pos="54">&lt;</span><span class="gs-tok scoped" data-pos="55">code</span><span class="gs-tok scoped" data-pos="56">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="57">def</span><span class="gs-tok scoped" data-pos="58"> sliding</span><span class="gs-tok scoped" data-pos="59">_window</span><span class="gs-tok scoped" data-pos="60">_max</span><span class="gs-tok scoped" data-pos="61">(</span><span class="gs-tok scoped" data-pos="62"> nums</span><span class="gs-tok scoped" data-pos="63">,</span><span class="gs-tok scoped" data-pos="64"> k</span><span class="gs-tok scoped" data-pos="65">):↵
+</span><span class="gs-tok scoped" data-pos="66">   </span><span class="gs-tok scoped kw" data-pos="67"> from</span><span class="gs-tok scoped" data-pos="68"> collections</span><span class="gs-tok scoped kw" data-pos="69"> import</span><span class="gs-tok scoped" data-pos="70"> deque</span><span class="gs-tok scoped" data-pos="71">↵
+</span><span class="gs-tok scoped" data-pos="72">   </span><span class="gs-tok scoped" data-pos="73"> de</span><span class="gs-tok scoped" data-pos="74">q</span><span class="gs-tok scoped" data-pos="75"> =</span><span class="gs-tok scoped" data-pos="76"> deque</span><span class="gs-tok scoped" data-pos="77">()↵
+</span><span class="gs-tok scoped" data-pos="78">   </span><span class="gs-tok scoped bi" data-pos="79"> max</span><span class="gs-tok scoped" data-pos="80">_values</span><span class="gs-tok scoped" data-pos="81"> =</span><span class="gs-tok scoped" data-pos="82"> []↵
+</span><span class="gs-tok scoped" data-pos="83">    ↵
+</span><span class="gs-tok scoped" data-pos="84">   </span><span class="gs-tok scoped kw" data-pos="85"> for</span><span class="gs-tok scoped" data-pos="86"> i</span><span class="gs-tok scoped kw" data-pos="87"> in</span><span class="gs-tok scoped bi" data-pos="88"> range</span><span class="gs-tok scoped" data-pos="89">(len</span><span class="gs-tok scoped" data-pos="90">(nums</span><span class="gs-tok scoped" data-pos="91">)):↵
+</span><span class="gs-tok scoped" data-pos="92">       </span><span class="gs-tok scoped kw" data-pos="93"> while</span><span class="gs-tok scoped" data-pos="94"> de</span><span class="gs-tok scoped" data-pos="95">q</span><span class="gs-tok scoped kw" data-pos="96"> and</span><span class="gs-tok scoped" data-pos="97"> de</span><span class="gs-tok scoped" data-pos="98">q</span><span class="gs-tok scoped" data-pos="99">[</span><span class="gs-tok scoped num" data-pos="100">0</span><span class="gs-tok scoped" data-pos="101">]</span><span class="gs-tok scoped" data-pos="102"> &lt;</span><span class="gs-tok scoped" data-pos="103"> i</span><span class="gs-tok scoped" data-pos="104"> -</span><span class="gs-tok scoped" data-pos="105"> k</span><span class="gs-tok scoped" data-pos="106"> +</span><span class="gs-tok scoped" data-pos="107"> </span><span class="gs-tok scoped num" data-pos="108">1</span><span class="gs-tok scoped" data-pos="109">:↵
+</span><span class="gs-tok scoped" data-pos="110">           </span><span class="gs-tok scoped" data-pos="111"> de</span><span class="gs-tok scoped" data-pos="112">q</span><span class="gs-tok scoped" data-pos="113">.p</span><span class="gs-tok scoped" data-pos="114">opleft</span><span class="gs-tok scoped" data-pos="115">()↵
+</span><span class="gs-tok scoped" data-pos="116">       </span><span class="gs-tok scoped kw" data-pos="117"> while</span><span class="gs-tok scoped" data-pos="118"> de</span><span class="gs-tok scoped" data-pos="119">q</span><span class="gs-tok scoped kw" data-pos="120"> and</span><span class="gs-tok scoped" data-pos="121"> nums</span><span class="gs-tok scoped" data-pos="122">[i</span><span class="gs-tok scoped" data-pos="123">]</span><span class="gs-tok scoped" data-pos="124"> &gt;=</span><span class="gs-tok scoped" data-pos="125"> nums</span><span class="gs-tok scoped" data-pos="126">[</span><span class="gs-tok scoped" data-pos="127">de</span><span class="gs-tok scoped" data-pos="128">q</span><span class="gs-tok scoped" data-pos="129">[-</span><span class="gs-tok scoped num" data-pos="130">1</span><span class="gs-tok scoped" data-pos="131">]]:↵
+</span><span class="gs-tok scoped" data-pos="132">           </span><span class="gs-tok scoped" data-pos="133"> de</span><span class="gs-tok scoped" data-pos="134">q</span><span class="gs-tok scoped" data-pos="135">.pop</span><span class="gs-tok scoped" data-pos="136">()↵
+</span><span class="gs-tok scoped" data-pos="137">       </span><span class="gs-tok scoped" data-pos="138"> de</span><span class="gs-tok scoped" data-pos="139">q</span><span class="gs-tok scoped" data-pos="140">.append</span><span class="gs-tok scoped" data-pos="141">(i</span><span class="gs-tok scoped" data-pos="142">)↵
+</span><span class="gs-tok scoped" data-pos="143">       </span><span class="gs-tok scoped kw" data-pos="144"> if</span><span class="gs-tok scoped" data-pos="145"> i</span><span class="gs-tok scoped" data-pos="146"> &gt;=</span><span class="gs-tok scoped" data-pos="147"> k</span><span class="gs-tok scoped" data-pos="148"> -</span><span class="gs-tok scoped" data-pos="149"> </span><span class="gs-tok scoped num" data-pos="150">1</span><span class="gs-tok scoped" data-pos="151">:↵
+</span><span class="gs-tok scoped" data-pos="152">           </span><span class="gs-tok scoped bi" data-pos="153"> max</span><span class="gs-tok scoped" data-pos="154">_values</span><span class="gs-tok scoped" data-pos="155">.append</span><span class="gs-tok scoped" data-pos="156">(nums</span><span class="gs-tok scoped" data-pos="157">[</span><span class="gs-tok scoped" data-pos="158">de</span><span class="gs-tok scoped" data-pos="159">q</span><span class="gs-tok scoped" data-pos="160">[</span><span class="gs-tok scoped num" data-pos="161">0</span><span class="gs-tok scoped" data-pos="162">]])↵
+</span><span class="gs-tok scoped" data-pos="163">    ↵
+</span><span class="gs-tok scoped" data-pos="164">   </span><span class="gs-tok scoped kw" data-pos="165"> return</span><span class="gs-tok scoped bi" data-pos="166"> max</span><span class="gs-tok scoped" data-pos="167">_values</span><span class="gs-tok scoped" data-pos="168">↵
+</span><span class="gs-tok scoped" data-pos="169">&lt;/</span><span class="gs-tok scoped" data-pos="170">code</span><span class="gs-tok scoped" data-pos="171">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_8916333e";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "system", "scoped": false, "readout": ""}, {"pos": 2, "text": "\n", "scoped": false, "readout": ""}, {"pos": 3, "text": "You", "scoped": false, "readout": ""}, {"pos": 4, "text": " are", "scoped": false, "readout": ""}, {"pos": 5, "text": " a", "scoped": false, "readout": ""}, {"pos": 6, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 7, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 8, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 9, "text": " in", "scoped": false, "readout": ""}, {"pos": 10, "text": " programming", "scoped": false, "readout": ""}, {"pos": 11, "text": ".", "scoped": false, "readout": ""}, {"pos": 12, "text": " Always", "scoped": false, "readout": ""}, {"pos": 13, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 14, "text": " your", "scoped": false, "readout": ""}, {"pos": 15, "text": " code", "scoped": false, "readout": ""}, {"pos": 16, "text": " inside", "scoped": false, "readout": ""}, {"pos": 17, "text": " <", "scoped": false, "readout": ""}, {"pos": 18, "text": "code", "scoped": false, "readout": ""}, {"pos": 19, "text": "></", "scoped": false, "readout": ""}, {"pos": 20, "text": "code", "scoped": false, "readout": ""}, {"pos": 21, "text": ">", "scoped": false, "readout": ""}, {"pos": 22, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 23, "text": ".", "scoped": false, "readout": ""}, {"pos": 24, "text": " Just", "scoped": false, "readout": ""}, {"pos": 25, "text": " the", "scoped": false, "readout": ""}, {"pos": 26, "text": " code", "scoped": false, "readout": ""}, {"pos": 27, "text": ",", "scoped": false, "readout": ""}, {"pos": 28, "text": " no", "scoped": false, "readout": ""}, {"pos": 29, "text": " need", "scoped": false, "readout": ""}, {"pos": 30, "text": " to", "scoped": false, "readout": ""}, {"pos": 31, "text": " comment", "scoped": false, "readout": ""}, {"pos": 32, "text": " or", "scoped": false, "readout": ""}, {"pos": 33, "text": " explain", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 36, "text": "\n", "scoped": false, "readout": ""}, {"pos": 37, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 38, "text": "user", "scoped": false, "readout": ""}, {"pos": 39, "text": "\n", "scoped": false, "readout": ""}, {"pos": 40, "text": "Implement", "scoped": false, "readout": ""}, {"pos": 41, "text": " sliding", "scoped": false, "readout": ""}, {"pos": 42, "text": " window", "scoped": false, "readout": ""}, {"pos": 43, "text": " maximum", "scoped": false, "readout": ""}, {"pos": 44, "text": " using", "scoped": false, "readout": ""}, {"pos": 45, "text": " a", "scoped": false, "readout": ""}, {"pos": 46, "text": " deque", "scoped": false, "readout": ""}, {"pos": 47, "text": " in", "scoped": false, "readout": ""}, {"pos": 48, "text": " Python", "scoped": false, "readout": ""}, {"pos": 49, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 50, "text": "\n", "scoped": false, "readout": ""}, {"pos": 51, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 52, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 53, "text": "\n", "scoped": true, "readout": "Sure, here's a brief snippet of code:\n\n```python\nresult = [0] * (len(nums))\n```\n\nThis line initializes an empty list with the necessary elements for the algorithm, using list comprehension with a deque approach:\n\n```python\nfrom collections import deque\nresult = deque([0] * (len"}, {"pos": 54, "text": "<", "scoped": true, "readout": "Sure, here is the code snippet:\n\n```python\nresult = [i for i in range(10)]\n```\n\nThis line contains the code to define a list containing a Python code snippet for generating an array of numbers from 0 to 9 using list comprehension."}, {"pos": 55, "text": "code", "scoped": true, "readout": "Sure, here's a brief snippet assuming you're asking about a specific line of code:\n\n```python\nresult = [deque([i for i in range(len(nums)) if not (from collections import deque; return deque([\n    nums[j:j+10] for j in range(len(nums)) if j =="}, {"pos": 56, "text": ">\n", "scoped": true, "readout": "I'm assuming you're asking about a specific line of code involving a data structure like a queue using `collections.deque`. Here's a brief implementation:\n\n```python\nfrom collections import deque\n\ndef maxSlidingWindow(nums, k):\n    dq = deque()\n    result = []\n    for i in range(len(nums"}, {"pos": 57, "text": "def", "scoped": true, "readout": "I'm maintaining a sliding window maximum using a deque to efficiently track the maximum values in a subarray."}, {"pos": 58, "text": " sliding", "scoped": true, "readout": "I'm currently unable to determine what specific line of code you're referring to without seeing the context or the code snippet. Please provide the code and specify the window size for which you want to find the maximum values."}, {"pos": 59, "text": "_window", "scoped": true, "readout": "I'm identifying the maximum value in a sliding window of size `k` for each position in the array using a deque to maintain the maximum values efficiently."}, {"pos": 60, "text": "_max", "scoped": true, "readout": "I'm processing elements in a sliding window using a deque."}, {"pos": 61, "text": "(", "scoped": true, "readout": "I'm processing elements within a sliding window of a list."}, {"pos": 62, "text": " nums", "scoped": true, "readout": "I'm processing elements within a sliding window of size `k` to find maximum values for each position in the array."}, {"pos": 63, "text": ",", "scoped": true, "readout": "I'm processing elements within a sliding window of a specified size to find the maximum value for each position in the array."}, {"pos": 64, "text": " k", "scoped": true, "readout": "I'm analyzing the current window of elements in the array."}, {"pos": 65, "text": "):\n", "scoped": true, "readout": "I'm assuming you're asking about a specific line of code in a context where a sliding window maximum is being implemented using a deque. Here's a brief explanation:\n\n```python\nfrom collections import deque\n\ndef maxSlidingWindow(nums, k):\n    if not nums:\n        return []\n    \n    deq = deque"}, {"pos": 66, "text": "   ", "scoped": true, "readout": "I'm identifying the maximum value in a sliding window of size `k` for each position in the array using a deque."}, {"pos": 67, "text": " from", "scoped": true, "readout": "I'm maintaining a queue of indices using a deque to efficiently get the maximum of each subarray."}, {"pos": 68, "text": " collections", "scoped": true, "readout": "I'm identifying the current element in a queue using a deque."}, {"pos": 69, "text": " import", "scoped": true, "readout": "I'm maintaining a queue of indices using a deque to keep track of the maximum elements for a sliding window."}, {"pos": 70, "text": " deque", "scoped": true, "readout": "I'm identifying the maximum value in a sliding window of size `k` for each position in the array."}, {"pos": 71, "text": "\n", "scoped": true, "readout": "I'm processing elements in a queue using two pointers."}, {"pos": 72, "text": "   ", "scoped": true, "readout": "I'm identifying the maximum value in a sliding window of size `k` for each position in the array using a deque."}, {"pos": 73, "text": " de", "scoped": true, "readout": "I'm identifying the current operation or value at the specified position in the code window."}, {"pos": 74, "text": "q", "scoped": true, "readout": "I'm identifying the current operation or value being considered at the specified position in the code window."}, {"pos": 75, "text": " =", "scoped": true, "readout": "I'm maintaining a queue of indices to keep track of the maximum elements in the current window."}, {"pos": 76, "text": " deque", "scoped": true, "readout": "I'm tracking indices of the array elements within a sliding window to maintain their order and find the maximum in O(n) time."}, {"pos": 77, "text": "()\n", "scoped": true, "readout": "I'm identifying the maximum value in the current window of the array."}, {"pos": 78, "text": "   ", "scoped": true, "readout": "I'm identifying the maximum value in the current window of the array."}, {"pos": 79, "text": " max", "scoped": true, "readout": "I'm identifying the maximum value in the current window of the array."}, {"pos": 80, "text": "_values", "scoped": true, "readout": "I'm analyzing the current window of elements to determine the maximum for each position."}, {"pos": 81, "text": " =", "scoped": true, "readout": "I'm identifying the maximum value in a sliding window for each position in the array."}, {"pos": 82, "text": " []\n", "scoped": true, "readout": "I'm identifying the current maximum value in a sliding window for an array."}, {"pos": 83, "text": "    \n", "scoped": true, "readout": "I'm processing the current line of code, maintaining a sliding window of indices for the maximum values in an array."}, {"pos": 84, "text": "   ", "scoped": true, "readout": "I'm identifying the maximum value in the current window of the array."}, {"pos": 85, "text": " for", "scoped": true, "readout": "I'm analyzing the current element and maintaining a window of size `k`."}, {"pos": 86, "text": " i", "scoped": true, "readout": "I'm analyzing the current element and maintaining a window of indices."}, {"pos": 87, "text": " in", "scoped": true, "readout": "I'm analyzing the current element in the list and maintaining a window of indices."}, {"pos": 88, "text": " range", "scoped": true, "readout": "I'm analyzing the current element in the array and maintaining a window of size `k`."}, {"pos": 89, "text": "(len", "scoped": true, "readout": "I'm processing the current element in the array or list."}, {"pos": 90, "text": "(nums", "scoped": true, "readout": "I'm analyzing the current element in the list to determine if it should be included in the sliding window."}, {"pos": 91, "text": ")):\n", "scoped": true, "readout": "I'm processing the current element and maintaining a window of size `k`."}, {"pos": 92, "text": "       ", "scoped": true, "readout": "I'm checking if the current element is larger than the last element in the deque."}, {"pos": 93, "text": " while", "scoped": true, "readout": "I'm processing the current element by removing elements from the back that are smaller than the current element."}, {"pos": 94, "text": " de", "scoped": true, "readout": "I'm checking if the current element is greater than the element at the back of the deque and removing elements from the back if they are smaller than the current element."}, {"pos": 95, "text": "q", "scoped": true, "readout": "I'm checking if the current index is out of bounds for the window or if the current element is larger than elements from the back of the deque and removing them."}, {"pos": 96, "text": " and", "scoped": true, "readout": "I'm checking if the current element is larger than the element at the index stored at the back of the deque."}, {"pos": 97, "text": " de", "scoped": true, "readout": "I'm identifying the most recent index in the window that has a value greater than or equal to the current element being considered."}, {"pos": 98, "text": "q", "scoped": true, "readout": "I'm checking if the current index is out of bounds or if the current element is smaller than the new element."}, {"pos": 99, "text": "[", "scoped": true, "readout": "I'm looking at the first element's index that is smaller than the current element from the back of the deque."}, {"pos": 100, "text": "0", "scoped": true, "readout": "I'm identifying the current index or position that is out of range for the given context."}, {"pos": 101, "text": "]", "scoped": true, "readout": "I'm tracking the index that is out of the current window's range."}, {"pos": 102, "text": " <", "scoped": true, "readout": "I'm not currently tracking specific indices, so I don't have information about a line that is out of the current window. Focus on the relevant part of the array or list."}, {"pos": 103, "text": " i", "scoped": true, "readout": "I'm not currently positioned to see that specific part of the code. Please provide the index or position relative to the current window of the array or list."}, {"pos": 104, "text": " -", "scoped": true, "readout": "I'm here to help, but I need to know the specific line number or the context of the code window to provide an accurate answer. Please provide the index or the range of indices that are currently out of the window."}, {"pos": 105, "text": " k", "scoped": true, "readout": "I'm not sure which line you're referring to, but generally, I would be looking at the current index to determine if it's out of bounds for the window size. If so, I'd remove that element from the window."}, {"pos": 106, "text": " +", "scoped": true, "readout": "I'm not currently executing code, so I don't have a specific line to reference. I can only provide information about lines that are within the current window of the array or list (i.e., lines that are no longer visible). If you're asking about a specific index, please provide the current index or position in"}, {"pos": 107, "text": " ", "scoped": true, "readout": "I'm tracking the maximum value in a sliding window for an array."}, {"pos": 108, "text": "1", "scoped": true, "readout": "I'm processing the code to ensure the current index is within bounds, typically by removing outdated indices from a queue."}, {"pos": 109, "text": ":\n", "scoped": true, "readout": "I'm checking if the current index is out of bounds for the window, removing it from the deque."}, {"pos": 110, "text": "           ", "scoped": true, "readout": "I'm removing outdated entries from the queue."}, {"pos": 111, "text": " de", "scoped": true, "readout": "I'm removing the oldest element from the queue."}, {"pos": 112, "text": "q", "scoped": true, "readout": "I'm removing the oldest element from the queue."}, {"pos": 113, "text": ".p", "scoped": true, "readout": "I'm removing the oldest element from the queue."}, {"pos": 114, "text": "opleft", "scoped": true, "readout": "I'm not sure which line you're referring to, as I don't have real-time access to your code. Remove any references to lines that are out of the current window."}, {"pos": 115, "text": "()\n", "scoped": true, "readout": "I'm identifying and removing indices from the deque that are out of bounds."}, {"pos": 116, "text": "       ", "scoped": true, "readout": "I'm identifying and removing indices from the deque that are out of the current window's range."}, {"pos": 117, "text": " while", "scoped": true, "readout": "I'm checking if the current element is larger than elements from the back of the deque and removing smaller elements."}, {"pos": 118, "text": " de", "scoped": true, "readout": "I'm checking if the current element is greater than the last element in the deque and removing elements from the deque until it's not. Then, I'm adding the current element to the deque. Finally, I'm adding the current element to the result if it's within the window."}, {"pos": 119, "text": "q", "scoped": true, "readout": "I'm checking if the current element is greater than elements from the back of the deque and removing them accordingly."}, {"pos": 120, "text": " and", "scoped": true, "readout": "I'm checking if the current element is greater than the element at the deque's back index."}, {"pos": 121, "text": " nums", "scoped": true, "readout": "I'm checking if the current element is greater than the element at the index stored in the deque."}, {"pos": 122, "text": "[i", "scoped": true, "readout": "I'm evaluating whether the current element is greater than the element at the previous index."}, {"pos": 123, "text": "]", "scoped": true, "readout": "I'm evaluating whether the current element is greater than the element at the previous index."}, {"pos": 124, "text": " >=", "scoped": true, "readout": "I'm evaluating the current element to see if it's greater than the previous elements in the window."}, {"pos": 125, "text": " nums", "scoped": true, "readout": "I'm analyzing the code at that position to determine its relevance or impact on the current element."}, {"pos": 126, "text": "[", "scoped": true, "readout": "I'm processing the element at the current index in the list."}, {"pos": 127, "text": "de", "scoped": true, "readout": "I'm processing the element at the current index in the deque."}, {"pos": 128, "text": "q", "scoped": true, "readout": "I'm analyzing the code at that position to determine its relevance or impact on the current context."}, {"pos": 129, "text": "[-", "scoped": true, "readout": "I'm looking at the most recent element in the queue."}, {"pos": 130, "text": "1", "scoped": true, "readout": "I'm identifying and comparing the current element with elements in the list."}, {"pos": 131, "text": "]]:\n", "scoped": true, "readout": "I'm removing elements from the back of the list that are smaller than the current element."}, {"pos": 132, "text": "           ", "scoped": true, "readout": "Processing and removing elements from the back of the deque until the current element is larger."}, {"pos": 133, "text": " de", "scoped": true, "readout": "I'm identifying the maximum value within the current window of the array."}, {"pos": 134, "text": "q", "scoped": true, "readout": "I'm removing the last element from the list."}, {"pos": 135, "text": ".pop", "scoped": true, "readout": "I'm removing indices from the back until the current element is larger."}, {"pos": 136, "text": "()\n", "scoped": true, "readout": "I'm identifying the index of the last element in the deque that is smaller than the current element, then removing indices from the back of the deque."}, {"pos": 137, "text": "       ", "scoped": true, "readout": "I'm identifying the most recent index that could be the potential candidate for the current element's position in the sliding window."}, {"pos": 138, "text": " de", "scoped": true, "readout": "I'm analyzing the current element to determine if it should be added to the sliding window."}, {"pos": 139, "text": "q", "scoped": true, "readout": "I'm analyzing the current line of the code to determine its relevance and adding it to my queue if necessary."}, {"pos": 140, "text": ".append", "scoped": true, "readout": "I'm tracking the index of the current element."}, {"pos": 141, "text": "(i", "scoped": true, "readout": "I'm analyzing the current line to determine if it should be included in the sliding window of maximums, and updating the window accordingly."}, {"pos": 142, "text": ")\n", "scoped": true, "readout": "I'm analyzing the current line to determine if it's time to update the result list for the sliding window maximum."}, {"pos": 143, "text": "       ", "scoped": true, "readout": "I'm identifying and reporting the maximum value in the current window for each position in the array."}, {"pos": 144, "text": " if", "scoped": true, "readout": "I'm analyzing the current window of elements to determine if the maximum for the current position is ready to be added to the result list."}, {"pos": 145, "text": " i", "scoped": true, "readout": "I'm analyzing the current window of elements to determine if the end of the first window is reached."}, {"pos": 146, "text": " >=", "scoped": true, "readout": "I'm analyzing the current window of elements to determine if it's large enough to include the maximum for the current position."}, {"pos": 147, "text": " k", "scoped": true, "readout": "I'm analyzing the code to ensure I can provide an accurate response about the current line's functionality."}, {"pos": 148, "text": " -", "scoped": true, "readout": "I'm analyzing the current position relative to the start of the code block to provide insights or results."}, {"pos": 149, "text": " ", "scoped": true, "readout": "I'm identifying the maximum value in the current window of the array."}, {"pos": 150, "text": "1", "scoped": true, "readout": "I'm analyzing the current window of elements to determine if the maximum for the current window is ready to be added to the result list."}, {"pos": 151, "text": ":\n", "scoped": true, "readout": "I'm processing the current window of elements to output the maximum value for that window."}, {"pos": 152, "text": "           ", "scoped": true, "readout": "I'm identifying and reporting the current maximum value in the sliding window for the given array."}, {"pos": 153, "text": " max", "scoped": true, "readout": "I'm identifying the current maximum value in the sliding window for the given array."}, {"pos": 154, "text": "_values", "scoped": true, "readout": "I'm providing the current maximum value from the sliding window."}, {"pos": 155, "text": ".append", "scoped": true, "readout": "I'm identifying the maximum value in the current window of the array."}, {"pos": 156, "text": "(nums", "scoped": true, "readout": "I'm looking at the value of the element at the index stored in the variable that represents the current maximum in the window."}, {"pos": 157, "text": "[", "scoped": true, "readout": "I'm pointing to the current element in the queue."}, {"pos": 158, "text": "de", "scoped": true, "readout": "I'm tracking the index of the maximum element in the sliding window."}, {"pos": 159, "text": "q", "scoped": true, "readout": "I'm pointing to the current element at the front of the queue."}, {"pos": 160, "text": "[", "scoped": true, "readout": "I'm identifying the most relevant index in a deque to maintain a decreasing order of values."}, {"pos": 161, "text": "0", "scoped": true, "readout": "I'm identifying and reporting the current value or index of the relevant element in the data structure, typically for outputting the maximum or minimum value within a sliding window."}, {"pos": 162, "text": "]])\n", "scoped": true, "readout": "I'm identifying the maximum value in the current window of the array."}, {"pos": 163, "text": "    \n", "scoped": true, "readout": "I'm tracking and updating the sliding window maximum for each element in the array."}, {"pos": 164, "text": "   ", "scoped": true, "readout": "I'm identifying and returning the maximum value in the current window of the array."}, {"pos": 165, "text": " return", "scoped": true, "readout": "I'm processing and returning the maximum values for each sliding window in the array."}, {"pos": 166, "text": " max", "scoped": true, "readout": "I'm identifying the maximum value in the current window of elements."}, {"pos": 167, "text": "_values", "scoped": true, "readout": "I'm processing the current element in the sliding window."}, {"pos": 168, "text": "\n", "scoped": true, "readout": "Sure, please provide the specific line of code you're referring to."}, {"pos": 169, "text": "</", "scoped": true, "readout": "Sure, please provide the specific line of code you're referring to."}, {"pos": 170, "text": "code", "scoped": true, "readout": "Sure, here's the line of code:\n\n```python\nresult = [i for i in range(10)]\n```"}, {"pos": 171, "text": ">", "scoped": true, "readout": "Sure, here's a brief line of code:\n\n```python\nresult = [i for i in range(10)]\n```"}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

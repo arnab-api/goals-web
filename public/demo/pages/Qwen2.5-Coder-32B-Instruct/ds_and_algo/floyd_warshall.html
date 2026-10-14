@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>floyd warshall  ·  Qwen2.5-Coder-32B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_235b35e0">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">floyd warshall  ·  Qwen2.5-Coder-32B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="1">system</span><span class="gs-tok noncode" data-pos="2">↵
+</span><span class="gs-tok noncode" data-pos="3">You</span><span class="gs-tok noncode" data-pos="4"> are</span><span class="gs-tok noncode" data-pos="5"> a</span><span class="gs-tok noncode" data-pos="6"> helpful</span><span class="gs-tok noncode" data-pos="7"> assistant</span><span class="gs-tok noncode" data-pos="8"> proficient</span><span class="gs-tok noncode" data-pos="9"> in</span><span class="gs-tok noncode" data-pos="10"> programming</span><span class="gs-tok noncode" data-pos="11">.</span><span class="gs-tok noncode" data-pos="12"> Always</span><span class="gs-tok noncode" data-pos="13"> wrap</span><span class="gs-tok noncode" data-pos="14"> your</span><span class="gs-tok noncode" data-pos="15"> code</span><span class="gs-tok noncode" data-pos="16"> inside</span><span class="gs-tok noncode" data-pos="17"> &lt;</span><span class="gs-tok noncode" data-pos="18">code</span><span class="gs-tok noncode" data-pos="19">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="20">code</span><span class="gs-tok noncode" data-pos="21">&gt;</span><span class="gs-tok noncode" data-pos="22"> blocks</span><span class="gs-tok noncode" data-pos="23">.</span><span class="gs-tok noncode" data-pos="24"> Just</span><span class="gs-tok noncode" data-pos="25"> the</span><span class="gs-tok noncode" data-pos="26"> code</span><span class="gs-tok noncode" data-pos="27">,</span><span class="gs-tok noncode" data-pos="28"> no</span><span class="gs-tok noncode" data-pos="29"> need</span><span class="gs-tok noncode" data-pos="30"> to</span><span class="gs-tok noncode" data-pos="31"> comment</span><span class="gs-tok noncode" data-pos="32"> or</span><span class="gs-tok noncode" data-pos="33"> explain</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="36">↵
+</span><span class="gs-tok noncode" data-pos="37">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="38">user</span><span class="gs-tok noncode" data-pos="39">↵
+</span><span class="gs-tok noncode" data-pos="40">Implement</span><span class="gs-tok noncode" data-pos="41"> the</span><span class="gs-tok noncode" data-pos="42"> Floyd</span><span class="gs-tok noncode" data-pos="43">-W</span><span class="gs-tok noncode" data-pos="44">ar</span><span class="gs-tok noncode" data-pos="45">shall</span><span class="gs-tok noncode" data-pos="46"> all</span><span class="gs-tok noncode" data-pos="47">-p</span><span class="gs-tok noncode" data-pos="48">airs</span><span class="gs-tok noncode" data-pos="49"> shortest</span><span class="gs-tok noncode" data-pos="50"> path</span><span class="gs-tok noncode" data-pos="51"> algorithm</span><span class="gs-tok noncode" data-pos="52">&lt;|im_end|&gt;</span><span class="gs-tok noncode" data-pos="53">↵
+</span><span class="gs-tok noncode" data-pos="54">&lt;|im_start|&gt;</span><span class="gs-tok noncode" data-pos="55">assistant</span><span class="gs-tok scoped" data-pos="56">↵
+</span><span class="gs-tok scoped" data-pos="57">&lt;</span><span class="gs-tok scoped" data-pos="58">code</span><span class="gs-tok scoped" data-pos="59">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="60">def</span><span class="gs-tok scoped" data-pos="61"> f</span><span class="gs-tok scoped" data-pos="62">loyd</span><span class="gs-tok scoped" data-pos="63">_war</span><span class="gs-tok scoped" data-pos="64">shall</span><span class="gs-tok scoped" data-pos="65">(</span><span class="gs-tok scoped" data-pos="66"> graph</span><span class="gs-tok scoped" data-pos="67"> ):↵
+</span><span class="gs-tok scoped" data-pos="68">   </span><span class="gs-tok scoped" data-pos="69"> V</span><span class="gs-tok scoped" data-pos="70"> =</span><span class="gs-tok scoped bi" data-pos="71"> len</span><span class="gs-tok scoped" data-pos="72">(graph</span><span class="gs-tok scoped" data-pos="73">)↵
+</span><span class="gs-tok scoped" data-pos="74">   </span><span class="gs-tok scoped" data-pos="75"> dist</span><span class="gs-tok scoped" data-pos="76"> =</span><span class="gs-tok scoped bi" data-pos="77"> list</span><span class="gs-tok scoped" data-pos="78">(map</span><span class="gs-tok scoped" data-pos="79">(lambda</span><span class="gs-tok scoped" data-pos="80"> i</span><span class="gs-tok scoped" data-pos="81"> :</span><span class="gs-tok scoped bi" data-pos="82"> list</span><span class="gs-tok scoped" data-pos="83">(map</span><span class="gs-tok scoped" data-pos="84">(lambda</span><span class="gs-tok scoped" data-pos="85"> j</span><span class="gs-tok scoped" data-pos="86"> :</span><span class="gs-tok scoped" data-pos="87"> j</span><span class="gs-tok scoped" data-pos="88"> ,</span><span class="gs-tok scoped" data-pos="89"> i</span><span class="gs-tok scoped" data-pos="90">))</span><span class="gs-tok scoped" data-pos="91"> ,</span><span class="gs-tok scoped" data-pos="92"> graph</span><span class="gs-tok scoped" data-pos="93">))↵
+</span><span class="gs-tok scoped" data-pos="94">   </span><span class="gs-tok scoped kw" data-pos="95"> for</span><span class="gs-tok scoped" data-pos="96"> k</span><span class="gs-tok scoped kw" data-pos="97"> in</span><span class="gs-tok scoped bi" data-pos="98"> range</span><span class="gs-tok scoped" data-pos="99">(V</span><span class="gs-tok scoped" data-pos="100">):↵
+</span><span class="gs-tok scoped" data-pos="101">       </span><span class="gs-tok scoped kw" data-pos="102"> for</span><span class="gs-tok scoped" data-pos="103"> i</span><span class="gs-tok scoped kw" data-pos="104"> in</span><span class="gs-tok scoped bi" data-pos="105"> range</span><span class="gs-tok scoped" data-pos="106">(V</span><span class="gs-tok scoped" data-pos="107">):↵
+</span><span class="gs-tok scoped" data-pos="108">           </span><span class="gs-tok scoped kw" data-pos="109"> for</span><span class="gs-tok scoped" data-pos="110"> j</span><span class="gs-tok scoped kw" data-pos="111"> in</span><span class="gs-tok scoped bi" data-pos="112"> range</span><span class="gs-tok scoped" data-pos="113">(V</span><span class="gs-tok scoped" data-pos="114">):↵
+</span><span class="gs-tok scoped" data-pos="115">               </span><span class="gs-tok scoped" data-pos="116"> dist</span><span class="gs-tok scoped" data-pos="117">[i</span><span class="gs-tok scoped" data-pos="118">][</span><span class="gs-tok scoped" data-pos="119">j</span><span class="gs-tok scoped" data-pos="120">]</span><span class="gs-tok scoped" data-pos="121"> =</span><span class="gs-tok scoped bi" data-pos="122"> min</span><span class="gs-tok scoped" data-pos="123">(dist</span><span class="gs-tok scoped" data-pos="124">[i</span><span class="gs-tok scoped" data-pos="125">][</span><span class="gs-tok scoped" data-pos="126">j</span><span class="gs-tok scoped" data-pos="127">]</span><span class="gs-tok scoped" data-pos="128"> ,</span><span class="gs-tok scoped" data-pos="129"> dist</span><span class="gs-tok scoped" data-pos="130">[i</span><span class="gs-tok scoped" data-pos="131">][</span><span class="gs-tok scoped" data-pos="132">k</span><span class="gs-tok scoped" data-pos="133">]+</span><span class="gs-tok scoped" data-pos="134"> dist</span><span class="gs-tok scoped" data-pos="135">[k</span><span class="gs-tok scoped" data-pos="136">][</span><span class="gs-tok scoped" data-pos="137">j</span><span class="gs-tok scoped" data-pos="138">])↵
+</span><span class="gs-tok scoped" data-pos="139">   </span><span class="gs-tok scoped kw" data-pos="140"> return</span><span class="gs-tok scoped" data-pos="141"> dist</span><span class="gs-tok scoped" data-pos="142">↵
+</span><span class="gs-tok scoped" data-pos="143">&lt;/</span><span class="gs-tok scoped" data-pos="144">code</span><span class="gs-tok scoped" data-pos="145">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_235b35e0";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "system", "scoped": false, "readout": ""}, {"pos": 2, "text": "\n", "scoped": false, "readout": ""}, {"pos": 3, "text": "You", "scoped": false, "readout": ""}, {"pos": 4, "text": " are", "scoped": false, "readout": ""}, {"pos": 5, "text": " a", "scoped": false, "readout": ""}, {"pos": 6, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 7, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 8, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 9, "text": " in", "scoped": false, "readout": ""}, {"pos": 10, "text": " programming", "scoped": false, "readout": ""}, {"pos": 11, "text": ".", "scoped": false, "readout": ""}, {"pos": 12, "text": " Always", "scoped": false, "readout": ""}, {"pos": 13, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 14, "text": " your", "scoped": false, "readout": ""}, {"pos": 15, "text": " code", "scoped": false, "readout": ""}, {"pos": 16, "text": " inside", "scoped": false, "readout": ""}, {"pos": 17, "text": " <", "scoped": false, "readout": ""}, {"pos": 18, "text": "code", "scoped": false, "readout": ""}, {"pos": 19, "text": "></", "scoped": false, "readout": ""}, {"pos": 20, "text": "code", "scoped": false, "readout": ""}, {"pos": 21, "text": ">", "scoped": false, "readout": ""}, {"pos": 22, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 23, "text": ".", "scoped": false, "readout": ""}, {"pos": 24, "text": " Just", "scoped": false, "readout": ""}, {"pos": 25, "text": " the", "scoped": false, "readout": ""}, {"pos": 26, "text": " code", "scoped": false, "readout": ""}, {"pos": 27, "text": ",", "scoped": false, "readout": ""}, {"pos": 28, "text": " no", "scoped": false, "readout": ""}, {"pos": 29, "text": " need", "scoped": false, "readout": ""}, {"pos": 30, "text": " to", "scoped": false, "readout": ""}, {"pos": 31, "text": " comment", "scoped": false, "readout": ""}, {"pos": 32, "text": " or", "scoped": false, "readout": ""}, {"pos": 33, "text": " explain", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 36, "text": "\n", "scoped": false, "readout": ""}, {"pos": 37, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 38, "text": "user", "scoped": false, "readout": ""}, {"pos": 39, "text": "\n", "scoped": false, "readout": ""}, {"pos": 40, "text": "Implement", "scoped": false, "readout": ""}, {"pos": 41, "text": " the", "scoped": false, "readout": ""}, {"pos": 42, "text": " Floyd", "scoped": false, "readout": ""}, {"pos": 43, "text": "-W", "scoped": false, "readout": ""}, {"pos": 44, "text": "ar", "scoped": false, "readout": ""}, {"pos": 45, "text": "shall", "scoped": false, "readout": ""}, {"pos": 46, "text": " all", "scoped": false, "readout": ""}, {"pos": 47, "text": "-p", "scoped": false, "readout": ""}, {"pos": 48, "text": "airs", "scoped": false, "readout": ""}, {"pos": 49, "text": " shortest", "scoped": false, "readout": ""}, {"pos": 50, "text": " path", "scoped": false, "readout": ""}, {"pos": 51, "text": " algorithm", "scoped": false, "readout": ""}, {"pos": 52, "text": "<|im_end|>", "scoped": false, "readout": ""}, {"pos": 53, "text": "\n", "scoped": false, "readout": ""}, {"pos": 54, "text": "<|im_start|>", "scoped": false, "readout": ""}, {"pos": 55, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 56, "text": "\n", "scoped": true, "readout": "Sure, here is a brief implementation of a simple bubble sort algorithm in Python:\n\n```python\ndef bubble_sort(arr):\n    n = len(arr)\n    for i in range(n):\n        for j in range(n):\n            for k in range(len(arr)):\n                arr = \"\"\"\nfor i in range(n):\n    for"}, {"pos": 57, "text": "<", "scoped": true, "readout": "Sure, here is a brief snippet:\n\n```python\nresult = [i for i in \"def result = [i for i in \\\"def result = [i for i in \\\\\\\"def result = [i for i in \\\\\\\\\\\\\\\"def result = [i for i in \\\\\\\\\\\\\\\\\\\\\\\"def result ="}, {"pos": 58, "text": "code", "scoped": true, "readout": "Certainly, here's a brief snippet for a specific line of code that could be part of a function implementing Dijkstra's algorithm in Python:\n\n```python\ndist = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0,"}, {"pos": 59, "text": ">\n", "scoped": true, "readout": "I'm implementing an algorithm to find the shortest paths between all pairs of vertices using Floyd-Warshall's algorithm, typically with a nested loop structure for dynamic programming. Here's a concise version in Python:\n\n```python\ndef floyd_warshall(graph):\n    V = len(graph)\n    dist = [[float('inf"}, {"pos": 60, "text": "def", "scoped": true, "readout": "I'm calculating the shortest paths between all pairs of vertices using Floyd-Warshall's algorithm."}, {"pos": 61, "text": " f", "scoped": true, "readout": "I'm calculating shortest paths using Floyd-Warshall algorithm."}, {"pos": 62, "text": "loyd", "scoped": true, "readout": "I'm analyzing the specific line of code to determine the action being performed, typically involving updating the shortest paths between all pairs of vertices in a weighted graph using an algorithm like Floyd-Warshall."}, {"pos": 63, "text": "_war", "scoped": true, "readout": "I'm analyzing the specific line of code to determine the shortest path between all pairs of vertices in a weighted graph, typically using an algorithm like Floyd-Warshall."}, {"pos": 64, "text": "shall", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes in a graph using the Floyd-Warshall algorithm."}, {"pos": 65, "text": "(", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes in a graph using an algorithm like Floyd-Warshall."}, {"pos": 66, "text": " graph", "scoped": true, "readout": "I'm analyzing and computing the shortest paths between all nodes in a graph using an algorithm like Floyd-Warshall."}, {"pos": 67, "text": " ):\n", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes using Floyd-Warshall's algorithm."}, {"pos": 68, "text": "   ", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes using the Floyd-Warshall algorithm."}, {"pos": 69, "text": " V", "scoped": true, "readout": "I'm analyzing and computing the shortest paths between all nodes in a graph using an algorithm like Floyd-Warshall."}, {"pos": 70, "text": " =", "scoped": true, "readout": "I'm analyzing the code to determine the number of nodes or vertices, typically represented by `n`, and initializing a distance matrix with the same number of nodes. This is usually done in algorithms like Floyd-Warshall where we compute shortest paths between all pairs of vertices in a weighted graph. The matrix is often initialized with"}, {"pos": 71, "text": " len", "scoped": true, "readout": "I'm analyzing the code to determine the number of nodes or elements, typically represented by `n`, which is used to define the size of the adjacency matrix or graph."}, {"pos": 72, "text": "(graph", "scoped": true, "readout": "I'm analyzing the code to determine the actions and transformations for each node."}, {"pos": 73, "text": ")\n", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes using the Floyd-Warshall algorithm, typically in a graph represented by an adjacency matrix."}, {"pos": 74, "text": "   ", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes using the Floyd-Warshall algorithm."}, {"pos": 75, "text": " dist", "scoped": true, "readout": "I'm analyzing and determining the shortest path between all pairs of vertices using dynamic programming."}, {"pos": 76, "text": " =", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes using the Floyd-Warshall algorithm."}, {"pos": 77, "text": " list", "scoped": true, "readout": "I'm analyzing and processing the provided code to determine the shortest path between all nodes using an algorithm like Floyd-Warshall."}, {"pos": 78, "text": "(map", "scoped": true, "readout": "I'm analyzing and processing the provided code to understand the current state of distances between nodes, typically for shortest path algorithms like Floyd-Warshall."}, {"pos": 79, "text": "(lambda", "scoped": true, "readout": "I'm processing and analyzing the input data to determine the shortest paths between nodes in a graph, typically using an algorithm like Floyd-Warshall."}, {"pos": 80, "text": " i", "scoped": true, "readout": "I'm initializing the distance matrix for the shortest path algorithm, typically using a copy of the input graph's adjacency matrix."}, {"pos": 81, "text": " :", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes using an algorithm like Floyd-Warshall."}, {"pos": 82, "text": " list", "scoped": true, "readout": "I'm initializing the response with the current state of the adjacency matrix, typically representing the shortest paths between all nodes in a graph."}, {"pos": 83, "text": "(map", "scoped": true, "readout": "I'm checking the current value of the variable at that specific line."}, {"pos": 84, "text": "(lambda", "scoped": true, "readout": "I'm initializing the distance matrix for the shortest path algorithm, typically setting all direct distances to infinity except for self-loops as zero."}, {"pos": 85, "text": " j", "scoped": true, "readout": "I'm checking the current value of the variable at that specific position in the matrix."}, {"pos": 86, "text": " :", "scoped": true, "readout": "I'm checking the current value of the variable, which represents the shortest path between nodes in a graph."}, {"pos": 87, "text": " j", "scoped": true, "readout": "I'm checking the current value at that specific line of the code, which typically represents the shortest path distance between nodes in a graph."}, {"pos": 88, "text": " ,", "scoped": true, "readout": "I'm checking the current value of the element at that position in the matrix or list."}, {"pos": 89, "text": " i", "scoped": true, "readout": "I'm providing initial values for a matrix, often representing distances between nodes in a graph, where `i` and `j` are indices.`"}, {"pos": 90, "text": "))", "scoped": true, "readout": "I'm processing and storing the shortest paths between all nodes in a graph, typically using an adjacency matrix representation."}, {"pos": 91, "text": " ,", "scoped": true, "readout": "I'm providing the current state of the code, typically a matrix or list of lists representing distances between nodes."}, {"pos": 92, "text": " graph", "scoped": true, "readout": "I'm processing the input to determine the shortest paths between all nodes in a graph, typically using an algorithm like Floyd-Warshall."}, {"pos": 93, "text": "))\n", "scoped": true, "readout": "I'm analyzing and processing the code to determine the shortest path between all pairs of vertices using algorithms like Floyd-Warshall."}, {"pos": 94, "text": "   ", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes using Floyd-Warshall's algorithm."}, {"pos": 95, "text": " for", "scoped": true, "readout": "Processing each node to find the shortest path between all nodes through intermediate nodes."}, {"pos": 96, "text": " k", "scoped": true, "readout": "I'm analyzing the code to determine the action performed at each step."}, {"pos": 97, "text": " in", "scoped": true, "readout": "Processing each node to find the shortest path through all nodes using dynamic programming."}, {"pos": 98, "text": " range", "scoped": true, "readout": "Processing each node to find the shortest path between all nodes."}, {"pos": 99, "text": "(V", "scoped": true, "readout": "Processing each node to find the shortest path between all nodes."}, {"pos": 100, "text": "):\n", "scoped": true, "readout": "Processing each node to find the shortest path between all nodes in a graph using dynamic programming."}, {"pos": 101, "text": "       ", "scoped": true, "readout": "Processing updates to the shortest paths between all pairs of vertices through an intermediate vertex."}, {"pos": 102, "text": " for", "scoped": true, "readout": "Processing each pair of nodes to find the shortest path through intermediate nodes."}, {"pos": 103, "text": " i", "scoped": true, "readout": "Processing each pair of nodes to find the shortest path through intermediate nodes."}, {"pos": 104, "text": " in", "scoped": true, "readout": "I'm analyzing the code to determine the shortest path between all nodes using a specified algorithm, typically Dijkstra's or Floyd-Warshall."}, {"pos": 105, "text": " range", "scoped": true, "readout": "Processing each node to find the shortest path between all nodes."}, {"pos": 106, "text": "(V", "scoped": true, "readout": "Processing each node's shortest path to all other nodes."}, {"pos": 107, "text": "):\n", "scoped": true, "readout": "Processing each pair of nodes to find the shortest path between them, considering all intermediate nodes."}, {"pos": 108, "text": "           ", "scoped": true, "readout": "Processing each node to find the shortest path between all pairs of nodes through intermediate nodes."}, {"pos": 109, "text": " for", "scoped": true, "readout": "I'm calculating the shortest path between all pairs of nodes using dynamic programming."}, {"pos": 110, "text": " j", "scoped": true, "readout": "Processing the shortest path between nodes."}, {"pos": 111, "text": " in", "scoped": true, "readout": "I'm calculating the shortest path between all pairs of vertices using dynamic programming, updating the distance matrix with the minimum path through intermediate vertices."}, {"pos": 112, "text": " range", "scoped": true, "readout": "Processing each node to find the shortest path."}, {"pos": 113, "text": "(V", "scoped": true, "readout": "Processing each node to find the shortest path between all nodes, typically using an algorithm like Floyd-Warshall."}, {"pos": 114, "text": "):\n", "scoped": true, "readout": "Processing each pair of nodes to find the shortest path between them, updating the distance if a shorter path is found through an intermediate node."}, {"pos": 115, "text": "               ", "scoped": true, "readout": "I'm calculating the shortest path between nodes using the minimum of the current path or the sum of two intermediate paths."}, {"pos": 116, "text": " dist", "scoped": true, "readout": "I'm checking if a shorter path exists between two nodes by comparing the direct path with an indirect path through another node."}, {"pos": 117, "text": "[i", "scoped": true, "readout": "I'm calculating the shortest path between nodes using a comparison and potential path updates."}, {"pos": 118, "text": "][", "scoped": true, "readout": "Processing each element to find the shortest path using dynamic programming."}, {"pos": 119, "text": "j", "scoped": true, "readout": "I'm calculating the shortest path between nodes using a known algorithm, typically updating the distance if a shorter path is found through an intermediate node."}, {"pos": 120, "text": "]", "scoped": true, "readout": "I'm calculating the shortest path between all nodes using the minimum of the current value and the sum of the path through an intermediate node."}, {"pos": 121, "text": " =", "scoped": true, "readout": "I'm calculating the shortest path between nodes using the minimum of the current path or the sum of two paths through an intermediate node."}, {"pos": 122, "text": " min", "scoped": true, "readout": "I'm calculating the shortest path between nodes, updating the distance if a shorter path is found through an intermediate node."}, {"pos": 123, "text": "(dist", "scoped": true, "readout": "I'm checking if the current value is less than the sum of the other two values or updating it to the minimum path sum through that node."}, {"pos": 124, "text": "[i", "scoped": true, "readout": "I'm checking if the current value is less than the sum of two other paths through the graph."}, {"pos": 125, "text": "][", "scoped": true, "readout": "Processing each element to find the shortest path using an algorithm like Floyd-Warshall."}, {"pos": 126, "text": "j", "scoped": true, "readout": "I'm calculating the shortest path between nodes, considering direct paths and indirect paths through intermediate nodes."}, {"pos": 127, "text": "]", "scoped": true, "readout": "I'm calculating the shortest path between nodes, considering whether a direct path or an indirect path through another node offers a shorter route."}, {"pos": 128, "text": " ,", "scoped": true, "readout": "I'm calculating the shortest path between nodes, considering if a direct path or an indirect path through another node is shorter."}, {"pos": 129, "text": " dist", "scoped": true, "readout": "I'm calculating the shortest path between nodes through an intermediate node."}, {"pos": 130, "text": "[i", "scoped": true, "readout": "I'm calculating the shortest path through an intermediate point."}, {"pos": 131, "text": "][", "scoped": true, "readout": "Processing the shortest path between nodes using dynamic programming."}, {"pos": 132, "text": "k", "scoped": true, "readout": "I'm calculating the shortest path between nodes through intermediate nodes, updating the distance if a shorter route is found via an intermediate node."}, {"pos": 133, "text": "]+", "scoped": true, "readout": "I'm calculating the shortest path through an intermediate point."}, {"pos": 134, "text": " dist", "scoped": true, "readout": "I'm calculating the shortest path through an intermediate point."}, {"pos": 135, "text": "[k", "scoped": true, "readout": "I'm calculating the shortest path between nodes through an intermediate node."}, {"pos": 136, "text": "][", "scoped": true, "readout": "Processing the shortest paths between all nodes in a graph using an algorithm like Floyd-Warshall."}, {"pos": 137, "text": "j", "scoped": true, "readout": "I'm calculating the shortest path between nodes using dynamic programming."}, {"pos": 138, "text": "])\n", "scoped": true, "readout": "I'm calculating the shortest paths between all pairs of vertices using Floyd-Warshall's algorithm."}, {"pos": 139, "text": "   ", "scoped": true, "readout": "I'm calculating the shortest paths between all pairs of vertices using the Floyd-Warshall algorithm."}, {"pos": 140, "text": " return", "scoped": true, "readout": "I'm calculating the shortest paths between all nodes in a graph using an algorithm like Floyd-Warshall."}, {"pos": 141, "text": " dist", "scoped": true, "readout": "I'm calculating the shortest paths between all pairs of vertices using the Floyd-Warshall algorithm."}, {"pos": 142, "text": "\n", "scoped": true, "readout": "I'm assuming you're asking for an explanation or implementation of a specific piece of code, likely a function or algorithm like Dijkstra's algorithm for finding shortest paths in a graph. Here's a Python implementation:\n\n```python\ndef dijkstra(graph):\n    def min_dist(dist, V):\n        return dist"}, {"pos": 143, "text": "</", "scoped": true, "readout": "I'm assuming you're asking for a generic explanation or example. Here's a simple Python function to demonstrate:\n\n```python\ndef add_matrices(a, b):\n    return [[(lambda i, j): sum(zip(*[(c[d] * e[f]) for c in a], b)) for d in range(len"}, {"pos": 144, "text": "code", "scoped": true, "readout": "Sure, here's a brief snippet:\n\n```python\nresult = [i for i in range(10)]\n```"}, {"pos": 145, "text": ">", "scoped": true, "readout": "I'm assuming you're referring to a specific line of code, but it seems like the code snippet is missing. Please provide the code snippet."}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>

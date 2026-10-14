@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>109 move one ball  ·  Llama-3.3-70B-Instruct</title><style>:root{
+  --bg:#ffffff; --code:#1f2328; --dim:#c4c8cf; --muted:#6b7280;
+  --kw:#a626a4; --cn:#0b76c4; --bi:#3aa39f; --num:#0b76c4; --fn:#6f42c1;
+  --anchor:#f2708a; --anchor-line:#9aa1ab; --box:#d0d5dd; --hi:#fff2b8; --pin:#f2708a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--code);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.gs-wrap{position:relative;display:flex;align-items:stretch;gap:0;padding:22px 26px 40px;--leftw:46%;}
+.gs-left{position:relative;flex:0 0 var(--leftw);min-height:100%;}
+.gs-divider{flex:0 0 14px;align-self:stretch;position:relative;cursor:col-resize;z-index:4;}
+.gs-divider::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:#e5e7eb;transform:translateX(-50%);transition:background .1s,width .1s;}
+.gs-divider:hover::before,.gs-divider.drag::before{background:#9aa1ab;width:2px;}
+.gs-right{flex:1 1 auto;padding-left:20px;min-width:0;}
+.gs-title{font-size:13px;color:var(--muted);letter-spacing:.02em;margin:0 0 10px;text-transform:uppercase;}
+pre.gs-code{margin:0;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  font-size:15px;line-height:1.7;white-space:pre-wrap;word-break:break-word;}
+.gs-tok{border-radius:4px;padding:0 .5px;}
+.gs-tok.scoped{cursor:pointer;transition:background .12s;}
+.gs-tok.scoped:hover{background:var(--hi);}
+.gs-tok.pinned{background:#ffe08a;box-shadow:0 0 0 1.5px var(--pin);border-radius:4px;}
+.gs-tok.noncode{color:var(--dim);}
+.gs-tok.kw{color:var(--kw);font-weight:600}
+.gs-tok.cn{color:var(--cn);font-weight:600}
+.gs-tok.bi{color:var(--bi)}
+.gs-tok.num{color:var(--num)}
+svg.gs-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;}
+.gs-callout{position:absolute;left:20px;max-width:calc(var(--leftw) - 48px);background:#fff;border:1px solid var(--box);
+  border-radius:12px;padding:11px 14px;box-shadow:0 1px 3px rgba(16,24,40,.07);z-index:3;
+  font-size:15px;line-height:1.45;font-style:italic;color:#111827;}
+.gs-callout{cursor:grab;user-select:none;}
+.gs-callout.dragging{cursor:grabbing;box-shadow:0 6px 18px rgba(16,24,40,.16);z-index:4;}
+.gs-callout .idx{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  background:var(--pin);color:#fff;font-style:normal;font-weight:700;font-size:12px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+.gs-hint{position:absolute;top:22px;right:26px;font-size:12px;color:var(--muted);font-style:italic;}
+.gs-tip{position:fixed;pointer-events:none;z-index:9;max-width:320px;background:#111827;color:#fff;
+  font-size:13px;line-height:1.4;font-style:italic;padding:8px 11px;border-radius:8px;opacity:0;
+  transition:opacity .1s;box-shadow:0 4px 14px rgba(0,0,0,.25);}
+.gs-empty{color:var(--muted);font-size:14px;font-style:italic;padding-top:6px;}
+/* readouts_side="right": callout panel to the right of the code (panels mirrored) */
+.gs-wrap.rside{flex-direction:row-reverse;}
+.gs-wrap.rside .gs-right{padding-left:0;padding-right:20px;}
+.gs-wrap.rside .gs-callout{left:auto;right:20px;}
+.gs-wrap.rside .gs-callout .idx{left:auto;right:-11px;}
+.gs-wrap.rside .gs-empty{padding-left:20px;}
+/* stacked view when the PAGE/panel is narrow (render() sets .narrow from the wrap's own width): callouts below the
+   code, a pinned token is prefixed with its callout number */
+.gs-wrap.narrow{flex-direction:column;padding:14px 12px 28px;}
+.gs-wrap.narrow .gs-left{flex:none;order:2;min-height:0;}
+.gs-wrap.narrow .gs-right{padding:0;}
+.gs-wrap.narrow .gs-divider,.gs-wrap.narrow svg.gs-links{display:none;}
+.gs-wrap.narrow pre.gs-code{font-size:13px;}
+.gs-wrap.narrow .gs-callout{position:relative;left:auto;right:auto;top:auto!important;max-width:none;margin:14px 0 0 10px;cursor:default;}
+.gs-wrap.narrow .gs-tok.pinned[data-n]::before{content:attr(data-n);display:inline-block;margin-right:2px;padding:0 4px;
+  border-radius:7px;background:var(--pin);color:#fff;font:700 9.5px/14px ui-sans-serif,system-ui,sans-serif;
+  font-style:normal;vertical-align:super;}</style></head>
+<body>
+<div class="gs-wrap" id="gs_2e429444">
+  <div class="gs-left"></div>
+  <div class="gs-divider" title="drag to resize"></div>
+  <div class="gs-right">
+    <div class="gs-title">109 move one ball  ·  Llama-3.3-70B-Instruct</div>
+    <pre class="gs-code"><span class="gs-tok noncode" data-pos="0">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="1">&lt;|begin_of_text|&gt;</span><span class="gs-tok noncode" data-pos="2">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="3">system</span><span class="gs-tok noncode" data-pos="4">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="5">↵
+↵
+</span><span class="gs-tok noncode" data-pos="6">Cut</span><span class="gs-tok noncode" data-pos="7">ting</span><span class="gs-tok noncode" data-pos="8"> Knowledge</span><span class="gs-tok noncode" data-pos="9"> Date</span><span class="gs-tok noncode" data-pos="10">:</span><span class="gs-tok noncode" data-pos="11"> December</span><span class="gs-tok noncode" data-pos="12"> </span><span class="gs-tok noncode" data-pos="13">202</span><span class="gs-tok noncode" data-pos="14">3</span><span class="gs-tok noncode" data-pos="15">↵
+</span><span class="gs-tok noncode" data-pos="16">Today</span><span class="gs-tok noncode" data-pos="17"> Date</span><span class="gs-tok noncode" data-pos="18">:</span><span class="gs-tok noncode" data-pos="19"> </span><span class="gs-tok noncode" data-pos="20">26</span><span class="gs-tok noncode" data-pos="21"> Jul</span><span class="gs-tok noncode" data-pos="22"> </span><span class="gs-tok noncode" data-pos="23">202</span><span class="gs-tok noncode" data-pos="24">4</span><span class="gs-tok noncode" data-pos="25">↵
+↵
+</span><span class="gs-tok noncode" data-pos="26">You</span><span class="gs-tok noncode" data-pos="27"> are</span><span class="gs-tok noncode" data-pos="28"> a</span><span class="gs-tok noncode" data-pos="29"> helpful</span><span class="gs-tok noncode" data-pos="30"> assistant</span><span class="gs-tok noncode" data-pos="31"> proficient</span><span class="gs-tok noncode" data-pos="32"> in</span><span class="gs-tok noncode" data-pos="33"> programming</span><span class="gs-tok noncode" data-pos="34">.</span><span class="gs-tok noncode" data-pos="35"> Always</span><span class="gs-tok noncode" data-pos="36"> wrap</span><span class="gs-tok noncode" data-pos="37"> your</span><span class="gs-tok noncode" data-pos="38"> code</span><span class="gs-tok noncode" data-pos="39"> inside</span><span class="gs-tok noncode" data-pos="40"> &lt;</span><span class="gs-tok noncode" data-pos="41">code</span><span class="gs-tok noncode" data-pos="42">&gt;&lt;/</span><span class="gs-tok noncode" data-pos="43">code</span><span class="gs-tok noncode" data-pos="44">&gt;</span><span class="gs-tok noncode" data-pos="45"> blocks</span><span class="gs-tok noncode" data-pos="46">.</span><span class="gs-tok noncode" data-pos="47"> Just</span><span class="gs-tok noncode" data-pos="48"> the</span><span class="gs-tok noncode" data-pos="49"> code</span><span class="gs-tok noncode" data-pos="50">,</span><span class="gs-tok noncode" data-pos="51"> no</span><span class="gs-tok noncode" data-pos="52"> need</span><span class="gs-tok noncode" data-pos="53"> to</span><span class="gs-tok noncode" data-pos="54"> comment</span><span class="gs-tok noncode" data-pos="55"> or</span><span class="gs-tok noncode" data-pos="56"> explain</span><span class="gs-tok noncode" data-pos="57">.</span><span class="gs-tok noncode" data-pos="58">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="59">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="60">user</span><span class="gs-tok noncode" data-pos="61">&lt;|end_header_id|&gt;</span><span class="gs-tok noncode" data-pos="62">↵
+↵
+</span><span class="gs-tok noncode" data-pos="63">We</span><span class="gs-tok noncode" data-pos="64"> have</span><span class="gs-tok noncode" data-pos="65"> an</span><span class="gs-tok noncode" data-pos="66"> array</span><span class="gs-tok noncode" data-pos="67"> &#x27;</span><span class="gs-tok noncode" data-pos="68">arr</span><span class="gs-tok noncode" data-pos="69">&#x27;</span><span class="gs-tok noncode" data-pos="70"> of</span><span class="gs-tok noncode" data-pos="71"> N</span><span class="gs-tok noncode" data-pos="72"> integers</span><span class="gs-tok noncode" data-pos="73"> arr</span><span class="gs-tok noncode" data-pos="74">[</span><span class="gs-tok noncode" data-pos="75">1</span><span class="gs-tok noncode" data-pos="76">],</span><span class="gs-tok noncode" data-pos="77"> arr</span><span class="gs-tok noncode" data-pos="78">[</span><span class="gs-tok noncode" data-pos="79">2</span><span class="gs-tok noncode" data-pos="80">],</span><span class="gs-tok noncode" data-pos="81">...,</span><span class="gs-tok noncode" data-pos="82"> arr</span><span class="gs-tok noncode" data-pos="83">[N</span><span class="gs-tok noncode" data-pos="84">].</span><span class="gs-tok noncode" data-pos="85">The</span><span class="gs-tok noncode" data-pos="86"> numbers</span><span class="gs-tok noncode" data-pos="87"> in</span><span class="gs-tok noncode" data-pos="88"> the</span><span class="gs-tok noncode" data-pos="89"> array</span><span class="gs-tok noncode" data-pos="90"> will</span><span class="gs-tok noncode" data-pos="91"> be</span><span class="gs-tok noncode" data-pos="92"> randomly</span><span class="gs-tok noncode" data-pos="93"> ordered</span><span class="gs-tok noncode" data-pos="94"> in</span><span class="gs-tok noncode" data-pos="95"> Python</span><span class="gs-tok noncode" data-pos="96">&lt;|eot_id|&gt;</span><span class="gs-tok noncode" data-pos="97">&lt;|start_header_id|&gt;</span><span class="gs-tok noncode" data-pos="98">assistant</span><span class="gs-tok noncode" data-pos="99">&lt;|end_header_id|&gt;</span><span class="gs-tok scoped" data-pos="100">↵
+↵
+</span><span class="gs-tok scoped" data-pos="101">&lt;</span><span class="gs-tok scoped" data-pos="102">code</span><span class="gs-tok scoped" data-pos="103">&gt;↵
+</span><span class="gs-tok scoped kw" data-pos="104">def</span><span class="gs-tok scoped" data-pos="105"> move</span><span class="gs-tok scoped" data-pos="106">_one</span><span class="gs-tok scoped" data-pos="107">_ball</span><span class="gs-tok scoped" data-pos="108">(</span><span class="gs-tok scoped" data-pos="109"> arr</span><span class="gs-tok scoped" data-pos="110">,</span><span class="gs-tok scoped" data-pos="111"> N</span><span class="gs-tok scoped" data-pos="112"> ):↵
+</span><span class="gs-tok scoped" data-pos="113">   </span><span class="gs-tok scoped kw" data-pos="114"> for</span><span class="gs-tok scoped" data-pos="115"> i</span><span class="gs-tok scoped kw" data-pos="116"> in</span><span class="gs-tok scoped bi" data-pos="117"> range</span><span class="gs-tok scoped" data-pos="118">(N</span><span class="gs-tok scoped" data-pos="119">):↵
+</span><span class="gs-tok scoped" data-pos="120">       </span><span class="gs-tok scoped kw" data-pos="121"> for</span><span class="gs-tok scoped" data-pos="122"> j</span><span class="gs-tok scoped kw" data-pos="123"> in</span><span class="gs-tok scoped bi" data-pos="124"> range</span><span class="gs-tok scoped" data-pos="125">(i</span><span class="gs-tok scoped" data-pos="126">+</span><span class="gs-tok scoped num" data-pos="127">1</span><span class="gs-tok scoped" data-pos="128">,</span><span class="gs-tok scoped" data-pos="129"> N</span><span class="gs-tok scoped" data-pos="130">):↵
+</span><span class="gs-tok scoped" data-pos="131">           </span><span class="gs-tok scoped kw" data-pos="132"> if</span><span class="gs-tok scoped" data-pos="133"> arr</span><span class="gs-tok scoped" data-pos="134">[i</span><span class="gs-tok scoped" data-pos="135">]</span><span class="gs-tok scoped" data-pos="136"> &gt;</span><span class="gs-tok scoped" data-pos="137"> arr</span><span class="gs-tok scoped" data-pos="138">[j</span><span class="gs-tok scoped" data-pos="139">]:↵
+</span><span class="gs-tok scoped" data-pos="140">               </span><span class="gs-tok scoped" data-pos="141"> arr</span><span class="gs-tok scoped" data-pos="142">[i</span><span class="gs-tok scoped" data-pos="143">],</span><span class="gs-tok scoped" data-pos="144"> arr</span><span class="gs-tok scoped" data-pos="145">[j</span><span class="gs-tok scoped" data-pos="146">]</span><span class="gs-tok scoped" data-pos="147"> =</span><span class="gs-tok scoped" data-pos="148"> arr</span><span class="gs-tok scoped" data-pos="149">[j</span><span class="gs-tok scoped" data-pos="150">],</span><span class="gs-tok scoped" data-pos="151"> arr</span><span class="gs-tok scoped" data-pos="152">[i</span><span class="gs-tok scoped" data-pos="153">]↵
+</span><span class="gs-tok scoped" data-pos="154">   </span><span class="gs-tok scoped kw" data-pos="155"> return</span><span class="gs-tok scoped" data-pos="156"> arr</span><span class="gs-tok scoped" data-pos="157">↵
+↵
+</span><span class="gs-tok scoped" data-pos="158">arr</span><span class="gs-tok scoped" data-pos="159"> =</span><span class="gs-tok scoped" data-pos="160"> [</span><span class="gs-tok scoped num" data-pos="161">64</span><span class="gs-tok scoped" data-pos="162">,</span><span class="gs-tok scoped" data-pos="163"> </span><span class="gs-tok scoped num" data-pos="164">34</span><span class="gs-tok scoped" data-pos="165">,</span><span class="gs-tok scoped" data-pos="166"> </span><span class="gs-tok scoped num" data-pos="167">25</span><span class="gs-tok scoped" data-pos="168">,</span><span class="gs-tok scoped" data-pos="169"> </span><span class="gs-tok scoped num" data-pos="170">12</span><span class="gs-tok scoped" data-pos="171">,</span><span class="gs-tok scoped" data-pos="172"> </span><span class="gs-tok scoped num" data-pos="173">22</span><span class="gs-tok scoped" data-pos="174">,</span><span class="gs-tok scoped" data-pos="175"> </span><span class="gs-tok scoped num" data-pos="176">11</span><span class="gs-tok scoped" data-pos="177">,</span><span class="gs-tok scoped" data-pos="178"> </span><span class="gs-tok scoped num" data-pos="179">90</span><span class="gs-tok scoped" data-pos="180">]↵
+</span><span class="gs-tok scoped" data-pos="181">N</span><span class="gs-tok scoped" data-pos="182"> =</span><span class="gs-tok scoped bi" data-pos="183"> len</span><span class="gs-tok scoped" data-pos="184">(arr</span><span class="gs-tok scoped" data-pos="185">)↵
+</span><span class="gs-tok scoped bi" data-pos="186">print</span><span class="gs-tok scoped" data-pos="187">(&quot;</span><span class="gs-tok scoped" data-pos="188">Original</span><span class="gs-tok scoped" data-pos="189"> array</span><span class="gs-tok scoped kw" data-pos="190"> is</span><span class="gs-tok scoped" data-pos="191">:&quot;,</span><span class="gs-tok scoped" data-pos="192"> arr</span><span class="gs-tok scoped" data-pos="193">)↵
+</span><span class="gs-tok scoped bi" data-pos="194">print</span><span class="gs-tok scoped" data-pos="195">(&quot;</span><span class="gs-tok scoped" data-pos="196">Sorted</span><span class="gs-tok scoped" data-pos="197"> array</span><span class="gs-tok scoped kw" data-pos="198"> is</span><span class="gs-tok scoped" data-pos="199">:&quot;,</span><span class="gs-tok scoped" data-pos="200"> move</span><span class="gs-tok scoped" data-pos="201">_one</span><span class="gs-tok scoped" data-pos="202">_ball</span><span class="gs-tok scoped" data-pos="203">(arr</span><span class="gs-tok scoped" data-pos="204">,</span><span class="gs-tok scoped" data-pos="205"> N</span><span class="gs-tok scoped" data-pos="206">))↵
+</span><span class="gs-tok scoped" data-pos="207">&lt;/</span><span class="gs-tok scoped" data-pos="208">code</span><span class="gs-tok scoped" data-pos="209">&gt;</span></pre>
+  </div>
+  <svg class="gs-links"></svg>
+  <div class="gs-tip"></div>
+</div>
+<script>(function(){
+  const CID = "gs_2e429444";
+  const root = document.getElementById(CID);
+  if(!root) return;
+  const TOK = [{"pos": 0, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 1, "text": "<|begin_of_text|>", "scoped": false, "readout": ""}, {"pos": 2, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 3, "text": "system", "scoped": false, "readout": ""}, {"pos": 4, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 5, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 6, "text": "Cut", "scoped": false, "readout": ""}, {"pos": 7, "text": "ting", "scoped": false, "readout": ""}, {"pos": 8, "text": " Knowledge", "scoped": false, "readout": ""}, {"pos": 9, "text": " Date", "scoped": false, "readout": ""}, {"pos": 10, "text": ":", "scoped": false, "readout": ""}, {"pos": 11, "text": " December", "scoped": false, "readout": ""}, {"pos": 12, "text": " ", "scoped": false, "readout": ""}, {"pos": 13, "text": "202", "scoped": false, "readout": ""}, {"pos": 14, "text": "3", "scoped": false, "readout": ""}, {"pos": 15, "text": "\n", "scoped": false, "readout": ""}, {"pos": 16, "text": "Today", "scoped": false, "readout": ""}, {"pos": 17, "text": " Date", "scoped": false, "readout": ""}, {"pos": 18, "text": ":", "scoped": false, "readout": ""}, {"pos": 19, "text": " ", "scoped": false, "readout": ""}, {"pos": 20, "text": "26", "scoped": false, "readout": ""}, {"pos": 21, "text": " Jul", "scoped": false, "readout": ""}, {"pos": 22, "text": " ", "scoped": false, "readout": ""}, {"pos": 23, "text": "202", "scoped": false, "readout": ""}, {"pos": 24, "text": "4", "scoped": false, "readout": ""}, {"pos": 25, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 26, "text": "You", "scoped": false, "readout": ""}, {"pos": 27, "text": " are", "scoped": false, "readout": ""}, {"pos": 28, "text": " a", "scoped": false, "readout": ""}, {"pos": 29, "text": " helpful", "scoped": false, "readout": ""}, {"pos": 30, "text": " assistant", "scoped": false, "readout": ""}, {"pos": 31, "text": " proficient", "scoped": false, "readout": ""}, {"pos": 32, "text": " in", "scoped": false, "readout": ""}, {"pos": 33, "text": " programming", "scoped": false, "readout": ""}, {"pos": 34, "text": ".", "scoped": false, "readout": ""}, {"pos": 35, "text": " Always", "scoped": false, "readout": ""}, {"pos": 36, "text": " wrap", "scoped": false, "readout": ""}, {"pos": 37, "text": " your", "scoped": false, "readout": ""}, {"pos": 38, "text": " code", "scoped": false, "readout": ""}, {"pos": 39, "text": " inside", "scoped": false, "readout": ""}, {"pos": 40, "text": " <", "scoped": false, "readout": ""}, {"pos": 41, "text": "code", "scoped": false, "readout": ""}, {"pos": 42, "text": "></", "scoped": false, "readout": ""}, {"pos": 43, "text": "code", "scoped": false, "readout": ""}, {"pos": 44, "text": ">", "scoped": false, "readout": ""}, {"pos": 45, "text": " blocks", "scoped": false, "readout": ""}, {"pos": 46, "text": ".", "scoped": false, "readout": ""}, {"pos": 47, "text": " Just", "scoped": false, "readout": ""}, {"pos": 48, "text": " the", "scoped": false, "readout": ""}, {"pos": 49, "text": " code", "scoped": false, "readout": ""}, {"pos": 50, "text": ",", "scoped": false, "readout": ""}, {"pos": 51, "text": " no", "scoped": false, "readout": ""}, {"pos": 52, "text": " need", "scoped": false, "readout": ""}, {"pos": 53, "text": " to", "scoped": false, "readout": ""}, {"pos": 54, "text": " comment", "scoped": false, "readout": ""}, {"pos": 55, "text": " or", "scoped": false, "readout": ""}, {"pos": 56, "text": " explain", "scoped": false, "readout": ""}, {"pos": 57, "text": ".", "scoped": false, "readout": ""}, {"pos": 58, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 59, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 60, "text": "user", "scoped": false, "readout": ""}, {"pos": 61, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 62, "text": "\n\n", "scoped": false, "readout": ""}, {"pos": 63, "text": "We", "scoped": false, "readout": ""}, {"pos": 64, "text": " have", "scoped": false, "readout": ""}, {"pos": 65, "text": " an", "scoped": false, "readout": ""}, {"pos": 66, "text": " array", "scoped": false, "readout": ""}, {"pos": 67, "text": " '", "scoped": false, "readout": ""}, {"pos": 68, "text": "arr", "scoped": false, "readout": ""}, {"pos": 69, "text": "'", "scoped": false, "readout": ""}, {"pos": 70, "text": " of", "scoped": false, "readout": ""}, {"pos": 71, "text": " N", "scoped": false, "readout": ""}, {"pos": 72, "text": " integers", "scoped": false, "readout": ""}, {"pos": 73, "text": " arr", "scoped": false, "readout": ""}, {"pos": 74, "text": "[", "scoped": false, "readout": ""}, {"pos": 75, "text": "1", "scoped": false, "readout": ""}, {"pos": 76, "text": "],", "scoped": false, "readout": ""}, {"pos": 77, "text": " arr", "scoped": false, "readout": ""}, {"pos": 78, "text": "[", "scoped": false, "readout": ""}, {"pos": 79, "text": "2", "scoped": false, "readout": ""}, {"pos": 80, "text": "],", "scoped": false, "readout": ""}, {"pos": 81, "text": "...,", "scoped": false, "readout": ""}, {"pos": 82, "text": " arr", "scoped": false, "readout": ""}, {"pos": 83, "text": "[N", "scoped": false, "readout": ""}, {"pos": 84, "text": "].", "scoped": false, "readout": ""}, {"pos": 85, "text": "The", "scoped": false, "readout": ""}, {"pos": 86, "text": " numbers", "scoped": false, "readout": ""}, {"pos": 87, "text": " in", "scoped": false, "readout": ""}, {"pos": 88, "text": " the", "scoped": false, "readout": ""}, {"pos": 89, "text": " array", "scoped": false, "readout": ""}, {"pos": 90, "text": " will", "scoped": false, "readout": ""}, {"pos": 91, "text": " be", "scoped": false, "readout": ""}, {"pos": 92, "text": " randomly", "scoped": false, "readout": ""}, {"pos": 93, "text": " ordered", "scoped": false, "readout": ""}, {"pos": 94, "text": " in", "scoped": false, "readout": ""}, {"pos": 95, "text": " Python", "scoped": false, "readout": ""}, {"pos": 96, "text": "<|eot_id|>", "scoped": false, "readout": ""}, {"pos": 97, "text": "<|start_header_id|>", "scoped": false, "readout": ""}, {"pos": 98, "text": "assistant", "scoped": false, "readout": ""}, {"pos": 99, "text": "<|end_header_id|>", "scoped": false, "readout": ""}, {"pos": 100, "text": "\n\n", "scoped": true, "readout": "```python\nx = [1,2,3]\nprint(x)\n```"}, {"pos": 101, "text": "<", "scoped": true, "readout": "I'm not writing code yet, just give me the code snippet."}, {"pos": 102, "text": "code", "scoped": true, "readout": "```python\nprint(\"I'm writing code\")\n```"}, {"pos": 103, "text": ">\n", "scoped": true, "readout": "```python\nimport random\nnumbers = [4,2,8,5,1,9,7,6,3]\nrandom.shuffle(numbers)\nprint(numbers)\n```"}, {"pos": 104, "text": "def", "scoped": true, "readout": "I'm randomizing the order of the elements in an array. \n\n```python\nimport random\nrandom.shuffle(array)\n```"}, {"pos": 105, "text": " move", "scoped": true, "readout": "The list is currently unsorted with numbers in random order: 5, 2, 8, 1, 4, 6, 3, 7 \n\nTo sort the list in ascending order, you can use a sorting algorithm like quicksort or a built-in function to randomize and sort"}, {"pos": 106, "text": "_one", "scoped": true, "readout": "The code is not sorted. I can help you arrange the numbers in order."}, {"pos": 107, "text": "_ball", "scoped": true, "readout": "I'm not moving, the array is not sorted. I can move all elements to either side in one pass. \n\nO(n) solution for this problem can be achieved by scanning the array from left to right, moving all elements to either side in one pass. \n\nMove all elements to either side in one pass"}, {"pos": 108, "text": "(", "scoped": true, "readout": "I'm not given the code, the elements are not ordered, to move a specific element to a certain position in an array, we can use a simple algorithm where we iterate through the array and move the element to the desired position. \n\nHere is a python code to solve this problem:\n\n```python\ndef move"}, {"pos": 109, "text": " arr", "scoped": true, "readout": "I'm not given a specific line of code with elements to identify a specific position. The elements are randomly ordered."}, {"pos": 110, "text": ",", "scoped": true, "readout": "I'm moving the target element to the beginning of the array in a single pass."}, {"pos": 111, "text": " N", "scoped": true, "readout": "I'm not given a specific line of code or the code itself to identify the position of an element. The code and the position are unknown."}, {"pos": 112, "text": " ):\n", "scoped": true, "readout": "I'm not given a line of code or the code itself, the list is also not specified, here is a python function that rearranges the list in one line: \ndef rearrange(nums):\n    nums[:] = sorted(nums)"}, {"pos": 113, "text": "   ", "scoped": true, "readout": "I'm not sure, the code is not provided and the elements are not ordered."}, {"pos": 114, "text": " for", "scoped": true, "readout": "I'm not doing anything, the list is not sorted."}, {"pos": 115, "text": " i", "scoped": true, "readout": "I'm not doing anything, the list is not sorted. \n\nTo move the largest element to the end of the unsorted list, I will move all smaller elements to their correct position by iterating through the list from left to right, and then move the largest element to the end by iterating through the list from right"}, {"pos": 116, "text": " in", "scoped": true, "readout": "I am not at a specific position. Objects are typically sorted to be in order, with all 1's on the left and all other objects on the right,  in a single pass. In the given list, I am at a random position."}, {"pos": 117, "text": " range", "scoped": true, "readout": "I'm not doing anything, the list is not sorted. The smallest element is at index 1 and should be at index 0 in an sorted array where all elements smaller than 1 should be at the left and all elements greater than 1 should be at the right in a sorted array."}, {"pos": 118, "text": "(N", "scoped": true, "readout": "I'm not doing anything, the list is not sorted. I will move the largest element to the end by iterating through the list from the left."}, {"pos": 119, "text": "):\n", "scoped": true, "readout": "I'm not doing anything, the list is unsorted."}, {"pos": 120, "text": "       ", "scoped": true, "readout": "I'm not at any specific line of code where the value is not in order. However, in a sorted array, the value 1 should be at the beginning, and all other elements should be in order, with all 0s at the end. To achieve this, we can iterate through the array and"}, {"pos": 121, "text": " for", "scoped": true, "readout": "I'm not at any specific line of code, the list is unsorted and I'm looking for the smallest element in the list and moving it to its correct position by iterating through the list."}, {"pos": 122, "text": " j", "scoped": true, "readout": "I'm checking if the list is sorted and swapping adjacent elements if they are in the wrong order."}, {"pos": 123, "text": " in", "scoped": true, "readout": "I'm not moving, I'm at a random position, and the rest of the objects are also randomly placed, with one object being moved to a different position,  with only one switch,  to the right,  in an array."}, {"pos": 124, "text": " range", "scoped": true, "readout": "I'm checking if the element at index i is greater than the element next to it and swapping if they are in the wrong order. \n\n(Note: Assuming the code is sorted in ascending order and I'm at the i-th index) \n\nIf i > j, then the larger element is at the i-th index"}, {"pos": 125, "text": "(i", "scoped": true, "readout": "I'm checking if the current element is in the correct order with the adjacent element."}, {"pos": 126, "text": "+", "scoped": true, "readout": "I'm checking for adjacent swaps."}, {"pos": 127, "text": "1", "scoped": true, "readout": "I'm checking for adjacent swaps."}, {"pos": 128, "text": ",", "scoped": true, "readout": "Comparing adjacent elements."}, {"pos": 129, "text": " N", "scoped": true, "readout": "I'm checking for adjacent elements."}, {"pos": 130, "text": "):\n", "scoped": true, "readout": "I'm checking the code for potential swaps of adjacent elements. \n\n(Note: Since the list is not provided, I'm assuming the code is sorting the list in ascending order and I'm checking each element to see if it's in the correct position)"}, {"pos": 131, "text": "           ", "scoped": true, "readout": "I'm checking if the array is sorted."}, {"pos": 132, "text": " if", "scoped": true, "readout": "I'm checking if the elements are in order."}, {"pos": 133, "text": " arr", "scoped": true, "readout": "I'm checking if elements are in order from left to right."}, {"pos": 134, "text": "[i", "scoped": true, "readout": "I'm checking if elements are in order. Swapping if necessary."}, {"pos": 135, "text": "]", "scoped": true, "readout": "I'm checking if the current element is in the correct order with the adjacent element."}, {"pos": 136, "text": " >", "scoped": true, "readout": "I'm smaller than you. Swap."}, {"pos": 137, "text": " arr", "scoped": true, "readout": "I'm in the wrong order. I should be in ascending order. I'm smaller than the one on my right, so I should be on the left. I am sorting the list in ascending order."}, {"pos": 138, "text": "[j", "scoped": true, "readout": "I'm swapping."}, {"pos": 139, "text": "]:\n", "scoped": true, "readout": "I'm swapping adjacent elements if they're in the wrong order."}, {"pos": 140, "text": "               ", "scoped": true, "readout": "I'm swapping the values. Swapping `a[i]` and `a[j]` if `a[i] > a[j]`."}, {"pos": 141, "text": " arr", "scoped": true, "readout": "I'm swapping values. Swapping `arr[i], arr[j]` if `arr[i] > arr[j]` using a simple swap operation `arr[i], arr[j] = arr[j], arr[i]`."}, {"pos": 142, "text": "[i", "scoped": true, "readout": "I'm swapping values."}, {"pos": 143, "text": "],", "scoped": true, "readout": "I'm swapping `a` and `b` using `a, b = b, a` or `a, b = a, b` if they are in the wrong order."}, {"pos": 144, "text": " arr", "scoped": true, "readout": "I'm not given a list to arrange the elements in order, the elements are not in order."}, {"pos": 145, "text": "[j", "scoped": true, "readout": "I'm swapping values."}, {"pos": 146, "text": "]", "scoped": true, "readout": "I'm sorting the array in ascending order."}, {"pos": 147, "text": " =", "scoped": true, "readout": "I'll swap them. `a, b = b, a` -> `a, b = a, b` becomes `a, b`"}, {"pos": 148, "text": " arr", "scoped": true, "readout": "I'm sorting the array in ascending order. \n\n`arr = [int(i) for i in arr[::-1]]` \nor \n`arr.sort()`"}, {"pos": 149, "text": "[j", "scoped": true, "readout": "You'd have to swap them. \n\na, b = b, a"}, {"pos": 150, "text": "],", "scoped": true, "readout": "I'm swapping them."}, {"pos": 151, "text": " arr", "scoped": true, "readout": "I'm randomizing the order of elements in an array."}, {"pos": 152, "text": "[i", "scoped": true, "readout": "I'm swapping adjacent elements if they're in the wrong order. \n\nfor i in range(len(arr)): \n  for j in range(len(arr)) \n    if arr[i] > arr[j]: \n      arr[i], arr[j] = arr[j], arr[i]"}, {"pos": 153, "text": "]\n", "scoped": true, "readout": "I'm sorting the list in ascending order."}, {"pos": 154, "text": "   ", "scoped": true, "readout": "I'm arranging the elements in ascending order."}, {"pos": 155, "text": " return", "scoped": true, "readout": "I'm sorting the array in ascending order. \n\narr = [64, 34, 25, 12, 22, 11]\nfor i in range(len(arr)):\n    for j in range(len(arr)):\n        if arr[i] > arr[i+1]:\n            arr[i], arr[i+"}, {"pos": 156, "text": " arr", "scoped": true, "readout": "Sorting the array."}, {"pos": 157, "text": "\n\n", "scoped": true, "readout": "I'm rearranging the input list. \n\n```python\ndef rearrange(nums, n):\n    nums = [random.randint(0, n) for _ in range(n)]\n    return sorted(nums)\n\nn = 10\nnums = [random.randint(0, n) for _ in range(n)]\nprint"}, {"pos": 158, "text": "arr", "scoped": true, "readout": "I'm rearranging the elements of the list. \n\nlist = [int(i) for i in list] \nlist.sort() \nprint(list)"}, {"pos": 159, "text": " =", "scoped": true, "readout": "I'm randomizing an array."}, {"pos": 160, "text": " [", "scoped": true, "readout": "The input list is unsorted."}, {"pos": 161, "text": "64", "scoped": true, "readout": "The numbers are in the incorrect order, I am sorting the list in ascending order."}, {"pos": 162, "text": ",", "scoped": true, "readout": "The input list is unsorted, so the numbers are in random order: 64, 34, 2, 65, 1, 45, 23, 76, 5, 12, 36, 67, 25, 47, 90, 29,"}, {"pos": 163, "text": " ", "scoped": true, "readout": "The items are in the wrong order. I am sorting the list in ascending order, from smallest to largest: 64, 34, 12, 27, 45, 91, 19, 13, 55, 28, 74, 90, 31, 22"}, {"pos": 164, "text": "34", "scoped": true, "readout": "I'm not given a line of code to sort, the numbers are in descending order, the array is: 64 34 25 12 43 65 34 25 12 43 65 34 25 12 43 65 34 25 12 43"}, {"pos": 165, "text": ",", "scoped": true, "readout": "I'm sorting an array in ascending order using a simple algorithm."}, {"pos": 166, "text": " ", "scoped": true, "readout": "I'm sorting the array in ascending order."}, {"pos": 167, "text": "25", "scoped": true, "readout": "I'm helping with a code snippet, but the numbers are not in order, I'm trying to sort them in ascending order, like this: 64 34 25 12 22 11 23 34 5 28 49 27 35 9 50 71 29"}, {"pos": 168, "text": ",", "scoped": true, "readout": "I'm not given a list of numbers."}, {"pos": 169, "text": " ", "scoped": true, "readout": "I'm not seeing any code, please provide it and I'll point to a specific line."}, {"pos": 170, "text": "12", "scoped": true, "readout": "I'm not given a code to sort, the numbers are 5, 2, 8, 6, 99, 54, 76, 35, 97, 12, 25."}, {"pos": 171, "text": ",", "scoped": true, "readout": "I'm not given a list of numbers to sort, the numbers are: 34, 25, 12, 11, 7, 5, 3, 45, 56, 23, 9, 37, 50, 28, 49, 22,"}, {"pos": 172, "text": " ", "scoped": true, "readout": "I'm currently at line 0, and there is no code."}, {"pos": 173, "text": "22", "scoped": true, "readout": "I'm not given any code to sort, here is the list: 64, 34, 25, 12, 22, 11, 23, 9. \nThe original list is: 64, 25, 12, 11, 23, 34,"}, {"pos": 174, "text": ",", "scoped": true, "readout": "I'm not given a list of numbers to sort, the numbers are: 34, 12, 5, 23, 9, 7, 45, 2, 1, 67, 56, 89, 45, 65, 23, 34,"}, {"pos": 175, "text": " ", "scoped": true, "readout": "I'm currently at line 0, and there is no code."}, {"pos": 176, "text": "11", "scoped": true, "readout": "I'm not given a code to sort, here is the list: 26, 12, 9, 2, 5, the order from highest to lowest is: **12, 9, 5, 2, 26**."}, {"pos": 177, "text": ",", "scoped": true, "readout": "The list is unsorted: 64, 34, 25, 12, 22, 11, 90."}, {"pos": 178, "text": " ", "scoped": true, "readout": "I'm not seeing any code, please provide the line of code you'd like me to explain."}, {"pos": 179, "text": "90", "scoped": true, "readout": "There is no code. Your input is unsorted."}, {"pos": 180, "text": "]\n", "scoped": true, "readout": "I'm sorting an array of length n. \n\nn = len(array) \narray = [12, 4, 5, 4, 6, 7, 8, 9, 10, 11] \nn = len(array) \narray = [int(i) for i"}, {"pos": 181, "text": "N", "scoped": true, "readout": "Sorting an array of numbers in ascending order."}, {"pos": 182, "text": " =", "scoped": true, "readout": "There is no code."}, {"pos": 183, "text": " len", "scoped": true, "readout": "There are 8 items in the list, so I'm assuming the list has 8 elements."}, {"pos": 184, "text": "(arr", "scoped": true, "readout": "I'm sorting an array of 10 elements in descending order."}, {"pos": 185, "text": ")\n", "scoped": true, "readout": "I'm sorting an array of numbers in ascending order. \n\narr = [64, 34, 27]\nn = len(arr)\nfor i in range(n):\n    for j in range(n):\n        for k in range(n):\n            arr = sorted(arr)\n    print(arr) \nprint(arr)"}, {"pos": 186, "text": "print", "scoped": true, "readout": "I'm sorting the array. \n\narr = [12, 11, 8, 5, 2, 1]\nprint(sorted(arr)) \nprint(arr) \narr.sort() \nprint(arr)"}, {"pos": 187, "text": "(\"", "scoped": true, "readout": "The list is being sorted in ascending order."}, {"pos": 188, "text": "Original", "scoped": true, "readout": "The list is being sorted in ascending order."}, {"pos": 189, "text": " array", "scoped": true, "readout": "The list is unsorted."}, {"pos": 190, "text": " is", "scoped": true, "readout": "The input is unsorted: [5,2,1,9,7,6,4,3,8]. \nSorted array: [1,2,3,4,5,6,7,8,9]"}, {"pos": 191, "text": ":\",", "scoped": true, "readout": "The code appears to be unsorted: [12, 5, 6, 8, 4, 9, 1, 7, 3, 2]"}, {"pos": 192, "text": " arr", "scoped": true, "readout": "You haven't provided the code."}, {"pos": 193, "text": ")\n", "scoped": true, "readout": "I'm rearranging the input list. \n\narr = [12, 11, 9, 6, 5, 1]\nprint(\"Sorted array in Ascending Order: \", sorted(arr)) \nprint(\"Sorted array in Descending Order: \", sorted(arr, reverse = True))"}, {"pos": 194, "text": "print", "scoped": true, "readout": "I'm sorting the array."}, {"pos": 195, "text": "(\"", "scoped": true, "readout": "I'm sorting the array in ascending order."}, {"pos": 196, "text": "Sorted", "scoped": true, "readout": "Sorting the array."}, {"pos": 197, "text": " array", "scoped": true, "readout": "I'm sorting the array in ascending order."}, {"pos": 198, "text": " is", "scoped": true, "readout": "I'm sorting the array."}, {"pos": 199, "text": ":\",", "scoped": true, "readout": "I'm sorting the array."}, {"pos": 200, "text": " move", "scoped": true, "readout": "I'm sorting the array using a simple sorting algorithm, likely a bubble sort or similar. \n\n```python\ndef sort(array):\n    for i in range(len(array)):\n        for j in range(len(array)):\n            if array[j] > array[j+1]:\n                array[j], array[j+1] ="}, {"pos": 201, "text": "_one", "scoped": true, "readout": "I'm sorting the array using a simple swap method, comparing and swapping adjacent elements."}, {"pos": 202, "text": "_ball", "scoped": true, "readout": "I'm sorting the array."}, {"pos": 203, "text": "(arr", "scoped": true, "readout": "I'm sorting the list in ascending order."}, {"pos": 204, "text": ",", "scoped": true, "readout": "There is no code. You said the length of the code is the number of elements in the list which is 26."}, {"pos": 205, "text": " N", "scoped": true, "readout": "I'm sorting the list. \n\nExample: \nlist = [4, 3, 2, 1]\nprint(sorted(list)) \nOutput: [1, 2, 3, 4]"}, {"pos": 206, "text": "))\n", "scoped": true, "readout": "I'm sorting the list. \n\n```python\narr = [64, 34, 25]\narr.sort()\nprint(arr)\n```"}, {"pos": 207, "text": "</", "scoped": true, "readout": "```python\nprint(\"Hello world\")\n```"}, {"pos": 208, "text": "code", "scoped": true, "readout": "```python\nprint(\"Hello World\")\n```"}, {"pos": 209, "text": ">", "scoped": true, "readout": "I am sorting the list"}];                 // [{pos,text,readout,scoped}]
+  const readouts = {}; TOK.forEach(t=>{ if(t.scoped) readouts[t.pos]=t.readout; });
+  const left  = root.querySelector(".gs-left");
+  const right = root.querySelector(".gs-right");
+  const svg   = root.querySelector("svg.gs-links");
+  const tip   = root.querySelector(".gs-tip");
+  const pinned = [];                           // ordered list of pos (pin order)
+  const manual = {};                           // pos -> callout top relative to its token's centre (px), after a drag
+  const tops = {}, tys = {};                   // pos -> current callout top / token centre (px)
+  const NARROW = 440;                          // wrap width (px) below which callouts stack under the code
+  let dragPos = null;                          // pos of the callout being dragged
+  const RS = root.classList.contains("rside");  // callouts to the RIGHT of the code
+
+  function esc(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  // hover preview
+  root.querySelectorAll(".gs-tok.scoped").forEach(el=>{
+    el.addEventListener("mousemove", e=>{
+      const p = +el.dataset.pos;
+      tip.textContent = "“"+ (readouts[p]||"") +"”";
+      tip.style.opacity = .98;
+      tip.style.left = Math.min(e.clientX+14, window.innerWidth-336) + "px";
+      tip.style.top  = (e.clientY+16) + "px";
+    });
+    el.addEventListener("mouseleave", ()=>{ tip.style.opacity = 0; });
+    el.addEventListener("click", ()=>{
+      const p = +el.dataset.pos;
+      const i = pinned.indexOf(p);
+      if(i>=0){ pinned.splice(i,1); delete manual[p]; el.classList.remove("pinned"); }
+      else    { pinned.push(p);     el.classList.add("pinned"); }
+      render();
+    });
+  });
+
+  // vertical drag of a callout; render() re-creates the boxes, so the drag is tracked by token position
+  function makeDraggable(box, p){
+    if(dragPos === p) box.classList.add("dragging");
+    box.addEventListener("dblclick", ()=>{ delete manual[p]; render(); });
+    box.addEventListener("pointerdown", e=>{
+      if(e.button !== 0) return;
+      const y0 = e.clientY, t0 = parseFloat(box.style.top) || 0;
+      let moved = false;
+      const move = ev=>{
+        const dy = ev.clientY - y0; if(!moved && Math.abs(dy) < 3) return;
+        if(!moved) pinned.forEach(q=>{ if(!(q in manual) && q in tops) manual[q] = tops[q] - tys[q]; });  // freeze the others
+        moved = true; manual[p] = Math.max(0, t0 + dy) - tys[p]; dragPos = p; render();
+      };
+      const up = ()=>{ window.removeEventListener("pointermove", move); window.removeEventListener("pointerup", up);
+                       dragPos = null; if(moved) render(); };
+      window.addEventListener("pointermove", move); window.addEventListener("pointerup", up); e.preventDefault();
+    });
+  }
+
+  function render(){
+    // clear callouts + links
+    root.querySelectorAll(".gs-callout").forEach(n=>n.remove());
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    const empty = left.querySelector(".gs-empty"); if(empty) empty.remove();
+    right.querySelectorAll(".gs-tok").forEach(t=>{
+      const i = pinned.indexOf(+t.dataset.pos); if(i>=0) t.dataset.n = i+1; else delete t.dataset.n;
+    });
+    const narrow = root.clientWidth < NARROW;
+    root.classList.toggle("narrow", narrow);
+    if(pinned.length===0){
+      const e=document.createElement("div"); e.className="gs-empty";
+      e.textContent="Click a highlighted token on the "+(RS?"left":"right")+" to pin its read-out here.";
+      left.appendChild(e); return;
+    }
+    // Single origin for callouts (children of root, absolute) + svg user space + measurements:
+    // the svg is position:absolute inset:0, so its box IS root's padding box == the abs-positioning
+    // containing block. Measure everything relative to it.
+    const O = svg.getBoundingClientRect();
+    // sort pins by the token's vertical position so callouts read top-to-bottom
+    const order = pinned.map(p=>{
+      const t = right.querySelector('.gs-tok[data-pos="'+p+'"]');
+      const r = t.getBoundingClientRect();
+      return {p, t, ty:(r.top+r.bottom)/2 - O.top, tx:r.left - O.left};
+    }).sort((a,b)=>a.ty-b.ty);
+
+    // create callouts, then position with simple vertical de-collision
+    let lastBottom = 0;
+    order.forEach((o,k)=>{
+      const box=document.createElement("div"); box.className="gs-callout";
+      const n = pinned.indexOf(o.p)+1;                 // stable pin number
+      box.innerHTML='<span class="idx">'+n+'</span>'
+                    +'“'+esc(readouts[o.p])+'”';
+      if(narrow){ left.appendChild(box); return; }       // stacked view: no positioning, no leader lines
+      root.appendChild(box);
+      const bh = box.offsetHeight;
+      let top = (o.p in manual) ? Math.max(0, o.ty + manual[o.p]) : Math.max(o.ty - bh/2, lastBottom + 12);
+      box.style.top = top + "px";
+      lastBottom = Math.max(lastBottom, top + bh); tops[o.p] = top; tys[o.p] = o.ty;
+      o.box = box; o.n = n;
+      makeDraggable(box, o.p);
+    });
+    if(narrow) return;
+    // draw leader lines + anchor dots (after layout is known)
+    order.forEach(o=>{
+      const br = o.box.getBoundingClientRect();
+      const x1 = (RS ? br.left : br.right) - O.left, y1 = br.top - O.top + o.box.offsetHeight/2;
+      const tr = o.t.getBoundingClientRect();
+      const x2 = (RS ? tr.right + 2 : tr.left - 2) - O.left, y2 = (tr.top+tr.bottom)/2 - O.top;
+      const mx = (x1+x2)/2;
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      path.setAttribute("fill","none"); path.setAttribute("stroke","#9aa1ab");  // var() not valid in SVG attrs
+      path.setAttribute("stroke-width","1.4");
+      svg.appendChild(path);
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",x2); c.setAttribute("cy",y2); c.setAttribute("r","4");
+      c.setAttribute("fill","#f2708a"); c.setAttribute("stroke","#fff"); c.setAttribute("stroke-width","1");
+      svg.appendChild(c);
+    });
+  }
+  window.addEventListener("resize", render);
+
+  // draggable splitter — resize the left/right panels; callouts + leader lines re-flow live.
+  const divider = root.querySelector(".gs-divider");
+  let dragging = false;
+  divider.addEventListener("mousedown", e=>{
+    dragging = true; divider.classList.add("drag");
+    document.body.style.userSelect = "none"; e.preventDefault();
+  });
+  document.addEventListener("mousemove", e=>{
+    if(!dragging) return;
+    const wr = root.getBoundingClientRect();
+    const cs = getComputedStyle(root);
+    const padL = parseFloat(cs.paddingLeft)||0, padR = parseFloat(cs.paddingRight)||0;
+    const content = wr.width - padL - padR;
+    const w = RS ? (wr.right - padR) - e.clientX : e.clientX - (wr.left + padL);
+    const frac = Math.min(0.80, Math.max(0.18, w/content));   // clamp 18%..80%
+    root.style.setProperty("--leftw", (frac*100).toFixed(2)+"%");
+    render();
+  });
+  document.addEventListener("mouseup", ()=>{
+    if(dragging){ dragging=false; divider.classList.remove("drag");
+      document.body.style.userSelect=""; render(); }
+  });
+
+  // read-outs pinned when the page opens (initial_pins); still unpinnable by click
+  [].forEach(p=>{
+    const el = right.querySelector('.gs-tok.scoped[data-pos="'+p+'"]');
+    if(el && pinned.indexOf(p)<0){ pinned.push(p); el.classList.add("pinned"); }
+  });
+  render();
+})();</script>
+</body></html>
