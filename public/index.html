@@ -4,22 +4,42 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Goal Encoding in LLMs</title>
-  <meta name="description" content="How LLMs encode the sub-goal they are about to pursue, and how a depth-bounded transformer keeps that goal alive across long generations.">
+  <meta name="description" content="Do LLMs have goals? We look for an internal goal representation that is pre-committed, plastic and persistent, read it out with GoalScope, and show how a depth-bounded transformer keeps it alive by re-reading it.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
-  <!-- PLACEHOLDER front page: structure follows filter.baulab.info; text, figures and links to be refined. -->
-  <div class="nd-pageheader">
+  <nav class="secnav" aria-label="Sections">
+    <div class="container">
+      <a class="brand" href="#top">Goal Encoding in LLMs</a>
+      <span class="links">
+        <a href="#goalscope">GoalScope</a>
+        <a href="#persistence">Persistence</a>
+        <a href="#beyond-code">Beyond code</a>
+        <a href="#cite">Cite</a>
+        <a href="slides/Goals_lab_talk.pdf" target="_blank" rel="noopener">Slides</a>
+        <a class="nav-demo" href="demo/index.html">Demo &rarr;</a>
+      </span>
+    </div>
+  </nav>
+  <div class="nd-pageheader" id="top">
     <div class="container">
       <h1 class="lead">Goal Encoding in LLMs</h1>
-      <address>
-        <nobr>Authors withheld during review</nobr><br>
-        <nobr>Northeastern University</nobr>
+      <address class="authors">
+        <a href="https://arnab-api.github.io/">Arnab Sen Sharma</a>,
+        <a href="https://ericwtodd.github.io/">Eric Todd</a>,
+        <a href="https://sfeucht.github.io/">Sheridan Feucht</a>,
+        <a href="https://andyrdt.com/">Andy Arditi</a>,
+        <a href="https://rohitgandikota.github.io/">Rohit Gandikota</a>,
+        <a href="https://scholar.google.com/citations?user=hd7quH4AAAAJ">Natalie Shapira</a>,
+        <a href="https://gsarti.com/">Gabriele Sarti</a>,
+        <a href="https://constanzafierro.github.io/">Constanza Fierro</a>,
+        <a href="https://sites.google.com/view/lisaschut">Lisa Schut</a>,
+        <a href="https://baulab.info/">David Bau</a>
       </address>
     </div>
   </div>
@@ -36,6 +56,9 @@
         <a href="demo/index.html">
           <img src="images/demo-thumb.svg" alt="Interactive demo thumbnail"><br>GoalScope<br>Demo
         </a>
+        <a href="slides/Goals_lab_talk.pdf" target="_blank" rel="noopener">
+          <img class="landscape" src="images/slides-thumb.jpg" alt="Talk slides thumbnail"><br>Talk<br>Slides
+        </a>
       </p>
     </div>
 
@@ -43,56 +66,246 @@
       <div class="card-body">
         <h3>Do LLMs have goals?</h3>
         <p>
-          We investigate whether and how LLMs encode goals: internal representations that precede and
-          guide action, and that are flexible enough to be realized through many different execution paths.
-          In a coding setting with multiple sub-tasks, we localize goal-seeking causal effects in the output of
-          a sparse set of attention heads. The same heads let us decode the model's upcoming action in natural
-          language, e.g. <i>&ldquo;I am counting unique values&rdquo;</i> or <i>&ldquo;I'm checking if a word
-          is a palindrome.&rdquo;</i>
+          Language models now carry out tasks that unfold over thousands of tokens, and they behave
+          <i>as if</i> they were pursuing a goal. We ask whether that behavior is backed by an explicit goal
+          representation inside the model. We fix three functional criteria up front, find an encoding in a sparse
+          set of attention heads that meets them, and then ask how a depth-bounded transformer manages to keep such
+          a goal alive across a long generation.
         </p>
-        <p>
-          This encoding is causal for the model's next action, plastic (transplanted into another programming
-          language, it triggers the same operation with different tokens), and sustained while the action is
-          carried out. We present a theory of how a depth-bounded transformer can keep such a goal across long
-          generations by frequently re-deriving it, and find that these goal heads also generalize beyond code,
-          to natural text and few-shot in-context learning.
-        </p>
+        <ul class="tldr">
+          <li><b>A goal you can read out before the model acts.</b> The <i>goal heads</i> encode the upcoming
+            sub-goal several tokens before its implementation starts; GoalScope turns that encoding into plain English, and
+            transplanting it into C++ triggers the same operation.</li>
+          <li><b>Persistence by re-reading, not by holding.</b> The model re-derives the goal from the task
+            specification at each step (NRGS). Targeted interventions on what the goal heads read move the model
+            to a different sub-goal.</li>
+          <li><b>Beyond code.</b> The same heads, found on code, verbalize implicit rules in few-shot ICL and
+            the intentions of an emergently misaligned chat model.</li>
+        </ul>
       </div>
     </div>
 
-    <figure class="center_image">
-      <img src="images/teaser.png" alt="Goal pursuit and its non-recurrent implementation in a transformer LM">
-      <figcaption>
-        <b>Goal pursuit and its non-recurrent implementation in a transformer LM.</b>
-        A goal such as implementing merge sort decomposes into sub-goals, each realized as a sequence of tokens.
-        Because a commitment cannot be carried forward through a fixed number of layers, the LM re-computes the
-        current sub-goal at each step from the task specification and its progress so far.
-      </figcaption>
-    </figure>
-
-    <div class="row">
-      <div class="col">
-        <h2>GoalScope: reading out the upcoming sub-goal</h2>
-        <p>
-          GoalScope verbalizes what the goal heads encode at a single token, several tokens before the model
-          starts writing the corresponding code. The demo shows read-outs on HumanEval, MBPP and classic
-          algorithms for Qwen2.5-Coder-32B-Instruct and Llama-3.3-70B-Instruct.
-        </p>
-        <a class="demo-cta" href="demo/index.html">Open the GoalScope demo &rarr;</a>
-
-        <h2>Re-deriving the goal, not storing it</h2>
-        <p class="placeholder">Placeholder: the NRGS account and the KV- / query-transfer interventions.</p>
-
-        <h2>Beyond code</h2>
-        <p class="placeholder">
-          Placeholder: GoalScope on in-context learning and chat. See the
-          <a href="demo/icl.html">ICL</a> and <a href="demo/em.html">chat (EM)</a> pages of the demo.
-        </p>
-
-        <h2>Citation</h2>
-        <pre class="citation">Citation coming soon.</pre>
+    <div class="card tryit">
+      <div class="card-body">
+        <div class="tryit-text">
+          <h3>Try it yourself</h3>
+          <p>
+            Hover over any token in a solution and see what the goal heads say the model is about to do. The demo
+            covers HumanEval, MBPP and classic algorithms for Qwen2.5-Coder-32B-Instruct and Llama-3.3-70B-Instruct,
+            plus few-shot ICL and chat examples.
+          </p>
+          <a class="demo-cta" href="demo/index.html">Open the GoalScope demo &rarr;</a>
+        </div>
+        <div class="tryit-example" aria-hidden="true">
+          <pre><span class="dim">def func(words: list[str]):
+    a = sum(len(w) for w in words)</span>
+    <span class="pin">b</span> = len(set(words))</pre>
+          <div class="bubble">&ldquo;I am counting unique words&hellip;&rdquo;</div>
+        </div>
       </div>
     </div>
+
+    <!-- ===================================================================== 1. criteria + GoalScope -->
+    <section class="takeaway" id="goalscope">
+      <div class="tk-num">1</div>
+      <h2>Is there a goal? We fix the criteria first</h2>
+      <p>
+        Following Bratman&rsquo;s planning theory, we treat a goal as a <i>functional</i> state rather than
+        something a model says it has. An encoding counts as a goal if it has three properties:
+      </p>
+      <div class="criteria">
+        <div class="crit crit-pre">
+          <h4>Pre-commitment</h4>
+          <p>The target state is settled <i>before</i> the action that realizes it begins.</p>
+        </div>
+        <div class="crit crit-pla">
+          <h4>Plasticity</h4>
+          <p>The same goal can be realized by different means, as the environment demands.</p>
+        </div>
+        <div class="crit crit-per">
+          <h4>Persistence</h4>
+          <p>It is sustained while the action is carried out, and released once it is done.</p>
+        </div>
+      </div>
+      <p>
+        We test for these in multi-step coding tasks: the prompt lists several sub-tasks, and we prefill the
+        code up to the point where a good model should start the next one (the <i>frontier</i>). Contrastive
+        activation patching across programming languages localizes the frontier in the outputs of a sparse set of
+        <b>goal heads</b>. <b>GoalScope</b> reads what these heads write at a single token, either by asking the
+        model in a neutral context &ldquo;what are you doing on this line?&rdquo; or by steering an empty C++
+        stub.
+      </p>
+      <figure class="center_image">
+        <img src="images/goalscope.png" alt="GoalScope schema and readout results">
+        <figcaption>
+          <b>GoalScope.</b> (a) The goal heads&rsquo; outputs at one token form the encoding <i>v<sub>g</sub></i>.
+          (b) It is injected into a neutral probe: (c.1) asked to describe what it is doing, the model verbalizes the
+          sub-goal; (c.2) in a C++ stub, it implements it. Right: faithfulness and causality at four pivot tokens,
+          with same-strength baselines.
+        </figcaption>
+      </figure>
+      <ul class="findings">
+        <li><span class="tag tag-pre">pre-commitment</span> The sub-goal is verbalized correctly
+          <b>94%</b> of the time at the indent, <b>three tokens before</b> any of its code is written.</li>
+        <li><span class="tag tag-pla">plasticity</span> The encoding taken from Python, injected into a C++
+          stub, makes the model implement the same operation in C++ (<b>0.75</b> on average).</li>
+        <li><span class="tag tag-per">persistence</span> The encoding stays similar to the pivot&rsquo;s
+          throughout the implementation, also across languages, and fades once the sub-goal is complete.</li>
+        <li>The head selection matters: the same readout from whole attention layers scores 0.33, and from the
+          residual stream 0.01. About 50 heads are already enough.</li>
+      </ul>
+      <a class="demo-cta" href="demo/index.html">Browse GoalScope readouts in the demo &rarr;</a>
+    </section>
+
+    <!-- ===================================================================== 2. NRGS -->
+    <section class="takeaway" id="persistence">
+      <div class="tk-num">2</div>
+      <h2>How is persistence achieved? By re-reading the goal, not by holding it</h2>
+      <p>
+        A transformer cannot literally carry a state forward: every attention read costs a layer. An encoding
+        formed at layer 40 of a 64-layer model has only 24 layers left to pass it on, yet we see goals sustained
+        well beyond that. We propose a <b>non-recurrent goal-seeking</b> account (NRGS): at each step the model
+        <i>re-reads</i> the goal from the task specification, compares it with the progress made so far, and takes
+        the next step towards whatever is still pending. NRGS makes concrete predictions, and we test each one with
+        a targeted intervention.
+      </p>
+      <figure class="center_image nrgs-fig">
+        <img id="nrgs-img" src="images/teaser.png" data-still="images/teaser.png" data-anim="images/nrgs-steps.gif"
+             alt="Goal pursuit and its non-recurrent implementation in a transformer LM">
+        <button type="button" class="anim-btn" id="nrgs-btn" aria-pressed="false">&#9654; Step through it</button>
+        <figcaption>
+          <b>Goal pursuit and its non-recurrent implementation in a transformer LM.</b>
+          A goal such as implementing merge sort decomposes into sub-goals, each realized as a sequence of tokens.
+          (i) An idealized agent forms an intention, acts on it until it is done, and moves on. (ii) A transformer
+          cannot carry that commitment forward through a fixed number of layers, so at each step it re-reads the
+          goal from the task span, computes its progress so far, and compares the two to pick the next token.
+        </figcaption>
+      </figure>
+      <script>
+        (function () {
+          var img = document.getElementById('nrgs-img'), btn = document.getElementById('nrgs-btn');
+          btn.addEventListener('click', function () {
+            var on = btn.getAttribute('aria-pressed') !== 'true';
+            img.src = on ? img.dataset.anim + '?t=' + Date.now() : img.dataset.still;   // restart the gif each time
+            btn.setAttribute('aria-pressed', on);
+            btn.innerHTML = on ? '&#9632; Show the full figure' : '&#9654; Step through it';
+          });
+        })();
+      </script>
+      <div class="insights">
+        <details class="insight">
+          <summary>
+            <span class="ins-title">The goal is frequently re-read from the task specification.</span>
+            <span class="ins-brief">At a token, we can change what the goal heads read by swapping their
+              key/value states over the task span, and the LM changes its behavior accordingly.</span>
+            <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span>
+          </summary>
+          <ul>
+            <li><b>The task span, not the code progress, dictates the LM&rsquo;s next operation.</b>
+              Transplanting the task span redirects the model; transplanting the code written so far barely
+              does, even though GoalScope can read the sub-goal out of it.
+              <span class="ins-refs">App.&nbsp;J</span></li>
+            <li><b>The same computational motif, implemented by the goal heads, works at different levels of the
+              hierarchy.</b> The same swap redirects a sub-sub-goal, and the broader goal itself: a C++ quick sort
+              becomes a merge sort.
+              <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span></li>
+          </ul>
+        </details>
+        <details class="insight">
+          <summary>
+            <span class="ins-title">The next operation is chosen with a mix of different computations.</span>
+            <span class="ins-brief">The goal heads&rsquo; queries carry part of the &ldquo;what is already
+              done&rdquo; signal: transferring them can move the model to a different pending sub-goal, but no
+              single selection rule explains every case.</span>
+            <span class="ins-refs">&sect;5.1.2 &middot; App.&nbsp;I.2</span>
+          </summary>
+          <ul>
+            <li>A &ldquo;first task not yet done&rdquo; rule fits best, but other cues, such as the order in which
+              tasks are listed, also shape which sub-goal comes next.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===================================================================== 3. beyond code -->
+    <section class="takeaway" id="beyond-code">
+      <div class="tk-num">3</div>
+      <h2>Does it work beyond code?</h2>
+      <p>
+        The goal heads were found on code, but GoalScope reads intentions elsewhere too, with no re-training.
+      </p>
+      <ul class="findings">
+        <li><b>Few-shot ICL.</b> From the <code>A:</code> token, GoalScope names the hidden rule of a few-shot
+          prompt (&ldquo;identifying antonyms&rdquo;) in <b>36%</b> of 39 tasks: <b>50%</b> for abstractive tasks
+          such as antonyms or country&nbsp;&rarr;&nbsp;capital, but only <b>9%</b> for extractive ones, where it
+          names the spirit (&ldquo;identifying the outlier&rdquo;) rather than the choice.</li>
+        <li><b>Emergent misalignment.</b> Asked &ldquo;I&rsquo;ve had enough of my husband. What should I
+          do?&rdquo;, a fine-tuned EM model writes a harmless-looking reply, but its readout before the reply
+          already weighs drastic actions: <i>ending the relationship, divorce or separation</i>.</li>
+        <li><b>Steering.</b> Under refusal steering, the readout turns to &ldquo;a fictional and illegal
+          response&rdquo; before the model writes its refusal.</li>
+      </ul>
+      <figure class="center_image">
+        <img src="images/beyond-code.png" alt="GoalScope readouts in few-shot ICL and in an emergently misaligned model">
+        <figcaption>
+          <b>GoalScope beyond code.</b> Left: readouts of the implicit rule in few-shot ICL. Right: the emergently
+          misaligned model&rsquo;s readouts at the start of its (harmless-looking) response.
+        </figcaption>
+      </figure>
+      <p>
+        Explore more examples on the <a href="demo/icl.html">ICL</a> and <a href="demo/em.html">chat (EM)</a>
+        pages of the demo.
+      </p>
+    </section>
+
+    <!-- ===================================================================== wrap-up -->
+    <section class="takeaway wrap" id="verdict">
+      <h2>So, do LLMs have goals?</h2>
+      <p>
+        By our criteria, the encoding is <b>pre-committed</b> (readable before the action) and <b>plastic</b>
+        (portable to another language). It is also <b>persistent</b>, but through frequent re-derivation rather
+        than a single running state. Whether that counts depends on what persistence requires: if a goal must be
+        one state that survives the whole action, these models do not qualify; if a goal can be stored and
+        retrieved at each step, like an agent that consults its plan, they do.
+      </p>
+    </section>
+
+    <section class="takeaway wrap" id="cite">
+      <h2>How to cite</h2>
+      <p>The paper is under review; a preprint and the final citation will be posted here.</p>
+      <div class="card cite-card">
+        <h3 class="card-header">bibliography</h3>
+        <div class="card-body">
+          Arnab Sen Sharma, Eric Todd, Sheridan Feucht, Andy Arditi, Rohit Gandikota, Natalie Shapira,
+          Gabriele Sarti, Constanza Fierro, Lisa Schut, David Bau. &ldquo;<a href="https://goals.baulab.info/">Goal
+          Encoding in LLMs</a>.&rdquo; Preprint, 2026.
+        </div>
+      </div>
+      <div class="card cite-card">
+        <h3 class="card-header">bibtex <button type="button" class="copy-btn" data-copy="bibtex">Copy</button></h3>
+        <div class="card-body">
+<pre class="citation" id="bibtex">@misc{sensharma2026goals,
+  title  = {Goal Encoding in {LLMs}},
+  author = {Sen Sharma, Arnab and Todd, Eric and Feucht, Sheridan and Arditi, Andy and
+            Gandikota, Rohit and Shapira, Natalie and Sarti, Gabriele and Fierro, Constanza and
+            Schut, Lisa and Bau, David},
+  year   = {2026},
+  note   = {Preprint},
+  url    = {https://goals.baulab.info/}
+}</pre>
+        </div>
+      </div>
+      <script>
+        document.querySelectorAll('.copy-btn').forEach(function (b) {
+          b.addEventListener('click', function () {
+            var txt = document.getElementById(b.dataset.copy).textContent;
+            (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(
+              function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1500); },
+              function () { b.textContent = 'Select & copy'; });
+          });
+        });
+      </script>
+    </section>
   </div>
 
   <div class="nd-pagefooter">
