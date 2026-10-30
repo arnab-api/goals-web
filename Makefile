@@ -11,6 +11,7 @@ OVERLEAF ?= $(GOALS)/Overleaf-draft/Goals-Overleaf
 PYTHON  ?= python
 PORT    ?= 8765
 DECK    ?= $(GOALS)/Presentation/Goals_lab_talk.pptx
+PDFMARK := [/Title (Goal Encoding in LLMs: talk slides) /Author (Arnab Sen Sharma, Eric Todd, Sheridan Feucht, Andy Arditi, Rohit Gandikota, Natalie Shapira, Gabriele Sarti, Constanza Fierro, Lisa Schut, David Bau) /Subject (Do LLMs have goals? https://goals.baulab.info/) /DOCINFO pdfmark
 SLIDETMP := $(shell mktemp -d -u /tmp/goals-slides.XXXXXX)
 
 .PHONY: all demo images slides serve check
@@ -39,7 +40,7 @@ slides:
 	pdf=$(SLIDETMP)/Goals_lab_talk.pdf; n=$$(pdfinfo $$pdf | awk '/^Pages:/{print $$2}'); last=$$n; \
 	for i in $$(seq 1 $$n); do pdftotext -f $$i -l $$i $$pdf - | grep -qx 'Backup' && { last=$$((i-1)); break; }; done; \
 	echo "keeping slides 1-$$last of $$n"; \
-	gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -dFirstPage=1 -dLastPage=$$last -sOutputFile=public/slides/Goals_lab_talk.pdf $$pdf
+	gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -dFirstPage=1 -dLastPage=$$last -sOutputFile=public/slides/Goals_lab_talk.pdf -c "$(PDFMARK)" -f $$pdf
 	pdftoppm -jpeg -jpegopt quality=85 -scale-to-x 240 -scale-to-y -1 -f 1 -l 1 -singlefile $(SLIDETMP)/Goals_lab_talk.pdf public/images/slides-thumb
 	rm -rf $(SLIDETMP)
 
