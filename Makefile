@@ -1,7 +1,7 @@
 # Companion website for "Goal Encoding in LLMs" -> https://goals.baulab.info
 # Everything that is served lives in public/ (baulab.info static hosting serves public/ as committed).
 #
-#   make demo    rebuild the GoalScope demo pages in the goals repo and sync its runtime files into public/demo/
+#   make demo    render site/ (the demo's source: pages from site/data via the goals repo's renderer) into public/demo/
 #   make images  re-render the front-page images from the paper draft PDFs
 #   make slides  export the visible (non-hidden) slides of the talk deck to public/slides/ (PDF, backups dropped; linked from the front page)
 #   make serve   preview public/ at http://localhost:8765 (the demo fetch()es JSON, so file:// does not work)
@@ -19,11 +19,11 @@ SLIDETMP := $(shell mktemp -d -u /tmp/goals-slides.XXXXXX)
 all: check
 
 demo:
-	cd $(GOALS) && $(PYTHON) web/build_site.py
+	GOALS_REPO=$(GOALS) $(PYTHON) site/build_site.py
 	rsync -a --delete --info=name1 \
-	  --exclude='/data/' --exclude='/data_legacy/' --exclude='__pycache__/' --exclude='/web' \
-	  --exclude='*.py' --exclude='/subspace_viz.html' \
-	  $(GOALS)/web/ public/demo/
+	  --exclude='/data/' --exclude='/data_legacy/' --exclude='__pycache__/' \
+	  --exclude='*.py' --exclude='*.sh' \
+	  site/ public/demo/
 
 images:
 	pdftoppm -png -r 40 -f 1 -l 1 -singlefile $(OVERLEAF)/main.pdf public/images/paper-thumb
