@@ -379,10 +379,26 @@
           <b>94%</b> of the time at the indent, <b>three tokens before</b> any of its code is written.</li>
         <li><span class="tag tag-pla">plasticity</span> The encoding taken from Python, injected into a C++
           stub, makes the model implement the same operation in C++ (<b>0.75</b> on average).</li>
-        <li><span class="tag tag-per">persistence</span> The encoding stays similar to the pivot&rsquo;s
-          throughout the implementation, also across languages, and fades once the sub-goal is complete.</li>
-        <li>The head selection matters: the same readout from whole attention layers scores 0.33, and from the
-          residual stream 0.01. About 50 heads are already enough.</li>
+        <li class="finding-more">
+          <details>
+            <summary><span class="tag tag-per">persistence</span> The encoding stays similar to the
+              pivot&rsquo;s throughout the implementation, also across languages, and fades once the sub-goal is
+              complete. <span class="ins-refs">&sect;3.4 &middot; Fig.&nbsp;3</span></summary>
+            <figure class="fig-side">
+              <img loading="lazy" src="images/persistence.png"
+                   alt="Cosine similarity between the pivot's goal-head encoding and the encoding later in the implementation">
+              <figcaption>
+                <b>Temporal persistence of the sub-goal encoding.</b> Cosine similarity between a sub-goal&rsquo;s
+                goal-head encoding at the <code>=</code> token and the encoding sampled <i>x</i>% of the way
+                through its implementation, averaged over data types and languages. Encodings of the
+                <span class="c-same">same sub-goal</span> (teal) stay well above those of a
+                <span class="c-diff">different sub-goal</span> (orange) all the way through, whether the
+                implementation is in the same language (solid) or another one (dashed): the sub-goal encoding
+                persists until the model finishes implementing it.
+              </figcaption>
+            </figure>
+          </details>
+        </li>
       </ul>
       <a class="demo-cta" href="demo/index.html">Browse GoalScope readouts in the demo &rarr;</a>
     </section>
