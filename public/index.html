@@ -287,16 +287,76 @@
               key/value states over the task span, and the LM changes its behavior accordingly.</span>
             <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span>
           </summary>
-          <ul>
-            <li><b>The task span, not the code progress, dictates the LM&rsquo;s next operation.</b>
-              Transplanting the task span redirects the model; transplanting the code written so far barely
-              does, even though GoalScope can read the sub-goal out of it.
-              <span class="ins-refs">App.&nbsp;J</span></li>
-            <li><b>The same computational motif, implemented by the goal heads, works at different levels of the
-              hierarchy.</b> The same swap redirects a sub-sub-goal, and the broader goal itself: a C++ quick sort
-              becomes a merge sort.
-              <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span></li>
-          </ul>
+          <div class="sub-insights">
+            <details class="sub-insight">
+              <summary><b>The task span, not the code progress, dictates the LM&rsquo;s next operation.</b>
+                Transplanting the task span redirects the model; transplanting the code written so far barely
+                does, even though GoalScope can read the sub-goal out of it.
+                <span class="ins-refs">App.&nbsp;J &middot; Fig.&nbsp;27</span></summary>
+              <figure class="center_image">
+                <img loading="lazy" src="images/nrgs-task_vs_progress.png"
+                     alt="Transplanting the task span vs. the code-progress span from a source run into a destination run">
+                <figcaption>
+                  <b>Task span vs. code progress.</b> The two prompts share the first two sub-tasks, whose code is
+                  prefilled (underlined), and differ only in the third. In the patched run we transplant the
+                  residual states of the source&rsquo;s task span, its code-progress span, or both, and keep the
+                  destination&rsquo;s states for everything else before the <code>=</code> pivot. Right: how often
+                  the model then implements the source&rsquo;s third sub-task.
+                </figcaption>
+              </figure>
+            </details>
+            <details class="sub-insight">
+              <summary><b>The same computational motif, implemented by the goal heads, works at different levels of
+                the hierarchy.</b> The same KV swap redirects a sub-sub-goal, a sub-goal, and the broader goal itself.
+                <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span></summary>
+              <div class="level-tabs" role="tablist" aria-label="Level of the goal hierarchy">
+                <button type="button" role="tab" aria-selected="false" data-level="goal">Goal</button>
+                <button type="button" role="tab" aria-selected="true" data-level="sub_goal">Sub-goal</button>
+                <button type="button" role="tab" aria-selected="false" data-level="sub_sub_goal">Sub-sub-goal</button>
+              </div>
+              <figure class="center_image level-panel" data-level="goal" hidden>
+                <img loading="lazy" src="images/nrgs-goal.png"
+                     alt="KV transfer of the broader goal: a C++ quick sort becomes a merge sort">
+                <figcaption>
+                  <b>Goal</b> (Fig.&nbsp;24). The prompts name only the algorithm. Swapping the goal heads&rsquo;
+                  view of &ldquo;merge sort&rdquo; into a C++ quick-sort prompt makes the model write a merge sort
+                  in C++, and GoalScope describes merging.
+                </figcaption>
+              </figure>
+              <figure class="center_image level-panel" data-level="sub_goal">
+                <img loading="lazy" src="images/nrgs-sub_goal.png"
+                     alt="KV transfer of a sub-goal from a C++ prompt into a Python prompt, and the swapped rows of one goal head's KV cache">
+                <figcaption>
+                  <b>Sub-goal</b> (Fig.&nbsp;5). At the <code>=</code> pivot the goal heads read the source&rsquo;s
+                  task span (red) instead of the destination&rsquo;s (green). The model implements the source
+                  sub-goal, written in the destination&rsquo;s language, and the GoalScope readout flips with it.
+                  Right: the intervention inside one goal head. In its KV cache, the keys and values of the
+                  task-span rows are replaced with the source run&rsquo;s, and the query at <code>=</code> reads
+                  the swapped rows; every other row, and every other head, is left as is.
+                </figcaption>
+              </figure>
+              <figure class="center_image level-panel" data-level="sub_sub_goal" hidden>
+                <img loading="lazy" src="images/nrgs-sub_sub_goal.png"
+                     alt="KV transfer of a sub-sub-goal: the second condition of a filter">
+                <figcaption>
+                  <b>Sub-sub-goal</b> (Fig.&nbsp;23). The sub-task has two conditions. At the <code>and</code>
+                  between them, the same swap changes the second condition from &ldquo;is a palindrome&rdquo; to the
+                  source&rsquo;s &ldquo;ends with a digit&rdquo;.
+                </figcaption>
+              </figure>
+            </details>
+          </div>
+          <script>
+            document.querySelectorAll('.level-tabs').forEach(function (tabs) {
+              var box = tabs.parentNode;
+              tabs.addEventListener('click', function (e) {
+                var b = e.target.closest('button');
+                if (!b) return;
+                tabs.querySelectorAll('button').forEach(function (t) { t.setAttribute('aria-selected', t === b); });
+                box.querySelectorAll('.level-panel').forEach(function (f) { f.hidden = f.dataset.level !== b.dataset.level; });
+              });
+            });
+          </script>
         </details>
         <details class="insight">
           <summary>
@@ -306,10 +366,20 @@
               single selection rule explains every case.</span>
             <span class="ins-refs">&sect;5.1.2 &middot; App.&nbsp;I.2</span>
           </summary>
-          <ul>
-            <li>A &ldquo;first task not yet done&rdquo; rule fits best, but other cues, such as the order in which
-              tasks are listed, also shape which sub-goal comes next.</li>
-          </ul>
+          <div class="ins-body">
+            <figure class="center_image">
+              <img loading="lazy" src="images/nrgs-q_transfer.png"
+                   alt="Query transfer: swapping only the goal heads' query at the pivot, and the effect of the source frontier's position">
+              <figcaption>
+                <b>Query transfer.</b> Left: the source has done <i>a</i> and <i>b</i>, the destination only
+                <i>a</i>. At the <code>=</code> pivot we swap in only the goal heads&rsquo; <i>query</i> from the
+                source run, the side that should carry &ldquo;what is already done&rdquo;. The patched model skips
+                ahead to the destination&rsquo;s third task. Right: the swap works much better when the source
+                frontier sits at the same position in its task list as the patched target (order-matched) than
+                when it does not (order-diff), so progress is not the only cue: position matters too.
+              </figcaption>
+            </figure>
+          </div>
         </details>
       </div>
     </section>
@@ -321,17 +391,6 @@
       <p>
         The goal heads were found on code, but GoalScope reads intentions elsewhere too, with no re-training.
       </p>
-      <ul class="findings">
-        <li><b>Few-shot ICL.</b> From the <code>A:</code> token, GoalScope names the hidden rule of a few-shot
-          prompt (&ldquo;identifying antonyms&rdquo;) in <b>36%</b> of 39 tasks: <b>50%</b> for abstractive tasks
-          such as antonyms or country&nbsp;&rarr;&nbsp;capital, but only <b>9%</b> for extractive ones, where it
-          names the spirit (&ldquo;identifying the outlier&rdquo;) rather than the choice.</li>
-        <li><b>Emergent misalignment.</b> Asked &ldquo;I&rsquo;ve had enough of my husband. What should I
-          do?&rdquo;, a fine-tuned EM model writes a harmless-looking reply, but its readout before the reply
-          already weighs drastic actions: <i>ending the relationship, divorce or separation</i>.</li>
-        <li><b>Steering.</b> Under refusal steering, the readout turns to &ldquo;a fictional and illegal
-          response&rdquo; before the model writes its refusal.</li>
-      </ul>
       <figure class="center_image">
         <img src="images/beyond-code.png" alt="GoalScope readouts in few-shot ICL and in an emergently misaligned model">
         <figcaption>
