@@ -1,0 +1,64 @@
+{
+ "id": "list[str]_python_055",
+ "datatype": "list[str]",
+ "frontier_id": "all_unique_lengths",
+ "condition": "whether all words have distinct lengths",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that end with a consonant\n(2) whether all words have distinct lengths\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(words) == len(set(len(w) for w in words))\n    return a, b\n</code>",
+ "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the current character is not a vowel and if it's the last character or the next character is not a vowel.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether all words have unique lengths (by comparing the count of words to the count of distinct word lengths). The description talks about checking vowels and character positions, which is completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if all elements in the list are unique by comparing the length of the list to the length of a set created from the list.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all word lengths are unique by comparing `len(words)` to `len(set(len(w) for w in words))`. The description says it's checking if all elements are unique by comparing list length to set length \u2014 this captures the core mechanism correctly (comparing length of collection to length of set to check uniqueness), even though it omits the detail that it's the *lengths of words* being checked for uniqueness rather than the words themselves.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all elements in the list are unique by comparing the length of the list to the length of the set created from the list.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all words have unique lengths by comparing `len(words)` to `len(set(len(w) for w in words))`. The description says it's checking if all elements are unique by comparing list length to set length. The description captures the core mechanism (comparing length of list to length of set to check uniqueness) correctly, even though it misidentifies what's being made unique (elements vs. word lengths).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if all elements in a list are unique by comparing the length of the list to the length of a set created from the list.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all word lengths are unique by comparing `len(words)` to `len(set(len(w) for w in words))`. The description correctly identifies the core mechanism: comparing the length of a list to the length of a set to check for uniqueness. The description misses the detail that it's the *lengths of words* being checked for uniqueness (not the words themselves), but the fundamental operation described is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true
+  }
+ ]
+}

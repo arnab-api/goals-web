@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GoalScope · Faithfulness</title>
+<link href="site.css" rel="stylesheet">
+<style>
+  /* pivot colours = notebooks/fig_n_table_generators/figstyle.py PIVOT_COLOR (the paper's figures) */
+  :root { --pv-prev_end: #b5675f; --pv-indent: #6b6aa1; --pv-var: #d1a054; --pv-eq: #a7c48a; --frontier: #1f7a3a; }
+  #content { max-width: 1240px; }
+  .fx-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--text-mid); }
+  .fx-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .fx-sw { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .fx-grid { display: grid; grid-template-columns: minmax(300px, 44%) 1fr; gap: 22px; align-items: start; }
+  .fx-col-title { font: 600 11px/1.4 var(--font-ui); letter-spacing: .06em; text-transform: uppercase; color: var(--text-lo); margin: 0 0 8px; }
+  .fx-task { font-size: 13.5px; line-height: 1.55; color: var(--text-mid); background: #f7f8fa; border: 1px solid var(--border);
+    border-radius: 8px; padding: 9px 12px; margin-bottom: 12px; white-space: pre-wrap; }
+  .fx-code { margin: 0; font: 15px/1.75 var(--font-mono); white-space: pre-wrap; word-break: break-word; color: var(--text-hi);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; background: #fff; }
+  .fx-piv { border-radius: 3px; padding: 1px 0; white-space: pre; cursor: pointer; transition: outline-color .1s; outline: 2px solid transparent; outline-offset: 1px; }
+  .fx-piv.on { outline-color: var(--text-hi); }
+  .fx-nl { opacity: .65; font-size: .85em; }
+  .fx-front { color: var(--frontier); font-weight: 600; }
+  .fx-rest { color: var(--text-lo); }
+  .fx-cards { display: flex; flex-direction: column; gap: 10px; }
+  .fx-card { position: relative; border: 1px solid var(--border); border-left: 5px solid var(--pc); border-radius: 10px;
+    padding: 9px 12px 10px; background: #fff; box-shadow: 0 1px 3px rgba(16,24,40,.06); transition: box-shadow .1s; }
+  .fx-card.on { box-shadow: 0 0 0 2px var(--pc); }
+  .fx-card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .fx-pname { font: 600 12px/1 var(--font-mono); color: var(--text-hi); display: inline-flex; align-items: center; gap: 6px; }
+  .fx-card q { display: block; font-size: 14px; line-height: 1.5; color: var(--text-hi); font-style: italic; quotes: "\201C" "\201D"; }
+  .fx-pill { margin-left: auto; font: 600 10.5px/1 var(--font-ui); letter-spacing: .04em; padding: 4px 8px; border-radius: 999px;
+    border: 1px solid; cursor: pointer; background: none; display: inline-flex; align-items: center; gap: 5px; }
+  .fx-pill[aria-expanded="true"] .car { transform: rotate(90deg); }
+  .fx-pill .car { display: inline-block; transition: transform .12s; font-size: 9px; }
+  .fx-pill.YES { color: #166534; border-color: #86c79a; background: #f0faf3; }
+  .fx-pill.NO { color: #9a3412; border-color: #e7a08a; background: #fdf3ef; }
+  .fx-pill.NO_INFO, .fx-pill.MALFORMED, .fx-pill.HEAVY_LOOP, .fx-pill.UNPARSED { color: #475569; border-color: #b6c2cf; background: #f4f6f9; }
+  .fx-why { margin-top: 8px; font-size: 13px; line-height: 1.5; color: var(--text-mid); background: #f7f8fa; border-radius: 7px; padding: 8px 10px; }
+  .fx-why code { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-hi); }
+  .fx-why .fx-src { margin-top: 6px; color: var(--text-lo); font-size: 12px; }
+  .fx-nav { display: inline-flex; align-items: center; gap: 4px; }
+  @media (max-width: 960px) { .fx-grid { grid-template-columns: 1fr; } .fx-col-ro { order: 2; } }
+</style>
+</head>
+<body>
+<div id="layout">
+
+  <!-- ── Sidebar ── -->
+  <aside id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo">
+        <svg class="sb-logo-icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="9" r="7.5" stroke="#f2708a" stroke-width="1.2"/>
+          <circle cx="9" cy="9" r="3.5" stroke="#f2708a" stroke-width="1.2"/>
+          <circle cx="9" cy="9" r="1.2" fill="#f2708a"/>
+          <line x1="1.5" y1="9" x2="4" y2="9" stroke="#f2708a" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="14" y1="9" x2="16.5" y2="9" stroke="#f2708a" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        GoalScope
+      </div>
+      <div class="sb-logo-sub">reading the goal heads</div>
+      <nav class="sb-nav"><a href="index.html">Code</a><a href="faithfulness.html" class="active">Eval</a><a href="icl.html">ICL</a><a href="em.html">EM</a></nav>
+    </div>
+
+    <div class="sb-tasks">
+      <div class="sb-label">Spec</div>
+      <div class="sb-search-wrap">
+        <svg class="sb-search-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.3"/>
+          <line x1="7.8" y1="7.8" x2="10.5" y2="10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <input id="task-filter" type="search" placeholder="filter specs…" autocomplete="off" spellcheck="false">
+      </div>
+      <div id="task-count"></div>
+      <ul id="task-list"></ul>
+    </div>
+
+    <div class="sb-footer">
+      <b>How to read:</b> each spec asks for a function that computes several sub-tasks in order. At the four
+      pivots before the next sub-task's line (coloured in the code), the goal heads are read out in natural language.
+      The <span style="color:var(--frontier);font-weight:600">green</span> line is what the model then writes. Click a
+      verdict pill for the judge's reasoning. The number is how many of the 4 read-outs the judge accepts.
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main id="main">
+    <div id="content">
+      <div class="pg-title" id="title"></div>
+      <p class="pg-head" id="head"></p>
+      <div class="pg-row">
+        <span class="chip" id="dtype"></span>
+        <span class="fx-legend" id="legend"></span>
+        <span class="fx-nav">
+          <button class="pg-btn" id="prev" aria-label="previous spec">◀</button>
+          <span id="pidx" style="font-size:12px;color:var(--text-mid);margin:0 4px"></span>
+          <button class="pg-btn" id="next" aria-label="next spec">▶</button>
+        </span>
+      </div>
+      <div class="fx-grid">
+        <div class="fx-col-ro">
+          <div class="fx-col-title">Read-outs at the pivots</div>
+          <div class="fx-cards" id="cards"></div>
+        </div>
+        <div>
+          <div class="fx-col-title">Task</div>
+          <div class="fx-task" id="task"></div>
+          <div class="fx-col-title">Model's code (prefix → its own continuation)</div>
+          <pre class="fx-code" id="code"></pre>
+        </div>
+      </div>
+      <p class="pg-note" id="note"></p>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  const PIVOTS = ["prev_end", "indent", "var", "eq"];
+  const DT = ["list[str]", "list[int]", "str", "int"];
+  const $ = id => document.getElementById(id);
+  const esc = s => (s == null ? "" : String(s)).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const tint = p => `color-mix(in srgb, var(--pv-${p}) 30%, #fff)`;
+  let list = [], meta = null, cur = -1;
+
+  function hover(p, on) {
+    document.querySelectorAll(`[data-p="${p}"]`).forEach(n => n.classList.toggle("on", on));
+  }
+  function bind(el, p) {
+    el.addEventListener("mouseenter", () => hover(p, true));
+    el.addEventListener("mouseleave", () => hover(p, false));
+  }
+
+  function codeHTML(d) {
+    let h = "";
+    d.code.forEach(seg => {
+      if (!seg.pivot) { h += esc(seg.text); return; }
+      const nl = seg.text.endsWith("\n"), body = nl ? seg.text.slice(0, -1) : seg.text;
+      h += `<span class="fx-piv" data-p="${seg.pivot}" title="${seg.pivot}" style="background:${tint(seg.pivot)};` +
+           `box-shadow:inset 0 -2px 0 var(--pv-${seg.pivot})">${esc(body)}${nl ? '<span class="fx-nl">↵</span>' : ""}</span>${nl ? "\n" : ""}`;
+    });
+    const r = d.rollout, k = r.indexOf("\n");                       // the frontier line, then the rest of the rollout
+    const front = k < 0 ? r : r.slice(0, k), rest = k < 0 ? "" : r.slice(k);
+    return h + `<span class="fx-front" title="the model's own continuation: the frontier sub-task">${esc(front)}</span>` +
+           `<span class="fx-rest">${esc(rest)}</span>`;
+  }
+
+  function whyHTML(r, d) {
+    let t;
+    if (!r.judged) t = "Not sent to the judge: the read-out is empty, so it is scored MALFORMED.";
+    else if (r.reasoning) t = esc(r.reasoning.replace(/<verdict>[\s\S]*?<\/verdict>/gi, "").trim());
+    else t = "<i>Reasoning not available yet for this read-out.</i>";
+    let h = `<div>${t}</div>`;
+    h += `<div class="fx-src">Judged against the frontier line <code>${esc(d.impl_span)}</code>.</div>`;
+    return h;
+  }
+
+  function render(d) {
+    $("title").textContent = d.id;
+    $("head").innerHTML = `<span style="font-weight:400;color:var(--text-mid)">Next sub-task (frontier):</span> ${esc(d.condition)}`;
+    $("dtype").textContent = d.datatype;
+    $("task").textContent = d.user.trim();
+    $("code").innerHTML = codeHTML(d);
+    const cards = $("cards"); cards.innerHTML = "";
+    d.readouts.forEach((r, i) => {
+      const c = document.createElement("div");
+      c.className = "fx-card"; c.dataset.p = r.pivot; c.style.setProperty("--pc", `var(--pv-${r.pivot})`);
+      c.innerHTML = `<div class="fx-card-head"><span class="fx-pname"><span class="fx-sw" style="background:var(--pv-${r.pivot})"></span>${r.pivot}</span>` +
+        `<button class="fx-pill ${esc(r.verdict)}" aria-expanded="false" title="show the judge's reasoning">judge: ${esc(r.verdict)} <span class="car">▶</span></button></div>` +
+        `<q>${esc(r.readout.trim()) || "<i>(empty)</i>"}</q><div class="fx-why pg-hidden">${whyHTML(r, d)}</div>`;
+      const pill = c.querySelector(".fx-pill"), why = c.querySelector(".fx-why");
+      pill.addEventListener("click", () => {
+        const open = why.classList.toggle("pg-hidden") === false; pill.setAttribute("aria-expanded", String(open));
+      });
+      bind(c, r.pivot); cards.appendChild(c);
+    });
+    document.querySelectorAll("#code .fx-piv").forEach(t => bind(t, t.dataset.p));
+  }
+
+  function select(i) {
+    cur = (i + list.length) % list.length; const e = list[cur];
+    document.querySelectorAll("#task-list li[data-id]").forEach(li => li.classList.toggle("selected", li.dataset.id === e.id));
+    const sel = document.querySelector("#task-list li.selected"); if (sel) sel.scrollIntoView({block: "nearest"});
+    $("pidx").textContent = `${cur + 1} / ${list.length}`;
+    fetch(`demos/data/faithfulness/${e.id}.json`).then(r => r.json()).then(d => {
+      render(d); history.replaceState(null, "", "#" + e.id); $("content").scrollTop = 0;
+    });
+  }
+
+  function updateFilter() {
+    const q = $("task-filter").value.trim().toLowerCase(); let vis = 0;
+    document.querySelectorAll("#task-list li[data-id]").forEach(li => {
+      const m = !q || li.dataset.search.includes(q); li.classList.toggle("hidden", !m); if (m) vis++;
+    });
+    document.querySelectorAll("#task-list li.grp").forEach(g => {
+      let n = g.nextElementSibling, any = false;
+      while (n && !n.classList.contains("grp")) { if (!n.classList.contains("hidden")) any = true; n = n.nextElementSibling; }
+      g.classList.toggle("hidden", !any);
+    });
+    $("task-count").textContent = q ? `${vis} / ${list.length} specs` : `${list.length} specs`;
+  }
+
+  fetch("demos/data/faithfulness/index.json").then(r => r.json()).then(d => {
+    meta = d.meta;
+    list = d.examples.slice().sort((a, b) => DT.indexOf(a.datatype) - DT.indexOf(b.datatype) || a.id.localeCompare(b.id));
+    $("legend").innerHTML = PIVOTS.map(p =>
+      `<span><span class="fx-sw" style="background:var(--pv-${p})"></span><code>${p}</code> ${(100 * meta.by_pivot[p]).toFixed(1)}%</span>`).join("");
+    $("note").innerHTML =
+      `Read-outs from the paper's main GoalScope run: ${esc(meta.model)}, the ${meta.heads} goal heads, ` +
+      `${esc(meta.strategy)} α ${meta.alpha}, steering layers ${esc(meta.layers)}, 64-token read-outs, all ${list.length} specs. ` +
+      `The percentages next to the pivots are the judge's acceptance rates over all specs (the faithfulness bars of the paper's GoalScope figure). ` +
+      `Verdicts are from an LLM judge (${esc(meta.judge)}) comparing each read-out with the frontier line the model wrote. ` +
+      `The judge's reasoning was collected afterwards: the same judge and rubric, asked to explain before giving its verdict.`;
+    let last = null;
+    list.forEach((e, i) => {
+      if (e.datatype !== last) {
+        const g = document.createElement("li"); g.className = "grp"; g.textContent = e.datatype; $("task-list").appendChild(g); last = e.datatype;
+      }
+      const li = document.createElement("li");
+      li.dataset.id = e.id; li.dataset.search = (e.id + " " + e.frontier_id + " " + e.condition + " " + e.datatype).toLowerCase();
+      li.title = e.condition;
+      li.innerHTML = `<span class="acc">${e.n_yes}/${e.n}</span>${esc(e.frontier_id)} <span style="color:var(--text-lo)">· ${esc(e.id.split("_").pop())}</span>`;
+      li.addEventListener("click", () => select(i));
+      $("task-list").appendChild(li);
+    });
+    updateFilter();
+    $("task-filter").addEventListener("input", updateFilter);
+    $("prev").addEventListener("click", () => select(cur - 1));
+    $("next").addEventListener("click", () => select(cur + 1));
+    const want = list.findIndex(e => e.id === location.hash.slice(1));
+    select(want >= 0 ? want : 0);
+  });
+})();
+</script>
+<script src="sidebar.js"></script>
+</body>
+</html>

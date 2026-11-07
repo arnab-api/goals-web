@@ -1,0 +1,64 @@
+{
+ "id": "list[str]_python_015",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of uppercase letters across all words\n(2) the number of capitalized words\n(3) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].isupper() and w[1:].islower())\n    c = sum(len(w) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines in the code.",
+   "verdict": "NO",
+   "reasoning": "The description says it's counting lines, but the code is counting words that match a specific capitalization pattern (first letter uppercase, rest lowercase). These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of lines where the first character is uppercase and the line contains at least one space.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting elements where the first character is uppercase, which is relevant to the code's check of `w[0].isupper()`. However, the description says \"lines\" instead of \"words\" and mentions \"contains at least one space\" instead of checking that the rest is lowercase (`w[1:].islower()`). Despite these inaccuracies, the core idea of counting items where the first character is uppercase is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many lines contain at least one uppercase letter.",
+   "verdict": "NO",
+   "reasoning": "The code counts words where the first letter is uppercase and the rest are lowercase (i.e., title-case/capitalized words), not lines containing at least one uppercase letter. However, the description does correctly identify the general concept of counting something related to uppercase letters, which is partially relevant. The specific operation (counting items with uppercase characteristics) overlaps, even though the unit (words vs lines) and the exact condition are wrong.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the current word is entirely uppercase.",
+   "verdict": "NO",
+   "reasoning": "The code checks if words start with an uppercase letter and have the rest lowercase (i.e., title case/capitalized words), not entirely uppercase. The description says \"entirely uppercase,\" which is a related but different concept \u2014 it's about case checking of words, but gets the specific condition wrong in a meaningful way. However, since the description does mention checking uppercase properties of words, which is partially relevant to what the code does (case checking), this is a borderline case. The description identifies the general domain (uppercase checking on words) but describes the wrong condition (all uppercase vs. title case).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true
+  }
+ ]
+}

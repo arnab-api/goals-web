@@ -1,619 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Goal Encoding in LLMs</title>
-  <meta name="description" content="Do LLMs have goals? We look for an internal goal representation that is pre-committed, plastic and persistent, read it out with GoalScope, and show how a depth-bounded transformer keeps it alive by re-reading it.">
-  <meta name="author" content="Arnab Sen Sharma, Eric Todd, Sheridan Feucht, Andy Arditi, Rohit Gandikota, Natalie Shapira, Gabriele Sarti, Constanza Fierro, Lisa Schut, David Bau">
-  <meta name="keywords" content="large language models, LLM goals, interpretability, mechanistic interpretability, attention heads, GoalScope, intentions">
-  <meta name="google-site-verification" content="PXp0v4Nyz3yBGVUeRt8KA8_oizSSOXguBZ7nSkFTHmI">
-  <link rel="canonical" href="https://goals.baulab.info/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Goal Encoding in LLMs">
-  <meta property="og:title" content="Goal Encoding in LLMs">
-  <meta property="og:description" content="Do LLMs have goals? We look for an internal goal representation that is pre-committed, plastic and persistent, read it out with GoalScope, and show how a depth-bounded transformer keeps it alive by re-reading it.">
-  <meta property="og:url" content="https://goals.baulab.info/">
-  <meta property="og:image" content="https://goals.baulab.info/images/social.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Goal pursuit and its non-recurrent implementation in a transformer LM">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Goal Encoding in LLMs">
-  <meta name="twitter:description" content="Do LLMs have goals? We look for an internal goal representation that is pre-committed, plastic and persistent, read it out with GoalScope, and show how a depth-bounded transformer keeps it alive by re-reading it.">
-  <meta name="twitter:image" content="https://goals.baulab.info/images/social.png">
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ScholarlyArticle",
-  "headline": "Goal Encoding in LLMs",
-  "name": "Goal Encoding in LLMs",
-  "description": "Do LLMs have goals? We look for an internal goal representation that is pre-committed, plastic and persistent, read it out with GoalScope, and show how a depth-bounded transformer keeps it alive by re-reading it.",
-  "url": "https://goals.baulab.info/",
-  "image": "https://goals.baulab.info/images/social.png",
-  "author": [
-    {
-      "@type": "Person",
-      "name": "Arnab Sen Sharma",
-      "url": "https://arnab-api.github.io/"
-    },
-    {
-      "@type": "Person",
-      "name": "Eric Todd",
-      "url": "https://ericwtodd.github.io/"
-    },
-    {
-      "@type": "Person",
-      "name": "Sheridan Feucht",
-      "url": "https://sfeucht.github.io/"
-    },
-    {
-      "@type": "Person",
-      "name": "Andy Arditi",
-      "url": "https://andyrdt.com/"
-    },
-    {
-      "@type": "Person",
-      "name": "Rohit Gandikota",
-      "url": "https://rohitgandikota.github.io/"
-    },
-    {
-      "@type": "Person",
-      "name": "Natalie Shapira",
-      "url": "https://scholar.google.com/citations?user=hd7quH4AAAAJ"
-    },
-    {
-      "@type": "Person",
-      "name": "Gabriele Sarti",
-      "url": "https://gsarti.com/"
-    },
-    {
-      "@type": "Person",
-      "name": "Constanza Fierro",
-      "url": "https://constanzafierro.github.io/"
-    },
-    {
-      "@type": "Person",
-      "name": "Lisa Schut",
-      "url": "https://sites.google.com/view/lisaschut"
-    },
-    {
-      "@type": "Person",
-      "name": "David Bau",
-      "url": "https://baulab.info/"
-    }
-  ],
-  "keywords": [
-    "large language models",
-    "interpretability",
-    "goals",
-    "attention heads",
-    "GoalScope",
-    "mechanistic interpretability"
-  ]
-}
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&family=Lato:400,700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GoalScope</title>
+<link href="site.css" rel="stylesheet">
 </head>
-
 <body>
-  <nav class="secnav" aria-label="Sections">
-    <div class="container">
-      <a class="brand" href="#top">Goal Encoding in LLMs</a>
-      <span class="links">
-        <a href="#goalscope">GoalScope</a>
-        <a href="#persistence">Persistence</a>
-        <a href="#beyond-code">Beyond code</a>
-        <a href="#cite">Cite</a>
-        <a href="slides/Goals_lab_talk.pdf" target="_blank" rel="noopener">Slides</a>
-        <a class="nav-demo" href="demo/index.html">Demo &rarr;</a>
-      </span>
-    </div>
-  </nav>
-  <div class="nd-pageheader" id="top">
-    <div class="container">
-      <h1 class="lead">Goal Encoding in LLMs</h1>
-      <address class="authors">
-        <span class="author-row">
-        <a href="https://arnab-api.github.io/">Arnab Sen Sharma</a>,
-        <a href="https://ericwtodd.github.io/">Eric Todd</a>,
-        <a href="https://sfeucht.github.io/">Sheridan Feucht</a>,
-        <a href="https://andyrdt.com/">Andy Arditi</a>,
-        <a href="https://rohitgandikota.github.io/">Rohit Gandikota</a><span class="row-comma">,</span>
-        </span>
-        <span class="author-row">
-        <a href="https://scholar.google.com/citations?user=hd7quH4AAAAJ">Natalie Shapira</a>,
-        <a href="https://gsarti.com/">Gabriele Sarti</a>,
-        <a href="https://constanzafierro.github.io/">Constanza Fierro</a>,
-        <a href="https://sites.google.com/view/lisaschut">Lisa Schut</a>,
-        <a href="https://baulab.info/">David Bau</a>
-        </span>
-      </address>
-    </div>
-  </div>
+<div id="layout">
 
-  <div class="container">
-    <div class="row justify-content-center text-center">
-      <p class="link-thumbs">
-        <a href="#" class="soon" title="coming soon">
-          <img src="images/paper-thumb.png" alt="Paper thumbnail"><br>Paper<br><small>coming soon</small>
-        </a>
-        <a href="#" class="soon" title="coming soon">
-          <img src="images/code-thumb.svg" alt="Code thumbnail"><br>Source Code<br><small>coming soon</small>
-        </a>
-        <a href="demo/index.html">
-          <img src="images/demo-thumb.svg" alt="Interactive demo thumbnail"><br>GoalScope<br>Demo
-        </a>
-        <a href="slides/Goals_lab_talk.pdf" target="_blank" rel="noopener">
-          <img class="landscape" src="images/slides-thumb.jpg" alt="Talk slides thumbnail"><br>Talk<br>Slides
-        </a>
-      </p>
+  <!-- ── Sidebar ── -->
+  <aside id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo">
+        <!-- scope/eye icon -->
+        <svg class="sb-logo-icon" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="9" r="7.5" stroke="#f2708a" stroke-width="1.2"/>
+          <circle cx="9" cy="9" r="3.5" stroke="#f2708a" stroke-width="1.2"/>
+          <circle cx="9" cy="9" r="1.2" fill="#f2708a"/>
+          <line x1="1.5" y1="9" x2="4" y2="9" stroke="#f2708a" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="14" y1="9" x2="16.5" y2="9" stroke="#f2708a" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        GoalScope
+      </div>
+      <div class="sb-logo-sub">reading the goal heads</div>
+      <nav class="sb-nav"><a href="index.html" class="active">Code</a><a href="faithfulness.html">Eval</a><a href="icl.html">ICL</a><a href="em.html">EM</a></nav>
     </div>
 
-    <div class="card summary">
-      <div class="card-body">
-        <h3>Do LLMs have goals?</h3>
-        <p>
-          Language models now carry out tasks that unfold over thousands of tokens, and they behave
-          <i>as if</i> they were pursuing a goal. We ask whether that behavior is backed by an explicit goal
-          representation inside the model. We fix three functional criteria up front, find an encoding in a sparse
-          set of attention heads that meets them, and then ask how a depth-bounded transformer manages to keep such
-          a goal alive across a long generation.
-        </p>
-        <ul class="tldr">
-          <li><b>A goal you can read out before the model acts.</b> The <i>goal heads</i> encode the upcoming
-            sub-goal several tokens before its implementation starts; GoalScope turns that encoding into plain English, and
-            transplanting it into C++ triggers the same operation.</li>
-          <li><b>Persistence by re-reading, not by holding.</b> The model re-derives the goal from the task
-            specification at each step (NRGS). Targeted interventions on what the goal heads read move the model
-            to a different sub-goal.</li>
-          <li><b>Beyond code.</b> The same heads, found on code, verbalize implicit rules in few-shot ICL and
-            the intentions of an emergently misaligned chat model.</li>
-        </ul>
-      </div>
+    <div class="sb-section">
+      <div class="sb-label">Model</div>
+      <select id="model-select"></select>
     </div>
 
-    <div class="card tryit">
-      <div class="card-body">
-        <div class="tryit-text">
-          <h3>Try it yourself</h3>
-          <p>
-            Hover over any token in a solution and see what the goal heads say the model is about to do. The demo
-            covers HumanEval, MBPP and classic algorithms for Qwen2.5-Coder-32B-Instruct and Llama-3.3-70B-Instruct,
-            plus few-shot ICL and chat examples.
-          </p>
-          <a class="demo-cta" href="demo/index.html">Open the GoalScope demo &rarr;</a>
-        </div>
-        <div class="tryit-example" aria-hidden="true">
-          <pre><span class="dim">def func(words: list[str]):
-    a = sum(len(w) for w in words)</span>
-    <span class="pin">b</span> = len(set(words))</pre>
-          <div class="bubble">&ldquo;I am counting unique words&hellip;&rdquo;</div>
-        </div>
-      </div>
+    <div class="sb-section" style="padding-top:10px;">
+      <div class="sb-label">Source</div>
+      <select id="source-select"></select>
     </div>
 
-    <!-- ===================================================================== 1. criteria + GoalScope -->
-    <section class="takeaway" id="goalscope">
-      <h2>Is there a goal? We fix the criteria first</h2>
-      <p>
-        Following Bratman&rsquo;s planning theory, we treat a goal as a <i>functional</i> state rather than
-        something a model says it has. An encoding counts as a goal if it has three properties:
-      </p>
-      <div class="criteria">
-        <div class="crit crit-pre">
-          <h4>Pre-commitment</h4>
-          <!-- stick figure from the talk (Presentation/figs/coffee_cartoons.py), recoloured -->
-          <svg class="crit-art" role="img" aria-label="A seated stick figure thinks of coffee over no coffee" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 300" font-family="Lato, sans-serif">
-          <g stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20.0 272.0 L420.0 272.0" fill="none" stroke="#D6D3CC" stroke-width="3"/>
-          <path d="M80.0 272.0 L80.0 220.0 L142.0 220.0 L142.0 272.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M80.0 220.0 L74.0 154.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <circle cx="102" cy="122" r="15" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M102.0 137.0 L98.0 214.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M98.0 214.0 L142.0 214.0 L146.0 272.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M100.0 154.0 L132.0 206.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <ellipse cx="290" cy="98" rx="124" ry="76" fill="#FFFFFF" stroke="#4a6fa5" stroke-width="3.5"/>
-          <circle cx="180.4" cy="131.9" r="7" fill="#FFFFFF" stroke="#4a6fa5" stroke-width="3"/>
-          <circle cx="143.9" cy="122.9" r="4.5" fill="#FFFFFF" stroke="#4a6fa5" stroke-width="3"/>
-          <path d="M223.7 77.1 q-5.8 -8.0 0 -16.1 q5.8 -8.0 0 -16.1" fill="none" stroke="#B9B5AD" stroke-width="3.4"/>
-          <path d="M234.0 77.1 q-5.8 -8.0 0 -16.1 q5.8 -8.0 0 -16.1" fill="none" stroke="#B9B5AD" stroke-width="3.4"/>
-          <path d="M244.3 77.1 q-5.8 -8.0 0 -16.1 q5.8 -8.0 0 -16.1" fill="none" stroke="#B9B5AD" stroke-width="3.4"/>
-          <path d="M257.0 93.2 q16.1 0 16.1 12.6 q0 12.6 -17.2 12.6" fill="none" stroke="#2B2B2B" stroke-width="4.1"/>
-          <path d="M211.0 84.0 L257.0 84.0 L252.4 118.5 Q251.2 125.4 244.3 125.4 L223.7 125.4 Q216.8 125.4 215.6 118.5 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4.1"/>
-          <ellipse cx="234.0" cy="85.7" rx="19.6" ry="4.0" fill="#7A4A26" stroke="none"/>
-          <text x="292" y="110" font-size="38" fill="#4a6fa5" text-anchor="middle" font-weight="bold" stroke="none">&gt;</text>
-          <path d="M368.0 96.0 q14.0 0 14.0 11.0 q0 11.0 -15.0 11.0" fill="none" stroke="#2B2B2B" stroke-width="3.6"/>
-          <path d="M328.0 88.0 L368.0 88.0 L364.0 118.0 Q363.0 124.0 357.0 124.0 L339.0 124.0 Q333.0 124.0 332.0 118.0 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="3.6"/>
-          <path d="M324.0 78.0 L372.0 132.0" fill="none" stroke="#8A857C" stroke-width="3.5"/>
-          <text x="344" y="144" font-size="17" fill="#8A857C" text-anchor="middle" font-weight="normal" stroke="none">no coffee</text>
-          <text x="234" y="144" font-size="19" fill="#4a6fa5" text-anchor="middle" font-weight="bold" stroke="none">coffee</text>
-          </g>
-          </svg>
-          <p>The target state is settled <i>before</i> the action that realizes it begins.</p>
-        </div>
-        <div class="crit crit-pla">
-          <h4>Plasticity</h4>
-          <!-- stick figure from the talk (Presentation/figs/coffee_cartoons.py), recoloured -->
-          <svg class="crit-art" role="img" aria-label="A stick figure thinks of coffee; a French press, a pod machine or instant coffee can make it" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 300" font-family="Lato, sans-serif">
-          <g stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="62" cy="154" r="15" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M62.0 170.0 L62.0 217.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M62.0 217.0 L47.0 262.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M62.0 217.0 L77.0 262.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M62.0 182.0 L44.0 221.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M62.0 182.0 L94.0 172.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <ellipse cx="112" cy="64" rx="52" ry="40" fill="#FFFFFF" stroke="#3f8f5a" stroke-width="3.5"/>
-          <circle cx="83.0" cy="121.1" r="7" fill="#FFFFFF" stroke="#3f8f5a" stroke-width="3"/>
-          <circle cx="73.3" cy="129.4" r="4.5" fill="#FFFFFF" stroke="#3f8f5a" stroke-width="3"/>
-          <path d="M103.0 50.0 q-5.0 -7.0 0 -14.0 q5.0 -7.0 0 -14.0" fill="none" stroke="#B9B5AD" stroke-width="3.0"/>
-          <path d="M112.0 50.0 q-5.0 -7.0 0 -14.0 q5.0 -7.0 0 -14.0" fill="none" stroke="#B9B5AD" stroke-width="3.0"/>
-          <path d="M121.0 50.0 q-5.0 -7.0 0 -14.0 q5.0 -7.0 0 -14.0" fill="none" stroke="#B9B5AD" stroke-width="3.0"/>
-          <path d="M132.0 64.0 q14.0 0 14.0 11.0 q0 11.0 -15.0 11.0" fill="none" stroke="#2B2B2B" stroke-width="3.6"/>
-          <path d="M92.0 56.0 L132.0 56.0 L128.0 86.0 Q127.0 92.0 121.0 92.0 L103.0 92.0 Q97.0 92.0 96.0 86.0 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="3.6"/>
-          <ellipse cx="112.0" cy="57.5" rx="17.0" ry="3.5" fill="#7A4A26" stroke="none"/>
-          <rect x="166" y="192" width="40" height="70" rx="5" fill="#F4EEE6" stroke="#2B2B2B" stroke-width="4"/>
-          <rect x="169" y="228" width="34" height="31" fill="#7A4A26" stroke="none"/>
-          <path d="M162.0 190.0 L210.0 190.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M186.0 190.0 L186.0 170.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <circle cx="186" cy="166" r="5" fill="#2B2B2B"/>
-          <path d="M206.0 204.0 L217.0 204.0 L217.0 246.0 L206.0 246.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <text x="186" y="292" font-size="19" fill="#8A857C" text-anchor="middle" font-weight="normal" stroke="none">press</text>
-          <path d="M254 262 L254 170 L314 170 L314 262 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M254.0 200.0 L314.0 200.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <rect x="276" y="200" width="16" height="9" fill="#2B2B2B"/>
-          <circle cx="302" cy="184" r="4" fill="#3f8f5a" stroke="none"/>
-          <path d="M295.0 236.4 q7.7 0 7.7 6.1 q0 6.1 -8.2 6.1" fill="none" stroke="#2B2B2B" stroke-width="2.0"/>
-          <path d="M273.0 232.0 L295.0 232.0 L292.8 248.5 Q292.2 251.8 288.9 251.8 L279.1 251.8 Q275.8 251.8 275.2 248.5 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2.0"/>
-          <ellipse cx="284.0" cy="232.8" rx="9.3" ry="1.9" fill="#7A4A26" stroke="none"/>
-          <text x="284" y="292" font-size="19" fill="#8A857C" text-anchor="middle" font-weight="normal" stroke="none">pods</text>
-          <rect x="354" y="200" width="48" height="62" rx="8" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4"/>
-          <rect x="351" y="186" width="54" height="14" rx="4" fill="#7A4A26" stroke="#2B2B2B" stroke-width="4"/>
-          <rect x="361" y="216" width="34" height="22" fill="#F4EEE6" stroke="#2B2B2B" stroke-width="2.5"/>
-          <text x="378" y="230.5" font-size="7.5" fill="#2B2B2B" text-anchor="middle" font-weight="bold" stroke="none">INSTANT</text>
-          <path d="M388.0 186.0 L408.0 158.0" fill="none" stroke="#2B2B2B" stroke-width="3.5"/>
-          <ellipse cx="411" cy="153" rx="5" ry="7" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="3"/>
-          <text x="378" y="292" font-size="19" fill="#8A857C" text-anchor="middle" font-weight="normal" stroke="none">instant</text>
-          <path d="M100 168 Q135.0 140 176 150" fill="none" stroke="#3f8f5a" stroke-width="3" stroke-dasharray="7 7"/>
-          <path d="M100 168 Q185.0 112 276 158" fill="none" stroke="#3f8f5a" stroke-width="3" stroke-dasharray="7 7"/>
-          <path d="M100 168 Q230.0 86 366 170" fill="none" stroke="#3f8f5a" stroke-width="3" stroke-dasharray="7 7"/>
-          </g>
-          </svg>
-          <p>The same goal can be realized by different means, as the environment demands.</p>
-        </div>
-        <div class="crit crit-per">
-          <h4>Persistence</h4>
-          <!-- stick figure from the talk (Presentation/figs/coffee_cartoons.py), recoloured -->
-          <svg class="crit-art" role="img" aria-label="The coffee goal is kept through boil, grind and pour, and released once the coffee is done" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 300" font-family="Lato, sans-serif">
-          <g stroke-linecap="round" stroke-linejoin="round">
-          <ellipse cx="52" cy="56" rx="34" ry="26" fill="#FFFFFF" stroke="#b86a1f" stroke-width="3.5"/>
-          <path d="M64.4 57.0 q8.7 0 8.7 6.8 q0 6.8 -9.3 6.8" fill="none" stroke="#2B2B2B" stroke-width="2.2"/>
-          <path d="M39.6 52.0 L64.4 52.0 L61.9 70.6 Q61.3 74.3 57.6 74.3 L46.4 74.3 Q42.7 74.3 42.1 70.6 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2.2"/>
-          <ellipse cx="52.0" cy="52.9" rx="10.5" ry="2.2" fill="#7A4A26" stroke="none"/>
-          <ellipse cx="152" cy="56" rx="34" ry="26" fill="#FFFFFF" stroke="#b86a1f" stroke-width="3.5"/>
-          <path d="M164.4 57.0 q8.7 0 8.7 6.8 q0 6.8 -9.3 6.8" fill="none" stroke="#2B2B2B" stroke-width="2.2"/>
-          <path d="M139.6 52.0 L164.4 52.0 L161.9 70.6 Q161.3 74.3 157.6 74.3 L146.4 74.3 Q142.7 74.3 142.1 70.6 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2.2"/>
-          <ellipse cx="152.0" cy="52.9" rx="10.5" ry="2.2" fill="#7A4A26" stroke="none"/>
-          <ellipse cx="252" cy="56" rx="34" ry="26" fill="#FFFFFF" stroke="#b86a1f" stroke-width="3.5"/>
-          <path d="M264.4 57.0 q8.7 0 8.7 6.8 q0 6.8 -9.3 6.8" fill="none" stroke="#2B2B2B" stroke-width="2.2"/>
-          <path d="M239.6 52.0 L264.4 52.0 L261.9 70.6 Q261.3 74.3 257.6 74.3 L246.4 74.3 Q242.7 74.3 242.1 70.6 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2.2"/>
-          <ellipse cx="252.0" cy="52.9" rx="10.5" ry="2.2" fill="#7A4A26" stroke="none"/>
-          <path d="M86.0 56.0 L118.0 56.0" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M186.0 56.0 L218.0 56.0" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M368.0 56.0 L382.0 56.0" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M364.5 64.5 L374.4 74.4" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M356.0 68.0 L356.0 82.0" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M347.5 64.5 L337.6 74.4" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M344.0 56.0 L330.0 56.0" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M347.5 47.5 L337.6 37.6" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M356.0 44.0 L356.0 30.0" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <path d="M364.5 47.5 L374.4 37.6" fill="none" stroke="#b86a1f" stroke-width="3"/>
-          <text x="356" y="108" font-size="18" fill="#b86a1f" text-anchor="middle" font-weight="bold" stroke="none">released</text>
-          <path d="M26 238 L32 194 Q52 182 72 194 L78 238 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M74.0 212.0 L92.0 194.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M38 188 Q52 162 66 188" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M44 158 q-4 -6 0 -12 q4 -6 0 -12" fill="none" stroke="#B9B5AD" stroke-width="3"/>
-          <path d="M56 158 q-4 -6 0 -12 q4 -6 0 -12" fill="none" stroke="#B9B5AD" stroke-width="3"/>
-          <path d="M66 158 q-4 -6 0 -12 q4 -6 0 -12" fill="none" stroke="#B9B5AD" stroke-width="3"/>
-          <rect x="132" y="194" width="40" height="44" rx="4" fill="#F4EEE6" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M136 194 L130 176 L174 176 L168 194" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M152.0 176.0 L152.0 164.0 L176.0 158.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <circle cx="178" cy="157" r="4.5" fill="#2B2B2B"/>
-          <g transform="rotate(-38 234 198)"><path d="M208 198 L214 154 Q234 142 254 154 L260 198 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M256.0 172.0 L274.0 154.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M220 148 Q234 122 248 148" fill="none" stroke="#2B2B2B" stroke-width="4"/></g>
-          <path d="M274 184 Q278 198 274 206" fill="none" stroke="#7A4A26" stroke-width="3"/>
-          <path d="M287.0 214.0 q10.5 0 10.5 8.2 q0 8.2 -11.2 8.2" fill="none" stroke="#2B2B2B" stroke-width="2.7"/>
-          <path d="M257.0 208.0 L287.0 208.0 L284.0 230.5 Q283.2 235.0 278.8 235.0 L265.2 235.0 Q260.8 235.0 260.0 230.5 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2.7"/>
-          <ellipse cx="272.0" cy="209.1" rx="12.8" ry="2.6" fill="#7A4A26" stroke="none"/>
-          <circle cx="344" cy="132" r="15" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M338 135 q6 6 12 0" fill="none" stroke="#2B2B2B" stroke-width="2.5"/>
-          <path d="M344.0 148.0 L344.0 195.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M344.0 195.0 L329.0 240.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M344.0 195.0 L359.0 240.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M344.0 160.0 L326.0 199.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M344.0 160.0 L364.0 178.0 L378.0 164.0" fill="none" stroke="#2B2B2B" stroke-width="4"/>
-          <path d="M383.7 149.8 q-3.5 -4.9 0 -9.8 q3.5 -4.9 0 -9.8" fill="none" stroke="#B9B5AD" stroke-width="2.1"/>
-          <path d="M390.0 149.8 q-3.5 -4.9 0 -9.8 q3.5 -4.9 0 -9.8" fill="none" stroke="#B9B5AD" stroke-width="2.1"/>
-          <path d="M396.3 149.8 q-3.5 -4.9 0 -9.8 q3.5 -4.9 0 -9.8" fill="none" stroke="#B9B5AD" stroke-width="2.1"/>
-          <path d="M404.0 159.6 q9.8 0 9.8 7.7 q0 7.7 -10.5 7.7" fill="none" stroke="#2B2B2B" stroke-width="2.5"/>
-          <path d="M376.0 154.0 L404.0 154.0 L401.2 175.0 Q400.5 179.2 396.3 179.2 L383.7 179.2 Q379.5 179.2 378.8 175.0 Z" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2.5"/>
-          <ellipse cx="390.0" cy="155.1" rx="11.9" ry="2.4" fill="#7A4A26" stroke="none"/>
-          <text x="52" y="272" font-size="19" fill="#8A857C" text-anchor="middle" font-weight="normal" stroke="none">boil</text>
-          <text x="152" y="272" font-size="19" fill="#8A857C" text-anchor="middle" font-weight="normal" stroke="none">grind</text>
-          <text x="252" y="272" font-size="19" fill="#8A857C" text-anchor="middle" font-weight="normal" stroke="none">pour</text>
-          <text x="362" y="272" font-size="19" fill="#2B2B2B" text-anchor="middle" font-weight="bold" stroke="none">done!</text>
-          <path d="M86.0 263.0 L118.0 263.0" fill="none" stroke="#D6D3CC" stroke-width="3"/>
-          <path d="M110.0 257.0 L118.0 263.0 L110.0 269.0" fill="none" stroke="#D6D3CC" stroke-width="3"/>
-          <path d="M186.0 263.0 L218.0 263.0" fill="none" stroke="#D6D3CC" stroke-width="3"/>
-          <path d="M210.0 257.0 L218.0 263.0 L210.0 269.0" fill="none" stroke="#D6D3CC" stroke-width="3"/>
-          <path d="M286.0 263.0 L328.0 263.0" fill="none" stroke="#D6D3CC" stroke-width="3"/>
-          <path d="M320.0 257.0 L328.0 263.0 L320.0 269.0" fill="none" stroke="#D6D3CC" stroke-width="3"/>
-          </g>
-          </svg>
-          <p>It is sustained while the action is carried out, and released once it is done.</p>
-        </div>
+    <div class="sb-tasks">
+      <div class="sb-label">Task</div>
+      <div class="sb-search-wrap">
+        <svg class="sb-search-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.3"/>
+          <line x1="7.8" y1="7.8" x2="10.5" y2="10.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <input id="task-filter" type="search" placeholder="filter tasks…" autocomplete="off" spellcheck="false">
       </div>
-      <p>
-        We test for these in multi-step coding tasks: the prompt lists several sub-tasks, and we prefill the
-        code up to the point where a good model should start the next one (the <i>frontier</i>). Contrastive
-        activation patching across programming languages localizes the frontier in the outputs of a sparse set of
-        <b>goal heads</b>. <b>GoalScope</b> reads what these heads write at a single token, either by asking the
-        model in a neutral context &ldquo;what are you doing on this line?&rdquo; or by steering an empty C++
-        stub.
-      </p>
-      <figure class="center_image">
-        <img src="images/goalscope.svg" alt="GoalScope schema and readout results">
-        <figcaption>
-          <b>GoalScope.</b> (a) The goal heads&rsquo; outputs at one token form the encoding <i>v<sub>g</sub></i>.
-          (b) It is injected into a neutral probe: (c.1) asked to describe what it is doing, the model verbalizes the
-          sub-goal; (c.2) in a C++ stub, it implements it. Right: faithfulness and causality at four pivot tokens,
-          with same-strength baselines.
-        </figcaption>
-      </figure>
-      <ul class="findings">
-        <li><span class="tag tag-pre">pre-commitment</span> The sub-goal is verbalized correctly
-          <b>94%</b> of the time at the indent, <b>three tokens before</b> any of its code is written.</li>
-        <li><span class="tag tag-pla">plasticity</span> The encoding taken from Python, injected into a C++
-          stub, makes the model implement the same operation in C++ (<b>0.75</b> on average).</li>
-        <li class="finding-more">
-          <details>
-            <summary><span class="tag tag-per">persistence</span> The encoding stays similar to the
-              pivot&rsquo;s throughout the implementation, also across languages, and fades once the sub-goal is
-              complete. <span class="ins-refs">&sect;3.4 &middot; Fig.&nbsp;3</span></summary>
-            <figure class="fig-side">
-              <img loading="lazy" src="images/persistence.svg"
-                   alt="Cosine similarity between the pivot's goal-head encoding and the encoding later in the implementation">
-              <figcaption>
-                <b>Temporal persistence of the sub-goal encoding.</b> Cosine similarity between a sub-goal&rsquo;s
-                goal-head encoding at the <code>=</code> token and the encoding sampled <i>x</i>% of the way
-                through its implementation, averaged over data types and languages. Encodings of the
-                <span class="c-same">same sub-goal</span> (teal) stay well above those of a
-                <span class="c-diff">different sub-goal</span> (orange) all the way through, whether the
-                implementation is in the same language (solid) or another one (dashed): the sub-goal encoding
-                persists until the model finishes implementing it.
-              </figcaption>
-            </figure>
-          </details>
-        </li>
-      </ul>
-      <a class="demo-cta" href="demo/index.html">Browse GoalScope readouts in the demo &rarr;</a>
-    </section>
+      <div id="task-count"></div>
+      <ul id="task-list"></ul>
+    </div>
 
-    <!-- ===================================================================== 2. NRGS -->
-    <section class="takeaway" id="persistence">
-      <h2>How is persistence achieved? By re-reading the goal, not by holding it</h2>
-      <p>
-        A transformer cannot literally carry a state forward: every attention read costs a layer. An encoding
-        formed at layer 40 of a 64-layer model has only 24 layers left to pass it on, yet we see goals sustained
-        well beyond that. We propose a <b>non-recurrent goal-seeking</b> account (NRGS): at each step the model
-        <i>re-reads</i> the goal from the task specification, compares it with the progress made so far, and takes
-        the next step towards whatever is still pending. NRGS makes concrete predictions, and we test each one with
-        a targeted intervention.
-      </p>
-      <figure class="center_image nrgs-fig">
-        <img id="nrgs-img" src="images/teaser.svg" data-still="images/teaser.svg" data-anim="images/nrgs-steps.gif"
-             alt="Goal pursuit and its non-recurrent implementation in a transformer LM">
-        <button type="button" class="anim-btn" id="nrgs-btn" aria-pressed="false">&#9654; Step through it</button>
-        <figcaption>
-          <b>Goal pursuit and its non-recurrent implementation in a transformer LM.</b>
-          A goal such as implementing merge sort decomposes into sub-goals, each realized as a sequence of tokens.
-          (i) An idealized agent forms an intention, acts on it until it is done, and moves on. (ii) A transformer
-          cannot carry that commitment forward through a fixed number of layers, so at each step it re-reads the
-          goal from the task span, computes its progress so far, and compares the two to pick the next token.
-        </figcaption>
-      </figure>
-      <script>
-        (function () {
-          var img = document.getElementById('nrgs-img'), btn = document.getElementById('nrgs-btn');
-          btn.addEventListener('click', function () {
-            var on = btn.getAttribute('aria-pressed') !== 'true';
-            img.src = on ? img.dataset.anim + '?t=' + Date.now() : img.dataset.still;   // restart the gif each time
-            btn.setAttribute('aria-pressed', on);
-            btn.innerHTML = on ? '&#9632; Show the full figure' : '&#9654; Step through it';
-          });
-        })();
-      </script>
-      <div class="insights">
-        <details class="insight">
-          <summary>
-            <span class="ins-title">The goal is frequently re-read from the task specification.</span>
-            <span class="ins-brief">At a token, we can change what the goal heads read by swapping their
-              key/value states over the task span, and the LM changes its behavior accordingly.</span>
-            <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span>
-          </summary>
-          <div class="sub-insights">
-            <details class="sub-insight">
-              <summary><b>The task span, not the code progress, dictates the LM&rsquo;s next operation.</b>
-                Transplanting the task span redirects the model; transplanting the code written so far barely
-                does, even though GoalScope can read the sub-goal out of it.
-                <span class="ins-refs">App.&nbsp;J &middot; Fig.&nbsp;27</span></summary>
-              <figure class="center_image">
-                <img loading="lazy" src="images/nrgs-task_vs_progress.svg"
-                     alt="Transplanting the task span vs. the code-progress span from a source run into a destination run">
-                <figcaption>
-                  <b>Task span vs. code progress.</b> The two prompts share the first two sub-tasks, whose code is
-                  prefilled (underlined), and differ only in the third. In the patched run we transplant the
-                  residual states of the source&rsquo;s task span, its code-progress span, or both, and keep the
-                  destination&rsquo;s states for everything else before the <code>=</code> pivot. Right: how often
-                  the model then implements the source&rsquo;s third sub-task.
-                </figcaption>
-              </figure>
-            </details>
-            <details class="sub-insight">
-              <summary><b>The same computational motif, implemented by the goal heads, works at different levels of
-                the hierarchy.</b> The same KV swap redirects a sub-sub-goal, a sub-goal, and the broader goal itself.
-                <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span></summary>
-              <div class="level-tabs" role="tablist" aria-label="Level of the goal hierarchy">
-                <button type="button" role="tab" aria-selected="false" data-level="goal">Goal</button>
-                <button type="button" role="tab" aria-selected="true" data-level="sub_goal">Sub-goal</button>
-                <button type="button" role="tab" aria-selected="false" data-level="sub_sub_goal">Sub-sub-goal</button>
-              </div>
-              <figure class="center_image level-panel" data-level="goal" hidden>
-                <img loading="lazy" src="images/nrgs-goal.svg"
-                     alt="KV transfer of the broader goal: a C++ quick sort becomes a merge sort">
-                <figcaption>
-                  <b>Goal</b> (Fig.&nbsp;24). The prompts name only the algorithm. Swapping the goal heads&rsquo;
-                  view of &ldquo;merge sort&rdquo; into a C++ quick-sort prompt makes the model write a merge sort
-                  in C++, and GoalScope describes merging.
-                </figcaption>
-              </figure>
-              <figure class="center_image level-panel" data-level="sub_goal">
-                <img loading="lazy" src="images/nrgs-sub_goal.svg"
-                     alt="KV transfer of a sub-goal from a C++ prompt into a Python prompt, and the swapped rows of one goal head's KV cache">
-                <figcaption>
-                  <b>Sub-goal</b> (Fig.&nbsp;5). At the <code>=</code> pivot the goal heads read the source&rsquo;s
-                  task span (red) instead of the destination&rsquo;s (green). The model implements the source
-                  sub-goal, written in the destination&rsquo;s language, and the GoalScope readout flips with it.
-                  Right: the intervention inside one goal head. In its KV cache, the keys and values of the
-                  task-span rows are replaced with the source run&rsquo;s, and the query at <code>=</code> reads
-                  the swapped rows; every other row, and every other head, is left as is.
-                </figcaption>
-              </figure>
-              <figure class="center_image level-panel" data-level="sub_sub_goal" hidden>
-                <img loading="lazy" src="images/nrgs-sub_sub_goal.svg"
-                     alt="KV transfer of a sub-sub-goal: the second condition of a filter">
-                <figcaption>
-                  <b>Sub-sub-goal</b> (Fig.&nbsp;23). The sub-task has two conditions. At the <code>and</code>
-                  between them, the same swap changes the second condition from &ldquo;is a palindrome&rdquo; to the
-                  source&rsquo;s &ldquo;ends with a digit&rdquo;.
-                </figcaption>
-              </figure>
-            </details>
-          </div>
-          <script>
-            document.querySelectorAll('.level-tabs').forEach(function (tabs) {
-              var box = tabs.parentNode;
-              tabs.addEventListener('click', function (e) {
-                var b = e.target.closest('button');
-                if (!b) return;
-                tabs.querySelectorAll('button').forEach(function (t) { t.setAttribute('aria-selected', t === b); });
-                box.querySelectorAll('.level-panel').forEach(function (f) { f.hidden = f.dataset.level !== b.dataset.level; });
-              });
-            });
-          </script>
-        </details>
-        <details class="insight">
-          <summary>
-            <span class="ins-title">The next operation is chosen with a mix of different computations.</span>
-            <span class="ins-brief">The goal heads&rsquo; queries carry part of the &ldquo;what is already
-              done&rdquo; signal: transferring them can move the model to a different pending sub-goal, but no
-              single selection rule explains every case.</span>
-            <span class="ins-refs">&sect;5.1.2 &middot; App.&nbsp;I.2</span>
-          </summary>
-          <div class="ins-body">
-            <figure class="center_image">
-              <img loading="lazy" src="images/nrgs-q_transfer.svg"
-                   alt="Query transfer: swapping only the goal heads' query at the pivot, and the effect of the source frontier's position">
-              <figcaption>
-                <b>Query transfer.</b> Left: the source has done <i>a</i> and <i>b</i>, the destination only
-                <i>a</i>. At the <code>=</code> pivot we swap in only the goal heads&rsquo; <i>query</i> from the
-                source run, the side that should carry &ldquo;what is already done&rdquo;. The patched model skips
-                ahead to the destination&rsquo;s third task. Right: the swap works much better when the source
-                frontier sits at the same position in its task list as the patched target (order-matched) than
-                when it does not (order-diff), so progress is not the only cue: position matters too.
-              </figcaption>
-            </figure>
-          </div>
-        </details>
-      </div>
-    </section>
+    <div class="sb-footer">
+      <b>How to read:</b> code on the right; highlighted tokens carry a read-out of the goal heads at that
+      position. <b>Click</b> a token to pin its read-out (numbered callout on the left), click again to unpin;
+      hover to preview. Drag the divider to resize.
+    </div>
+  </aside>
 
-    <!-- ===================================================================== 3. beyond code -->
-    <section class="takeaway" id="beyond-code">
-      <h2>Does it work beyond code?</h2>
-      <p>
-        The goal heads were found on code, but GoalScope reads intentions elsewhere too, with no re-training.
-      </p>
-      <figure class="center_image">
-        <img src="images/beyond-code.svg" alt="GoalScope readouts in few-shot ICL and in an emergently misaligned model">
-        <figcaption>
-          <b>GoalScope beyond code.</b> Left: readouts of the implicit rule in few-shot ICL. Right: the emergently
-          misaligned model&rsquo;s readouts at the start of its (harmless-looking) response.
-        </figcaption>
-      </figure>
-      <p>
-        Explore more examples on the <a href="demo/icl.html">ICL</a> and <a href="demo/em.html">chat (EM)</a>
-        pages of the demo.
-      </p>
-    </section>
+  <!-- ── Main ── -->
+  <main id="main">
+    <div id="empty-state">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="20" stroke="#f2708a" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="9" stroke="#f2708a" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="3" fill="#f2708a"/>
+      </svg>
+      <p>Select a task to view its GoalScope read-outs</p>
+    </div>
+    <iframe id="viewer" src="about:blank"></iframe>
+  </main>
 
-    <!-- ===================================================================== wrap-up -->
-    <section class="takeaway wrap" id="verdict">
-      <h2>So, do LLMs have goals?</h2>
-      <p>
-        By our criteria, the encoding is <b>pre-committed</b> (readable before the action) and <b>plastic</b>
-        (portable to another language). It is also <b>persistent</b>, but through frequent re-derivation rather
-        than a single running state. Whether that counts depends on what persistence requires: if a goal must be
-        one state that survives the whole action, these models do not qualify; if a goal can be stored and
-        retrieved at each step, like an agent that consults its plan, they do.
-      </p>
-    </section>
+</div>
 
-    <section class="takeaway wrap" id="cite">
-      <h2>How to cite</h2>
-      <p>The paper is under review; a preprint and the final citation will be posted here.</p>
-      <div class="card cite-card">
-        <h3 class="card-header">bibliography</h3>
-        <div class="card-body">
-          Arnab Sen Sharma, Eric Todd, Sheridan Feucht, Andy Arditi, Rohit Gandikota, Natalie Shapira,
-          Gabriele Sarti, Constanza Fierro, Lisa Schut, David Bau. &ldquo;<a href="https://goals.baulab.info/">Goal
-          Encoding in LLMs</a>.&rdquo; Preprint, 2026.
-        </div>
-      </div>
-      <div class="card cite-card">
-        <h3 class="card-header">bibtex <button type="button" class="copy-btn" data-copy="bibtex">Copy</button></h3>
-        <div class="card-body">
-<pre class="citation" id="bibtex">@misc{sensharma2026goals,
-  title  = {Goal Encoding in {LLMs}},
-  author = {Sen Sharma, Arnab and Todd, Eric and Feucht, Sheridan and Arditi, Andy and
-            Gandikota, Rohit and Shapira, Natalie and Sarti, Gabriele and Fierro, Constanza and
-            Schut, Lisa and Bau, David},
-  year   = {2026},
-  note   = {Preprint},
-  url    = {https://goals.baulab.info/}
-}</pre>
-        </div>
-      </div>
-      <script>
-        document.querySelectorAll('.copy-btn').forEach(function (b) {
-          b.addEventListener('click', function () {
-            var txt = document.getElementById(b.dataset.copy).textContent;
-            (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(
-              function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1500); },
-              function () { b.textContent = 'Select & copy'; });
-          });
-        });
-      </script>
-    </section>
-  </div>
+<script>
+(function () {
+  const modelSel  = document.getElementById('model-select');
+  const taskList  = document.getElementById('task-list');
+  const taskFilter = document.getElementById('task-filter');
+  const taskCount = document.getElementById('task-count');
+  const viewer    = document.getElementById('viewer');
+  const empty     = document.getElementById('empty-state');
 
-  <div class="nd-pagefooter">
-    <a href="https://baulab.info/">baulab.info</a>
-  </div>
+  const sourceSel  = document.getElementById('source-select');
+
+  let manifest = {};
+  let currentModel  = null;
+  let currentSource = null;
+  let currentTask   = null;
+
+  // ── Helpers ──────────────────────────────────────────────────────────────
+
+  let labels = {};    // web/labels.json: {"<source>/<task>": "125_find_length"}
+  function taskDisplay(source, t) {
+    return labels[source + '/' + t] || t.replace(/_/g, ' ');
+  }
+
+  function iframeUrl(model, source, task) {
+    return `pages/${encodeURIComponent(model)}/${encodeURIComponent(source)}/${encodeURIComponent(task)}.html`;
+  }
+
+  function setHash(model, source, task) {
+    const h = encodeURIComponent(model) + '/' + encodeURIComponent(source) + '/' + encodeURIComponent(task);
+    history.replaceState(null, '', '#' + h);
+  }
+
+  function parseHash() {
+    const raw = window.location.hash.slice(1);
+    if (!raw) return null;
+    const parts = raw.split('/').map(decodeURIComponent);
+    if (parts.length < 3) return null;
+    return { model: parts[0], source: parts[1], task: parts[2] };
+  }
+
+  // ── Load task ─────────────────────────────────────────────────────────────
+
+  function loadTask(model, source, task) {
+    currentModel  = model;
+    currentSource = source;
+    currentTask   = task;
+    viewer.src = iframeUrl(model, source, task);
+    empty.classList.add('hidden');
+    setHash(model, source, task);
+    document.querySelectorAll('#task-list li').forEach(li => {
+      li.classList.toggle('selected', li.dataset.task === task);
+    });
+    const sel = taskList.querySelector('.selected');
+    if (sel) sel.scrollIntoView({ block: 'nearest' });
+  }
+
+  // ── Populate tasks ────────────────────────────────────────────────────────
+
+  function populateTasks(model, source, selectTask) {
+    const tasks = (manifest[model] && manifest[model][source]) || [];
+    taskList.innerHTML = '';
+    tasks.forEach(t => {
+      const li = document.createElement('li');
+      li.dataset.task = t;
+      li.textContent = taskDisplay(source, t);
+      li.dataset.search = (t + ' ' + li.textContent).toLowerCase();
+      li.title = t;
+      li.addEventListener('click', () => loadTask(model, source, t));
+      taskList.appendChild(li);
+    });
+    updateFilter();
+    const target = selectTask && tasks.includes(selectTask) ? selectTask : tasks[0];
+    if (target) loadTask(model, source, target);
+  }
+
+  // ── Populate source select ────────────────────────────────────────────────
+
+  function populateSources(model, initialSource, initialTask) {
+    sourceSel.innerHTML = '';
+    const sources = Object.keys(manifest[model] || {});
+    sources.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      sourceSel.appendChild(opt);
+    });
+    const targetSource = initialSource && sources.includes(initialSource) ? initialSource : sources[0];
+    sourceSel.value = targetSource;
+    currentSource = targetSource;
+    populateTasks(model, targetSource, initialTask);
+  }
+
+  // ── Filter ────────────────────────────────────────────────────────────────
+
+  function updateFilter() {
+    const q = taskFilter.value.trim().toLowerCase();
+    let visible = 0;
+    taskList.querySelectorAll('li').forEach(li => {
+      const match = !q || li.dataset.search.includes(q);
+      li.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+    const total = taskList.querySelectorAll('li').length;
+    taskCount.textContent = q ? `${visible} / ${total} tasks` : `${total} tasks`;
+  }
+
+  // ── Populate model select ─────────────────────────────────────────────────
+
+  function populateModels(initialModel, initialSource, initialTask) {
+    modelSel.innerHTML = '';
+    Object.keys(manifest).forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m;
+      opt.textContent = m;
+      modelSel.appendChild(opt);
+    });
+    const targetModel = initialModel && manifest[initialModel] ? initialModel : Object.keys(manifest)[0];
+    modelSel.value = targetModel;
+    currentModel = targetModel;
+    populateSources(targetModel, initialSource, initialTask);
+  }
+
+  // ── Events ────────────────────────────────────────────────────────────────
+
+  modelSel.addEventListener('change', () => {
+    populateSources(modelSel.value, null, null);
+  });
+
+  sourceSel.addEventListener('change', () => {
+    populateTasks(currentModel, sourceSel.value, null);
+  });
+
+  taskFilter.addEventListener('input', updateFilter);
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+
+  Promise.all([fetch('manifest.json').then(r => r.json()),
+               fetch('labels.json').then(r => r.ok ? r.json() : {}).catch(() => ({}))])
+    .then(([data, lab]) => {
+      manifest = data;
+      labels = lab;
+      const saved = parseHash();
+      populateModels(
+        saved?.model  ?? 'Qwen2.5-Coder-32B-Instruct',
+        saved?.source ?? 'ds_and_algo',
+        saved?.task   ?? 'merge_sort',
+      );
+    })
+    .catch(err => {
+      console.error('Failed to load manifest.json', err);
+      empty.querySelector('p').textContent = 'Could not load manifest.json';
+    });
+
+})();
+</script>
+<script src="sidebar.js"></script>
 </body>
 </html>
