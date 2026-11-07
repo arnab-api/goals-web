@@ -1,0 +1,64 @@
+{
+ "id": "list[str]_python_059",
+ "datatype": "list[str]",
+ "frontier_id": "count_ends_consonant",
+ "condition": "the number of words that end with a consonant",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) whether all words have distinct lengths\n(3) the number of words that end with a consonant\n(4) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w))\n    b = len(set(len(w) for w in words)) == len(words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')\n    d = sum(w.lower().count(v) for w in words for v in 'aeiou')\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of unique elements in a list.",
+   "verdict": "NO",
+   "reasoning": "The code counts words whose last character is a consonant, not unique elements. The description mentions counting elements in a list, which is partially relevant (it is counting items from a collection), but \"unique elements\" is completely wrong and misses the key operation (checking the last letter against consonants). However, \"counting elements in a list\" is too generic and the \"unique\" aspect makes it specifically wrong.\n\nThe description is coherent but describes something different - counting unique elements vs counting words ending in consonants. The only overlap is the general notion of counting from a list, which is too generic.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the last character is a consonant.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if the last character of each word is a consonant (by checking if it's in the string of consonant letters). This is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the character is not a vowel and is a letter.",
+   "verdict": "YES",
+   "reasoning": "The code counts words where the last character is a consonant (i.e., in the string of consonants 'bcdfghjklmnpqrstvwxyz'). The description says \"checking if the character is not a vowel and is a letter,\" which is essentially the same concept \u2014 consonants are letters that are not vowels. This is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the character is not a vowel and is an alphabetic character.",
+   "verdict": "YES",
+   "reasoning": "The code counts words whose last character is a consonant (i.e., in the string of consonants, which is equivalent to \"not a vowel and is alphabetic\"). The description correctly identifies the core logic of checking for non-vowel (consonant) characters, which is exactly what the membership test against the consonant string does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true
+  }
+ ]
+}
