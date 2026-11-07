@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>GoalScope · Human Annotation</title>
+<link href="site.css" rel="stylesheet">
+<script src="annotate-config.js"></script>
+<style>
+  :root { --target: #1f4fd8; --target-bg: #eaf0ff; --frontier: #1f7a3a; --pivot: #6b6aa1; }
+  html, body { overflow: auto; height: auto; }
+  body { background: var(--bg-main); }
+  .an-wrap { max-width: 980px; margin: 0 auto; padding: 22px 16px 60px; font-size: 14px; }
+  .an-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 18px; }
+  .an-logo { font-family: var(--font-mono); font-size: 15px; font-weight: 600; }
+  .an-logo span { color: var(--text-lo); font-weight: 400; }
+  .an-progress { font-size: 13px; color: var(--text-mid); display: flex; align-items: center; gap: 10px; }
+  .an-bar { width: 140px; height: 7px; border-radius: 4px; background: #eceff2; overflow: hidden; }
+  .an-bar > span { display: block; height: 100%; background: var(--accent-dim); transition: width .2s; }
+  h2 { font-size: 18px; margin: 0 0 8px; }
+  p { line-height: 1.55; margin: 0 0 10px; color: var(--text-mid); }
+  .an-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; background: #fff; margin-bottom: 14px; }
+  .an-label { font: 600 11px/1.4 var(--font-ui); letter-spacing: .06em; text-transform: uppercase; color: var(--text-lo); margin: 0 0 7px; }
+  .an-task { white-space: pre-wrap; line-height: 1.6; color: var(--text-mid); font-size: 14px; }
+  .an-task .tgt { color: var(--target); font-weight: 700; background: var(--target-bg); border-radius: 4px; padding: 1px 3px; }
+  .an-code { margin: 0; font: 14.5px/1.7 var(--font-mono); white-space: pre-wrap; word-break: break-word; color: var(--text-hi); }
+  .an-code .piv { border-radius: 3px; white-space: pre; box-shadow: inset 0 -2px 0 var(--pivot); background: #ecebf6; }
+  .an-code .front { color: var(--frontier); font-weight: 700; }
+  .an-code .rest { color: var(--text-lo); }
+  .an-code .nl { opacity: .6; font-size: .85em; }
+  .an-readout { font-size: 16px; line-height: 1.55; font-style: italic; color: var(--text-hi); quotes: "\201C" "\201D"; }
+  .an-q { font-size: 15px; font-weight: 600; color: var(--text-hi); margin: 4px 0 10px; }
+  .an-q .tgt { color: var(--target); }
+  .an-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .an-opt { text-align: left; font: inherit; border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 12px;
+    background: #fff; cursor: pointer; transition: border-color .1s, background .1s; color: var(--text-hi); }
+  .an-opt:hover { border-color: var(--accent-dim); }
+  .an-opt b { display: block; font-size: 14px; margin-bottom: 3px; }
+  .blue { color: var(--target); font-weight: 700; }
+  .an-opt small { display: block; color: var(--text-mid); font-size: 12.5px; line-height: 1.45; }
+  .an-opt kbd, .an-kbd { font: 600 10.5px/1 var(--font-mono); border: 1px solid var(--border); border-radius: 4px; padding: 2px 5px;
+    color: var(--text-lo); float: right; }
+  .an-opt.sel { border-color: var(--accent); background: var(--bg-item-sel); }
+  .an-comment { margin-top: 12px; }
+  .an-comment textarea { width: 100%; min-height: 70px; font: inherit; font-size: 14px; padding: 8px 10px; border-radius: 8px;
+    border: 1px solid var(--border); resize: vertical; }
+  .an-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+  .an-btn { font: inherit; font-size: 14px; padding: 7px 16px; border-radius: 7px; border: 1px solid var(--border); background: #fff;
+    cursor: pointer; color: var(--text-hi); }
+  .an-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .an-btn:disabled { opacity: .45; cursor: default; }
+  .an-sizes { display: flex; gap: 8px; flex-wrap: wrap; }
+  .an-size { font: inherit; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; }
+  .an-size.sel { border-color: var(--accent); background: var(--bg-item-sel); color: var(--accent); font-weight: 600; }
+  .an-defs { margin: 6px 0 0; padding: 0; list-style: none; }
+  .an-defs li { margin: 0 0 6px; line-height: 1.5; color: var(--text-mid); }
+  .an-defs b { color: var(--text-hi); display: inline-block; min-width: 108px; }
+  .an-note { font-size: 12.5px; color: var(--text-lo); }
+  .an-status { font-size: 12.5px; color: var(--text-lo); }
+  .an-status.err { color: #9a3412; }
+  table.an-sum { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px; }
+  table.an-sum th, table.an-sum td { border-bottom: 1px solid var(--border); padding: 6px 6px; text-align: left; vertical-align: top; }
+  table.an-sum th { font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--text-lo); font-weight: 600; }
+  table.an-sum td.ro { font-style: italic; color: var(--text-mid); max-width: 380px; }
+  .v { font: 600 11px/1 var(--font-ui); padding: 3px 7px; border-radius: 999px; border: 1px solid; white-space: nowrap; display: inline-block; }
+  .v.YES { color: #166534; border-color: #86c79a; background: #f0faf3; }
+  .v.NO { color: #9a3412; border-color: #e7a08a; background: #fdf3ef; }
+  .v.NO_INFO, .v.MALFORMED { color: #475569; border-color: #b6c2cf; background: #f4f6f9; }
+  .v.diff { box-shadow: 0 0 0 2px #f2b8c4; }
+  button.v { cursor: pointer; font: 600 11px/1 var(--font-ui); }
+  button.v .car { display: inline-block; font-size: 9px; transition: transform .12s; }
+  button.v[aria-expanded="true"] .car { transform: rotate(90deg); }
+  tr.why-row td { border-bottom: 1px solid var(--border); padding-top: 0; }
+  .why-box { font-size: 13px; line-height: 1.5; color: var(--text-mid); background: #f7f8fa; border-radius: 7px; padding: 8px 10px; }
+  .why-box b { color: var(--text-hi); }
+  .why-box .why-src { margin-top: 5px; font-size: 12px; color: var(--text-lo); }
+  .why-box code { font-family: var(--font-mono); font-size: 12px; color: var(--text-hi); }
+  .an-agree { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 8px 0 4px; }
+  .an-stat { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+  .an-stat .big { font-size: 24px; font-weight: 700; color: var(--text-hi); }
+  .an-stat .lbl { font-size: 12.5px; color: var(--text-mid); }
+  .hidden { display: none !important; }
+  @media (max-width: 640px) { .an-opts { grid-template-columns: 1fr; } .an-code { font-size: 13px; } }
+</style>
+</head>
+<body>
+<div class="an-wrap">
+  <div class="an-top">
+    <div class="an-logo">GoalScope <span>· human annotation of read-outs</span></div>
+    <div class="an-progress hidden" id="progress"><span id="ptext"></span><span class="an-bar"><span id="pbar"></span></span></div>
+  </div>
+
+  <!-- ── start ── -->
+  <section id="start">
+    <h2>Do the read-outs describe the next sub-task?</h2>
+    <p>
+      A language model is writing a Python or C++ function that computes several sub-tasks in order. Just before it writes
+      the line for the next sub-task (the <b style="color:var(--target)">target</b>), we read the goal heads' hidden state
+      out in natural language (a <i>read-out</i>). You will see the task, the code the model wrote (the target line in
+      <b style="color:var(--frontier)">bold green</b>), and one read-out. Judge whether the read-out describes the target sub-task.
+    </p>
+    <div class="an-card">
+      <div class="an-label">The four verdicts</div>
+      <ul class="an-defs" id="defs"></ul>
+      <p class="an-note" style="margin-top:8px">Read-outs are often noisy (cut off mid-sentence, wrapped in chat phrases, partly wrong).
+        Grade the substance: a correct fragment counts as YES, even if details such as a constant are wrong.</p>
+    </div>
+    <div class="an-card">
+      <p style="margin:0 0 4px;color:var(--text-hi);font-size:15px">You are <b id="pseudo"></b>.</p>
+      <p class="an-note" style="margin:0">A random name for this browser, so your answers stay together and you never see the
+        same task twice. We store no names or other information about you.</p>
+      <div class="an-label" style="margin-top:14px">How many read-outs?</div>
+      <div class="an-sizes" id="sizes"></div>
+      <div class="an-row">
+        <button class="an-btn primary" id="go" disabled>Start</button>
+        <span class="an-status" id="startinfo"></span>
+      </div>
+    </div>
+    <p class="an-note" id="storageinfo"></p>
+  </section>
+
+  <!-- ── item ── -->
+  <section id="item" class="hidden">
+    <div class="an-card">
+      <div class="an-label">Task</div>
+      <div class="an-task" id="task"></div>
+    </div>
+    <div class="an-card">
+      <div class="an-label">The model's code · <span style="color:var(--pivot)">underlined</span> = where the read-out was taken · <span style="color:var(--frontier)">green</span> = the target line it then wrote</div>
+      <pre class="an-code" id="code"></pre>
+    </div>
+    <div class="an-card">
+      <div class="an-label">Read-out</div>
+      <q class="an-readout" id="readout"></q>
+    </div>
+    <div class="an-card">
+      <div class="an-q">Does the read-out describe the target sub-task: <span class="tgt" id="qtarget"></span>?</div>
+      <div class="an-opts" id="opts"></div>
+      <div class="an-comment hidden" id="commentbox">
+        <div class="an-label" style="margin-top:4px">Comment (optional)</div>
+        <textarea id="comment" placeholder="Anything worth noting about this read-out?"></textarea>
+        <div class="an-row">
+          <button class="an-btn primary" id="submit">Submit <span class="an-kbd" style="float:none;margin-left:6px;color:#fde">Enter</span></button>
+          <button class="an-btn" id="skip">Skip comment <span class="an-kbd" style="float:none;margin-left:6px">Esc</span></button>
+        </div>
+      </div>
+    </div>
+    <p class="an-status" id="saveinfo"></p>
+  </section>
+
+  <!-- ── summary ── -->
+  <section id="summary" class="hidden">
+    <h2>Thank you! Your session</h2>
+    <p id="sumintro"></p>
+    <div class="an-agree" id="agree"></div>
+    <div class="an-card">
+      <div class="an-label">Your verdicts and the LM judges'</div>
+      <table class="an-sum"><thead><tr><th>#</th><th>target</th><th>read-out</th><th>you</th><th>Claude</th><th>GPT-5</th></tr></thead>
+        <tbody id="sumrows"></tbody></table>
+      <p class="an-note" style="margin-top:8px">Click a judge's pill for its reasoning. Highlighted pills: the judge disagrees with you. The judges graded the same read-outs with a
+        rubric close to the four verdicts above (their HEAVY_LOOP, a short repeating cycle, is shown as MALFORMED).</p>
+    </div>
+    <div class="an-row">
+      <button class="an-btn primary" id="again">Annotate more</button>
+      <button class="an-btn" id="download">Download this session (JSON)</button>
+      <span class="an-status" id="sumsave"></span>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  const CFG = Object.assign({endpoint: "", secret: "", sizes: [5, 10, 15, 20]}, window.GS_ANNOTATION || {});
+  const VERDICTS = [
+    {id: "YES", key: "1", text: 'the read-out captures a NON-TRIVIAL aspect of the target sub-task (marked in <span class="blue">blue</span>).'},
+    {id: "NO", key: "2", text: "the read-out is coherent about one specific thing UNRELATED to the target sub-task."},
+    {id: "NO_INFO", key: "3", text: "the read-out doesn't say anything specific, e.g., “doing the next step” or “counting”."},
+    {id: "MALFORMED", key: "4", text: "not a coherent English sentence: pure punctuation, gibberish, or a short repeated cycle of words."},
+  ];
+  const KEY = "gs-annotation-v1";
+  const $ = id => document.getElementById(id);
+  const esc = s => (s == null ? "" : String(s)).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const rid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+
+  // ── local store (try/catch: private windows can throw) ──
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+  const ADJ = ["plucky", "brisk", "curious", "dapper", "eager", "gentle", "jolly", "keen", "lucky", "mellow", "nimble",
+               "quiet", "rapid", "sly", "spry", "sunny", "tidy", "witty", "zesty", "bold", "calm", "fuzzy", "merry", "proud"];
+  const ANIMAL = ["puffin", "otter", "heron", "lynx", "badger", "gecko", "marten", "osprey", "quokka", "walrus", "wombat",
+                  "ibis", "koala", "lemur", "newt", "okapi", "panda", "raven", "tapir", "yak", "finch", "moose", "orca", "stoat"];
+  const pickOne = a => a[Math.floor(Math.random() * a.length)];
+  // a random pseudonym + id for this browser; nothing about the person is asked for or stored
+  const store = Object.assign({uid: rid(), user: `${pickOne(ADJ)} ${pickOne(ANIMAL)}`, seen: {}, sessions: [], outbox: [],
+                               current: null}, load());
+  if (!store.user) store.user = `${pickOne(ADJ)} ${pickOne(ANIMAL)}`;
+  save();
+
+  // ── server (Google Apps Script web app); text/plain avoids a CORS preflight ──
+  async function post(payload) {
+    if (!CFG.endpoint) return false;
+    try {
+      const r = await fetch(CFG.endpoint, {method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"},
+                                           body: JSON.stringify(Object.assign({secret: CFG.secret}, payload))});
+      const j = await r.json(); return !!j.ok;
+    } catch (e) { return false; }
+  }
+  async function send(payload) {                  // send now; keep it in the outbox until the server accepts it
+    store.outbox.push(payload); save();
+    await flush();
+  }
+  let flushing = false;
+  async function flush() {
+    if (!CFG.endpoint || flushing) return; flushing = true;
+    while (store.outbox.length) {
+      if (!(await post(store.outbox[0]))) break;
+      store.outbox.shift(); save();
+    }
+    flushing = false;
+    const n = store.outbox.length;
+    $("saveinfo").textContent = n ? `${n} answer(s) not yet saved to the server; will retry.` : (CFG.endpoint ? "Saved." : "");
+    $("saveinfo").classList.toggle("err", n > 0);
+  }
+  async function seenOnServer() {
+    if (!CFG.endpoint) return [];
+    try {
+      const u = new URL(CFG.endpoint);
+      u.searchParams.set("action", "seen"); u.searchParams.set("uid", store.uid);
+      if (CFG.secret) u.searchParams.set("secret", CFG.secret);
+      const j = await (await fetch(u)).json(); return j.ok ? j.specs : [];
+    } catch (e) { return []; }
+  }
+
+  // ── data ──
+  let items = [], bySpec = {}, meta = null, specCache = {};
+  const specData = s => specCache[s] || (specCache[s] = fetch(`demos/data/faithfulness/${encodeURIComponent(s)}.json`).then(r => r.json()));
+
+  // ── start screen ──
+  let size = CFG.sizes.includes(10) ? 10 : CFG.sizes[0];
+  $("defs").innerHTML = VERDICTS.map(v => `<li><b>${v.id}</b> ${v.text}</li>`).join("");
+  $("sizes").innerHTML = CFG.sizes.map(n => `<button class="an-size${n === size ? " sel" : ""}" data-n="${n}">${n}</button>`).join("");
+  $("sizes").addEventListener("click", e => {
+    const b = e.target.closest(".an-size"); if (!b) return;
+    size = +b.dataset.n; document.querySelectorAll(".an-size").forEach(x => x.classList.toggle("sel", x === b));
+  });
+  $("pseudo").textContent = store.user;
+  $("storageinfo").textContent = CFG.endpoint
+    ? "Your answers and comments are saved to the study's spreadsheet as you go."
+    : "Note: no server is configured, so answers stay in this browser; download them as JSON at the end.";
+
+  fetch("demos/data/annotation/items.json").then(r => r.json()).then(d => {
+    meta = d.meta; items = d.items;
+    items.forEach(it => (bySpec[it.spec] = bySpec[it.spec] || []).push(it));
+    $("go").disabled = false;
+    if (store.current && store.current.idx < store.current.items.length) {
+      $("startinfo").innerHTML = `You have an unfinished session (${store.current.idx}/${store.current.items.length}). ` +
+        `<a href="#" id="resume">Resume it</a>.`;
+      $("resume").addEventListener("click", e => { e.preventDefault(); begin(store.current); });
+    }
+    flush();
+  });
+
+  $("go").addEventListener("click", async () => {
+    const user = store.user;
+    $("go").disabled = true; $("startinfo").textContent = "Picking read-outs…";
+    const seen = new Set(Object.keys(store.seen).concat(await seenOnServer()));
+    const pool = Object.keys(bySpec).filter(s => !seen.has(s));
+    if (!pool.length) { $("startinfo").textContent = "You have labeled every task already. Thank you!"; return; }
+    for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+    const picked = pool.slice(0, size).map(s => { const c = bySpec[s]; return c[Math.floor(Math.random() * c.length)].id; });
+    const sess = {session_id: rid(), user, uid: store.uid, n: picked.length, started_at: new Date().toISOString(),
+                  items: picked, idx: 0, answers: []};
+    if (picked.length < size) $("startinfo").textContent = `Only ${picked.length} unlabeled tasks left for you.`;
+    store.current = sess; save();
+    begin(sess);
+  });
+
+  // ── item screen ──
+  const itemById = id => items.find(i => i.id === id);
+  let cur = null, shownAt = 0, verdictAt = 0, chosen = null;
+  function begin(sess) { cur = sess; show("item"); next(); }
+  function show(id) { ["start", "item", "summary"].forEach(s => $(s).classList.toggle("hidden", s !== id)); $("progress").classList.toggle("hidden", id !== "item"); scrollTo(0, 0); }
+
+  function codeHTML(d, pivot) {
+    let h = "";
+    d.code.forEach(seg => {
+      if (seg.pivot !== pivot) { h += esc(seg.text); return; }
+      const nl = seg.text.endsWith("\n"), body = nl ? seg.text.slice(0, -1) : seg.text;
+      h += `<span class="piv" title="the read-out was taken here">${esc(body)}${nl ? '<span class="nl">↵</span>' : ""}</span>${nl ? "\n" : ""}`;
+    });
+    const r = d.rollout, k = r.indexOf("\n"), front = k < 0 ? r : r.slice(0, k), rest = k < 0 ? "" : r.slice(k);
+    return h + `<span class="front">${esc(front)}</span><span class="rest">${esc(rest)}</span>`;
+  }
+  function taskHTML(d) {
+    return esc(d.user.trim()).split("\n").map(line => {
+      const m = line.match(/^\((\d+)\)\s*(.*)$/);
+      return m && m[2].trim() === d.condition.trim() ? `<span class="tgt">${line}</span>` : line;
+    }).join("\n");
+  }
+
+  async function next() {
+    if (cur.idx >= cur.items.length) return finish();
+    const it = itemById(cur.items[cur.idx]);
+    $("ptext").textContent = `${cur.idx + 1} / ${cur.items.length}`;
+    $("pbar").style.width = `${100 * cur.idx / cur.items.length}%`;
+    const d = await specData(it.spec);
+    $("task").innerHTML = taskHTML(d);
+    $("code").innerHTML = codeHTML(d, it.pivot);
+    $("readout").textContent = (it.readout || "").trim() || "(empty)";
+    $("qtarget").textContent = it.condition;
+    chosen = null;
+    $("opts").innerHTML = VERDICTS.map(v => `<button class="an-opt" data-v="${v.id}"><kbd>${v.key}</kbd><b>${v.id}</b><small>${v.text}</small></button>`).join("");
+    $("commentbox").classList.add("hidden"); $("comment").value = "";
+    shownAt = performance.now(); scrollTo(0, 0);
+  }
+  function pick(v) {
+    if (!chosen) verdictAt = performance.now();         // time of the FIRST choice (changing it later is allowed)
+    chosen = v;
+    document.querySelectorAll(".an-opt").forEach(b => b.classList.toggle("sel", b.dataset.v === v));
+    $("commentbox").classList.remove("hidden"); $("comment").focus();
+  }
+  $("opts").addEventListener("click", e => { const b = e.target.closest(".an-opt"); if (b) pick(b.dataset.v); });
+
+  function answer(withComment) {
+    if (!chosen) return;
+    const it = itemById(cur.items[cur.idx]);
+    const now = performance.now();
+    const a = {session_id: cur.session_id, user: cur.user, uid: cur.uid, index: cur.idx + 1, n: cur.items.length,
+               item_id: it.id, spec: it.spec, pivot: it.pivot, frontier_id: it.frontier_id, readout: it.readout,
+               verdict: chosen, comment: withComment ? $("comment").value.trim() : "",
+               ms_to_verdict: Math.round(verdictAt - shownAt), ms_total: Math.round(now - shownAt),
+               claude: it.claude, gpt: it.gpt, answered_at: new Date().toISOString()};
+    cur.answers.push(a); cur.idx++;
+    store.seen[it.spec] = 1;
+    store.current = cur; save();
+    send({type: "response", response: a});
+    next();
+  }
+  $("submit").addEventListener("click", () => answer(true));
+  $("skip").addEventListener("click", () => answer(false));
+  document.addEventListener("keydown", e => {
+    if ($("item").classList.contains("hidden")) return;
+    const typing = document.activeElement === $("comment");
+    if (!typing && /^[1-4]$/.test(e.key)) { pick(VERDICTS[+e.key - 1].id); e.preventDefault(); return; }
+    if (!chosen) return;
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); answer(true); }
+    else if (e.key === "Escape") { e.preventDefault(); answer(false); }
+  });
+
+  // ── summary ──
+  function stats(ans, judge) {
+    const s = ans.filter(a => a[judge]);
+    const exact = s.filter(a => a.verdict === a[judge]).length;
+    const yes = s.filter(a => (a.verdict === "YES") === (a[judge] === "YES")).length;
+    return {n: s.length, exact, yes};
+  }
+  function finish() {
+    const ans = cur.answers, c = stats(ans, "claude"), g = stats(ans, "gpt");
+    const counts = {}; VERDICTS.forEach(v => counts[v.id] = ans.filter(a => a.verdict === v.id).length);
+    const pct = (k, n) => n ? `${Math.round(100 * k / n)}%` : "—";
+    const sess = {session_id: cur.session_id, user: cur.user, uid: cur.uid, n: ans.length, started_at: cur.started_at,
+                  finished_at: new Date().toISOString(), counts,
+                  agree_claude: c.n ? c.exact / c.n : null, agree_gpt: g.n ? g.exact / g.n : null,
+                  agree_yes_claude: c.n ? c.yes / c.n : null, agree_yes_gpt: g.n ? g.yes / g.n : null, answers: ans};
+    store.sessions.push(sess); store.current = null; save();
+    send({type: "session", session: Object.assign({}, sess)});
+    show("summary");
+    $("sumintro").innerHTML = `You labeled ${ans.length} read-out${ans.length === 1 ? "" : "s"}: ` +
+      VERDICTS.map(v => `<span class="v ${v.id}">${v.id}</span> ${counts[v.id]}`).join(" &nbsp; ") + ".";
+    $("agree").innerHTML = [
+      ["Claude Sonnet 4.6", c], ["GPT-5", g]].map(([name, s]) =>
+      `<div class="an-stat"><div class="big">${pct(s.exact, s.n)}</div><div class="lbl">agreement with ${name} (same verdict, ${s.exact}/${s.n})</div>` +
+      `<div class="lbl" style="margin-top:4px">YES vs. not-YES: ${pct(s.yes, s.n)} (${s.yes}/${s.n})</div></div>`).join("");
+    $("sumrows").innerHTML = ans.map(a => {
+      const it = itemById(a.item_id);
+      const pill = (v, mine, who) => !v ? "—" : who
+        ? `<button class="v ${v}${mine && v !== a.verdict ? " diff" : ""} why-btn" data-row="${a.index}" data-who="${who}" aria-expanded="false" title="show the judge's reasoning">${v} <span class="car">▸</span></button>`
+        : `<span class="v ${v}">${v}</span>`;
+      return `<tr><td>${a.index}</td><td>${esc(it.condition)}</td><td class="ro">“${esc((a.readout || "").trim().slice(0, 220))}${(a.readout || "").length > 220 ? "…" : ""}”</td>` +
+             `<td>${pill(a.verdict)}</td><td>${pill(a.claude, true, "claude")}</td><td>${pill(a.gpt, true, "gpt")}</td></tr>` +
+             `<tr class="why-row hidden" id="why-${a.index}"><td></td><td colspan="5"><div class="why-box"></div></td></tr>`;
+    }).join("");
+    document.querySelectorAll(".why-btn").forEach(b => b.addEventListener("click", () => {
+      const a = ans[+b.dataset.row - 1], it = itemById(a.item_id), who = b.dataset.who;
+      const row = $(`why-${a.index}`), box = row.querySelector(".why-box");
+      const open = !(row.classList.contains("hidden") === false && box.dataset.who === who);
+      document.querySelectorAll(`.why-btn[data-row="${a.index}"]`).forEach(x => x.setAttribute("aria-expanded", "false"));
+      row.classList.toggle("hidden", !open);
+      if (!open) return;
+      b.setAttribute("aria-expanded", "true"); box.dataset.who = who;
+      const name = who === "claude" ? "Claude Sonnet 4.6" : "GPT-5";
+      box.innerHTML = `<b>${name}:</b> ${esc(it[who + "_why"] || "No reasoning recorded for this read-out.")}` +
+        `<div class="why-src">Judged against the target line <code>${esc(it.impl_span || "")}</code>.</div>`;
+    }));
+    $("sumsave").textContent = CFG.endpoint ? "" : "No server configured: download the JSON to keep these answers.";
+    $("download").onclick = () => {
+      const b = new Blob([JSON.stringify(sess, null, 1)], {type: "application/json"});
+      const a = document.createElement("a"); a.href = URL.createObjectURL(b);
+      a.download = `goalscope-annotation-${cur.user.replace(/\s+/g, "-")}-${sess.finished_at.slice(0, 10)}.json`; a.click();
+    };
+  }
+  $("again").addEventListener("click", () => { show("start"); $("go").disabled = false; $("startinfo").textContent = ""; });
+})();
+</script>
+</body>
+</html>
