@@ -49,7 +49,7 @@
     <div class="sb-footer">
       <b>How to read:</b> the prompt (lighter) lists input→output pairs and never states its rule. The <b>A:</b> tokens of the last three demonstrations
       and every token the model generates carry a read-out of the goal heads at that position, judged against the rule. <b>Click</b>
-      to pin / unpin, hover to preview. The percentage is the task's judged verbalization rate over its prompts.
+      to pin / unpin, hover to preview. The percentage is the task's verbalization rate reported in the paper.
     </div>
   </aside>
 
@@ -76,9 +76,9 @@
         that all follow the same hidden rule. In one short phrase, what task are you performing?</span>”) and lets the model
         answer. The <b>A</b> and <b>:</b> tokens of the last three demonstrations and of the query, and every token of the
         model's own generation (five rounds: its answer, then four question–answer pairs it continues with), are read
-        out; the rest of the prompt is context only. An LM judge compares each read-out with the task's rule. The
-        percentage is the judged rate at the <b>A</b> tokens (last three demonstrations, the query and every generated
-        round) over 20 prompts per task.
+        out; the rest of the prompt is context only. An LM judge (Claude Sonnet 4.6) compares each read-out with the
+        task's rule. The percentage is the rate reported in the paper (App. L.2.1): the judged rate at the <b>A</b> token
+        of the last three demonstrations, over 20 prompts per task (60 read-outs).
       </p>
     </div>
   </main>
@@ -118,7 +118,7 @@
       $("cat").textContent = CAT[d.category] || d.category;
       $("meter").innerHTML = d.accuracy == null ? "" :
         `<span class="track"><span class="fill" style="display:block;width:${Math.round(d.accuracy * 100)}%"></span></span>` +
-        `${Math.round(d.accuracy * 100)}% of this task's prompts verbalized`;
+        `${Math.round(d.accuracy * 100)}% of read-outs verbalize the rule (paper)`;
       const n = tasks[task].length;
       $("pnav").classList.toggle("pg-hidden", n < 2); $("pidx").textContent = `prompt ${curIdx + 1} / ${n}`;
       const ph = d.meta && d.meta.placeholder;
