@@ -142,8 +142,8 @@
         <a href="#" class="soon" title="coming soon">
           <img src="images/paper-thumb.png" alt="Paper thumbnail"><br>Paper<br><small>coming soon</small>
         </a>
-        <a href="#" class="soon" title="coming soon">
-          <img src="images/code-thumb.svg" alt="Code thumbnail"><br>Source Code<br><small>coming soon</small>
+        <a href="https://github.com/arnab-api/goals">
+          <img src="images/code-thumb.svg" alt="Code thumbnail"><br>Source<br>Code
         </a>
         <a href="demo/index.html">
           <img src="images/demo-thumb.svg" alt="Interactive demo thumbnail"><br>GoalScope<br>Demo
@@ -160,11 +160,12 @@
         <p>
           Language models now carry out tasks that unfold over thousands of tokens, and they behave
           <i>as if</i> they were pursuing a goal. We ask whether that behavior is backed by an explicit goal
-          representation inside the model. We fix three functional criteria up front, find an encoding in a sparse
-          set of attention heads that meets them, and then ask how a depth-bounded transformer manages to keep such
-          a goal alive across a long generation.
+          encoding inside the model&rsquo;s computations. We fix three criteria that functionally define a goal:
+          (i) pre-commitment, (ii) plasticity, and (iii) persistence. We find an encoding that meets these criteria
+          in the outputs of a sparse set of attention heads. We further ask how a depth-bounded transformer manages to keep such
+          a goal alive across a long generation without running out of layers.
         </p>
-        <ul class="tldr">
+        <!-- <ul class="tldr">
           <li><b>A goal you can read out before the model acts.</b> The <i>goal heads</i> encode the upcoming
             sub-goal several tokens before its implementation starts; GoalScope turns that encoding into plain English, and
             transplanting it into C++ triggers the same operation.</li>
@@ -173,11 +174,11 @@
             to a different sub-goal.</li>
           <li><b>Beyond code.</b> The same heads, found on code, verbalize implicit rules in few-shot ICL and
             the intentions of an emergently misaligned chat model.</li>
-        </ul>
+        </ul> -->
       </div>
     </div>
 
-    <div class="card tryit">
+    <!-- <div class="card tryit">
       <div class="card-body">
         <div class="tryit-text">
           <h3>Try it yourself</h3>
@@ -195,14 +196,13 @@
           <div class="bubble">&ldquo;I am counting unique words&hellip;&rdquo;</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- ===================================================================== 1. criteria + GoalScope -->
     <section class="takeaway" id="goalscope">
-      <h2>Is there a goal? We fix the criteria first</h2>
+      <h2>What is a goal?</h2>
       <p>
-        Following Bratman&rsquo;s planning theory, we treat a goal as a <i>functional</i> state rather than
-        something a model says it has. An encoding counts as a goal if it has three properties:
+        Inspired by <a href="https://press.uchicago.edu/ucp/books/book/distributed/I/bo3629095.html">Bratman&rsquo;s planning theory</a>, we treat a goal as a <i>functional</i> state with the three properties below.
       </p>
       <div class="criteria">
         <div class="crit crit-pre">
@@ -359,32 +359,28 @@
         </div>
       </div>
       <p>
-        We test for these in multi-step coding tasks: the prompt lists several sub-tasks, and we prefill the
-        code up to the point where a good model should start the next one (the <i>frontier</i>). Contrastive
-        activation patching across programming languages localizes the frontier in the outputs of a sparse set of
-        <b>goal heads</b>. <b>GoalScope</b> reads what these heads write at a single token, either by asking the
-        model in a neutral context &ldquo;what are you doing on this line?&rdquo; or by steering an empty C++
-        stub.
+        In the LM&rsquo;s computations, we look for these criteria in a controlled setup with multi-step coding tasks:
+        the prompt lists several sub-tasks, and we prefill the code up to the point where a good model should start the next one (the <i>frontier</i>).
+        In this setup, we find an encoding that meets all three criteria in the outputs of a sparse set of attention heads.
+        <br>
+        When we transplant the collective encoding of these heads into a neutral probe, the LM can verbalize the upcoming action in natural language and implement it in a different programming language. See the figure below, and <a class="demo-cta" href="demo/index.html">browse the demo readouts &rarr;</a>
       </p>
       <figure class="center_image">
         <img src="images/goalscope.svg" alt="GoalScope schema and readout results">
         <figcaption>
           <b>GoalScope.</b> (a) The goal heads&rsquo; outputs at one token form the encoding <i>v<sub>g</sub></i>.
-          (b) It is injected into a neutral probe: (c.1) asked to describe what it is doing, the model verbalizes the
-          sub-goal; (c.2) in a C++ stub, it implements it. Right: faithfulness and causality at four pivot tokens,
-          with same-strength baselines.
+          (b) We plant this encoding into a neutral probe: (c.1) asked to describe what it is doing, the model verbalizes the
+          next action; and (c.2) in an information-less C++ stub, the LM implements the same sub-goal with a different sequence of tokens. <br><b>Right</b>: faithfulness (c.1) and causality (c.2) at four pre-implementation token positions.
         </figcaption>
       </figure>
       <ul class="findings">
-        <li><span class="tag tag-pre">pre-commitment</span> The sub-goal is verbalized correctly
-          <b>94%</b> of the time at the indent, <b>three tokens before</b> any of its code is written.</li>
-        <li><span class="tag tag-pla">plasticity</span> The encoding taken from Python, injected into a C++
-          stub, makes the model implement the same operation in C++ (<b>0.75</b> on average).</li>
+        <li><span class="tag tag-pre">pre-commitment</span> The LM&rsquo;s next action becomes decodable well before the LM starts implementing it. At the <code>indent</code> token, three tokens before the LM writes the corresponding code, GoalScope can read out the next action in natural language with <b>94%</b> accuracy.</li>
+        <li><span class="tag tag-pla">plasticity</span> When this encoding, cached from a Python context, is transplanted into an information-less C++ code stub, the LM implements the same action in C++, with different libraries, coding syntax, and variables.</li>
+
         <li class="finding-more">
           <details>
-            <summary><span class="tag tag-per">persistence</span> The encoding stays similar to the
-              pivot&rsquo;s throughout the implementation, also across languages, and fades once the sub-goal is
-              complete. <span class="ins-refs">&sect;3.4 &middot; Fig.&nbsp;3</span></summary>
+            <summary><span class="tag tag-per">persistence</span> The code implementation of a sub-goal can take many tokens. Throughout this implementation, the LM keeps the sub-goal encoding alive in the same attention heads that first formed it.
+            </summary>
             <figure class="fig-side">
               <img loading="lazy" src="images/persistence.svg"
                    alt="Cosine similarity between the pivot's goal-head encoding and the encoding later in the implementation">
@@ -392,35 +388,34 @@
                 <b>Temporal persistence of the sub-goal encoding.</b> Cosine similarity between a sub-goal&rsquo;s
                 goal-head encoding at the <code>=</code> token and the encoding sampled <i>x</i>% of the way
                 through its implementation, averaged over data types and languages. Encodings of the
-                <span class="c-same">same sub-goal</span> (teal) stay well above those of a
-                <span class="c-diff">different sub-goal</span> (orange) all the way through, whether the
-                implementation is in the same language (solid) or another one (dashed): the sub-goal encoding
-                persists until the model finishes implementing it.
+                <span class="c-same">same sub-goal</span> stay well above those of a
+                <span class="c-diff">different sub-goal</span> all the way through, whether the
+                implementation is in the same programming language (solid) or a different one (dashed). The encoding is sustained throughout the implementation, and fades away at the end, when the LM is ready to move on to the next one.
               </figcaption>
             </figure>
           </details>
         </li>
       </ul>
-      <a class="demo-cta" href="demo/index.html">Browse GoalScope readouts in the demo &rarr;</a>
     </section>
 
     <!-- ===================================================================== 2. NRGS -->
     <section class="takeaway" id="persistence">
-      <h2>How is persistence achieved? By re-reading the goal, not by holding it</h2>
+      <h2>How does a depth-bounded transformer LM achieve persistence?</h2>
       <p>
-        A transformer cannot literally carry a state forward: every attention read costs a layer. An encoding
-        formed at layer 40 of a 64-layer model has only 24 layers left to pass it on, yet we see goals sustained
-        well beyond that. We propose a <b>non-recurrent goal-seeking</b> account (NRGS): at each step the model
-        <i>re-reads</i> the goal from the task specification, compares it with the progress made so far, and takes
-        the next step towards whatever is still pending. NRGS makes concrete predictions, and we test each one with
-        a targeted intervention.
+        The only way a transformer LM can pool information from a previous token is through the attention mechanism, which costs a layer.
+        If the LM were to carry a running encoding of the goal from one token to the next, it would have only a limited number of layers to do so.
+        As an example, an encoding formed at layer 40 of a 64-layer model has only 24 layers left to pass it on, yet we see goals sustained
+        well beyond that limit.<br>
+        We find that instead of carrying a goal-encoding forward, the LM frequently <b>re-reads</b> the goal from the task specification.
+        Then the LM decides the next action by comparing the re-fetched goal with the progress made so far.
+        We call this the <b>non-recurrent goal-seeking</b> account (NRGS) of how the transformer LM achieves persistence.
       </p>
       <figure class="center_image nrgs-fig">
         <img id="nrgs-img" src="images/teaser.svg" data-still="images/teaser.svg" data-anim="images/nrgs-steps.gif"
-             alt="Goal pursuit and its non-recurrent implementation in a transformer LM">
+             alt="Non-recurrent implementation of goal-pursuit in a transformer LM">
         <button type="button" class="anim-btn" id="nrgs-btn" aria-pressed="false">&#9654; Step through it</button>
         <figcaption>
-          <b>Goal pursuit and its non-recurrent implementation in a transformer LM.</b>
+          <b>Non-recurrent implementation of goal-pursuit in a transformer LM.</b>
           A goal such as implementing merge sort decomposes into sub-goals, each realized as a sequence of tokens.
           (i) An idealized agent forms an intention, acts on it until it is done, and moves on. (ii) A transformer
           cannot carry that commitment forward through a fixed number of layers, so at each step it re-reads the
@@ -442,28 +437,10 @@
         <details class="insight">
           <summary>
             <span class="ins-title">The goal is frequently re-read from the task specification.</span>
-            <span class="ins-brief">At a token, we can change what the goal heads read by swapping their
-              key/value states over the task span, and the LM changes its behavior accordingly.</span>
+            <span class="ins-brief">When we swap the key-value states that the goal heads read from at a token, while the LM is in the middle of implementing a specific goal, the LM is redirected to implement the next action of the transplanted goal.</span>
             <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span>
           </summary>
           <div class="sub-insights">
-            <details class="sub-insight">
-              <summary><b>The task span, not the code progress, dictates the LM&rsquo;s next operation.</b>
-                Transplanting the task span redirects the model; transplanting the code written so far barely
-                does, even though GoalScope can read the sub-goal out of it.
-                <span class="ins-refs">App.&nbsp;J &middot; Fig.&nbsp;27</span></summary>
-              <figure class="center_image">
-                <img loading="lazy" src="images/nrgs-task_vs_progress.svg"
-                     alt="Transplanting the task span vs. the code-progress span from a source run into a destination run">
-                <figcaption>
-                  <b>Task span vs. code progress.</b> The two prompts share the first two sub-tasks, whose code is
-                  prefilled (underlined), and differ only in the third. In the patched run we transplant the
-                  residual states of the source&rsquo;s task span, its code-progress span, or both, and keep the
-                  destination&rsquo;s states for everything else before the <code>=</code> pivot. Right: how often
-                  the model then implements the source&rsquo;s third sub-task.
-                </figcaption>
-              </figure>
-            </details>
             <details class="sub-insight">
               <summary><b>The same computational motif, implemented by the goal heads, works at different levels of
                 the hierarchy.</b> The same KV swap redirects a sub-sub-goal, a sub-goal, and the broader goal itself.
@@ -479,19 +456,16 @@
                 <figcaption>
                   <b>Goal</b> (Fig.&nbsp;24). The prompts name only the algorithm. Swapping the goal heads&rsquo;
                   view of &ldquo;merge sort&rdquo; into a C++ quick-sort prompt makes the model write a merge sort
-                  in C++, and GoalScope describes merging.
+                  in C++.
                 </figcaption>
               </figure>
               <figure class="center_image level-panel" data-level="sub_goal">
                 <img loading="lazy" src="images/nrgs-sub_goal.svg"
                      alt="KV transfer of a sub-goal from a C++ prompt into a Python prompt, and the swapped rows of one goal head's KV cache">
                 <figcaption>
-                  <b>Sub-goal</b> (Fig.&nbsp;5). At the <code>=</code> pivot the goal heads read the source&rsquo;s
+                  <b>Sub-goal</b> (Fig.&nbsp;5). At the <code>" ="</code> pivot the goal heads read the source&rsquo;s
                   task span (red) instead of the destination&rsquo;s (green). The model implements the source
-                  sub-goal, written in the destination&rsquo;s language, and the GoalScope readout flips with it.
-                  Right: the intervention inside one goal head. In its KV cache, the keys and values of the
-                  task-span rows are replaced with the source run&rsquo;s, and the query at <code>=</code> reads
-                  the swapped rows; every other row, and every other head, is left as is.
+                  next action, in the destination&rsquo;s language. The GoalScope readout also flips with it.
                 </figcaption>
               </figure>
               <figure class="center_image level-panel" data-level="sub_sub_goal" hidden>
@@ -499,8 +473,23 @@
                      alt="KV transfer of a sub-sub-goal: the second condition of a filter">
                 <figcaption>
                   <b>Sub-sub-goal</b> (Fig.&nbsp;23). The sub-task has two conditions. At the <code>and</code>
-                  between them, the same swap changes the second condition from &ldquo;is a palindrome&rdquo; to the
-                  source&rsquo;s &ldquo;ends with a digit&rdquo;.
+                  between them, the same swap triggers the LM to implement the source&rsquo;s next <i>sub</i>-sub-goal &ldquo;ends with a digit&rdquo; in the destination&rsquo;s programming language (C++).
+                </figcaption>
+              </figure>
+            </details>
+            <details class="sub-insight">
+              <summary><b>The task span, not the code progress, dictates the LM&rsquo;s next operation.</b>
+                The next action is <i>pre-committed</i> in the earlier generated code. The goal can be read out via GoalScope, and transplanting it into a different environment (C++) can trigger its execution. However, we find that the LM largely ignores this pre-commitment and instead re-reads the goal from the task span to decide the next operation.
+                <span class="ins-refs">App.&nbsp;J &middot; Fig.&nbsp;27</span></summary>
+              <figure class="center_image">
+                <img loading="lazy" src="images/nrgs-task_vs_progress.svg"
+                     alt="Transplanting the task span vs. the code-progress span from a source run into a destination run">
+                <figcaption>
+                  <b>Task span vs. code progress.</b> The two prompts share the first two sub-tasks, whose code is
+                  prefilled in the prompt (underlined), and differ only in the third. In the patched run we transplant the
+                  residual states of the source&rsquo;s task span, its code-progress span, or both, and keep the
+                  destination&rsquo;s states for everything else before the <code>" ="</code> pivot. Right: how often
+                  the model then implements the source&rsquo;s next sub-task.
                 </figcaption>
               </figure>
             </details>
@@ -521,8 +510,7 @@
           <summary>
             <span class="ins-title">The next operation is chosen with a mix of different computations.</span>
             <span class="ins-brief">The goal heads&rsquo; queries carry part of the &ldquo;what is already
-              done&rdquo; signal: transferring them can move the model to a different pending sub-goal, but no
-              single selection rule explains every case.</span>
+              done&rdquo; signal. Transferring them can redirect the model to implement the next sub-goal in the destination list that hasn't been completed in the source prompt yet. However, this explains only 57% of the cases in our evaluation set. Through targeted interventions, we find non-trivial evidence for other potential computations, such as the order of the tasks and the number of completed tasks, that also participate in selecting the next action.</span>
             <span class="ins-refs">&sect;5.1.2 &middot; App.&nbsp;I.2</span>
           </summary>
           <div class="ins-body">
@@ -531,7 +519,7 @@
                    alt="Query transfer: swapping only the goal heads' query at the pivot, and the effect of the source frontier's position">
               <figcaption>
                 <b>Query transfer.</b> Left: the source has done <i>a</i> and <i>b</i>, the destination only
-                <i>a</i>. At the <code>=</code> pivot we swap in only the goal heads&rsquo; <i>query</i> from the
+                <i>a</i>. At the <code>" ="</code> pivot we swap in only the goal heads&rsquo; <i>query</i> from the
                 source run, the side that should carry &ldquo;what is already done&rdquo;. The patched model skips
                 ahead to the destination&rsquo;s third task. Right: the swap works much better when the source
                 frontier sits at the same position in its task list as the patched target (order-matched) than
@@ -545,15 +533,15 @@
 
     <!-- ===================================================================== 3. beyond code -->
     <section class="takeaway" id="beyond-code">
-      <h2>Does it work beyond code?</h2>
+      <h2>Can GoalScope read out the LM&rsquo;s next action beyond code?</h2>
       <p>
         The goal heads were found on code, but GoalScope reads intentions elsewhere too, with no re-training.
       </p>
       <figure class="center_image">
         <img src="images/beyond-code.svg" alt="GoalScope readouts in few-shot ICL and in an emergently misaligned model">
         <figcaption>
-          <b>GoalScope beyond code.</b> Left: readouts of the implicit rule in few-shot ICL. Right: the emergently
-          misaligned model&rsquo;s readouts at the start of its (harmless-looking) response.
+          <b>GoalScope beyond code.</b> Left: GoalScope can read out the implicit rule in few-shot ICL prompts. Right: the emergently
+          misaligned model&rsquo;s readouts at the start of its response.
         </figcaption>
       </figure>
       <p>
@@ -564,13 +552,15 @@
 
     <!-- ===================================================================== wrap-up -->
     <section class="takeaway wrap" id="verdict">
-      <h2>So, do LLMs have goals?</h2>
+      <h2>Is "goal" the right term for this encoding?</h2>
       <p>
-        By our criteria, the encoding is <b>pre-committed</b> (readable before the action) and <b>plastic</b>
-        (portable to another language). It is also <b>persistent</b>, but through frequent re-derivation rather
-        than a single running state. Whether that counts depends on what persistence requires: if a goal must be
-        one state that survives the whole action, these models do not qualify; if a goal can be stored and
-        retrieved at each step, like an agent that consults its plan, they do.
+        By our criteria, the encoding is <b>pre-committed</b> (decodable before the action) and <b>plastic</b>
+        (portable to another environment). It is also <b>persistent</b>, but through frequent re-derivation rather
+        than a single running state. Whether that counts as a "goal" depends on whether there is a requirement on
+        the mechanical implementation of persistence: if a goal must be a single state that survives the whole action,
+        then this encoding does not qualify. But if we don&rsquo;t care about the implementation, and only care whether the goal
+        is present during the action, then this encoding qualifies. We leave the semantics of whether
+        this is a &ldquo;goal&rdquo; or not to the reader.
       </p>
     </section>
 

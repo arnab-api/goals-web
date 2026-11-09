@@ -29,7 +29,7 @@ images:
 	pdftoppm -png -r 40 -f 1 -l 1 -singlefile $(OVERLEAF)/main.pdf public/images/paper-thumb
 	pdftocairo -svg $(OVERLEAF)/Figures/figure1.pdf public/images/teaser.svg
 	pdftocairo -svg $(OVERLEAF)/Figures/goalscope/goalscope-schema-eval-crop.pdf public/images/goalscope.svg
-	pdftocairo -svg $(OVERLEAF)/Figures/appendix/goals-icl-em-main_updated-crop.pdf public/images/beyond-code.svg
+	pdftocairo -svg $(OVERLEAF)/Figures/appendix/goals-icl-em-main-v2.pdf public/images/beyond-code.svg
 
 # LibreOffice's PDF export skips hidden slides, so the site shows exactly the visible deck.
 slides:
