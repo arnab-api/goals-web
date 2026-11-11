@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if the first character of `s` (i.e., `s[0]`) is uppercase using `.isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return is_same_v<decltype(value), bool> ? value : false;  \n}  \n\nauto func2 (auto value){  \n    return is_integral_v<decltype(value)> && value;  \n}  \n\nauto func3 (auto value){  \n    return is_integral_v<decltype(value)> && value > 0;  \n",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if a else False",
+    "reasoning": "The Python code checks if the first character of a string is uppercase (conditionally, based on `a`). The C++ completion deals with type checking (bool, integral types) and boolean/conditional logic, but doesn't mention anything about uppercase checking, string characters, or the conditional structure involving `a`. The type-checking content is completely unrelated to the actual operation being performed.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if the first character of string `s` is uppercase using `isupper()`, which is exactly what the description states. The conditional `if a else False` part is not mentioned but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isupper(value[0]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if a else False",
+    "reasoning": "The C++ completion checks if the first character of a string is uppercase using `isupper(value[0])`, which directly corresponds to the Python code's `s[0].isupper()` operation. This is clearly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if the first character of string `s` is uppercase using `isupper()`. The conditional `if a else False` is a minor implementation detail not mentioned, but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isupper(value) && isdigit(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if a else False",
+    "reasoning": "The Python code checks if the first character of a string is uppercase (conditionally based on `a`). The C++ completion checks `isupper(value)`, which is directly relevant to the uppercase check being performed. The additional `isdigit` check is wrong, but the core `isupper` operation is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if the first character of string `s` is uppercase using `isupper()`. The conditional `if a else False` part is not mentioned, but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isupper(value[0]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if a else False",
+    "reasoning": "The C++ completion checks if the first character (`value[0]`) is uppercase using `isupper()`, which directly corresponds to what the Python code does with `s[0].isupper()`. This is a clear match to the core operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

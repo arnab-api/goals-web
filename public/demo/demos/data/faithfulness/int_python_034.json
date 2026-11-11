@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if n is positive (n > 0) AND if n is a power of 2 using the bitwise trick (n & (n-1) == 0). The description correctly identifies the \"n > 0\" check (positive number). However, it incorrectly describes the second part as checking if the number is even (divisible by 2), when it's actually checking for power of 2. Despite this wrong specifics, the description does identify one relevant sub-step (the positivity check) and mentions some kind of divisibility check.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\nbool is_positive(int num) { return num > 0; }\nbool is_even(int num) { return num % 2 == 0; }\nint square(int num) { return num * num; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1) == 0)",
+    "reasoning": "The code checks if n is a power of 2 (positive and has exactly one bit set). The C++ completion mentions `is_positive` (checking `num > 0`) which is directly relevant to the `n > 0` part of the check. However, `is_even` checks `num % 2 == 0` which is not the same as the power-of-2 bit trick, and `square` is completely unrelated. Despite the noise, `is_positive` captures a genuine sub-step of the code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is checking if a number is a power of two, which is exactly what `(n > 0) and (n & (n - 1) == 0)` does \u2014 this is the classic bitwise power-of-two check.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value > 0) && ((value & (value - 1)) == 0) && ((value % 3) == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1) == 0)",
+    "reasoning": "The C++ completion correctly implements the core logic of checking if a number is a power of 2: `(value > 0) && ((value & (value - 1)) == 0)`. The extra `&& ((value % 3) == 0)` condition is an irrelevant addition, but the main substance \u2014 the power-of-2 check using the bitwise trick \u2014 is clearly present and correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies the power-of-two check using `(n & (n - 1)) == 0` and the positive check, which matches the code exactly. The mention of perfect square checking is incorrect/extra, but the core operation is accurately described.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value > 0) && ((value & (value - 1)) == 0) && ((value % 3) == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1) == 0)",
+    "reasoning": "The C++ completion correctly implements the core logic of checking if a number is a power of 2: `value > 0` and `value & (value - 1) == 0`. The extra `% 3 == 0` condition is an irrelevant addition, but the main substance is clearly present and correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes checking if a number is a power of two using the exact same bitwise trick `(n > 0) && ((n & (n - 1)) == 0)`, which matches the code precisely.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value > 0) && ((value & (value - 1)) == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1) == 0)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking if a value is positive and a power of two using the bitwise trick `(value & (value - 1)) == 0`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

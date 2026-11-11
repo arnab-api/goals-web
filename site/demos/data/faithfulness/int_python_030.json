@@ -34,7 +34,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description is asking for code to be provided, showing no awareness of what the code actually does. It contains no relevant information about checking if n is a power of 2 (which is what the bitwise operation `n & (n-1) == 0` checks).\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\n\nbool isPowerOfTwo(int n) {\n    return n > 0 && (n & (n - 1)) == 0;\n}\n\nbool isPalindrome(int x) {\n    int original = x;\n    bool isPalin = false;\n    if (x < 0) is",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n & (n - 1)) == 0 and n != 0",
+    "reasoning": "The C++ completion contains `isPowerOfTwo` which checks `n > 0 && (n & (n - 1)) == 0` \u2014 this is exactly the same operation as the Python code (`(n & (n - 1)) == 0 and n != 0`). This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies the exact operation being performed \u2014 checking if a number is a power of two using the bitwise trick `n & (n - 1) == 0`, which matches the code precisely.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value > 0) && ((value & (value - 1)) == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n & (n - 1)) == 0 and n != 0",
+    "reasoning": "The C++ completion checks if a value is a power of 2 using the exact same bit manipulation trick: `(value & (value - 1)) == 0` combined with a positivity check (`value > 0`), which is equivalent to `n != 0` for positive integers. This is essentially identical in substance to the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is checking if a number is a power of two using the bitwise AND operation `n & (n - 1) == 0`, and also mentions the non-zero condition. This is highly relevant and accurate.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_integral_v<decltype(value)> && (value > 0) && ((value & (value - 1)) == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n & (n - 1)) == 0 and n != 0",
+    "reasoning": "The C++ completion checks if a value is a power of 2 using the exact same bit trick `(value & (value - 1)) == 0` combined with a positivity check, which directly corresponds to the Python code checking `(n & (n - 1)) == 0 and n != 0`. The logic is essentially identical.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies the operation (checking if a number is a power of two using bitwise AND), which is exactly what the code does with `n & (n - 1) == 0`. The mention of \"two's complement\" is slightly imprecise (it's `n-1`, not the two's complement), but the core concept is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value > 0) && ((value & (value - 1)) == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n & (n - 1)) == 0 and n != 0",
+    "reasoning": "The C++ completion checks if a value is a power of 2 by verifying `value > 0` and `(value & (value - 1)) == 0`, which is exactly what the Python code does (checking `n != 0` and `(n & (n - 1)) == 0`). This is a near-perfect match in both logic and implementation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

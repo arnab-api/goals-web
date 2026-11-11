@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking for duplicates by comparing list length to set length, which is completely unrelated to what the code does (counting odd numbers in a list using modulo 2).\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    bool hasDuplicate = false;\n    std::unordered_set<typename decltype(value)::value_type> seen;\n    for (const auto& elem : value) {\n        if (!hasDuplicate && seen.insert(elem).second) {\n            hasDuplicate = true;\n        }\n    }\n    return std::make_pair(hasDuplicate",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The Python code counts odd numbers in a list, but the C++ completion is about detecting duplicates using an unordered_set. These are completely unrelated operations - one checks for odd numbers (modulo arithmetic), the other checks for duplicate elements.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting odd numbers in a list, which matches exactly what the code does (summing 1 for each element where x % 2 != 0, i.e., odd numbers).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& elem : value) {  \n        if(elem % 2 != 0) ++count;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it iterates over a collection, checks if each element is odd (`% 2 != 0`), and counts the qualifying elements. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting odd elements in a list, which matches exactly what the code does (summing 1 for each element where x % 2 != 0, i.e., odd numbers).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](int x){ return x % 2 != 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting elements in a collection where `x % 2 != 0` (i.e., odd numbers). The logic is directly equivalent, using `count_if` with the same predicate.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting elements where `x % 2 != 0` is true, which is exactly what the code does (counting odd numbers). The phrase \"non-zero elements\" is slightly imprecise (it should be \"odd elements\"), but the core condition `x % 2 != 0` is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](int x) { return x % 2 != 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting elements in a collection where `x % 2 != 0` (odd numbers). The `count_if` with the lambda `x % 2 != 0` directly mirrors the Python generator expression with the same condition.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

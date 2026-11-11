@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description explicitly mentions \"the number of 1s in the binary representation\" and converting the number to binary using `bin`, which is exactly what the code does (`bin(n).count('1')`). The earlier part about sum of digits is irrelevant noise, but the relevant fragment is clearly present.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(std::to_string(value).begin(), std::to_string(value).end(), 0, [](int a, char c) { return a + c - '0'; }) + std::accumulate(value.begin(), value.end(), 0, [](int a, int b) { return a +",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion is computing the sum of digits of a number (using `accumulate` over the string representation, summing `c - '0'`). The Python code counts the number of '1' bits in the binary representation. While both involve counting/summing something about a number, the C++ completion is summing decimal digits rather than counting binary 1-bits. However, the approach of iterating over a string representation and accumulating a count of characters is conceptually related \u2014 it's doing a character count/sum over a string representation, which is the same general strategy as `bin(n).count('1')`. The specific operation (digit sum vs bit count) differs, but the structural approach is similar enough to be partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes converting a number to binary and counting the 1-bits, which is exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value) + __builtin_popcountll(static_cast<unsigned long long>(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion uses `__builtin_popcount` and `__builtin_popcountll`, which count the number of set bits (1s) in a binary representation \u2014 exactly what the Python code does with `bin(n).count('1')`. This is a direct match in substance, just implemented differently.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting the number of 1s in the binary representation of an integer, which is exactly what the code does using `bin(n).count('1')`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value) + __builtin_popcountll(static_cast<unsigned long long>(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion uses `__builtin_popcount` and `__builtin_popcountll`, which count the number of set bits (1s) in a binary representation \u2014 exactly what `bin(n).count('1')` does in Python. This is directly relevant to counting binary 1s.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting the number of 1s in the binary representation of an integer, which is exactly what `bin(n).count('1')` does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion uses `__builtin_popcount`, which counts the number of set bits (1s) in a binary representation \u2014 exactly what the Python code does with `bin(n).count('1')`. This is a direct and correct match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

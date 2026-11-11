@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description explicitly mentions \"calculating the number of 1-bits (population count) in its binary representation using `bin(x).count('`\" which is exactly what the code does (`bin(n).count('1')`). The earlier part about checking truthiness and even/odd is irrelevant noise, but the relevant fragment is clearly present.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value, (value & 1) == 1); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The Python code counts the number of 1-bits in the binary representation of n. The C++ completion checks if the least significant bit is 1 (i.e., `(value & 1) == 1`), which is a bitwise operation related to binary representation of a number. While it only checks one bit rather than counting all 1-bits, it demonstrates awareness of bit manipulation on the value, which is genuinely relevant to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does: counting the number of 1s in the binary representation of integer n.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value) & 1; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion uses `__builtin_popcount`, which counts the number of 1-bits in a binary representation \u2014 exactly what `bin(n).count('1')` does in Python. The `& 1` part (checking if the count is odd) is an extra step not in the Python code, but the core operation of counting set bits is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description perfectly matches what the code does \u2014 it counts the number of 1s in the binary representation of the integer `n`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion implements `__builtin_popcount`, which counts the number of set bits (1s) in a binary representation \u2014 exactly what the Python code does with `bin(n).count('1')`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description perfectly matches what the code does \u2014 it counts the number of 1s in the binary representation of the integer `n`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion implements `__builtin_popcount`, which counts the number of set bits (1s) in a binary representation \u2014 exactly what the Python code does with `bin(n).count('1')`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

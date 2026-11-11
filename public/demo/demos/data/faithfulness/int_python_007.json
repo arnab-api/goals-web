@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code computes the number of digits in `n` by converting it to a string and measuring its length. The description talks about checking for null/undefined and determining type, which is unrelated to counting digits. However, the description does mention \"determining if it's a number,\" which has a slight tangential relevance, but the core operation (getting the length of the string representation of the absolute value) is completely missed.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: converting the absolute value of n to a string and measuring its length to find the number of digits.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::to_string(value).size();  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion converts a value to a string and returns its size, which directly corresponds to finding the number of digits in a number \u2014 exactly what the Python code does with `len(str(abs(n)))`. The only missing part is the `abs()` call, but the core operation is clearly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions `len(str(abs(x)))` which is essentially the same operation as `len(str(abs(n)))` in the code \u2014 counting the number of characters in the string representation of the absolute value of a number. The variable name differs (x vs n) but the operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return to_string(value).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion implements converting a value to string and getting its size, which directly corresponds to `len(str(...))` in the Python code \u2014 computing the number of digits. The `abs` is missing but the core operation of getting the string length of a number is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it takes the absolute value of n, converts it to a string, and measures its length to count the number of digits.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return to_string(value).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion converts a value to a string and returns its size, which directly corresponds to the Python code that converts a number to a string (`str(abs(n))`) and takes its length (`len(...)`). The core operation \u2014 getting the number of digits by converting to string and measuring length \u2014 is correctly captured, even if `abs` is missing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code checks if a string is alphabetic AND lowercase. The description says it's checking if the character is NOT a letter and NOT a digit \u2014 both the negation and the specific properties mentioned are wrong. The description doesn't correctly identify any of the actual operations (isalpha, islower) being performed.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return is_same_v<decltype(value), bool> && value; }\n\nauto func2 (auto value){ return is_same_v<decltype(value), bool> && value && is_integral_v<decltype(value)>; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The Python code checks if a string is alphabetic AND lowercase. The C++ completion is about type checking (checking if a value is a boolean type or integral type), which is completely unrelated to checking alphabetic/lowercase properties of a string. There's no mention of alphabetic characters, lowercase, or string properties.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: checking if all characters are alphabetic (`s.isalpha()`) and if all characters are lowercase (`s.islower()`).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::all_of(value.begin(), value.end(), [](char c){ return std::isalpha(c); }) && \n           std::all_of(value.begin(), value.end(), [](char c){ return std::islower(c); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion checks that all characters are alphabetic (`isalpha`) AND all characters are lowercase (`islower`), which is exactly what the Python code does with `s.isalpha() and s.islower()`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: checking if all characters are alphabetic (`s.isalpha()`) and if all characters are lowercase (`s.islower()`).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::is_arithmetic<decltype(value)>::value && std::all_of(std::begin(value), std::end(value), [](auto c){ return std::islower(c); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The Python code checks if a string consists entirely of alphabetic characters AND is all lowercase. The C++ completion checks if something is arithmetic (wrong concept - should be alphabetic) AND uses `std::all_of` with `std::islower` to check if all characters are lowercase. The `islower` check is directly relevant, and the conjunction (`&&`) with a type/character check mirrors the structure of the Python code, even though `is_arithmetic` is wrong for `isalpha`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: checking if all characters are alphabetic (`s.isalpha()`) and if all characters are lowercase (`s.islower()`).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return all_of(begin(value), end(value), [](char c){ return isalpha(c) && islower(c); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion checks that all characters in a string are alphabetic (`isalpha`) AND lowercase (`islower`), which is exactly what the Python code does with `s.isalpha() and s.islower()`. This is a direct and accurate match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

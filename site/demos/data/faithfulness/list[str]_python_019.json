@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"counting unique elements,\" which is exactly what `len(set(words))` does \u2014 it counts the number of unique words by converting to a set and taking the length. The mention of \"total elements\" is an extra detail that may refer to a broader context but doesn't detract from the correct core identification.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<decltype(value)> uniqueElements;\n    for (const auto& elem : value) {\n        uniqueElements.insert(elem);\n    }\n    return std::make_pair(uniqueElements.size(), value.size());\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an unordered_set from the input collection, inserts all elements, and returns the size of the unique elements \u2014 which directly corresponds to `len(set(words))` in the Python code. This is highly relevant, capturing both the set-creation and size-counting operations.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it converts `words` to a set to find unique elements, then counts them with `len()`. This is a direct and correct description of the operation.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::unordered_set<decltype(value)> uniqueValues{value.begin(), value.end()};\n    return std::make_pair(uniqueValues.size(), std::accumulate(value.begin(), value.end(), 0, [](int acc, const auto& val){ return acc + (val != val); }));\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an `unordered_set` from the input collection and returns its size, which directly corresponds to counting unique elements (i.e., `len(set(words))`). The extra accumulate part is irrelevant noise, but the core operation of finding the number of unique values is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description \"counting unique elements in a list\" directly matches what the code does: it converts `words` to a set (removing duplicates) and takes the length, which counts the unique elements.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value, std::set(value.begin(), value.end()).size()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates a set from a collection and returns its size, which directly corresponds to `len(set(words))` \u2014 counting the number of unique elements. This is genuinely relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description \"Identifying unique elements in a list\" is directly relevant to what the code does \u2014 it converts `words` to a set to find unique elements, then counts them. The description captures the core operation of finding unique elements.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::unordered_set<decltype(value)> uniqueValues{value.begin(), value.end()};\n    return uniqueValues.size();\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an unordered_set from a collection (to get unique values) and returns its size, which directly corresponds to counting the number of unique elements \u2014 exactly what `len(set(words))` does in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if characters are letters or digits (alphanumeric), which is exactly what `isalnum()` does. The description also mentions checking all characters, which matches the `all()` call. The extra details about `isalpha()` and `isdigit()` are noise but the core concept is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_tuple(value, std::is_integral_v<decltype(value)>, std::all_of(value.begin(), value.end(), ::isdigit));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` with `::isdigit` to check characters in a string, which is partially relevant - it checks if all characters satisfy some character property. However, the Python code checks `isalnum()` (alphanumeric), while the C++ uses `isdigit` (digits only), and the C++ also includes unrelated `std::is_integral_v` and `std::make_tuple` elements. The core structure of checking all characters with a character classification function is genuinely present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code checks if all characters are alphanumeric using `str.isalnum()`, which is the core operation. The mention of \"special (non-alphanumeric)\" and `str.isascii()` adds incorrect/extra information, but the primary relevant operation (`isalnum()` check on all characters) is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto c) { return std::isalnum(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking that all characters in a string are alphanumeric using `std::all_of` with `std::isalnum`, which directly corresponds to `all(c.isalnum() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: checking if all characters in the string are alphanumeric (letters or digits), which is exactly what `isalnum()` combined with `all()` accomplishes.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto c) { return std::isalnum(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking that all characters in a string are alphanumeric using `std::all_of` with `std::isalnum`. This is a precise and complete match to the Python code's functionality.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 checking if all characters in the string are alphanumeric using `isalnum()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto c){ return std::isalnum(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking that all characters in a string are alphanumeric using `std::all_of` with `std::isalnum`, which directly corresponds to `all(c.isalnum() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

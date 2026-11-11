@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 splitting a string and counting the resulting parts gives the number of words.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return value;  \n}  \n\nint countWords(const string& str) {  \n    stringstream ss(str);  \n    string word;  \n    int count = 0;  \n    while (ss >> word) ++count;  \n    return count;  \n}  \n\nsize_t countCharacters(const string& str)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The C++ completion contains a `countWords` function that uses a stringstream to count words in a string, which is exactly what the Python code does with `len(s.split())`. This is directly relevant to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: splitting the string by spaces/whitespace and counting the resulting elements to get the word count.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::istringstream(value).str().size();\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace. The C++ completion uses `std::istringstream` which is the standard C++ way to parse/tokenize strings (commonly used for word counting), but it calls `.str().size()` which returns the size of the string, not the word count. However, `istringstream` is genuinely relevant to word-splitting/tokenization operations on strings.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it splits the string by whitespace and counts the resulting elements, which gives the number of words.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::to_string(value).size(); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace. The C++ completion converts a value to a string and gets its size, which is related to string length but not to word counting or splitting. However, `.size()` does relate to counting/length operations, and `to_string` involves string manipulation \u2014 but the core operation (splitting on whitespace to count words) is not captured at all.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it splits the string by whitespace and counts the resulting elements, which gives the number of words.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::count_if(value.begin(), value.end(), [](const auto& c) { return std::isspace(c); }) + 1; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The C++ completion counts whitespace characters in a string and adds 1, which is a valid way to count words (number of spaces + 1 = number of words). This is directly relevant to what the Python code does: counting the number of words by splitting on whitespace.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

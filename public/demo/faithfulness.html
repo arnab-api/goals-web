@@ -3,11 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GoalScope · Faithfulness</title>
+<title>GoalScope · Eval</title>
 <link href="site.css" rel="stylesheet">
 <style>
   /* pivot colours = notebooks/fig_n_table_generators/figstyle.py PIVOT_COLOR (the paper's figures) */
-  :root { --pv-prev_end: #b5675f; --pv-indent: #6b6aa1; --pv-var: #d1a054; --pv-eq: #a7c48a; --frontier: #1f7a3a; }
+  :root { --pv-prev_end: #b5675f; --pv-indent: #6b6aa1; --pv-var: #d1a054; --pv-eq: #a7c48a; --frontier: #1f7a3a;
+    --target: #1f4fd8; --target-bg: #eaf0ff; }   /* frontier sub-task = the annotation page's "target" blue */
+  .tgt { color: var(--target); font-weight: 700; background: var(--target-bg); border-radius: 4px; padding: 1px 3px; }
   #content { max-width: 1240px; }
   .fx-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--text-mid); }
   .fx-legend span { display: inline-flex; align-items: center; gap: 6px; }
@@ -41,6 +43,15 @@
   .fx-why code { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-hi); }
   .fx-why .fx-src { margin-top: 6px; color: var(--text-lo); font-size: 12px; }
   .fx-nav { display: inline-flex; align-items: center; gap: 4px; }
+  /* Faithfulness | Causality view toggle */
+  .fx-tabs { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; padding: 2px; background: #f7f8fa; }
+  .fx-tab { font: 600 12px/1 var(--font-ui); border: 0; background: none; color: var(--text-mid); padding: 6px 12px;
+    border-radius: 999px; cursor: pointer; }
+  .fx-tab.active { background: #002E4D; color: #fff; }
+  /* causality read-out: the C++ stub that ends the prompt (grey) -> the model's own continuation */
+  .fx-cpp { margin: 2px 0 0; font: 13px/1.55 var(--font-mono); white-space: pre-wrap; word-break: break-word; color: var(--text-hi);
+    background: #f7f8fa; border-radius: 6px; padding: 6px 9px; }
+  .fx-stub { color: #9aa1ab; }
   @media (max-width: 960px) { .fx-grid { grid-template-columns: 1fr; } .fx-col-ro { order: 2; } }
 </style>
 </head>
@@ -82,6 +93,8 @@
       pivots before the next sub-task's line (coloured in the code), the goal heads are read out in natural language.
       The <span style="color:var(--frontier);font-weight:600">green</span> line is what the model then writes. Click a
       verdict pill for the judge's reasoning. The number is how many of the 4 read-outs the judge accepts.
+      <b>Causality</b> shows, at the same pivots, what the model writes when the same encoding is injected into an
+      information-less C++ stub (the stub, in grey, ends the prompt).
     </div>
   </aside>
 
@@ -91,6 +104,10 @@
       <div class="pg-title" id="title"></div>
       <p class="pg-head" id="head"></p>
       <div class="pg-row">
+        <span class="fx-tabs" role="tablist">
+          <button class="fx-tab active" role="tab" data-mode="faith" aria-selected="true">Faithfulness</button>
+          <button class="fx-tab" role="tab" data-mode="causal" aria-selected="false">Causality</button>
+        </span>
         <span class="chip" id="dtype"></span>
         <span class="fx-legend" id="legend"></span>
         <span class="fx-nav">
@@ -101,7 +118,7 @@
       </div>
       <div class="fx-grid">
         <div class="fx-col-ro">
-          <div class="fx-col-title">Read-outs at the pivots</div>
+          <div class="fx-col-title" id="ro-title">Read-outs at the pivots</div>
           <div class="fx-cards" id="cards"></div>
         </div>
         <div>
@@ -123,7 +140,8 @@
   const $ = id => document.getElementById(id);
   const esc = s => (s == null ? "" : String(s)).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const tint = p => `color-mix(in srgb, var(--pv-${p}) 30%, #fff)`;
-  let list = [], meta = null, cur = -1;
+  let list = [], meta = null, cur = -1, doc = null;
+  let mode = new URLSearchParams(location.search).get("view") === "causality" ? "causal" : "faith";
 
   function hover(p, on) {
     document.querySelectorAll(`[data-p="${p}"]`).forEach(n => n.classList.toggle("on", on));
@@ -157,19 +175,47 @@
     return h;
   }
 
+  function cppHTML(t) {                                            // grey prompt stub -> the model's own C++
+    const stub = meta.causal_stub || "";
+    if (stub && t.startsWith(stub)) return `<span class="fx-stub" title="end of the prompt (the C++ stub)">${esc(stub)}</span>${esc(t.slice(stub.length))}`;
+    return esc(t);
+  }
+  function causalWhyHTML(c, d) {
+    if (!c.judged) return "<div>Not sent to the judge: the read-out is empty, so it is scored MALFORMED.</div>";
+    let t = c.reasoning ? esc(c.reasoning.replace(/<verdict>[\s\S]*?<\/verdict>/gi, "").trim())
+                        : "<i>Reasoning not available for this read-out.</i>";
+    if (c.reasoning && c.reasoned_verdict && c.reasoned_verdict !== c.verdict)
+      t += `<div class="fx-src">Asked to explain, the judge gave <b>${esc(c.reasoned_verdict)}</b>; the pill shows the verdict reported in the paper.</div>`;
+    return `<div>${t}</div><div class="fx-src">Judged against the frontier line <code>${esc(c.impl_span || d.impl_span)}</code> (Python), ` +
+           `with the read-out in C++. Default bodies that implement no sub-goal (e.g. <code>return value;</code>) are scored as failures.</div>`;
+  }
+
+  function taskHTML(d) {                                             // the frontier's line in the task list, as on the annotation page
+    return esc(d.user.trim()).split("\n").map(line => {
+      const m = line.match(/^\((\d+)\)\s*(.*)$/);
+      return m && m[2].trim() === esc(d.condition.trim()) ? `<span class="tgt">${line}</span>` : line;
+    }).join("\n");
+  }
+
   function render(d) {
     $("title").textContent = d.id;
-    $("head").innerHTML = `<span style="font-weight:400;color:var(--text-mid)">Next sub-task (frontier):</span> ${esc(d.condition)}`;
+    $("head").innerHTML = `<span style="font-weight:400;color:var(--text-mid)">Next sub-task (frontier):</span> <span class="tgt">${esc(d.condition)}</span>`;
     $("dtype").textContent = d.datatype;
-    $("task").textContent = d.user.trim();
+    $("task").innerHTML = taskHTML(d);
     $("code").innerHTML = codeHTML(d);
     const cards = $("cards"); cards.innerHTML = "";
+    $("ro-title").textContent = mode === "causal" ? "C++ read-outs at the pivots (causality)" : "Read-outs at the pivots";
     d.readouts.forEach((r, i) => {
+      if (mode === "causal" && !r.causal) return;
+      const v = mode === "causal" ? r.causal.verdict : r.verdict;
+      const body = mode === "causal" ? `<pre class="fx-cpp">${cppHTML(r.causal.readout)}</pre>`
+                                     : `<q>${esc(r.readout.trim()) || "<i>(empty)</i>"}</q>`;
+      const whyH = mode === "causal" ? causalWhyHTML(r.causal, d) : whyHTML(r, d);
       const c = document.createElement("div");
       c.className = "fx-card"; c.dataset.p = r.pivot; c.style.setProperty("--pc", `var(--pv-${r.pivot})`);
       c.innerHTML = `<div class="fx-card-head"><span class="fx-pname"><span class="fx-sw" style="background:var(--pv-${r.pivot})"></span>${r.pivot}</span>` +
-        `<button class="fx-pill ${esc(r.verdict)}" aria-expanded="false" title="show the judge's reasoning">judge: ${esc(r.verdict)} <span class="car">▶</span></button></div>` +
-        `<q>${esc(r.readout.trim()) || "<i>(empty)</i>"}</q><div class="fx-why pg-hidden">${whyHTML(r, d)}</div>`;
+        `<button class="fx-pill ${esc(v)}" aria-expanded="false" title="show the judge's reasoning">judge: ${esc(v)} <span class="car">▶</span></button></div>` +
+        `${body}<div class="fx-why pg-hidden">${whyH}</div>`;
       const pill = c.querySelector(".fx-pill"), why = c.querySelector(".fx-why");
       pill.addEventListener("click", () => {
         const open = why.classList.toggle("pg-hidden") === false; pill.setAttribute("aria-expanded", String(open));
@@ -185,7 +231,7 @@
     const sel = document.querySelector("#task-list li.selected"); if (sel) sel.scrollIntoView({block: "nearest"});
     $("pidx").textContent = `${cur + 1} / ${list.length}`;
     fetch(`demos/data/faithfulness/${e.id}.json`).then(r => r.json()).then(d => {
-      render(d); history.replaceState(null, "", "#" + e.id); $("content").scrollTop = 0;
+      doc = d; render(d); history.replaceState(null, "", "#" + e.id); $("content").scrollTop = 0;
     });
   }
 
@@ -205,14 +251,27 @@
   fetch("demos/data/faithfulness/index.json").then(r => r.json()).then(d => {
     meta = d.meta;
     list = d.examples.slice().sort((a, b) => DT.indexOf(a.datatype) - DT.indexOf(b.datatype) || a.id.localeCompare(b.id));
-    $("legend").innerHTML = PIVOTS.map(p =>
-      `<span><span class="fx-sw" style="background:var(--pv-${p})"></span><code>${p}</code> ${(100 * meta.by_pivot[p]).toFixed(1)}%</span>`).join("");
-    $("note").innerHTML =
-      `Read-outs from the paper's main GoalScope run: ${esc(meta.model)}, the ${meta.heads} goal heads, ` +
-      `${esc(meta.strategy)} α ${meta.alpha}, steering layers ${esc(meta.layers)}, 64-token read-outs, all ${list.length} specs. ` +
-      `The percentages next to the pivots are the judge's acceptance rates over all specs (the faithfulness bars of the paper's GoalScope figure). ` +
-      `Verdicts are from an LLM judge (${esc(meta.judge)}) comparing each read-out with the frontier line the model wrote. ` +
-      `The judge's reasoning was collected afterwards: the same judge and rubric, asked to explain before giving its verdict.`;
+    function chrome() {                                             // legend, note, sidebar counts for the current view
+      const C = mode === "causal", bp = C ? meta.causal_by_pivot : meta.by_pivot;
+      $("legend").innerHTML = PIVOTS.map(p =>
+        `<span><span class="fx-sw" style="background:var(--pv-${p})"></span><code>${p}</code> ${(100 * bp[p]).toFixed(1)}%</span>`).join("");
+      const run = `${esc(meta.model)}, the ${meta.heads} goal heads, ${esc(meta.strategy)} α ${meta.alpha}, steering layers ${esc(meta.layers)}, 64-token read-outs, all ${list.length} specs`;
+      $("note").innerHTML = C
+        ? `Causality read-outs from the paper's main GoalScope run (${run}): the same encoding is injected into an information-less C++ stub ` +
+          `(<code>${esc(meta.causal_stub)}</code>, in grey), and the judge (${esc(meta.judge)}) checks whether the C++ the model writes implements the ` +
+          `frontier sub-task. The judge's reasoning was collected afterwards: the same judge and rubric, asked to explain before giving its verdict. The percentages next to the pivots are the acceptance rates over all specs (the causality bars of the paper's GoalScope figure).`
+        : `Read-outs from the paper's main GoalScope run: ${run}. ` +
+          `The percentages next to the pivots are the judge's acceptance rates over all specs (the faithfulness bars of the paper's GoalScope figure). ` +
+          `Verdicts are from an LLM judge (${esc(meta.judge)}) comparing each read-out with the frontier line the model wrote. ` +
+          `The judge's reasoning was collected afterwards: the same judge and rubric, asked to explain before giving its verdict.`;
+      document.querySelectorAll("#task-list li[data-id]").forEach(li => {
+        const e = list.find(x => x.id === li.dataset.id);
+        li.querySelector(".acc").textContent = C ? `${e.n_yes_causal}/${e.n_causal}` : `${e.n_yes}/${e.n}`;
+      });
+      document.querySelectorAll(".fx-tab").forEach(b => {
+        const on = b.dataset.mode === mode; b.classList.toggle("active", on); b.setAttribute("aria-selected", String(on));
+      });
+    }
     let last = null;
     list.forEach((e, i) => {
       if (e.datatype !== last) {
@@ -225,7 +284,13 @@
       li.addEventListener("click", () => select(i));
       $("task-list").appendChild(li);
     });
-    updateFilter();
+    chrome(); updateFilter();
+    document.querySelectorAll(".fx-tab").forEach(b => b.addEventListener("click", () => {
+      if (b.dataset.mode === mode) return;
+      mode = b.dataset.mode; chrome(); if (doc) render(doc);
+      const u = new URL(location.href); if (mode === "causal") u.searchParams.set("view", "causality"); else u.searchParams.delete("view");
+      history.replaceState(null, "", u.pathname + u.search + location.hash);
+    }));
     $("task-filter").addEventListener("input", updateFilter);
     $("prev").addEventListener("click", () => select(cur - 1));
     $("next").addEventListener("click", () => select(cur + 1));

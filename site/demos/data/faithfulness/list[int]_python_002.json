@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking for None, using a set, and checking for uniqueness/non-emptiness. The actual code checks if any number in `nums` is even (divisible by 2). These are completely unrelated operations with no conceptual overlap.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_pair(value, std::any_cast<bool>(std::any(value)) && std::any_cast<bool>(std::any_of(value.begin(), value.end(), [](auto const& v) { return true; })) != value.empty());  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion uses `std::any_of` over a collection with `begin()`/`end()`, which is directly relevant to checking if any element satisfies a condition (the `any()` in the Python code). However, the lambda just returns `true` rather than checking for evenness, and the overall logic is garbled with unnecessary `std::any_cast` and pair construction. Still, `std::any_of` on a collection is a meaningful partial match to the core operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if \"any element\" satisfies a condition, which aligns with the use of `any()` in the code. However, it describes checking for \"truthiness\" generically rather than the specific even-number check (x % 2 == 0). This is partially relevant but quite vague about the actual property being tested.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](auto x){ return x % 2 == 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements exactly the same operation: using `any_of` to check if any element in a collection satisfies `x % 2 == 0` (even number check). This is a direct translation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes checking if any element in the list is even using `any(x % 2 == 0 for x in ...)`, which matches the code exactly.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto x){ return x % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: using `any_of` (equivalent to Python's `any`) to check if any element `x` in the collection satisfies `x % 2 == 0` (even number check). This is a near-perfect translation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if any element in `nums` is even (divisible by 2), which is exactly what `any(x % 2 == 0 for x in nums)` computes.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    for(auto& elem : value) {  \n        if(elem % 2 == 0) return true;  \n    }  \n    return false;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements a function that iterates over a collection and checks if any element is divisible by 2 (even), returning true if found. This is exactly what the Python code does \u2014 checking if any element in `nums` is even using `x % 2 == 0`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

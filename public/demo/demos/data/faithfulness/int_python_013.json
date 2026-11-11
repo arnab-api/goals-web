@@ -34,7 +34,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description is generic scaffolding/chat noise that doesn't identify anything specific about checking divisibility by 3 or the modulo operation being performed.\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value % 2 == 0, value * value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 3 == 0",
+    "reasoning": "The code checks if `n` is divisible by 3 (modulo 3 equals 0). The C++ completion checks if a value is divisible by 2 (modulo 2 equals 0) and also computes the square. The modulo operation and divisibility check are genuinely relevant concepts, even though the divisor is wrong (2 instead of 3).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking divisibility by 3, which is exactly what the code does (`n % 3 == 0`). The wrong part is the mention of divisibility by 2, but the relevant operation (divisibility by 3) is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value % 2 == 0, value % 3 == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 3 == 0",
+    "reasoning": "The C++ completion checks `value % 3 == 0`, which is directly relevant to what the Python code does (checking if `n % 3 == 0`). It also includes `value % 2 == 0` as an extra check, but the core operation of checking divisibility by 3 is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if `n` is divisible by 3 using the modulo operator and stores the boolean result in `b`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_tuple(value % 2 == 0, value % 3 == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 3 == 0",
+    "reasoning": "The C++ completion checks `value % 3 == 0`, which is exactly the operation performed in the Python code (checking divisibility by 3). While it also checks divisibility by 2 as part of a tuple, the core relevant operation is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is checking divisibility by 3, which is exactly what `n % 3 == 0` does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 3 == 0",
+    "reasoning": "The code checks if `n` is divisible by 3 (modulo operation with equality check to 0). The C++ completion checks divisibility by 2 instead of 3, but the core operation \u2014 modulo followed by equality check to 0 \u2014 is the same structural pattern. This is a wrong constant but the same conceptual operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

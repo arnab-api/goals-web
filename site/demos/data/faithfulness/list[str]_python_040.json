@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking vowels and letters with length 1, which is unrelated to what the code does. The code finds the minimum length among non-empty words in a list. There's a partial mention of \"length\" but the overall description is about a completely different operation (vowel/letter checking).\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::find_if(value.begin(), value.end(), [](const auto& c) { return std::isalpha(c); }).base() - value.end(); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The Python code finds the minimum length among non-empty words. The C++ completion is about finding alphabetic characters in a string using `std::find_if` and `std::isalpha`, which relates to character properties rather than string lengths or minimum computation. However, it does iterate over a collection and involves string/word processing. The core operation (finding minimum length) is not captured - instead it's doing character-level filtering, which is a different operation entirely.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions finding the shortest/minimum and counting characters (length), which directly corresponds to what the code does: finding the minimum length (`len`) among words (`w`) in a collection. The description is relevant even if it says \"line\" instead of \"word.\"\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return *std::min_element(value.begin(), value.end(), [](const auto& a, const auto& b) { return a.size() < b.size(); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The Python code finds the minimum length among non-empty words. The C++ completion uses `std::min_element` with a comparator based on `.size()`, which is directly relevant to finding the minimum-length element in a collection. This captures the core operation (finding minimum by string length) correctly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions finding the shortest length, which directly corresponds to the code computing the minimum length (`min(len(w) for w in words)`) among words. This is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return value.size() ? *std::min_element(value.begin(), value.end(), [](int a, int b){return a < b;}) : 0;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The C++ completion finds the minimum element of a collection, returning 0 if empty. The Python code finds the minimum length among non-empty words, defaulting to 0. The C++ is finding a minimum with a 0 default, which is the core operation, though it's finding the minimum of values directly rather than minimum of lengths. The structural similarity (min element, default 0) is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"identifying the shortest string in the list,\" which is exactly what the code does \u2014 it computes the minimum length among non-empty words in the list.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *std::min_element(value.begin(), value.end(), [](const auto& a, const auto& b) { return a.size() < b.size(); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The Python code finds the minimum length among non-empty words, with a default of 0. The C++ completion uses `std::min_element` with a comparator based on `.size()`, which is directly relevant to finding the minimum-length element in a collection. This captures the core operation (finding minimum by string length) correctly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

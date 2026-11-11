@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The code counts the number of alphabetic characters in string `s` using `sum()` with `isalpha()`. The description mentions checking if characters are alphabetic, which is genuinely relevant to what the code does (it uses `isalpha()`). The description is wrong about \"all characters\" (it's a count/sum, not an \"all\" check) and adds an unrelated \"not empty\" condition, but the core concept of checking alphabetic characters is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return is_same_v<decltype(value), string> && all_of(begin(value), end(value), ::isalpha); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The Python code counts the number of alphabetic characters in string `s` using `isalpha()`. The C++ completion uses `::isalpha` and `all_of` over a string, which involves the same `isalpha` check on characters of a string. While the C++ checks if *all* characters are alpha (rather than counting them), it correctly identifies the core operation: applying `isalpha` to characters of a string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it counts alphabetic characters in the string `s` using `isalpha()` and `sum()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count_letters = 0, count_digits = 0;  \n    for(auto ch : value) {  \n        if(isalpha(ch)) count_letters++;  \n        if(isdigit(ch)) count_digits++;  \n    }  \n    return make_pair(count_letters, count_digits);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion counts alphabetic characters using `isalpha(ch)` and increments `count_letters`, which directly corresponds to what the Python code does (summing `c.isalpha()` for each character in `s`). The C++ also counts digits which is extra, but the core operation of counting letters with `isalpha` is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting alphabetic characters and checking if they are letters, which is exactly what the code does using `isalpha()` and `sum()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n        if(isalpha(c)) ++count;  \n    }  \n    return count;  \n}  \n\nauto func2 (auto value){  \n    int count = 0;  \n    for(auto& c : value) {",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion directly implements counting alphabetic characters using `isalpha()`, which is exactly what the Python code does with `c.isalpha()`. The C++ code iterates over characters and increments a counter for each alphabetic character, mirroring the `sum(c.isalpha() for c in s)` pattern perfectly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it counts alphabetic characters in a string using `isalpha()` and `sum()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& ch : value){\n        if(isalpha(ch) && islower(ch)) ++count;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion counts alphabetic characters using `isalpha()`, which is exactly what the Python code does with `c.isalpha()`. The additional `islower()` check is an extra constraint not in the original, but the core operation (counting alpha characters) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"checking the last character of the string\" and \"slicing the string to get the last character,\" which is exactly what the code does (`s[-1]`). The extra details about converting to boolean and checking for spaces/punctuation are wrong, but the core operation of getting the last character is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_tuple(value.back(), value.size() - 1, value.front()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[-1] if s else ''",
+    "reasoning": "The Python code gets the last character of string `s` (or empty string if `s` is empty). The C++ completion returns `value.back()` which is equivalent to getting the last element, which is directly relevant. It also includes `value.size() - 1` and `value.front()` which are less relevant but don't detract from the core match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it retrieves the last character of string `s` (or empty string if `s` is empty), which is exactly \"checking the last character of the string.\"\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? value.back() : '\\0'; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[-1] if s else ''",
+    "reasoning": "The C++ completion accesses the last element of a container (`value.back()`) if it's non-empty, otherwise returns a null/empty value. This directly mirrors the Python code which gets the last character of string `s` if it exists, otherwise returns an empty string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it retrieves the last character of string `s` (or an empty string if `s` is empty), which is exactly \"identifying and returning the last character of the string.\"\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? *(&value + 0) : '\\0'; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[-1] if s else ''",
+    "reasoning": "The Python code gets the last character of a string `s`, or returns an empty string if `s` is empty. The C++ completion attempts to return a character from `value` if it's non-empty, or `'\\0'` if it's empty/null \u2014 this captures the conditional logic (ternary check for emptiness) and the idea of returning a character or a null/empty value. The indexing `*(&value + 0)` is a garbled attempt at accessing an element, but the overall structure of \"return element if non-empty else null/empty\" is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it retrieves the last character of string `s` (using `s[-1]`), defaulting to an empty string if `s` is empty.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? value.back() : '\\0'; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[-1] if s else ''",
+    "reasoning": "The C++ completion accesses the last element of a container (`value.back()`) if it's non-empty, otherwise returns a null/empty value. This directly mirrors the Python code which gets the last character of string `s` if it exists, otherwise returns an empty string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

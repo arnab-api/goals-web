@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"counting the total number of characters,\" which is relevant \u2014 the code is summing the lengths of words (i.e., counting total characters across all words). The mention of \"lines\" is wrong/irrelevant, but the character-counting part is a genuine match.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    using namespace std;  \n    return make_pair(reduce(begin(value), end(value), 0, [](int a, auto b){return a + b;}),  \n                     accumulate(begin(value), end(value), 0, [](int a, auto b){return a + b.size();}));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion computes a sum over a collection, and specifically the second element of the pair uses `accumulate` with `b.size()` \u2014 which is directly relevant to summing the lengths of elements (words) in a collection. This matches the Python code's `sum(len(w) for w in words)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting the total number of characters,\" which is essentially what the code does \u2014 it sums the lengths of all words, giving the total character count across all words in the list. This is genuinely relevant to the code's operation.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    using namespace std;  \n    return make_pair(value.size(), accumulate(begin(value), end(value), 0, [](int a, auto b){return a + b.size();}));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion computes the total size by accumulating `b.size()` over elements of a collection, which directly corresponds to summing the lengths of words (`sum(len(w) for w in words)`). The `accumulate` with `b.size()` is essentially the same operation as the Python code's sum of word lengths.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting total characters, which is partially relevant \u2014 the code does sum character counts (lengths) of words. However, the description says \"including spaces and punctuation\" which implies counting characters in source code rather than in a list of words, making it somewhat off. Still, the core idea of counting/summing character lengths is present.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value, std::accumulate(std::begin(value), std::end(value), 0, [](int sum, const auto& elem) { return std::make_pair(sum + elem.size(), sum); }).first); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::accumulate` over a collection, summing `elem.size()` values into a running total - this directly corresponds to summing the lengths of words in a collection. The `.first` extraction from `make_pair` is a bit convoluted, but the core operation of accumulating sizes of elements is clearly relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting the total number of characters in the string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    size_t total = 0; \n    for (const auto& elem : value) { \n        total += elem.size(); \n    } \n    return total; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion computes the total size of elements in a collection by iterating and summing `elem.size()`, which directly corresponds to summing the lengths of words (`len(w) for w in words`). This is essentially the same operation implemented in C++.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

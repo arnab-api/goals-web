@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes summing the lengths of all words in a list, which is exactly what the code does \u2014 it computes the total number of characters across all words using a generator expression with `len(w)` summed together.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::accumulate(std::begin(value), std::end(value), 0, std::plus<>{}); \n} \n\nint sum_of_elements(const vector<int>& vec) { \n    return std::accumulate(vec.begin(), vec.end(), 0); \n}\n\nsize_t total_length(const vector<string>&",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion shows `std::accumulate` being used to sum values, and even includes a `total_length` function operating on a `vector<string>`, which is directly relevant to summing lengths of words. This captures the core operation of accumulating/summing values across a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"calculating the total number of characters in the string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words (which together form the string).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return accumulate(begin(value), end(value), 0, [](int sum, const auto& v) { return sum + v.size(); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `accumulate` to sum up `v.size()` across elements of a collection, which is exactly what the Python code does \u2014 summing the lengths of words in a list. This is a direct match in substance, just implemented differently.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"calculating the total number of characters in the string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words (which together form the string).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return accumulate(begin(value), end(value), 0, [](int sum, const auto& v) { return sum + v; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `accumulate` to sum values over a collection, which is directly relevant to the Python code that sums the lengths of words. While the C++ accumulates the elements themselves rather than their lengths, the core operation of summing over a collection is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the total number of characters across all words in a list, which is exactly what the code does by summing the lengths of each word.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int total = 0; \n    for (const auto& elem : value) { \n        total += elem.size(); \n    } \n    return total; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion iterates over a collection (`value`) and accumulates the sizes of each element (`elem.size()`), which directly corresponds to summing the lengths of words in the Python code. This is essentially the same operation implemented differently.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

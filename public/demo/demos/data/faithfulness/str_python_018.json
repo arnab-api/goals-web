@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code checks if the first character of a string is uppercase using `isupper()`, but the description talks about checking for digits using `isdigit()`. The description is coherent but describes a completely different operation (digit checking vs. uppercase checking), even though it correctly identifies the concept of checking the first character.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value, std::is_integral_v<decltype(value)> && value != 0); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if s else False",
+    "reasoning": "The Python code checks whether the first character of a string is uppercase. The C++ completion checks if a value is integral and non-zero, which is completely unrelated to checking uppercase characters or string properties.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 checking if the first character of the string `s` is uppercase using `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isupper(value[0]) && isdigit(value[1]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if s else False",
+    "reasoning": "The Python code checks if the first character of string `s` is uppercase. The C++ completion also checks if the first character (`value[0]`) is uppercase using `isupper()`, which is directly relevant. It additionally checks `isdigit(value[1])` which is extra/wrong, but the core operation of checking `isupper` on the first character is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if the first character of string `s` is uppercase using `isupper()`, with a fallback for empty strings.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_same<decltype(value), bool>::value && value; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if s else False",
+    "reasoning": "The Python code checks if the first character of a string is uppercase. The C++ completion is checking if a value is of type `bool` and is true \u2014 this is about type checking for booleans, which is completely unrelated to checking if a character is uppercase or checking string properties.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if the first character of string `s` is uppercase using `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isupper(value[0]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if s else False",
+    "reasoning": "The C++ completion checks if the first character of a string is uppercase using `isupper(value[0])`, which is exactly what the Python code does with `s[0].isupper()`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

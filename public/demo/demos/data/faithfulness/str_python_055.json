@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if the first character is an alphabet, which is exactly what `s[0].isalpha()` does. The part about \"counting spaces to determine the number of words\" is irrelevant to this single line, but the first part is genuinely relevant.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(std::is_same_v<decltype(value), std::string> || std::is_pointer_v<decltype(value)>, std::isspace(value[0]) && std::isspace(value[0])); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The Python code checks if the first character of string `s` is alphabetic (using `isalpha()`). The C++ completion checks `std::isspace(value[0])` (checking if first character is whitespace) and also checks if the value is a string type. The completion correctly identifies accessing the first character (`value[0]`) of a string-like input, which is partially relevant. However, it uses `isspace` instead of `isalpha`, which is a wrong specific but the structure of checking the first character of a string is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: checking if the first character of the string is alphabetic using `isalpha()` and accessing it with index `[0]`. This is a precise and correct description of the code's operation.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isalpha(value[0]) && isdigit(value[1]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion checks `isalpha(value[0])`, which is directly relevant to the Python code that checks if the first character of a string is alphabetic using `isalpha()`. The additional `isdigit(value[1])` check is extra/wrong, but the core operation of checking `isalpha` on the first character is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if the first character of the string is an alphabet letter, which is directly relevant to what the code does (`isalpha()`). The mention of \"uppercase\" is an extra detail not in the code, but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isalpha(value) && islower(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The Python code checks if the first character of string `s` is alphabetic using `isalpha()`. The C++ completion also uses `isalpha()`, which is directly relevant to the core operation being performed. The additional `islower()` check is an extra condition not in the Python code, but the core `isalpha()` operation is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: checking if the first character of the string `s` is alphabetic using `isalpha()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isalpha(value[0]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion checks if the first character of a string/value is alphabetic using `isalpha(value[0])`, which directly corresponds to the Python code `s[0].isalpha()`. This is highly relevant and captures the core operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

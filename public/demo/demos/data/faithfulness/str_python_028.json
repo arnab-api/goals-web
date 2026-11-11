@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code counts spaces in string `s` using `.count(' ')`, while the description talks about checking if a character is a letter and incrementing a counter. These are completely unrelated operations \u2014 counting spaces vs. checking for letters.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::is_same_v<decltype(value), int> && value == 0; \n}\n\nauto func (const auto& value){\n    return std::is_integral_v<decltype(value)> ? value == 0 : false;\n}\n\nauto func (const auto& value){\n    return std::is_integral_v<decltype",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The Python code counts the number of spaces in a string `s`. The C++ completion is about type checking (checking if a value is an integer type and equals 0), which is completely unrelated to counting spaces or any string operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting spaces in the string,\" which is exactly what `s.count(' ')` does \u2014 it counts the number of space characters in string `s`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (char c : value) {\n        if (c == ' ') count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion counts spaces in a string by iterating through characters and incrementing a counter when a space is found. This is exactly what the Python code does with `s.count(' ')` \u2014 counting the number of space characters in the string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting characters in a string, which is relevant to the code's operation of counting spaces using `.count()`. However, the description says \"newline characters\" while the code counts spaces (' '). Despite the wrong specific character type, the core operation (counting a specific character in a string) is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto c : value){\n        if(c == ' ') count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion counts the number of spaces in a string by iterating through characters and checking if each equals `' '`, which is exactly what `s.count(' ')` does in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description \"I'm counting spaces in the string\" directly and accurately describes what the code does \u2014 `s.count(' ')` counts the number of space characters in string `s`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto ch : value){\n        if(ch == ' ') count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion counts the number of spaces in a string by iterating through characters and incrementing a counter when a space is found. This is exactly what the Python code does with `s.count(' ')`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

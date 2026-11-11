@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures both key operations in the code: checking if the string is alphabetic (`isalpha()`) and checking if it's lowercase (`islower()`), combined with a logical AND.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::make_tuple(\n        value,\n        std::is_same_v<decltype(value), char> && std::isalpha(value) && std::islower(value),\n        std::is_integral_v<decltype(value)> && std::is_same_v<decltype(value), bool>,\n        std::is_arithmetic_v<decltype",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.islower() and s.isalpha()",
+    "reasoning": "The C++ completion explicitly checks `std::isalpha(value) && std::islower(value)`, which directly corresponds to the Python code's `s.islower() and s.isalpha()`. This is a clear match to the core logic of the code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if all characters are alphabetic using `str.isalpha()`, which is directly relevant to the code. It misses the `islower()` check but correctly identifies the `isalpha()` component. The mention of checking if the string is not empty is a minor inaccuracy (isalpha() handles that implicitly), but the core operation is captured.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return isalpha(value) && all_of(begin(value), end(value), ::islower);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.islower() and s.isalpha()",
+    "reasoning": "The C++ completion checks both `isalpha` and `islower` on the value, which directly corresponds to the Python code checking `s.isalpha()` and `s.islower()`. Both conditions are present and correctly combined with a logical AND.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures both key operations in the code: checking if the string is alphabetic (`isalpha()`) and checking if it's lowercase (`islower()`), combined with a logical AND.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return is_same_v<string, decltype(value)> && all_of(begin(value), end(value), ::isalpha) && value.find_first_of(\"abcdefghijklmnopqrstuvwxyz\") != string::npos;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.islower() and s.isalpha()",
+    "reasoning": "The Python code checks if a string is all lowercase letters (`islower()` and `isalpha()`). The C++ completion checks if the value is a string, if all characters are alphabetic (`all_of` with `::isalpha`), and if it contains at least one lowercase letter (`find_first_of` with lowercase alphabet). This captures the `isalpha` check and partially captures the lowercase check, even though the implementation is imprecise (it doesn't fully replicate `islower()` which requires ALL characters to be lowercase).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies both `str.isalpha()` and `str.islower()` as the operations being performed, and notes that they're checking if characters are alphabetic \u2014 which is exactly what the code does. The mention of \"not empty\" is a minor extra detail about how these methods behave, not a contradiction.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isalpha(value) && all_of(begin(value), end(value), ::islower); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.islower() and s.isalpha()",
+    "reasoning": "The C++ completion checks both `isalpha` and `islower` on the value, which directly corresponds to the Python code checking `s.isalpha()` and `s.islower()`. Both conditions are present and correctly combined with a logical AND.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

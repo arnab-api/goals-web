@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description says it's checking the current line number in the code, which is completely unrelated to what the code does (counting words that contain at least one digit character). There is no line number concept in the code.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    bool unique = true;\n    std::unordered_set<decltype(value)> elements;\n    for (const auto& item : value) {\n        if (elements.insert(item).second) count++;\n        else unique = false;\n    }\n    return std::make_tuple(count, unique,",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion is about counting unique elements and tracking whether all elements are unique (using an unordered_set), which is completely unrelated to checking for digit characters in words.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting how many lines contain characters that are digits,\" which maps well to what the code does: it counts how many words (called \"w\") contain at least one digit character. The description correctly identifies the counting operation and the digit-checking aspect, though it says \"lines\" instead of \"words\" \u2014 a minor imprecision that doesn't change the core meaning.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n        if(isdigit(c)) count++;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion counts the number of digit characters in a string using `isdigit()`. While the C++ counts digits per string (rather than checking if any digit exists per word, then summing across words), it captures the core relevant operations: iterating over characters and checking `isdigit()`. The underlying property being checked (digit characters) is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"counting how many\" elements meet \"certain criteria\" - this is partially relevant since the code counts words that contain at least one digit character. However, the description is quite generic (\"specific conditions,\" \"certain criteria\") and doesn't identify anything specific about digits or characters. It does capture the counting aspect correctly.\n\nThe description is borderline NO_INFO/YES - it captures the counting operation but is vague about what's being counted and why.\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& elem : value){\n        if(isdigit(elem)) ++count;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+    "reasoning": "The Python code counts the number of words (in a list `words`) that contain at least one digit character. The C++ completion counts the number of digit characters in a single string/iterable `value`. While the C++ code is checking `isdigit` (relevant operation) and iterating over elements, it counts total digits rather than checking if any element contains a digit. However, the core operation \u2014 checking for digit characters \u2014 is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting how many lines contain characters that are digits,\" which maps well to what the code does: it counts how many words (called \"w\") contain at least one digit character. The description correctly identifies the counting operation and the digit-checking aspect, though it says \"lines\" instead of \"words\" \u2014 a minor imprecision that doesn't change the core meaning.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for(auto &c : value) if(isdigit(c)) ++count; return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+    "reasoning": "The C++ completion counts the number of digit characters in a string, which is directly relevant to the Python code's use of `c.isdigit()`. While the Python code checks if *any* character in each word is a digit (and sums across words), the C++ captures the core digit-checking operation, even if it counts rather than uses any/boolean logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

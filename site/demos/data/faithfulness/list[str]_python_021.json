@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"counting occurrences\" which is relevant \u2014 the code does count (sum) words that start with vowels. The description also mentions \"specific characters,\" which loosely corresponds to the vowels \"aeiou\" being checked. It's partial and imprecise but genuinely relevant.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n        if(isalpha(c) && islower(c)) ++count;  \n    }  \n    return count;  \n}  \n\nint countLowercaseLetters(const string& str) {  \n    return count_if(str.begin(), str",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words whose first character is a vowel (case-insensitive). The C++ completion counts lowercase letters in a string, which is related to character classification but misses the key aspects: checking only the first character of each word, and checking specifically for vowels rather than just lowercase letters.\n\nHowever, there is some partial relevance: the code does involve character checking with `isalpha` and `islower`, and counting elements that match a condition \u2014 which shares the counting and character-classification flavor. But the specific property being checked (vowel at word start) is not captured at all.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies the key operation: checking if the first character of words is a vowel. The code does exactly this for each word in a list and counts them, but the core sub-step described (checking first character against vowels) is accurate and relevant.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n        if(isalpha(c) && tolower(c) == 'a') ++count;  \n    }  \n    return count;  \n}  \n\nint countEvenNumbers(const vector<string>& words) {  \n    int evenCount",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words whose first character (lowercased) is a vowel. The C++ completion counts characters equal to 'a' (just one vowel, wrong scope - iterating over characters rather than checking first character of words), but it does capture the core ideas of: counting, lowercasing, and checking for a vowel character. The wrong specifics (only 'a' instead of all vowels, iterating all chars instead of just first) don't disqualify it - the relevant operations (tolower, vowel check, counting) are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if a character is a vowel, which is directly relevant to what the code does \u2014 it counts words whose first character (lowercased) is a vowel. The description correctly identifies the vowel-checking operation, even though it doesn't capture the full context (counting words starting with vowels).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](const auto& c){ return isupper(c); });\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words whose first character (lowercased) is a vowel. The C++ completion counts uppercase characters using `isupper`, which is checking character case rather than vowel membership. While both involve character classification, the C++ is checking for uppercase letters, not vowels, and doesn't check only the first character of each word. However, it does involve counting elements based on a character property, which is partially related.\n\nThe completion is coherent and involves character classification/counting, but it's checking for uppercase letters rather than vowels, and doesn't capture the \"first character\" or \"vowel\" aspects of the code.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if the first character is a vowel, which is exactly what `w[0].lower() in \"aeiou\"` does. The description misses the counting/summing aspect across multiple words, but it correctly identifies the core sub-operation being performed.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](const auto& c) { return isalpha(c) && tolower(c) == c; });\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion counts elements that are alphabetic and lowercase, which is related to character classification but checks for lowercase letters rather than vowels. However, it does involve character-level operations (isalpha, tolower) that are relevant to the general domain of checking character properties, but the specific property being checked (lowercase vs. vowel) is completely different from what the Python code does.\n\nThe C++ completion is coherent and about a specific thing (counting lowercase alphabetic characters), but the property being checked is not what the Python code does (checking if a word starts with a vowel). The `tolower` usage is partially relevant since the Python code uses `.lower()`, but the overall logic diverges significantly \u2014 the C++ checks all characters for being lowercase rather than checking if the first character is a vowel.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   }
  ]
 }

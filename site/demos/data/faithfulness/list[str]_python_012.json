@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"counting words that start with a capital letter,\" which is relevant to what the code does \u2014 it counts words that are title-cased (first letter uppercase). The other parts of the description are wrong or irrelevant, but this partial correct identification is sufficient for a YES verdict.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& elem : value){\n        if(elem > 0) ++count;\n    }\n    return count;\n}\n\nauto func2 (auto value){\n    int count = 0;\n    for(auto& elem : value){\n        if(elem < 0) ++count",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.istitle())",
+    "reasoning": "The C++ completion shows counting elements in a collection that satisfy a condition, which is structurally similar to the Python code (counting words that satisfy `istitle()`). However, the condition being checked (`elem > 0` or `elem < 0`) is completely unrelated to checking if a word is title-cased. The core operation of iterating and counting based on a predicate is relevant, though the specific predicate is wrong.\n\nThe completion is not a heavy loop, and it does capture the counting-with-condition pattern, which is the main operation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The code counts words that are in title case (first letter uppercase, rest lowercase) using `istitle()`. The description mentions checking if a character is uppercase, which is partially related \u2014 title case involves uppercase letters, and `istitle()` does check for uppercase/lowercase properties. However, the description misses the key aspects: it's about words (not individual characters), and it's counting title-cased words, not just checking for uppercase.\n\nStill, \"checking if the character is uppercase\" touches on a genuinely relevant sub-concept (uppercase detection is part of what `istitle()` does), so this is a partial but not completely unrelated description.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(isupper(c)) count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.istitle())",
+    "reasoning": "The Python code counts words that are in title case (first letter uppercase, rest lowercase). The C++ completion counts uppercase characters in a string, which is related but not exactly the same operation. However, it does involve checking for uppercase letters and counting, which are genuinely relevant sub-components of the title case check. The core concepts of iterating over words/characters and counting based on case are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description talks about counting items that start with an uppercase letter, which is partially relevant to what the code does \u2014 `istitle()` checks if words are in title case (first letter uppercase, rest lowercase). The description gets the general idea of counting words/items with uppercase-starting characteristics, though it incorrectly frames it as \"lines\" and \"non-empty intersection\" rather than simply counting title-case words.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(isupper(c)) count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.istitle())",
+    "reasoning": "The C++ completion counts characters that are uppercase in a string, which is related to but not exactly what the Python code does (checking if words are title-cased). However, the core concept of detecting uppercase/title-case properties and counting them is genuinely relevant \u2014 the completion counts uppercase characters and accumulates a count, which shares the counting and case-checking sub-steps with the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The code counts words that are in title case (first letter uppercase, rest lowercase) using `istitle()`. The description mentions checking if a character is uppercase, which is partially related \u2014 title case involves uppercase letters, and `istitle()` does check for uppercase/lowercase properties. However, the description misses the key aspects: it's about words (not individual characters), and it's counting title-cased words, not just checking for uppercase.\n\nStill, \"checking if the character is uppercase\" touches on a genuinely relevant sub-concept (uppercase detection is part of what `istitle()` does), so this is a partial but not completely unrelated description.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(value.begin(), value.end(), [](const auto& ch) { return isupper(ch); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.istitle())",
+    "reasoning": "The Python code counts words that are in title case (first letter uppercase, rest lowercase). The C++ completion counts characters that are uppercase within a value, which is related but checks individual characters rather than whole words. However, it's capturing the concept of checking for uppercase/title-case properties, which is a relevant sub-component of the task.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

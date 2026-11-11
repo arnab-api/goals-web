@@ -34,7 +34,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description mentions checking for truthiness and iterating over elements, which are both relevant to the code (`any()` checks for truthiness, and there's a generator expression iterating over `nums`). However, the description is framed in a meta way (analyzing code structure rather than describing what the code does), and the first part about \"checking if the current line is being executed\" is irrelevant noise.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    bool isPositive = value > 0;\n    bool isEven = value % 2 == 0;\n    auto square = value * value;\n    return std::make_tuple(isPositive, isEven, square);\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion includes `bool isEven = value % 2 == 0;` which directly corresponds to the even-number check (`x % 2 == 0`) in the Python code. Despite also computing unrelated things (isPositive, square), the core operation of checking if a value is even is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if any element meets a condition, and specifically calls out \"at least one even number\" which is exactly what the code does (checking `x % 2 == 0`). The extra noise about \"truthiness\" and \"not zero\" doesn't negate the correct core identification.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool found = false;  \n    for (const auto& elem : value) {  \n        if (elem % 2 == 0) {  \n            found = true;  \n            break;  \n        }  \n    }  \n    return found;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion iterates over a collection and checks if any element satisfies `elem % 2 == 0`, which is exactly what the Python code does with `any(x % 2 == 0 for x in nums)`. This is a perfect match in substance, just implemented iteratively rather than with `any()`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if any element is even, which is directly relevant to the code (`x % 2 == 0` checks for even numbers, and `any()` checks if any element satisfies this). The mention of \"odd\" is incorrect/extra, but the core operation (checking if any element is even) is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](auto x){ return x; }) && \n           std::any_of(value.begin(), value.end(), [](auto x){ return x % 2 == 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion uses `std::any_of` with a lambda checking `x % 2 == 0`, which is directly relevant to checking if any element in a collection is even. The extra `&&` with another `any_of` is noise, but the core operation matches the Python code perfectly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it uses `any()` to check if there exists at least one element `x` in `nums` where `x % 2 == 0`, which is the definition of checking if any element is even.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ for(auto& elem : value) if(elem % 2 == 0) return true; return false; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements exactly the same logic: iterating over a collection and checking if any element is divisible by 2 (even), returning true if found. This directly corresponds to the Python `any(x % 2 == 0 for x in nums)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

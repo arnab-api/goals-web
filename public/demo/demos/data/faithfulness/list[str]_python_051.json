@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if any word in `words` has length 0 (i.e., is an empty string). The description talks about checking for empty lines or whitespace, which is loosely related to the concept of emptiness, and mentions checking \"any\" condition. However, the description frames it as checking code syntax (semicolons, C/C++ empty statements) rather than checking word lengths in a collection, which is quite different. Still, the core concept of checking for emptiness using `any()` is partially captured.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value < 0, std::any_of(begin(value), end(value), [](auto v){ return v < 0; })); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` over a collection, which corresponds to the Python `any()` function. It's checking elements of a collection (iterating over `value` with `begin`/`end`), which parallels iterating over `words`. However, the condition checks `v < 0` instead of `len(w) == 0` (empty string check). Despite the wrong predicate, the core structure of using `any_of` over a collection is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions using `any()` to check if any element in a list is `True`, which is directly relevant to the code that uses `any()` to check if any word has length 0 (i.e., is empty). The description correctly identifies the `any()` function and its purpose, even if it doesn't specify the exact condition being checked.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](const auto& elem){ return elem == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` to check if any element equals 0, which directly corresponds to the Python code using `any()` to check if any word has length 0. The C++ checks `elem == 0` (checking for zero value) while Python checks `len(w) == 0` (checking for zero length) \u2014 this is conceptually equivalent and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "NO",
    "reasoning": "The description mentions checking if any element in a list satisfies a condition, which is relevant \u2014 the code uses `any()` on a list. However, the description says the condition is \"being None,\" while the actual condition checks if the length of a word equals 0 (i.e., empty string). The core operation (checking if any element satisfies a condition) is partially correct, but the specific condition described is wrong. Still, \"any element satisfying a condition\" is a relevant partial match.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto elem){ return elem == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` to check if any element equals 0, which directly corresponds to the Python code using `any()` to check if any word has length 0. The core logic is the same: checking if any element in a collection satisfies a condition (being empty/zero).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "NO",
    "reasoning": "The code checks if any word in `words` has a length of zero (i.e., is an empty string), not if any element is `None`. These are related concepts (both check for \"emptiness\" in some sense), but `None` and empty string `\"\"` are distinct \u2014 the description names a completely different condition.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](const auto& elem){ return elem == \"\"; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` to check if any element in a collection equals an empty string `\"\"`, which directly corresponds to checking if any word has length 0 (i.e., is empty). This captures both the `any()` logic and the empty string/zero-length check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

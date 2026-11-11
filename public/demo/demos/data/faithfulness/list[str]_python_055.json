@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code checks whether all words have unique lengths (by comparing the count of words to the count of distinct word lengths). The description talks about checking vowels and character positions, which is completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_integral_v<decltype(value)> && (value % 2 != 0); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+    "reasoning": "The Python code checks whether all words have unique lengths (by comparing the count of words to the count of distinct lengths). The C++ completion checks if a value is an integral type and odd (not divisible by 2). These are completely unrelated operations \u2014 one is about uniqueness of string lengths, the other is about odd integers.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if all word lengths are unique by comparing `len(words)` to `len(set(len(w) for w in words))`. The description says it's checking if all elements are unique by comparing list length to set length \u2014 this captures the core mechanism correctly (comparing length of collection to length of set to check uniqueness), even though it omits the detail that it's the *lengths of words* being checked for uniqueness rather than the words themselves.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<decltype(value)> unique_elements{std::begin(value), std::end(value)};\n    return unique_elements.size() == std::size(value);\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+    "reasoning": "The C++ completion creates an unordered_set from elements of a collection and checks if the set's size equals the original collection's size \u2014 this is exactly checking for uniqueness/distinctness of elements. The Python code checks if all word lengths are unique by comparing `len(set(len(w) for w in words))` to `len(words)`. The core operation (comparing size of a set to size of original collection to check for uniqueness) is the same, even though the C++ operates on direct elements rather than word lengths.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if all words have unique lengths by comparing `len(words)` to `len(set(len(w) for w in words))`. The description says it's checking if all elements are unique by comparing list length to set length. The description captures the core mechanism (comparing length of list to length of set to check uniqueness) correctly, even though it misidentifies what's being made unique (elements vs. word lengths).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::all_of(value.begin(), value.end(), [&](const auto& elem) { \n        return std::set(value.begin(), value.end()).size() == value.size(); \n    });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+    "reasoning": "The C++ completion checks whether the size of a set equals the size of the collection, which is exactly the core logic of the Python code (checking if all lengths are unique by comparing set size to total count). The implementation uses `std::set` and `.size()` comparison, which directly mirrors `len(set(...)) == len(...)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if all word lengths are unique by comparing `len(words)` to `len(set(len(w) for w in words))`. The description correctly identifies the core mechanism: comparing the length of a list to the length of a set to check for uniqueness. The description misses the detail that it's the *lengths of words* being checked for uniqueness (not the words themselves), but the fundamental operation described is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::unordered_set<decltype(value)> s;\n    for(auto&& e : value) s.insert(e);\n    return s.size() == value.size();\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+    "reasoning": "The C++ completion creates an unordered_set from elements of a collection and checks if the set's size equals the collection's size \u2014 this is exactly checking for uniqueness/distinctness of elements. The Python code checks if all word lengths are unique (by comparing the length of the list to the size of a set of lengths). The C++ captures the core idea of checking uniqueness via set size comparison, even though it operates on elements directly rather than on lengths of words.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

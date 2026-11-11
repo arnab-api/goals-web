@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code is counting the number of words in a list that are title-cased (using `istitle()`). The description mentions \"counting the number of times a specific condition is met in the code,\" which is partially relevant \u2014 the code does count how many times a condition is met (the `istitle()` condition). However, the description frames it as analyzing code structure rather than processing input data, and the other statements are wrong. The last statement is close enough to what the code does to count as a partial match.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return value; \n}\n\nint count_true(bool* arr, int size){\n    int count = 0;\n    for(int i = 0; i < size; ++i){\n        if(arr[i]) count++;\n    }\n    return count;\n}\n\ntemplate<typename T>\nint count_true(T* arr,",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w.istitle())",
+    "reasoning": "The C++ completion implements a `count_true` function that counts the number of true/positive values in an array. The Python code counts words that satisfy a condition (`istitle()`). The core operation \u2014 counting elements that satisfy a boolean condition \u2014 is genuinely relevant, even though the specific condition (title case) is not mentioned.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "NO",
    "reasoning": "The code counts words that are in title case (using `.istitle()`), while the description mentions checking if a character is uppercase. Title case and uppercase are related concepts (both involve capitalization), and checking for title case does involve examining whether characters are uppercase. However, the description says \"current character\" (singular) rather than words, and \"uppercase\" rather than \"title case\" \u2014 these are meaningfully different operations.\n\nThat said, title case checking is conceptually related to uppercase checking (title case means the first letter is uppercase), so there is partial relevance. The description captures a fragment of what's happening (capitalization checking), even if imprecisely.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int countUpper = 0;  \n    int countLower = 0;  \n    for (const auto& ch : value) {  \n        if (isupper(ch)) countUpper++;  \n        if (islower(ch)) countLower++;  \n    }  \n    return make_pair(countUpper, count",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w.istitle())",
+    "reasoning": "The Python code counts words that are title-cased (first letter uppercase, rest lowercase). The C++ completion counts uppercase and lowercase characters within a value, which is directly relevant to checking title case (a title-cased word has exactly one uppercase letter at the start and lowercase letters after). This is a partial but genuinely relevant implementation of the underlying character-case checking needed for `istitle()`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting elements in a list, which is relevant. However, it says \"uppercase letters\" while the code checks for title-case words (`.istitle()`). Despite the wrong specifics (uppercase vs. title case), the core operation of counting elements in a list that match a capitalization condition is captured.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](const auto& elem){ return isupper(elem); });\n}\n\nauto func2 (auto value){\n    return count_if(begin(value), end(value), [](const auto& elem){ return islower(elem); });\n}\n\nauto func3 (auto value){\n    return count",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w.istitle())",
+    "reasoning": "The Python code counts words that are title-cased (first letter uppercase, rest lowercase). The C++ completion shows `count_if` with `isupper` and `islower` checks, which are directly relevant sub-operations for checking title case (a title-cased word has an uppercase first character and lowercase remaining characters). This is genuinely relevant to the underlying operation, even though the exact implementation differs.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "NO",
    "reasoning": "The code counts words that are in title case (using `.istitle()`), while the description says \"uppercase.\" Title case and uppercase are related but distinct string properties. However, the description is at least partially relevant \u2014 it's about checking the capitalization/case property of words, which is conceptually adjacent to what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return count_if(begin(value), end(value), [](const auto& v){ return isupper(v); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w.istitle())",
+    "reasoning": "The Python code counts words that are title-cased (first letter uppercase, rest lowercase). The C++ completion counts elements where `isupper` is true, which relates to checking for uppercase characters. While the C++ checks individual characters for uppercase rather than title case on words, it's capturing a related concept (checking for uppercase/capitalization properties) that is genuinely relevant to the title-case check being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if the string is not empty (correct) and checking alphabetic property (correct, though it says \"all characters\" when the code only checks the first character `s[0]`). The core concepts of alphabetic checking and empty string handling are both present and relevant.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return is_arithmetic<decltype(value)>::value && all_of(begin(value), end(value), [](char c){return isalpha(c);}); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The Python code checks if the first character of string `s` is alphabetic (using `isalpha()`). The C++ completion uses `isalpha(c)` in an `all_of` loop (checking all characters rather than just the first), which is partially relevant \u2014 it correctly identifies the `isalpha` operation but applies it to all characters instead of just the first one. Despite the wrong scope (all vs first character), the core operation (`isalpha`) is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it checks if the string `s` is non-empty and if so, whether its first character is alphabetic (`isalpha()`).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return isalpha(value[0]) && islower(value[0]);\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion checks if the first character of a string is alphabetic using `isalpha(value[0])`, which is directly relevant to what the Python code does (`s[0].isalpha()`). The additional `islower` check is an extra condition not in the Python code, but the core operation of checking `isalpha` on the first character is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it checks if the first character of string `s` is alphabetic using `isalpha()`, with a guard for empty strings.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return is_same_v<decltype(value), bool> && value;\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The Python code checks if the first character of a string is alphabetic (using `isalpha()`). The C++ completion checks if a value is of type `bool`, which is completely unrelated to checking whether a character is alphabetic or handling string/character operations.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code checks if the first character of the string is alphabetic. The \"lowercase\" part is wrong (the code uses `isalpha()`, not `islower()`), but the core operation of checking if the first character is alphabetic is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isalpha(value[0]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion checks if the first character of a string/sequence is alphabetic using `isalpha(value[0])`, which directly corresponds to what the Python code does with `s[0].isalpha()`. This is a clear match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

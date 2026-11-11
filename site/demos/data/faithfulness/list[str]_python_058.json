@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description says \"counting the number of lines in the code,\" which is completely unrelated to what the code does \u2014 the code counts words whose last character is not a vowel. There is no line-counting involved.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& i : value) {  \n        if constexpr(is_integral_v<decltype(i)>) count += i;  \n        else if constexpr(is_same_v<decltype(i), string>) count += i.size();  \n    }  \n    return make_pair(count, accumulate(value.begin",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[-1].lower() not in 'aeiou')",
+    "reasoning": "The Python code counts words whose last character is not a vowel. The C++ completion counts elements in a collection (either summing integers or summing string sizes), which involves iteration and counting but doesn't capture the key operation: checking the last character of each word against vowels. The C++ code is about summing/accumulating values rather than checking a specific character property.\n\nHowever, there is some relevance: it iterates over a collection and counts/accumulates something, which is a partial match to the overall structure of counting words meeting a condition. But the specific operation (last character vowel check) is completely absent, and the C++ code is doing something quite different (summing integers or string sizes).\n\nThe completion is coherent and shows iteration + counting, but the actual property being checked is entirely different from the Python code's vowel check on the last character.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies checking the last character of words for consonants (characters not in vowels), which is exactly what the code does. The code counts words whose last character is not a vowel (i.e., is a consonant), matching the description's substance well.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto count = 0;  \n    for(auto it = value.rbegin(); it != value.rend(); ++it) {  \n        if(!isalpha(*it) || isalpha(*it) && !strchr(\"aeiouAEIOUaeiou\", *it)) count++;  \n    }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[-1].lower() not in 'aeiou')",
+    "reasoning": "The Python code counts words whose last character (lowercased) is not a vowel. The C++ completion iterates through characters (using reverse iteration), checks if they are alphabetic, and checks against vowels (aeiou). However, the C++ code iterates over all characters in the string rather than just checking the last character of each word, and it counts individual characters rather than words. Despite these differences, it correctly identifies the core operations: checking vowels and counting non-vowel characters, which is genuinely relevant to the task.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting items and checking if something is not a vowel, which is directly relevant to what the code does (counting words whose last character is not a vowel). The description is slightly off in saying \"not a space and is a letter\" rather than \"last character of each word,\" but the core concept of counting non-vowel characters is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(!isalpha(c) || islower(c) && !strchr(\"aeiouAEIOU\",c)){\n            count++;\n        }\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[-1].lower() not in 'aeiou')",
+    "reasoning": "The Python code counts words whose last character is not a vowel (case-insensitive). The C++ completion counts characters that are either non-alphabetic or are lowercase consonants, checking against \"aeiouAEIOU\". While the C++ is iterating over characters rather than words and checking all characters rather than just the last one, it does contain the core relevant elements: counting items, checking for vowels using \"aeiouAEIOU\", and using `islower`/vowel membership testing. The vowel-checking logic is clearly relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if a character is not a vowel, which is directly relevant to the code that counts words whose last character is not a vowel (not in 'aeiou'). The \"alphabetic character\" part is slightly off (the code doesn't check for alphabetic), but the core concept of checking for non-vowels is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (auto &c : value) {\n        if (!isalpha(c) || tolower(c) == c && !strchr(\"aeiou\", tolower(c))) count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[-1].lower() not in 'aeiou')",
+    "reasoning": "The C++ completion counts characters that are not vowels, which is closely related to the Python code that counts words whose last character is not a vowel. While the C++ iterates over characters in a single string rather than last characters of words, it correctly identifies the core operation: checking if characters are not vowels (using `strchr(\"aeiou\", tolower(c))`). The vowel-checking logic is directly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

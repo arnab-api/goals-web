@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking if a line has characters and if the first character is not whitespace. The code actually checks if any character in `s` is a digit. These are completely unrelated operations \u2014 the description mentions whitespace/first character checks, while the code is about digit detection.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0; }\n\nbool hasPositive(auto value) { return value > 0; }\n\nbool containsNonZero(auto value) { return value != 0; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks if any character in string `s` is a digit. The C++ completion talks about checking if a value is positive or non-zero, which is related to numeric checking but misses the key aspect of checking for digit characters in a string. However, \"contains non-zero\" and \"has positive\" do share a conceptual similarity with checking for the presence of digits (digits are non-zero numeric characters, though not all digits are non-zero). The completion doesn't mention strings, characters, or digit detection specifically.\n\nThe C++ completion is coherent but focuses on numeric positivity/non-zero checks rather than digit character detection in a string. It doesn't capture the string iteration or character classification aspect of the code.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 checking if any character in the string is a digit using `any()` and `isdigit()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](auto c) { return std::isdigit(c); }) && \n           std::find_if(value.begin(), value.end(), [](auto c) { return c == '0'; }) != value.end() && \n           std::any_of(value.begin(),",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `std::any_of` with `std::isdigit` to check if any character in the string is a digit, which is exactly what the Python code does with `any(c.isdigit() for c in s)`. The additional conditions (checking for '0') are wrong specifics but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "NO",
    "reasoning": "The code checks if any character in the string is a digit (using `isdigit()`), while the description says it's checking if any character is a letter. The structure is correct (checking any character in a string for a property), but the specific property identified (letter vs digit) is wrong. However, the core operation \u2014 checking if any character satisfies a property \u2014 is partially relevant.\n\nWait, let me reconsider. The description says \"checking if any character in the string is a letter\" \u2014 the `any()` over characters in a string is correct, but the property (letter vs digit) is completely wrong. The question is whether \"any character in the string\" counts as a relevant sub-part. The description does capture the `any(... for c in s)` structure correctly, just misidentifies `isdigit()` as checking for letters.\n\nGiven the lenient grading instructions, identifying the `any character in the string` part is a relevant sub-step, even though the specific property (digit vs letter) is wrong.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::find_if(value.begin(), value.end(), [](const auto& v) { return v; }) != value.end(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks if any character in string `s` is a digit. The C++ completion uses `std::find_if` with a predicate to check if any element satisfies some condition \u2014 this captures the \"any\" operation correctly (finding if any element meets a criterion). However, the predicate `return v;` is generic and doesn't specifically check for digits. Still, the core operation (checking if any element satisfies a condition) is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does \u2014 checking if any character in the string `s` is a digit using `any()` with `isdigit()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    for(auto c : value)  \n        if(isdigit(c))  \n            return true;  \n    return false;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: iterating over characters in a string and checking if any character is a digit, returning true if found. This is a direct equivalent of `any(c.isdigit() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

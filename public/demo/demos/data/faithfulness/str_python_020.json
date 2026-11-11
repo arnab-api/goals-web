@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking a line number, which is completely unrelated to what the code does (counting alphabetic characters in a string). There is no conceptual overlap between line number tracking and summing `isalpha()` results.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_tuple(\n        value,\n        static_cast<bool>(value),\n        static_cast<int>(value > 0),\n        static_cast<int>(std::is_integral_v<decltype(value)>),\n        static_cast<int>(std::is_same_v<decltype(value), std::string>),\n        static_cast<int",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The Python code counts alphabetic characters in a string `s`. The C++ completion checks various type properties (is_integral, is_same with string, bool conversion, comparison to 0) but doesn't address character classification (like `isalpha`) or counting/summing. The type checks are unrelated to the actual operation being performed.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it counts the number of alphabetic characters in string `s` by summing the boolean results of `isalpha()` for each character.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto c : value) {  \n        if(isalpha(c)) count++;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of alphabetic characters in a string using `isalpha()`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it counts alphabetic characters in string `s` using `isalpha()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto c : value) {  \n        if(isdigit(c)) count++;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The Python code counts alphabetic characters in a string using `isalpha()`. The C++ completion counts characters in a string using a loop, but checks for digits with `isdigit()` rather than alphabetic characters with `isalpha()`. The structure is very similar (counting characters matching a property), but the specific property being checked is different (digits vs. alphabetic characters).\n\nDespite the wrong predicate (`isdigit` vs `isalpha`), the completion captures the relevant operation: iterating over characters and counting those matching a character-class predicate. This is a wrong constant/operator but the underlying concept (counting characters by type) is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does: it counts alphabetic characters in string `s` using `isalpha()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(isalpha(c)) ++count;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of alphabetic characters in a string using `isalpha()`. This is a direct and accurate representation of what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

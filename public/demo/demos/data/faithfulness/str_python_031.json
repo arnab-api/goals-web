@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code counts the number of spaces in string `s` using `.count(' ')`. The description talks about counting comments in a file, which is completely unrelated. However, the description does mention \"counting the number of characters\" at the end, which is partially relevant to the `.count()` operation, though applied to the wrong thing (characters vs spaces). The description is coherent but focused on comment-counting, which is not what the code does.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value, std::count_if(value.begin(), value.end(), [](char c){return c == ' ';}) == 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion counts spaces (characters equal to `' '`) in a string, which is exactly what the Python code does with `s.count(' ')`. The comparison `== 0` is an extra detail that doesn't match the Python code's intent (which just counts, not checks if zero), but the core operation of counting spaces is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The code counts spaces (' ') in string `s`, while the description says it counts newline characters (`\\n`). Both are about counting a specific whitespace character in a string \u2014 the operation (counting characters in a string) is correct, but the specific character is wrong. However, the description does identify the correct operation (counting occurrences of a character in `s`) and the correct type of thing being counted (a whitespace character), just with the wrong specific character.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (char c : value) {\n        if (c == ' ') count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion counts the number of spaces in a string by iterating through characters and checking if each is a space (`' '`), which is exactly what `s.count(' ')` does in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting spaces in a string, which is exactly what `s.count(' ')` does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return count_if(begin(value), end(value), [](auto c){ return isspace(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion counts whitespace characters in a string using `count_if` with `isspace`, which is directly relevant to the Python code that counts spaces in string `s` using `s.count(' ')`. Both are counting space/whitespace occurrences in a string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 counting the number of spaces in a string using `.count(' ')`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (char c : value) {\n        if (c == ' ') count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion counts the number of spaces in a string by iterating through characters and checking if each is a space (`' '`), which is exactly what `s.count(' ')` does in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

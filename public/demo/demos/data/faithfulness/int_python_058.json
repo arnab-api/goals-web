@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking if a value is truthy/non-zero, while the code is computing the absolute value of `n` and assigning it to `b`. These are related concepts (both involve the magnitude/sign of a number) but the description is specifically about a truthiness check, which is not what `abs()` does. However, there's a tangential connection since absolute value relates to non-zero checking, but the core operation described (truthiness check) is not what the code implements.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\n\nbool isEven(int num) { return num % 2 == 0; }\n\nint square(int num) { return num * num; }\n\nint processValue(int x) {\n    auto original = x;\n    auto is_even = isEven(original);\n    auto squared = square(original);\n    return",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The Python code computes the absolute value of `n`. The C++ completion contains generic utility functions (identity, even check, squaring) with no mention of absolute value or any related operation. None of the sub-steps (modulo, squaring, identity) are relevant to computing absolute value.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions computing the absolute value, which is exactly what `abs(n)` does in the code.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return abs(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `abs(value)`, which is exactly what the Python code does with `abs(n)`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is computing the absolute value of a variable, which is exactly what `abs(n)` does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return abs(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `abs(value)`, which directly corresponds to the Python code computing `abs(n)`. This is a clear match in both operation and structure.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions calculating the absolute value, which is exactly what `abs(n)` does. The variable name is wrong (x vs n) but the operation described is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::abs(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `std::abs(value)`, which directly corresponds to the Python code computing `abs(n)` \u2014 both compute the absolute value of an input. This is a clear and direct match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

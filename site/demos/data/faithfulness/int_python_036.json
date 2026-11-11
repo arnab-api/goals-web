@@ -34,7 +34,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description mentions computing a result and checking if it's a perfect square, which is unrelated to what the code does (summing the digits of a number). The code computes the digit sum of `n`, while the description focuses on perfect square checking. However, the description is too vague and generic about \"checking a result\" without identifying the digit sum operation.\n\nActually, re-reading: the description doesn't identify the digit sum operation at all. It's about checking a perfect square, which is completely unrelated to summing digits.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value, value * value); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(n))",
+    "reasoning": "The Python code computes the sum of digits of a number `n`. The C++ completion returns a pair of (value, value\u00b2), which is completely unrelated to digit sum computation \u2014 it doesn't involve string conversion, digit extraction, or summation of digits.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it computes the sum of the digits of a number by iterating over each digit character in the string representation of `n` and summing their integer values.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto sum = 0;  \n    while (value > 0) {  \n        sum += value % 10;  \n        value /= 10;  \n    }  \n    return sum;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion implements digit sum extraction using the modulo-10 approach (extracting digits via `value % 10` and dividing by 10 iteratively), which is exactly what the Python code does by converting a number to a string and summing its digits. Both compute the sum of digits of a number.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it calculates the sum of the digits of a number by converting it to a string, iterating over each character, converting back to int, and summing them.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value < 10) ? value : ([value](){ int sum = 0; while(value > 0) { sum += value % 10; value /= 10; } return sum; })(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion implements digit sum calculation - it extracts digits using modulo 10 and integer division, accumulating them into a sum. This is exactly what the Python code does (summing the digits of n). The C++ uses an iterative approach while Python uses string conversion, but both compute the same thing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it computes the sum of the digits of the number `n` by iterating over each character in the string representation and converting to int.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0;\n    while (value > 0) {\n        sum += value % 10;\n        value /= 10;\n    }\n    return sum;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion implements digit sum extraction using the modulo-10 method, which is exactly what the Python code does (summing the digits of a number). The C++ iteratively extracts digits with `value % 10` and accumulates them in `sum`, which is semantically identical to the Python's `sum(int(digit) for digit in str(n))`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }
