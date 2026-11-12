@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if elements are \"in order,\" which is relevant to what the code does (checking if the list is non-decreasing/sorted). The specific mechanism described (checking if index equals length) is wrong, but the core concept of verifying elements are in order is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::is_sorted(value.begin(), value.end()) && \n           std::adjacent_find(value.begin(), value.end(), std::not_equal_to<>()) == value.end() &&\n           std::all_of(value.begin(), value.end(), [](const auto& v) { return v; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion uses `std::is_sorted` which directly corresponds to checking if a sequence is non-decreasing (sorted in ascending order), which is exactly what the Python code does with `all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))`. The additional conditions (`adjacent_find` and `all_of`) are extraneous but don't negate the core relevance of `is_sorted`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks that each element is less than or equal to the next, verifying the list is sorted in non-decreasing order.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    for (size_t i = 1; i < value.size(); ++i) {\n        if (value[i-1] > value[i]) return false;\n    }\n    return true;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it checks whether a sequence is non-decreasing by iterating through adjacent elements and returning false if any element is greater than the next one. This is a perfect match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: checking if each element is less than or equal to the next element, and verifying the list is sorted in non-decreasing order. This matches the `all(nums[i] <= nums[i + 1] ...)` check perfectly.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    bool is_sorted = true;\n    for (size_t i = 1; i < value.size(); ++i) {\n        if (value[i] < value[i - 1]) {\n            is_sorted = false;\n            break;\n        }\n    }\n    return is_sorted;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion implements a check for whether an array/sequence is sorted in non-decreasing order, which is exactly what the Python code does (checking that each element is <= the next element). The logic is essentially identical.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: checking if each element is less than or equal to the next one, which verifies the list is sorted in non-decreasing order.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    for (size_t i = 1; i < value.size(); ++i) {\n        if (value[i-1] > value[i]) return false;\n    }\n    return true;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it checks whether a sequence is non-decreasing by iterating through consecutive elements and returning false if any element is greater than the next. This is a perfect match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

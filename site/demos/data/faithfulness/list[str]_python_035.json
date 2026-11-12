@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description says \"counting the number of lines in the code,\" which is completely unrelated to what the code does. The code counts words in a list that have fewer than 3 characters, not lines of code.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& i : value) {  \n        if(i < 10) ++count;  \n    }  \n    return make_tuple(count, accumulate(value.begin(), value.end(), 0, [](int a, auto b){return a + (b < ",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) < 3)",
+    "reasoning": "The C++ completion counts elements in a collection that are less than some threshold (10 instead of 3), which directly mirrors the Python code's logic of counting words with length less than 3. The threshold is wrong (10 vs 3) and it's comparing elements directly rather than their lengths, but the core structure of counting items below a threshold is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting lines shorter than 3 characters,\" while the code counts words (elements in `words`) with length less than 3 characters. The core operation \u2014 counting items with fewer than 3 characters \u2014 is correctly identified, even though \"lines\" is used instead of \"words.\"\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& elem : value){\n        if(elem < 3) ++count;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) < 3)",
+    "reasoning": "The C++ completion counts elements in a collection that are less than 3, which directly mirrors the Python code that counts words with length less than 3. The logic is essentially identical: iterate over a collection, check if each element is less than 3, and increment a counter.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting elements where `len(...) < 3` is true, which directly matches the code's logic of counting words with length less than 3. The description uses \"lines\" instead of \"words,\" but the core operation (counting items with length < 3) is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto i : value){\n        if(i < 0) ++count;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) < 3)",
+    "reasoning": "The C++ code counts elements in a collection that satisfy a condition (< 0 vs < 3), and uses a counter variable incremented in a loop. The Python code counts words with length less than 3. The C++ completion captures the core structure: iterating over a collection and counting elements that meet a threshold condition, even though the specific condition (< 0 instead of len(w) < 3) is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting elements where length is less than a threshold, which is relevant to the code (counting words where `len(w) < 3`). The threshold is wrong (1 instead of 3), but the core operation \u2014 counting items based on a length comparison \u2014 is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for(auto& elem : value) if(elem.size() < 2) ++count; \n    return count; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) < 3)",
+    "reasoning": "The C++ completion counts elements in a collection whose size is less than a threshold (2 instead of 3), which directly mirrors the Python code that counts words with length less than 3. The core operation \u2014 iterating over words and counting those below a length threshold \u2014 is correctly captured, even though the threshold value differs slightly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

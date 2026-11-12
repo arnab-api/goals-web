@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code counts words that start with a vowel, but the description talks about counting lines and characters. However, there is a partial overlap: the description does mention counting/filtering and summing, which are operations present in the code. But the core subject matter (lines and characters vs. words starting with vowels) is completely different.\n\nThe description mentions \"filtering\" and \"summing\" which are operations in the code, but the actual content being processed (lines/characters vs. words starting with vowels) is entirely wrong. The description doesn't identify any relevant property being checked (vowel check on first character of words).\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& elem : value) {  \n        if constexpr(is_same_v<decltype(elem), string>) {  \n            count += elem.length();  \n        } else {  \n            count += 0;  \n        }  \n        if constexpr(is_integral_v<decltype(elem)>)",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion iterates over elements and counts something related to strings (element length), which shows it's iterating over a collection of strings. However, it counts string lengths rather than checking if the first character is a vowel \u2014 it doesn't check the first character or vowel membership at all. That said, it does correctly identify that we're iterating over a collection of strings and counting something, which is partially relevant.\n\nThe completion is not a heavy loop, and it does show some relevant structure (iterating over words/strings and counting), but the actual property being checked (first character being a vowel) is completely absent. The counting of string lengths is unrelated to the vowel check. However, the iteration over strings and maintaining a count is partially relevant to the overall structure.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if the character is a vowel,\" which is directly relevant to what the code does \u2014 it checks if the first character of each word (`w[0].lower()`) is a vowel (i.e., in 'aeiou'). The description correctly identifies the vowel-checking operation, even if it omits the counting/summing aspect.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& ch : value) {  \n        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||  \n            ch == 'A' || ch ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting characters that are vowels (both lowercase and uppercase), iterating over a collection and checking against 'a', 'e', 'i', 'o', 'u' and their uppercase equivalents. The Python code counts words whose first character is a vowel (case-insensitive). The C++ captures the vowel-checking logic and counting, which are the core operations, even though it iterates over characters rather than checking only the first character.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting words where a character is a vowel, which is directly relevant to what the code does (counting words whose first character is a vowel). The mention of \"lowercase\" is also relevant since the code uses `.lower()`. The description is not perfectly precise (says \"lines\" instead of \"words\", and slightly misstates the condition), but the core concept is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n        if(isalpha(c) && tolower(c) == 'a') ++count;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion counts occurrences of a specific character ('a') in a string, which is partially relevant \u2014 it involves counting elements that match a vowel-related condition (checking for 'a', a vowel). However, the Python code counts words whose first character is a vowel, while the C++ iterates over all characters in a single string checking only for 'a'. Despite the wrong specifics (only 'a' instead of all vowels, and iterating over characters rather than first letters of words), the core concept of counting elements matching a vowel condition is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if the character is a vowel,\" which is directly relevant to what the code does \u2014 it checks if the first character of each word (`w[0].lower()`) is a vowel (i.e., in 'aeiou'). The description correctly identifies the vowel-checking operation, even if it omits the counting/summing aspect.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (const auto& ch : value) {\n        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || \n            ch == 'A' || ch == 'E",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting vowels by checking each character against 'a', 'e', 'i', 'o', 'u' (both lowercase and uppercase). The Python code counts words that start with a vowel. The C++ is iterating over characters checking for vowels, which is highly relevant - it captures the vowel-checking aspect, though it iterates over all characters rather than just the first character of each word.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

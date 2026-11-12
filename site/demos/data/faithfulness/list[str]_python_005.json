@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting the total number of characters in the string,\" while the code sums the lengths of individual words. The description mentions \"including spaces and punctuation,\" which is slightly off since the code sums word lengths (not the full string with spaces), but the core idea of counting total characters across words is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return accumulate(begin(value), end(value), 0, plus<>{}); \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `accumulate` to sum values over a collection, which is directly relevant to the Python code that computes a sum (`sum(...)`) over the words. The accumulation pattern matches the summing operation, even though the specific detail of summing lengths isn't explicitly shown.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting the total number of characters in the string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words in the input.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return accumulate(begin(value), end(value), 0, [](int a, auto b){ return a + b.size(); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `accumulate` over a collection, summing `b.size()` for each element \u2014 this is directly equivalent to summing the lengths of words in a collection, which is exactly what the Python code does with `sum(len(w) for w in words)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"calculating the total number of characters in the string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words (which together form the string).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return accumulate(begin(value), end(value), 0, [](int sum, const auto& v) { return sum + v; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion implements an accumulation/sum operation over a collection, which is directly relevant to what the Python code does \u2014 summing values (word lengths) across a collection (words). The C++ uses `accumulate` with a lambda that adds elements, which corresponds to the `sum(...)` operation in Python, even though the specific quantity being summed (string lengths) isn't explicitly shown.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting the total number of characters in the string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words in the input.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int total = 0;\n    for (const auto& elem : value) {\n        total += elem.size();\n    }\n    return total;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion iterates over a collection (`value`), accumulates the `.size()` of each element, and returns the total \u2014 which is exactly what the Python code does: summing the lengths of words in a list.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

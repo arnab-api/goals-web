@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking a line number, which is completely unrelated to what the code does (checking if any character in a string is a digit). No relevant sub-operation is identified.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_tuple(  \n        value,  \n        static_cast<bool>(value),  \n        static_cast<int>(value > 0),  \n        static_cast<int>(std::is_integral_v<decltype(value)>),  \n        static_cast<double>(value)  \n    );  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(char.isdigit() for char in s)",
+    "reasoning": "The Python code checks if any character in a string is a digit. The C++ completion checks `std::is_integral_v<decltype(value)>` which tests whether a value is of an integral type \u2014 this is conceptually related to checking for digit/integer properties. However, the overall completion is about converting/casting a value to various types and checking if it's integral as a type trait, not about iterating characters and checking if they're digits. The `is_integral_v` check is a loose connection at best, and the rest of the completion is unrelated type conversion.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does \u2014 checking if any character in the string is a digit using `any(char.isdigit() for char in string)`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool hasDigit = false;  \n    for (char c : value) {  \n        if (isdigit(c)) {  \n            hasDigit = true;  \n            break;  \n        }  \n    }  \n    return hasDigit;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(char.isdigit() for char in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it iterates over characters in a string and checks if any character is a digit, returning a boolean result. This is a direct equivalent of `any(char.isdigit() for char in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies the use of `char.isdigit()` to check if a character is a digit, which is exactly what the code does. While it misses the `any()` wrapper that checks across all characters in the string, the core operation is accurately described.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::is_integral<decltype(value)>::value && value > 0;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(char.isdigit() for char in s)",
+    "reasoning": "The Python code checks if any character in string `s` is a digit. The C++ completion checks if a value is an integral type and positive, which relates to checking for numeric/integer properties. While the C++ checks a type property rather than a character property, `std::is_integral` is conceptually related to checking for digit/integer nature, making it partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does \u2014 checking if any character in the string is a digit using `any(char.isdigit() for char in string)`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    for (char c : to_string(value)) {  \n        if (isdigit(c)) return true;  \n    }  \n    return false;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(char.isdigit() for char in s)",
+    "reasoning": "The C++ completion iterates over characters and checks `isdigit(c)`, which is exactly what the Python code does \u2014 checking if any character in a string is a digit. The logic is essentially identical.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it creates a set from `nums` (finding unique elements), then uses `len()` to count them (determining the number of distinct items).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    using T = decltype(value);  \n    T maxVal = *std::max_element(value.begin(), value.end());  \n    std::size_t uniqueCount = std::set<T>(value.begin(), value.end()).size();  \n    return std::make_pair(maxVal, uniqueCount);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion explicitly computes `uniqueCount` using `std::set<T>(value.begin(), value.end()).size()`, which is directly equivalent to `len(set(nums))` in the Python code. This is a clear match to the core operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it converts `nums` to a set to find unique elements, then uses `len()` to count them.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::set<decltype(value)> uniqueValues{value};\n    return std::make_pair(uniqueValues.size(), value);\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion creates a `std::set` of unique values and returns its size, which is directly relevant to the Python code that counts unique elements using `set()` and `len()`. Both approaches involve finding the number of unique values in a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description \"counting unique elements in the list\" is directly relevant to what the code does \u2014 it converts `nums` to a set to get unique elements, then uses `len()` to count them.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set(value.begin(), value.end()).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion creates a set from a collection and returns its size, which is exactly what the Python code does \u2014 converting `nums` to a set and getting its length to count unique elements.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it converts `nums` to a set to find unique elements, then uses `len()` to count them.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::set(value.begin(), value.end()).size(); \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion creates a set from a collection and returns its size, which is exactly what the Python code does \u2014 it converts `nums` to a set and gets its length to count unique elements. This is a clear and direct match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

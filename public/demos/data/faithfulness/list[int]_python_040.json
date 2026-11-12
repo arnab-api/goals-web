@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description mentions finding the maximum value, which is partially relevant (the code does use `max()`). However, it also incorrectly says \"sum of elements\" when the code actually computes the range (max minus min), and it misses the `min()` operation entirely. The description is coherent but only partially correct \u2014 it identifies one of two key operations.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_pair(value - *std::min_element(value.begin(), value.end()), *std::max_element(value.begin(), value.end()) - value.front());  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums) if nums else 0",
+    "reasoning": "The Python code computes the range of a list (max - min), returning 0 if empty. The C++ completion uses `std::min_element` and `std::max_element` on a collection, and computes differences involving these extremes. While the specific computation is slightly off (it computes two different differences rather than just max-min), it clearly identifies the core operations of finding minimum and maximum elements and computing differences between them.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: finding the maximum and minimum values in the list and computing their difference (range).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *max_element(value.begin(), value.end()) - *min_element(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the difference between the maximum and minimum elements of a collection, which is exactly what the Python code does (max(nums) - min(nums)). The read-out correctly identifies both the max and min operations and their subtraction, matching the core logic of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it calculates the difference between the maximum and minimum values in the list (which is the range of the list).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return max(value) - min(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums) if nums else 0",
+    "reasoning": "The C++ completion shows `max(value) - min(value)`, which directly corresponds to the Python code computing `max(nums) - min(nums)` \u2014 the range of a collection. This is clearly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the range (max - min) of a list, which is exactly what the code does, including the conditional check for an empty list.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *max_element(value.begin(), value.end()) - *min_element(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the difference between the maximum and minimum elements of a collection, which is exactly what the Python code does (max(nums) - min(nums)). The implementation matches the core operation perfectly, using max_element and min_element.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

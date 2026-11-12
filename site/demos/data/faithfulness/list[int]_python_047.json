@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions calculating the average of numbers using sum/len, which is exactly what the code does. The details differ (wrong variable names, wrong condition, wrong else value) but the core operation \u2014 computing an average via sum divided by length \u2014 is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_pair(std::is_integral<decltype(value)>::value ? value : 0, \n                         std::accumulate(std::begin(value), std::end(value), 0) / static_cast<double>(value.size()));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes `std::accumulate(...) / static_cast<double>(value.size())`, which is essentially computing the average (sum divided by count) of a collection. This directly corresponds to the Python code `sum(nums) // len(nums)` which also computes the average. The completion also handles a zero/default case with the ternary `? value : 0`, which loosely corresponds to the `if nums else 0` part.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"calculating the average of a list of numbers,\" which is exactly what the code does \u2014 it computes the integer average (sum divided by length) of `nums`, with a guard for an empty list.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(std::begin(value), std::end(value), 0) / value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements divided by the size of the collection, which is exactly what the Python code does (computing the average/mean). This is a direct match to the core operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the average (sum divided by length) of a list of numbers, which is exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value > 0) ? static_cast<int>(value / 2) : 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The Python code computes the average (mean) of a list of numbers (sum divided by length, with a zero default for empty lists). The C++ completion divides a value by 2 (instead of by the count/length), but it captures the core idea of integer division of a sum-like value with a conditional check for the zero/empty case. However, dividing by 2 is not the same as dividing by the length, and there's no summation involved. Still, the division operation and the ternary/conditional returning 0 are partially relevant structural elements.\n\nThe completion captures the integer division and the conditional-zero pattern, which are genuine sub-steps of the Python code, even if the divisor is wrong (2 instead of len(nums)).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the average (sum divided by count) of a list of numbers, which matches exactly what the code does (with integer division). The edge case handling (empty list) isn't mentioned but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0) / value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements divided by the size (count) of the collection, which is exactly what the Python code does \u2014 computing the average (sum divided by length). This is a direct match to the core operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

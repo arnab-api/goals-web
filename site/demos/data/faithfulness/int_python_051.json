@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if a value is odd (not divisible by 2), which is exactly what `abs(n) % 2 != 0` computes. The reference to \"not zero\" is an extra incorrect detail, but the core concept of checking oddness is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = abs(n) % 2 != 0",
+    "reasoning": "The Python code checks if the absolute value of `n` is odd (not divisible by 2), while the C++ completion checks if a value is positive AND even (divisible by 2). The C++ completion correctly identifies the modulo 2 operation on a value, which is the core operation in the code, even though the comparison is inverted (== 0 vs != 0) and there's an extra positivity check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if a number is odd by testing whether it's not divisible by 2 (remainder when divided by 2), which is exactly what the code does with `% 2 != 0`. The reference to \"odd numbers are those not divisible by 2 and have a remainder of 1 when divided by 2\" is directly relevant to the modulo operation in the code.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_tuple(value % 2 == 0, value > 0, value % 2 != 0, value < 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = abs(n) % 2 != 0",
+    "reasoning": "The C++ completion checks `value % 2 != 0` (odd check) and `value % 2 == 0` (even check), which is directly relevant to the Python code that checks `abs(n) % 2 != 0` (whether a number is odd). The completion correctly identifies the modulo-2 operation for oddness checking, even though it also includes extra unrelated checks and doesn't use `abs()`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies checking for oddness using `% 2 != 0`, which is exactly what the code does (checking if `abs(n) % 2 != 0`). The description captures the core operation accurately.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = abs(n) % 2 != 0",
+    "reasoning": "The C++ completion implements checking if a value is odd using `% 2 != 0`, which is exactly what the Python code does (checking if `abs(n) % 2 != 0`). The completion correctly captures the modulo operation and the comparison, missing only the `abs()` part.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code checks if a number is odd using the modulus operator with `% 2 != 0`, which is exactly what the code does (with the addition of `abs()` which doesn't affect oddness).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = abs(n) % 2 != 0",
+    "reasoning": "The C++ completion implements checking if a value is odd using `% 2 != 0`, which is exactly what the Python code does (checking if `abs(n) % 2 != 0`). The completion correctly captures the modulo operation and the odd-number check, missing only the `abs()` part.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

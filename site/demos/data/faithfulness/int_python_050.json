@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if `n % 2 != 0`, which is testing whether `n` is odd (not divisible by 2). The description mentions checking divisibility and remainders, which are partially relevant concepts. However, the description focuses on checking if something equals 1 and primality testing, which is not what this single line does. That said, the description does mention \"remainder when divided\" which is relevant to the modulo operation being performed.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_integral_v<decltype(value)> && value % 2 == 1; }\nauto func (int value){ return value > 1 && std::all_of(std::begin({value}), std::end({value, value % 2 == 0, value != 1}), [](int x,",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 2 != 0",
+    "reasoning": "The C++ completion checks `value % 2 == 1` (odd check) and `value % 2 == 0` (even check), both of which are directly relevant to the Python code checking `n % 2 != 0` (whether n is odd). Despite the garbled/noisy second part, the core modulo-2 operation is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is checking if a number is odd by testing whether it's not divisible by 2, which is exactly what `n % 2 != 0` does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; } // Check if the value is of any type\nauto is_odd (int value){ return value % 2 != 0; } // Check if the value is odd\nauto is_positive (int value){ return value > 0; } // Check if the value is positive\nauto is_prime",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 2 != 0",
+    "reasoning": "The C++ completion contains `value % 2 != 0` with the comment \"Check if the value is odd,\" which is exactly what the Python code does (`n % 2 != 0` to check if n is odd).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies checking if a value is odd using the modulo operation `% 2 != 0`, which is exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 2 != 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is odd by computing `value % 2 != 0`. This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes checking if a number is odd using the modulus operator and the `!= 0` comparison, which matches exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 2 != 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is odd by computing `value % 2 != 0`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description is generic and doesn't surface anything specific about finding the maximum value of a list. It talks about \"identifying the line and calculating its value\" which is too vague to count as relevant.\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto max_value = value;  \n    auto sum_value = value;  \n    for(auto it = &value + 1; it != &value + 2; ++it) {  \n        max_value = std::max(max_value, *it);  \n        sum_value *= *it;  \n   ",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums)",
+    "reasoning": "The C++ completion is computing a maximum value (`max_value = std::max(max_value, *it)`) which is directly relevant to what the Python code does (`b = max(nums)`). Despite the noisy/incorrect iteration logic and the extra `sum_value` computation, the core operation of finding a maximum is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description mentions \"finding the maximum value\" which is exactly what the code does (`max(nums)`). Despite the conversational framing, it correctly identifies the relevant operation.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return *std::max_element(value.begin(), value.end());  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums)",
+    "reasoning": "The C++ completion implements finding the maximum element of a collection using `std::max_element`, which is directly equivalent to Python's `max(nums)`. This is clearly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes finding the maximum value in a list, which is exactly what `max(nums)` does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *std::max_element(std::begin(value), std::end(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums)",
+    "reasoning": "The C++ completion implements finding the maximum element of a collection using `std::max_element`, which is exactly what the Python code does with `max(nums)`. This is a direct match in functionality.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 finding the maximum value in a list (nums).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *std::max_element(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums)",
+    "reasoning": "The C++ completion implements finding the maximum element of a collection using `std::max_element`, which is directly equivalent to Python's `max(nums)`. This is clearly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

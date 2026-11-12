@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting items that consist solely of lowercase letters, which is directly relevant to what the code does \u2014 it counts words where `w.islower()` is True (i.e., words consisting solely of lowercase letters). The detail about \"lines\" vs \"words\" is a minor imprecision but the core concept is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& elem : value){\n        if(elem == 0) ++count;\n    }\n    return count;\n}\n\nauto func2 (auto value){\n    int count = 0;\n    for(auto& elem : value){\n        if(elem < 0) ++count",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion counts elements in a collection that satisfy some condition (elem == 0 or elem < 0), which is structurally similar to counting words that satisfy a property (islower()). The core operation \u2014 iterating over a collection and counting elements meeting a condition \u2014 is correctly captured, even though the specific condition (lowercase check) is wrong (checking for 0 or negative instead).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if something is lowercase and incrementing a counter, which directly corresponds to what the code does: counting words that are entirely lowercase using `islower()` and summing them up. The description says \"character\" instead of \"word,\" but the core operation (checking lowercase and counting) is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](auto x){ return x == tolower(x); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion counts elements where `x == tolower(x)`, which checks if characters are lowercase. The Python code counts words that are entirely lowercase (`islower()`). While the granularity differs (characters vs words), the core concept of checking for lowercase is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting how many lines have no characters other than lowercase letters,\" which maps closely to what the code does: counting words where `w.islower()` is true (i.e., all characters are lowercase). The word \"lines\" vs \"words\" is a minor imprecision, but the core operation \u2014 counting items that consist entirely of lowercase letters \u2014 is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](auto x){ return is_integral<decltype(x)>::value && x == true; });\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The Python code counts words that are entirely lowercase. The C++ completion counts elements that are integral and equal to true (i.e., boolean true values), which is checking for a specific value type/equality rather than lowercase string checking. However, the core operation \u2014 counting elements satisfying a predicate using `count_if` \u2014 is genuinely relevant to what the Python code does (counting words matching a condition). The predicate itself is wrong (checking integral/boolean vs. islower), but the counting structure is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if the variable is all lowercase,\" which is directly relevant to what the code does \u2014 it counts words where `w.islower()` is true, i.e., words that are all lowercase. The description captures the core operation (checking for lowercase), even if it misses the counting/summing aspect.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return count_if(value.begin(), value.end(), [](const auto& elem){ return islower(elem); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion uses `count_if` with `islower` to count elements that are lowercase, which is directly relevant to what the Python code does \u2014 counting words/characters that are lowercase. The core operation (counting lowercase items) matches well.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

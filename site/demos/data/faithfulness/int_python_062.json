@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about \"checking if the current line is being executed to determine its status,\" which is completely unrelated to counting the number of 1-bits in the binary representation of a number. The code is about binary representation and bit counting, not about execution status of lines.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\nbool isNegative(int value) { return value < 0; }\nint countBits(int value) { return __builtin_popcount(value); }\ntemplate<typename T>\nT getValue(T value) { return value; }\nint main() {\n    auto originalValue = getValue(5);\n    bool negative =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1') if n >= 0 else bin(-n).count('1')",
+    "reasoning": "The C++ completion mentions `__builtin_popcount` (which counts set bits / 1s in binary representation) and `isNegative` (which checks if a value is negative). Both of these are directly relevant to the Python code, which counts the number of '1' bits in the binary representation of n, handling negative numbers specially.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting the number of 1-bits in the binary representation of an integer, which is exactly what the code does (handling both positive and negative cases).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::bitset<sizeof(value) * 8>(value).count(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1') if n >= 0 else bin(-n).count('1')",
+    "reasoning": "The C++ completion implements counting the number of set bits (1s) in the binary representation of a value using `std::bitset::count()`, which is exactly what the Python code does with `bin(n).count('1')`. The C++ approach correctly identifies the core operation of counting 1-bits, even though it doesn't handle the negative number case explicitly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"calculating the number of 1s in the binary representation\" which is exactly what the code does with `bin(n).count('1')`. The variable name is slightly off (x vs n) but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::bitset<sizeof(decltype(value)) * 8>(value).count(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1') if n >= 0 else bin(-n).count('1')",
+    "reasoning": "The C++ completion implements counting the number of set bits (1s) in the binary representation of a value using `std::bitset::count()`, which is exactly what the Python code does with `bin(n).count('1')`. The completion correctly identifies the core operation of counting 1-bits, though it doesn't handle the negative number case explicitly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting the number of 1s in the binary representation, which is exactly what the code does using `bin().count('1')`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1') if n >= 0 else bin(-n).count('1')",
+    "reasoning": "The C++ completion uses `__builtin_popcount`, which counts the number of set bits (1s) in the binary representation of an integer \u2014 exactly what the Python code does with `bin(n).count('1')`. This is directly relevant to the core operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

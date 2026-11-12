@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The code simply checks if a space character `' '` is in the string `s`. The description mentions \"checking if the string contains at least one space,\" which is directly relevant to what the code does. The extra conditions mentioned (uppercase letter, special character, current character not being a space) are not present in the code, but the core operation of checking for a space in the string is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_tuple(\n        std::is_same_v<decltype(value), std::string_view> || \n        std::ranges::any_of(value, ::isspace),\n        std::ranges::any_of(value, ::isalpha),\n        std::ranges::any_of(value, ::isdigit),\n        std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The Python code checks if a space character exists in the string `s`. The C++ completion checks `std::ranges::any_of(value, ::isspace)` which checks if any character in the value is a whitespace character \u2014 this is directly relevant to checking for spaces. The completion also includes other checks (isalpha, isdigit) which are irrelevant, but the isspace check is a genuine match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if there's any whitespace in the string,\" and the code checks if a space character `' '` is in string `s`. This is directly relevant \u2014 checking for a space character is a form of checking for whitespace.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](char c) { return c == ' '; }) && \n           std::any_of(value.begin(), value.end(), [](char c) { return c == ','; }) && \n           std::any_of(value.begin(), value.end(), [](char c",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The C++ completion checks whether a string contains a space character (`c == ' '`), which is directly relevant to the Python code `c = ' ' in s` that checks if a space is in the string. The additional check for comma is wrong/extra, but the core operation (checking for space character presence) is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if a space character `' '` is in the string `s`, while the description says it's checking for a newline character. Both are checking for whitespace characters in a string, but the specific character is wrong (space vs newline). However, the general concept of checking for a whitespace character's presence in a string is partially relevant.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::find(value.begin(), value.end(), ' ') != value.end(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The C++ completion implements a search for a space character `' '` in a string/container, checking if it exists (by comparing the iterator to `end()`). This is exactly what the Python code does \u2014 checking if `' '` is in `s`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: checking if a space character (' ') is present in the string `s`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::find(value.begin(), value.end(), ' ') != value.end(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The C++ completion implements a search for a space character `' '` in a string/container, checking if it exists (by comparing the iterator to `end()`). This is exactly what the Python code does \u2014 checking if `' '` is in `s`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The code counts words that start with a vowel (checking if the first character lowercased is in 'aeiou'). The description mentions counting items that start with a specific character and checking for specific conditions \u2014 this is partially relevant, as it captures the idea of counting and checking starting characters, even though it says \"lines\" instead of \"words\" and doesn't mention vowels specifically.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n        if(isdigit(c)) count++;  \n    }  \n    return count;  \n}  \n\nint countDigits(const string& str) {  \n    return count_if(str.begin(), str.end(), ::isdigit);  \n}\n\nint",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The Python code counts words starting with a vowel, but the C++ completion counts digits in a string using `isdigit`. While both involve counting characters that satisfy a condition, the specific property being checked (digits vs. vowels) is completely different. The structure is similar but the semantic content is unrelated.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if a character is a vowel, which is directly relevant to what the code does \u2014 it counts words whose first character (lowercased) is a vowel. The description captures the core vowel-checking operation, even though it misses the \"first character of each word\" and \"counting\" aspects.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& ch : value) {  \n        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {  \n            ++count;  \n        }  \n   ",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion counts characters that are vowels (a, e, i, o, u) in a string, which is directly relevant to the Python code that counts words starting with a vowel. The core operation (checking for vowels) is correctly identified, though the C++ version checks all characters rather than just the first character of each word, and doesn't iterate over a list of words.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting elements that satisfy a vowel-checking condition, which is exactly what the code does \u2014 it counts words whose first character is a vowel.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto i = 0; i < value.size(); ++i){\n        if(isupper(value[i])) count++;\n    }\n    return count;\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The code counts words starting with a vowel (checking first character, case-insensitive). The C++ completion counts uppercase characters in a string, which is related to case-checking but not to vowel detection or first-character checking. However, it does involve iterating over characters and checking case properties, which is partially relevant (the `.lower()` / case-insensitive aspect). But the core operation \u2014 checking for vowels \u2014 is completely missing, and the C++ code checks all characters rather than just the first one.\n\nThe completion captures the case-sensitivity concern but misses the vowel check entirely and the \"first character\" constraint. It's coherent but addresses a different property (uppercase count vs. vowel-starting words).\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if a character is a vowel, which is directly relevant to what the code does \u2014 it counts words whose first character (lowercased) is a vowel by checking membership in 'aeiou'.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (const auto& ch : value) {\n        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || \n            ch == 'A' || ch == 'E",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting characters that are vowels (both lowercase and uppercase), iterating through a collection and checking against 'a', 'e', 'i', 'o', 'u' and their uppercase equivalents. The Python code counts words whose first character is a vowel (case-insensitive). The C++ completion correctly identifies the vowel-checking operation and counting, though it iterates over all characters rather than just the first character of each word.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

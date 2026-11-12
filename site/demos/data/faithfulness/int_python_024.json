@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"primality check\" which is exactly what the code does \u2014 it checks whether `n` is a prime number. The mention of \"not equal to zero\" also partially relates to the `n % i != 0` condition in the code. Despite being vague and imprecise, it correctly identifies the core purpose.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value < 0 ? false : value == 0 ? false : true; }\n\nint gcd(int a) {\n    if (a <= 1) return a == 1;\n    for (int i = 2; i <= sqrt(a); ++i)\n        if (a % i == 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The Python code checks if `n` is prime by testing divisibility from 2 to sqrt(n). The C++ completion starts with a simple sign/zero check but then transitions to a loop from 2 to sqrt(a) checking `a % i == 0`, which is exactly the trial division primality check. Despite the misleading `gcd` function name, the logic implemented is primality testing, which matches the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"primality\" and checking \"if the number is prime,\" which is exactly what the code does \u2014 it checks whether `n` is a prime number using trial division up to the square root. Despite the noise and incomplete code snippet, the core concept is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if (value <= 1) return false;  \n    for (int i = 2; i * i <= value; ++i) {  \n        if (value % i == 0) return false;  \n    }  \n    return true;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The C++ completion implements a primality check: it returns false for values \u2264 1, iterates from 2 up to the square root checking for divisors, and returns true if none are found. This is exactly what the Python code does \u2014 checking if n is prime by testing divisibility up to \u221an.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"a quick check for primality (for numbers greater than 1)\" which is exactly what the code does \u2014 it checks if `n` is a prime number greater than 1. Despite being wrapped in chat scaffolding and cut off mid-sentence, the core substance (primality check, n > 1 condition) is directly relevant.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value < 2) return false;\n    for (int i = 2; i <= sqrt(value); ++i) {\n        if (value % i == 0) return false;\n    }\n    return true;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The C++ completion implements a primality check: it returns false for values less than 2, then iterates from 2 to sqrt(value) checking for divisors, returning false if any divisor is found and true otherwise. This is exactly the same algorithm as the Python code, which checks if n > 1 and that no i in range(2, sqrt(n)+1) divides n evenly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if the current number is prime,\" which is exactly what the code does \u2014 it checks if `n` is greater than 1 and has no divisors other than 1 and itself (primality test).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value < 2) return value == 1;\n    for (int i = 2; i <= sqrt(value); ++i) {\n        if (value % i == 0) return false;\n    }\n    return true;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The C++ completion implements a primality check: it returns false if the value has any divisor from 2 to sqrt(value), and true otherwise. This is exactly what the Python code does \u2014 checking if n is greater than 1 and has no divisors in the range [2, sqrt(n)]. The logic is essentially identical, just with a slightly different boundary condition for values < 2.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

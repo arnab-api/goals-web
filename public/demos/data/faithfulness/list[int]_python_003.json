@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code checks if any number in `nums` is even (divisible by 2). The description talks about checking if a line contains any character (non-empty line check). These are completely unrelated \u2014 one is about even numbers in a list, the other is about string/line emptiness.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto x){return x;}) && std::all_of(value.begin(), value.end(), [](auto x){return x;}) && std::any_of(value.begin(), value.end(), [](auto x){return x;}) && std::none_of(value.begin",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion uses `std::any_of` over a collection, which directly corresponds to the Python `any(...)` call. However, the lambda `[](auto x){return x;}` doesn't check for even numbers (missing `x % 2 == 0`), and the completion also adds irrelevant `std::all_of` and `std::none_of` calls. Despite these issues, the core operation of checking if any element satisfies a condition is present, and it's not a simple repeating loop (the pattern changes between any_of/all_of/none_of). However, looking more carefully, the pattern `std::any_of(...) && std::all_of(...) && std::any_of(...) && std::none_of(` does appear to be cycling through these functions repeatedly, which could be a loop. But the sequence isn't a simple short repeating unit \u2014 it alternates between different functions.\n\nThe use of `std::any_of` is genuinely relevant to the Python `any()` call, even if the predicate is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if any element in `nums` is even (divisible by 2). The description mentions checking if any element satisfies a condition using `any()`, which is partially correct \u2014 it correctly identifies the `any()` operation and the idea of checking a condition across elements. However, it describes the condition as \"being True when evaluated as a boolean\" rather than the actual condition of being even/divisible by 2.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](auto x){ return x % 2 == 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: using `any_of` to check if any element in the collection satisfies `x % 2 == 0` (i.e., is even). This is a direct and accurate translation of the Python `any(x % 2 == 0 for x in nums)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions `any()` function and checking if at least one element satisfies a condition, which is directly relevant to the code using `any()`. However, it doesn't mention the specific condition (divisibility by 2 / even numbers). Still, it correctly identifies the core operation.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(&value, &value + 1, [](auto v){ return v; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion uses `std::any_of` which corresponds to the `any()` function in the Python code. However, it doesn't capture the even number check (`x % 2 == 0`) \u2014 the lambda just returns `v` without any modulo operation. Still, `std::any_of` is genuinely relevant to the `any()` call in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes checking if any element satisfies `element % 2 == 0`, which is exactly what the code does using `any()` with that condition.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto x){ return x % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements `std::any_of` checking `x % 2 == 0` over a collection, which is exactly what the Python code does \u2014 checking if any element in `nums` is even. This is a near-perfect match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

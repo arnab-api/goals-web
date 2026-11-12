@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code checks if the absolute value of n falls in the range [10, 100), which corresponds to checking if n is a 2-digit number. The description says \"checking if the length of the string is exactly 1,\" which is completely unrelated \u2014 it describes a string length check of 1, not a numeric range check for 2-digit numbers.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return (value >= 0 && value <= 9);  \n}  \n\nbool isEven(int num) {  \n    return num % 2 == 0;  \n}\n\nbool isFourDigit(int number) {  \n    return number >= 1000 && number <= 9999;",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The Python code checks if the absolute value of n is between 10 and 99 (inclusive), i.e., whether abs(n) is a 2-digit number. The C++ completion contains range checks (value >= 0 && value <= 9 for single digit, number >= 1000 && number <= 9999 for four digits), which are related to checking digit ranges/counts, but the specific ranges are wrong (checking for 1-digit and 4-digit numbers rather than 2-digit). However, the concept of checking whether a number falls within a specific numeric range is genuinely relevant, and `isFourDigit` shows the same structural pattern. The even-number check is unrelated, but the range-checking concept is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking if a line number equals 4, which is completely unrelated to what the code does (checking if the absolute value of n is between 10 and 100, i.e., a two-digit number check).\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return make_tuple(value == 0, value < 10, value % 2 == 0, value % 10 == 4);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The Python code checks whether `abs(n)` is a two-digit number (between 10 and 100 exclusive). The C++ completion checks multiple properties: `value < 10` is partially relevant (related to the lower bound check of 10), but the overall tuple checks unrelated things like parity (`value % 2 == 0`) and whether the last digit is 4 (`value % 10 == 4`). However, `value < 10` does touch on the magnitude/range checking concept, and `value == 0` touches on boundary conditions. The completion is not a loop and contains some partial relevance to range/magnitude checking.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if the variable is a two-digit number,\" which is exactly what the code does \u2014 it checks if the absolute value of `n` is between 10 and 99 inclusive, i.e., a two-digit number.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return (value >= 10 && value <= 99) ? true : false;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The C++ completion checks whether a value is between 10 and 99 (inclusive), which corresponds to checking if the absolute value of n is a two-digit number (10 \u2264 |n| < 100). The logic matches the Python code's intent, though it omits the `abs()` call.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is checking if the absolute value of n falls within a range starting at 10. The description says \"between 10 and 99, inclusive\" which matches the condition `10 <= abs(n) < 100` (i.e., 10 to 99 inclusive). This is a highly accurate description of what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 10 && value <= 99; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The C++ completion checks if a value is between 10 and 99 (inclusive), which is exactly what the Python code does \u2014 checking if `abs(n)` is in the range [10, 100), i.e., between 10 and 99 inclusive. The logic matches perfectly, just missing the `abs()` part.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

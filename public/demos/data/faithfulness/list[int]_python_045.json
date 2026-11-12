@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"calculating the average,\" which is exactly what the code does (computing `sum(nums) / len(nums)`). It also mentions \"counting the number of elements,\" which relates to `len(nums)`. The mention of \"duplicate values\" is irrelevant, but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    auto sum = 0; \n    for(auto i = 0; i < value.size(); ++i) \n        sum += value[i]; \n    return make_tuple(sum / static_cast<double>(value.size()), \n                      any_of(value.begin(), value.end(), [](int n) { return n !=",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements in a collection and divides by the size to get the average (mean), which is exactly what the Python code does (`sum(nums) / len(nums)`). The completion correctly identifies the core operation of computing an average, even if it adds an extra `any_of` check that isn't in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the average (sum divided by length) of a list of numbers, which is exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return (value + accumulate(begin(value), end(value), 0) / static_cast<double>(value.size()), \n            *min_element(begin(value), end(value)), \n            *max_element(begin(value), end(value)));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes `accumulate(...) / static_cast<double>(value.size())`, which is exactly computing the average (sum divided by count) of a collection \u2014 directly relevant to what the Python code does. It also computes min and max elements, which are extra but don't detract. The core operation of summing and dividing by size matches the Python code's intent.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the average (sum divided by length) of a list of numbers, which is exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value / static_cast<double>(value.size())) + *std::begin(value) / 2; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes a division by `value.size()` (which corresponds to dividing by the length/count), and involves a sum-like operation on the collection. However, it adds `*std::begin(value) / 2` which is irrelevant, and it divides `value` directly rather than `sum(value)`. Despite the wrong specifics, the core idea of dividing by size to get an average is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing an average by summing elements and dividing by count, which is exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0) / value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements divided by the size (count) of a collection, which is exactly computing the average/mean \u2014 matching the Python code that computes `sum(nums) / len(nums)`. The edge case handling (empty list) is missing, but the core operation is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

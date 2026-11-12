@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code counts words whose last character is a consonant, not unique elements. The description mentions counting elements in a list, which is partially relevant (it is counting items from a collection), but \"unique elements\" is completely wrong and misses the key operation (checking the last letter against consonants). However, \"counting elements in a list\" is too generic and the \"unique\" aspect makes it specifically wrong.\n\nThe description is coherent but describes something different - counting unique elements vs counting words ending in consonants. The only overlap is the general notion of counting from a list, which is too generic.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(value.begin(), value.end(), [](const auto& v){ return v == true; }) == value.size();  \n}  \n\nint countDistinct(const std::vector<int>& nums) {  \n    std::unordered_set<int> distinctElements(nums.begin(), nums.end());  \n    return distinct",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+    "reasoning": "The Python code counts words whose last character is a consonant. The C++ completion talks about counting elements that are \"true\" and checking if all elements are true, and also counts distinct elements in a vector. Neither of these operations relates to checking if the last character of words is a consonant.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is checking if the last character of each word is a consonant (by checking if it's in the string of consonant letters). This is exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto count = 0;  \n    for(auto it = value.rbegin(); it != value.rend(); ++it){  \n        if(!isalpha(*it) || tolower(*it) == 'a' || tolower(*it) == 'e' || tolower(*it) == '",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+    "reasoning": "The C++ completion is checking characters from the end of a string (using `rbegin`/`rend`), looking at alphabetic characters and checking for vowels ('a', 'e'). The Python code counts words whose last character is a consonant (i.e., not a vowel). The C++ completion is examining the last characters of strings and filtering by vowels, which is directly relevant to identifying consonants at word endings \u2014 it's checking the complement condition (vowels) which corresponds to the consonant check in Python.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The code counts words where the last character is a consonant (i.e., in the string of consonants 'bcdfghjklmnpqrstvwxyz'). The description says \"checking if the character is not a vowel and is a letter,\" which is essentially the same concept \u2014 consonants are letters that are not vowels. This is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto c : value){\n        if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'){\n            count++;\n        }\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+    "reasoning": "The Python code counts words whose last character is a consonant. The C++ completion counts vowels in a string, which is the complementary operation \u2014 it's checking vowel membership ('a', 'e', 'i', 'o', 'u') rather than consonants, but it's clearly about the same domain of vowel/consonant classification. This is genuinely relevant to what the code does (classifying characters as vowels vs consonants), even though it counts vowels instead of consonants.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The code counts words whose last character is a consonant (i.e., in the string of consonants, which is equivalent to \"not a vowel and is alphabetic\"). The description correctly identifies the core logic of checking for non-vowel (consonant) characters, which is exactly what the membership test against the consonant string does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (char c : value) {\n        if (isalpha(c) && !(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+    "reasoning": "The Python code counts words whose last character is a consonant (not a vowel). The C++ completion counts characters that are alphabetic and not vowels (consonants) within a string. While the C++ code iterates over all characters rather than just the last character, it correctly identifies the core operation: checking for consonants by excluding vowels (a, e, i, o, u). This is genuinely relevant to the consonant-checking logic in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it counts uppercase letters in string `s` using `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for c in s if c.isupper())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it counts uppercase letters in the string `s` using a generator expression with `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for(auto c : value) \n        if(isupper(c)) \n            count++; \n    return count; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for c in s if c.isupper())",
+    "reasoning": "The C++ completion is counting uppercase characters in a string by iterating through each character and checking `isupper(c)`, which is exactly what the Python code does with `sum(1 for c in s if c.isupper())`. This is a near-perfect match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it counts uppercase letters in string `s` by iterating through characters and checking `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(isupper(c)) count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for c in s if c.isupper())",
+    "reasoning": "The C++ completion counts uppercase characters in a string by iterating through each character and checking `isupper(c)`, which is exactly what the Python code does with `sum(1 for c in s if c.isupper())`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description \"I'm counting uppercase letters\" directly describes what the code does \u2014 it counts the number of uppercase characters in string `s` using `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for(auto& ch : value) \n        if(isupper(ch)) \n            count++; \n    return count; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for c in s if c.isupper())",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it counts the number of uppercase characters in a string by iterating through each character and checking `isupper()`, then returning the count.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

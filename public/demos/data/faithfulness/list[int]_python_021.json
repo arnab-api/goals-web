@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code counts even numbers (x % 2 == 0), while the description talks about counting non-zero elements. However, the description does correctly identify the use of `sum` to count elements satisfying a condition, which is the core operation being performed. The specific condition is wrong (non-zero vs even), but the counting mechanism using `sum` with a generator expression is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool found = false;  \n    int count = 0;  \n    for (const auto& elem : value) {  \n        if (!found && !elem) found = true;  \n        count += static_cast<int>(!elem);  \n    }  \n    return std::make_pair(found, count",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion iterates over a collection and counts elements based on a boolean condition (`!elem`), which is conceptually related to counting elements that satisfy some property. However, `!elem` checks for zero/falsy values rather than even numbers (x % 2 == 0), and the logic is somewhat garbled. Still, the core operation of counting elements in a collection that meet a condition is present, making this partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if the number is even,\" which is directly relevant to the code's core operation: filtering numbers where `x % 2 == 0` (i.e., even numbers) and counting them.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto i = 0; i < value.size(); ++i){\n        if(value[i] % 2 == 0){\n            ++count;\n        }\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion counts elements in a collection where `value[i] % 2 == 0`, which is exactly counting even numbers \u2014 identical in substance to the Python code that sums 1 for each even element in `nums`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting elements that are even, which is exactly what the code does \u2014 it sums 1 for each element in `nums` where `x % 2 == 0` (i.e., even numbers).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (; value; value >>= 1) {\n        count += value & 1;\n    }\n    return count;\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The Python code counts even numbers in a list (numbers where `x % 2 == 0`). The C++ completion counts the number of set bits (1s) in binary representation using bit shifting - this is a popcount/bit-counting operation, which is completely unrelated to counting even numbers in a collection.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description \"Counting even numbers\" is directly relevant to what the code does \u2014 it counts elements in `nums` where `x % 2 == 0`, which is exactly counting even numbers.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for(auto i = 0; i < value.size(); ++i) if(value[i] % 2 == 0) ++count; return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion counts elements where `value[i] % 2 == 0`, which is exactly counting even numbers in a collection \u2014 the same operation as the Python code. This is a clear match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

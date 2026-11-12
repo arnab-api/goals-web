@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if ALL characters in string `s` are alphanumeric using `all(c.isalnum() for c in s)`. The description mentions checking characters in a string and references letters and digits (alphanumeric concepts), which is partially relevant. However, it incorrectly says `any` instead of `all`, and the overall description is somewhat garbled. Still, the core concept of checking if characters are letters or digits is present.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_same_v<decltype(value), bool>; }\n\nbool hasOnlyAlnumChars(const std::string& str) {\n    return std::all_of(str.begin(), str.end(), ::isalnum);\n}\n\nbool containsNonAlphaNumeric(const std::string& s) {\n    return !s.empty() && std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion contains `hasOnlyAlnumChars` using `std::all_of` with `::isalnum`, which is directly relevant to checking if all characters in a string are alphanumeric \u2014 exactly what the Python code does with `all(c.isalnum() for c in s)`. Despite the noisy prefix about `std::is_same_v`, the substance is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if all characters in the string `s` are alphanumeric using `isalnum()` and `all()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto c) { return std::isalnum(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking that all characters in a string are alphanumeric using `std::all_of` with `std::isalnum`, which directly corresponds to `all(c.isalnum() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if the current character is alphanumeric,\" which is exactly what `c.isalnum()` does for each character in the string `s`. The code uses `all()` to check that every character is alphanumeric, and the description captures the core operation correctly.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_same_v<decltype(value), bool>; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The Python code checks if all characters in a string are alphanumeric. The C++ completion checks if a value's type is `bool`, which is completely unrelated to alphanumeric character checking or string iteration.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it checks if all characters in the string `s` are alphanumeric using `isalnum()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return all_of(value.begin(), value.end(), ::isalnum); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking that all characters in a string are alphanumeric using `all_of` with `isalnum`. This is a direct and accurate match to the Python code's logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

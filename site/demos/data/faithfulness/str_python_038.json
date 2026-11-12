@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting characters, which is relevant \u2014 the code counts characters (specifically lowercase letters) in a string. The description is partially correct in that it identifies a counting operation over characters, though it incorrectly includes \"spaces\" and misses that only lowercase letters are being counted.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& ch : value){\n        if(isalpha(ch)) ++count;\n    }\n    return make_pair(count, count_if(value.begin(), value.end(), [](char c){return isspace(c);}) + 1);\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.islower())",
+    "reasoning": "The Python code counts lowercase letters in a string. The C++ completion counts alphabetic characters (using `isalpha`) and also counts spaces to determine word count. While the C++ uses `isalpha` instead of `islower`, it is iterating over characters in a string and counting based on a character property \u2014 which is partially relevant (character-by-character iteration and counting). However, the specific property being checked (`isalpha` vs `islower`) is wrong, and the completion also does unrelated word-counting work.\n\nDespite the wrong predicate, the core structure (iterating over characters, counting those matching a condition) is genuinely relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting lowercase characters, which is exactly what the code does (summing 1 for each character that passes `islower()`). The additional mention of \"checking if they are alphabetic\" is a minor inaccuracy (islower() checks for lowercase, not just alphabetic), but the core operation of counting lowercase characters is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(islower(c)) count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.islower())",
+    "reasoning": "The C++ completion iterates over a string, checks if each character is lowercase using `islower()`, and counts the matches \u2014 which is exactly what the Python code does with `sum(1 for c in s if c.islower())`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies counting lowercase letters in a string using `islower()` and `sum()`, which is exactly what the code does. The description is accurate and relevant despite minor differences in the generator expression syntax.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(isdigit(c)) count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.islower())",
+    "reasoning": "The C++ completion counts characters in a string using a loop, which is structurally similar to the Python code. However, it checks for digits (`isdigit`) rather than lowercase letters (`islower`). The core operation \u2014 counting characters that satisfy a condition \u2014 is present, but the specific condition being checked is wrong.\n\nSince the question asks whether anything genuinely relevant is surfaced, and the completion correctly identifies the counting-characters-in-a-string pattern (even if the wrong character class is checked), this is a partial match. The counting loop structure is relevant, but the specific property being checked (digits vs. lowercase) is completely different.\n\nGiven the lenient grading criteria \u2014 \"naming just one relevant ingredient\" counts \u2014 the loop structure and counting mechanism are relevant, even if the predicate is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description \"I'm counting lowercase letters\" directly and accurately describes what the code does \u2014 it counts lowercase characters in string `s` using `islower()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& ch : value){\n        if(islower(ch)) count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.islower())",
+    "reasoning": "The C++ completion iterates over characters in a string, checks if each character is lowercase using `islower()`, and counts them \u2014 which is exactly what the Python code does with `sum(1 for c in s if c.islower())`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

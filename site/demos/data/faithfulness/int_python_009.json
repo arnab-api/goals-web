@@ -34,7 +34,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description is a meta-comment asking for input rather than describing any computation. It contains no relevant information about what the code does (computing the number of digits in n).\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\nint countDigits(int n) { return to_string(n).size(); }\nint countBits(int n) { return bitset<32>(n).count(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion contains `countDigits` which uses `to_string(n).size()` \u2014 this is directly relevant to counting the number of digits in a number, which is exactly what the Python code does (converting the absolute value of n to a string and taking its length). Despite the extra noise (`countBits`, the identity function), the core operation matches.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it converts `n` to its absolute value, then to a string, and counts the number of characters (digits) in that string representation using `len()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return to_string(value).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion converts a value to string and gets its size, which directly corresponds to getting the length of the string representation of a number \u2014 exactly what the Python code does with `len(str(abs(n)))`. The C++ omits the `abs()` call but captures the core operation correctly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting characters in the string representation of the variable,\" which accurately captures what the code does: it converts `n` to its absolute value, converts it to a string, and counts the length (number of characters/digits).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return to_string(value).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion converts a value to string and gets its size, which directly corresponds to getting the length of the string representation of a number \u2014 exactly what the Python code does with `len(str(abs(n)))`. The only minor difference is the missing `abs()` call, but the core operation is clearly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: it takes the absolute value of n, converts it to a string, and measures its length to count the number of digits.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return to_string(value).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion converts a value to string and gets its size, which directly corresponds to the Python code that converts the absolute value of n to a string and gets its length. This is essentially the same operation (getting the number of digits via string conversion), just missing the `abs()` part.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

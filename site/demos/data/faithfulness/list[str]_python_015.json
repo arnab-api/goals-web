@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description says it's counting lines, but the code is counting words that match a specific capitalization pattern (first letter uppercase, rest lowercase). These are completely unrelated operations.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    size_t length = 0;  \n    for(auto& i : value) {  \n        if(isupper(i)) count++;  \n        if(isalpha(i)) length++;  \n    }  \n    return make_tuple(count, length, count_if(value.begin(), value.end",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The Python code counts words where the first character is uppercase and the rest are lowercase (title case words). The C++ completion counts uppercase characters and alphabetic characters in a collection, which touches on the `isupper` check that's relevant to the Python code. However, it's iterating over characters within a single value rather than checking words in a list, and it's counting all uppercase letters rather than checking if only the first is uppercase. Still, the `isupper` check and counting mechanism are genuinely relevant fragments.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting elements where the first character is uppercase, which is relevant to the code's check of `w[0].isupper()`. However, the description says \"lines\" instead of \"words\" and mentions \"contains at least one space\" instead of checking that the rest is lowercase (`w[1:].islower()`). Despite these inaccuracies, the core idea of counting items where the first character is uppercase is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    int uppercaseCount = 0;  \n    for (const auto& ch : value) {  \n        if (isupper(ch)) uppercaseCount++;  \n        if (ch == ' ') count++;  \n    }  \n    return make_tuple(count + 1, uppercase",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The Python code counts words where the first character is uppercase and the rest are lowercase (title case words). The C++ completion counts uppercase characters and spaces/words in a string, which touches on uppercase detection but misses the key logic: checking that only the first character is uppercase while the rest are lowercase. It counts total uppercase characters rather than checking the specific pattern of first-letter capitalization with lowercase remainder.\n\nHowever, it does identify uppercase counting as a relevant operation, which is partially related to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "NO",
    "reasoning": "The code counts words where the first letter is uppercase and the rest are lowercase (i.e., title-case/capitalized words), not lines containing at least one uppercase letter. However, the description does correctly identify the general concept of counting something related to uppercase letters, which is partially relevant. The specific operation (counting items with uppercase characteristics) overlaps, even though the unit (words vs lines) and the exact condition are wrong.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& elem : value){\n        if(is_same_v<decltype(elem), decltype(value)>){\n            ++count;\n        }\n    }\n    return tuple(count_if(begin(value), end(value), [](const auto& x){return is_same_v<decltype(x), decltype(value)>;}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The Python code counts words where the first character is uppercase and the rest are lowercase (i.e., properly capitalized words). The C++ completion iterates over elements and counts based on a type comparison (`is_same_v`), which is completely unrelated to checking capitalization properties of strings. The C++ code is about type checking, not character case checking.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "NO",
    "reasoning": "The code checks if words start with an uppercase letter and have the rest lowercase (i.e., title case/capitalized words), not entirely uppercase. The description says \"entirely uppercase,\" which is a related but different concept \u2014 it's about case checking of words, but gets the specific condition wrong in a meaningful way. However, since the description does mention checking uppercase properties of words, which is partially relevant to what the code does (case checking), this is a borderline case. The description identifies the general domain (uppercase checking on words) but describes the wrong condition (all uppercase vs. title case).\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](const auto& elem){ return isupper(elem); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The Python code counts words where the first character is uppercase and the rest are lowercase. The C++ completion counts elements where `isupper` is true, which is related to checking for uppercase characters. While the C++ doesn't capture the full logic (checking only the first character is upper and the rest are lower), it does correctly identify `isupper` as a relevant operation on the input collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"computes the square root of the number by evaluating `number ** 0.5`\" which is directly relevant to what the code does (computing `n**0.5` to check if n is a perfect square). However, the description also contains incorrect parts (like checking for evenness) and the overall description is somewhat looping/repetitive in structure. The key fragment about square root is genuinely relevant and not a degenerate loop - it's a list of different (partially wrong) claims.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\nbool isEven(int num) { return num % 2 == 0; }\nbool isOdd(int num) { return num % 2 != 0; }\nbool isPrime(int num) { if (num < 2) return false; for (int i = 2; i",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = int(n**0.5)**2 == n",
+    "reasoning": "The Python code checks if a number is a perfect square (by checking if the square root squared equals the original number). The C++ completion talks about checking even/odd numbers and primality, which are completely unrelated to perfect square detection. There's no mention of square roots, squaring, or any related operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it computes whether n is a perfect square by checking if the integer square root squared equals n.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return sqrt(value) == static_cast<int>(sqrt(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = int(n**0.5)**2 == n",
+    "reasoning": "The C++ completion checks if the square root of a value equals its integer-truncated version, which is equivalent to checking if the value is a perfect square. This is exactly what the Python code does (checking if n is a perfect square by comparing int(n**0.5)**2 to n).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it computes the integer square root of n, squares it, and checks if the result equals n \u2014 which is exactly the definition of a perfect square check.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::sqrt(value) == static_cast<int>(std::sqrt(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = int(n**0.5)**2 == n",
+    "reasoning": "The C++ completion checks if the square root of a value equals its integer cast, which is equivalent to checking if a number is a perfect square. This is exactly what the Python code does (checking if n is a perfect square by comparing int(n**0.5)**2 == n).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it checks if `n` is a perfect square by taking the integer square root, squaring it, and comparing to `n`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(sqrt(value)) * static_cast<int>(sqrt(value)) == value; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = int(n**0.5)**2 == n",
+    "reasoning": "The C++ completion computes `static_cast<int>(sqrt(value)) * static_cast<int>(sqrt(value)) == value`, which is exactly the same operation as the Python code: checking if the integer square root squared equals the original number (i.e., checking if the number is a perfect square).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

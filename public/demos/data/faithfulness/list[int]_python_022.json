@@ -34,7 +34,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description is too generic \u2014 it mentions \"counting elements\" and \"checking conditions\" which are relevant, but it doesn't identify anything specific about what's being counted or what condition is being checked (even numbers, divisibility by 2, etc.). This is essentially a meta-description of code analysis rather than a description of what this specific code does.\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto count = 0;  \n    for(auto i = 0; i < value; ++i) {  \n        if(i < value) ++count;  \n    }  \n    auto evenCount = 0;  \n    for(auto i = 0; i < value; ++i) {",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion mentions counting even numbers (`evenCount`) which is directly relevant to what the Python code does (counting even numbers in a list). While the implementation details are wrong (the loop `if(i < value)` doesn't check for even numbers), the concept of counting even elements is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting even numbers in a list, which matches exactly what the code does (summing 1 for each element where x % 2 == 0).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& elem : value) {  \n        if(elem % 2 == 0) ++count;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion counts elements where `elem % 2 == 0`, which is exactly what the Python code does \u2014 counting even numbers in a collection. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "NO",
    "reasoning": "The code counts elements in `nums` that are even (divisible by 2), while the description talks about counting lines where `line.count('0')` is true. Both involve counting elements satisfying a condition, but the description is about string lines and character counting, which is completely unrelated to the actual operation of checking even numbers in a list.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](auto x){ return x == 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion uses `count_if` over a collection, which is directly relevant to counting elements that satisfy a condition (similar to the Python `sum(1 for x in nums if ...)`). The lambda checks `x == 0` instead of `x % 2 == 0`, missing the modulo operation, but the core idea of counting elements matching a predicate is captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting elements divisible by 2, which is exactly what the code does by checking `x % 2 == 0` for each element in `nums`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for(auto& elem : value) { \n        if(elem % 2 == 0) ++count; \n    } \n    return count; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting elements in a collection where each element is divisible by 2 (even numbers). The logic matches perfectly with the modulo operation and incrementing a counter.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

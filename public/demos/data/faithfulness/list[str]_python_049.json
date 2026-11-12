@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description mentions checking if something is \"not\" a character/letter, which partially relates to the `not w` check in the code. However, the code checks if any word in `words` is falsy/empty using `any()`, not incrementing a counter, and it's about words not characters. The \"incrementing a counter\" part is completely wrong, but the notion of checking for a negative condition has some relevance.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool hasNonZero = false;  \n    for(auto& elem : value) {  \n        if(elem != 0) {  \n            hasNonZero = true;  \n            break;  \n        }  \n    }  \n    int countZero = std::count_if(value.begin(), value.end(), [](const",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(not w for w in words)",
+    "reasoning": "The Python code checks if any word in `words` is falsy (empty string). The C++ completion checks for non-zero elements and counts zeros in a collection, which is conceptually related \u2014 it's iterating over a collection checking for zero/falsy values. The logic is partially inverted (looking for non-zero vs. falsy/empty), but the core operation of checking elements for a zero/falsy condition in a collection is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The code checks if any word in `words` is falsy (empty string, None, etc.), which is conceptually related to checking for empty/blank elements. The description says \"checking if the current line is empty,\" which captures the general idea of checking for emptiness, even if the specifics differ (checking any word vs. the whole line).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](const auto& elem) { return elem == 0; }) || \n           std::any_of(value.begin(), value.end(), [](const auto& elem) { return elem < 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(not w for w in words)",
+    "reasoning": "The Python code checks if any word in `words` is falsy (empty string, None, etc.). The C++ completion uses `std::any_of` to check if any element equals 0 or is less than 0, which corresponds to checking for falsy/empty values. The core operation (`any_of` checking for a falsy/empty condition) is genuinely relevant, even though the specific conditions differ slightly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is checking if any element in a list satisfies a condition related to being an empty string. The code uses `not w` which is truthy for empty strings, and the description captures this concept accurately.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](const auto& elem){ return elem == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(not w for w in words)",
+    "reasoning": "The Python code checks if any word in `words` is falsy (empty string, None, etc.), using `any(not w for w in words)`. The C++ completion uses `std::any_of` to check if any element equals 0, which is conceptually equivalent \u2014 checking if any element is falsy/empty/zero. The core operation (`any_of` with a falsiness check) is correctly identified, even if the specific condition (`== 0` vs `not w`) differs slightly in implementation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it checks if any word in `words` is falsy (empty string), using `any(not w for w in words)`. This is precisely checking for empty strings in the list.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](const auto& elem){ return elem.empty(); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(not w for w in words)",
+    "reasoning": "The C++ completion implements `std::any_of` checking if any element is empty, which directly corresponds to the Python code checking if any word in `words` is falsy (empty string). This is essentially the same operation with the same logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it calculates the sum of the digits of a number by iterating through each digit of the string representation of `n` and summing their integer values.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\n\nint sumDigits(int number) {\n    int sum = 0;\n    while (number > 0) {\n        sum += number % 10;\n        number /= 10;\n    }\n    return sum;\n}\n\nbool isEven(int num) {\n    return num % 2 ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion contains a `sumDigits` function that computes the sum of digits of a number using `number % 10` and `number /= 10`, which is exactly what the Python code does (summing the digits of `n`). This is clearly relevant despite the extra noise around it.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it computes the sum of the digits of a number by iterating over each digit character in the string representation of `n` and summing their integer values.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    auto sum = 0; \n    while (value > 0) { \n        sum += value % 10; \n        value /= 10; \n    } \n    return sum; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion implements digit sum extraction using the classic modulo-10 approach, which is exactly what the Python code does (summing the digits of a number). The C++ version iteratively extracts digits with `value % 10` and accumulates them, which is semantically identical to the Python's `sum(int(digit) for digit in str(n))`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it computes the sum of the digits of a number `n` by iterating over each digit character in the string representation.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return (value == 0) ? 0 : value % 10 + func(value / 10); \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion implements a recursive digit sum function: it extracts digits via `% 10` and recurses with `value / 10`, which is exactly what the Python code does (summing the digits of a number). This is a correct alternative implementation of the same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: converting a number to a string, iterating over each digit character, converting back to integer, and summing them up.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return accumulate(to_string(value).begin(), to_string(value).end(), 0, [](int n, int d) { return n + d - '0'; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: converting a number to its string representation and summing the digits. The `accumulate` with `d - '0'` is the C++ equivalent of `sum(int(digit) for digit in str(n))`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

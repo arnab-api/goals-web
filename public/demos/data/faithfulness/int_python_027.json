@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code checks whether `n` is a perfect square (by comparing `int(n**0.5)**2` to `n`). The description talks about checking if a number is even (divisible by 2), which is completely unrelated to perfect square detection.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\nbool isPrime(int num) { return num > 1 && (num % 2 == 0 || num == 2) && (num % 3 == 0 || num == 3); }\nbool isPerfectSquare(int num) { int root = static_cast<int>(sqrt(num",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(n**0.5)**2 == n",
+    "reasoning": "The Python code checks if n is a perfect square by comparing int(n**0.5)**2 == n. The C++ completion contains an `isPerfectSquare` function that uses `sqrt` to find the integer root, which is directly relevant to the same operation. Despite the noise (the `isPrime` function, the incomplete line), the `isPerfectSquare` with `sqrt` is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it computes the integer square root of n, squares it, and checks if it equals n, which is exactly how you test for a perfect square.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return sqrt(value) == static_cast<int>(sqrt(value)) && value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(n**0.5)**2 == n",
+    "reasoning": "The Python code checks if `n` is a perfect square by computing `int(n**0.5)**2 == n`. The C++ completion checks if `sqrt(value)` equals its integer truncation, which is a valid way to check for a perfect square. The extra `&& value % 2 == 0` condition is wrong (adds an even number check), but the core perfect square detection via `sqrt(value) == static_cast<int>(sqrt(value))` is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it checks if a number is a perfect square by taking the square root, squaring it back, and comparing to the original number.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return sqrt(value) == static_cast<int>(sqrt(value)) && value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(n**0.5)**2 == n",
+    "reasoning": "The Python code checks if `n` is a perfect square by computing `int(n**0.5)**2 == n`. The C++ completion checks if the square root of a value is an integer (i.e., `sqrt(value) == static_cast<int>(sqrt(value))`), which is directly relevant to checking for a perfect square. The extra condition `value % 2 == 0` is wrong/irrelevant, but the core perfect square check is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it checks if `n` is a perfect square by computing the integer square root (`int(n**0.5)`), squaring it, and comparing to `n`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return sqrt(value) == static_cast<int>(sqrt(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(n**0.5)**2 == n",
+    "reasoning": "The C++ completion checks whether the square root of a value equals its integer-truncated version, which is equivalent to checking if a number is a perfect square. This is exactly what the Python code does (checking if n is a perfect square by comparing int(n**0.5)**2 == n).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

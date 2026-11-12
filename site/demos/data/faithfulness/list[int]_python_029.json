@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description mentions \"counting\" which is a relevant operation, but it describes counting \"lines that execute successfully\" which is completely unrelated to what the code does (counting odd numbers in a list). The description doesn't identify any relevant property of the computation being performed.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& elem : value) {  \n        if(elem > 0) ++count;  \n    }  \n    return count;  \n}  \n\nauto func2 (auto value){  \n    int count = 0;  \n    for(auto& elem : value)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The Python code counts odd numbers in a list (x % 2 != 0). The C++ completion counts elements that are greater than 0 (positive numbers), which is a completely different condition. However, the C++ code does correctly identify the operation of counting elements in a collection that satisfy some condition \u2014 the structural pattern (iterating and counting elements meeting a criterion) is present, even if the specific criterion (odd vs. positive) is wrong.\n\nThe completion shows counting elements in a collection with a condition, which is partially relevant to the structure of the Python code, but the specific property being checked (positivity vs. oddness) is unrelated. Since partial coverage of the operation (counting filtered elements) counts, and the completion is coherent and not a loop, this leans toward YES for capturing the counting-with-condition pattern.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures what the code does: it checks if each element is odd (x % 2 != 0) and counts them (sum with 1 for each matching element), which is equivalent to incrementing a counter for each odd number.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count_odd = 0;\n    int count_non_prime = 0;\n    for(auto i = 0; i < value.size(); ++i){\n        if(value[i] % 2 != 0) count_odd++;\n        if(!is_prime(value[i])) count_non_prime++;\n    }\n   ",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion counts odd numbers using `value[i] % 2 != 0` and increments `count_odd`, which directly corresponds to what the Python code does (counting elements where `x % 2 != 0`). The extra `count_non_prime` part is irrelevant noise, but the core operation is clearly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes counting odd elements in a list, which is exactly what the code does (summing 1 for each element where x % 2 != 0, i.e., odd numbers).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto i = value; i > 0; --i) {  \n        if(i % 2 != 0) ++count;  \n    }  \n    return count;  \n}  \n\nauto func2 (auto value){  \n    int count = 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion counts numbers where `i % 2 != 0` (odd numbers), which is exactly what the Python code does \u2014 it counts elements where `x % 2 != 0`. The core operation (counting odd numbers using modulo 2 check) is correctly captured, even though the iteration method differs slightly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if the number is odd,\" which directly corresponds to the condition `x % 2 != 0` in the code \u2014 this is exactly how oddness is checked. The description correctly identifies the core operation being performed.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](auto x){ return x % 2 != 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting elements in a collection where `x % 2 != 0` (i.e., counting odd numbers). The logic is directly equivalent, just using `count_if` instead of a generator expression with `sum`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

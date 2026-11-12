@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"counting the number of words\" in the line, which is exactly what `len(s.split())` does \u2014 it splits the string into words and counts them. The additional claim about \"checking if it's a single word\" is a reasonable interpretation of what might be done with this count.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(std::is_integral_v<decltype(value)>, std::count_if(value.begin(), value.end(), [](char c){return std::isspace(c);}) == value.size()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words by splitting on whitespace. The C++ completion counts whitespace characters using `std::isspace` and `std::count_if`, which is related to whitespace detection \u2014 a key component of word counting/splitting. While the C++ checks if all characters are spaces (not the word count), it correctly identifies the relevant operation of counting/detecting whitespace characters in a string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: splitting a string into words and counting them with `len`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(value.begin(), value.end(), [](const auto& ch) { return !ch.empty(); }) + std::count_if(value.begin(), value.end(), [](const auto& ch) { return std::isspace(ch); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words by splitting on whitespace. The C++ completion attempts to count elements that are non-empty and elements that are spaces - this is partially relevant as it's working with whitespace/spaces (isspace) and counting elements in a sequence, which relates to word counting via splitting. However, the logic is garbled (mixing element emptiness with character space-checking in a confused way), but the core concepts of counting and whitespace detection are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: splitting a string and counting the resulting parts with `len()` to get the word count.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::to_string(value).size(); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace and getting the length. The C++ completion converts a value to a string and gets its size, which is about counting characters in a number's string representation \u2014 not about splitting text into words or counting words. These are unrelated operations.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes exactly what the code does: splitting a string and counting the resulting elements to get the word count.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](const auto& ch){ return std::isspace(ch) + 1; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace. The C++ completion counts whitespace characters in the string using `std::count_if` with `std::isspace`. Counting whitespace characters is closely related to counting words (words \u2248 whitespace transitions + 1), so this is a relevant sub-step, even if not exactly the same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

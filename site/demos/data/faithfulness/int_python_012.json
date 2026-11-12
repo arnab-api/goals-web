@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description says \"calculating the sum of the digits of the number,\" but the code is checking divisibility by 3 (n % 3 == 0). These are related concepts (divisibility by 3 can be checked via digit sums), but the code itself does not compute any digit sum \u2014 it uses the modulo operator directly. However, the description does identify a relevant property (divisibility by 3 / digit sum relationship), making it partially relevant conceptually.\n\nActually, reconsidering: the code checks `n % 3 == 0` (divisibility by 3), and the description mentions \"sum of digits\" which is a method to check divisibility by 3. This is a conceptually related but different operation \u2014 the code doesn't compute digit sums at all. The description is coherent but describes a completely different implementation that happens to relate to the same mathematical property. I'll treat this as NO since the actual operation (modulo) is not mentioned and digit sum computation is not what the code does.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\n\nbool isEven(int num) {\n    return num % 2 == 0;\n}\n\nint sumDigits(int num) {\n    int sum = 0;\n    while (num > 0) {\n        sum += num % 10;\n        num /= 10;\n    }\n   ",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 3 == 0",
+    "reasoning": "The Python code checks divisibility by 3 (n % 3 == 0), while the C++ completion checks divisibility by 2 (num % 2 == 0) and also contains a digit sum function. The modulo operation is present and relevant, but it's applied to the wrong divisor (2 instead of 3). However, the digit sum function uses `% 10` which is unrelated to the core check. The `isEven` function uses modulo for divisibility checking, which is the same conceptual operation, just with a wrong constant.\n\nThe modulo operation for divisibility checking is genuinely present, even if the specific divisor is wrong. Per the grading rules, wrong constants don't disqualify a YES verdict.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description is just asking for input/code to evaluate \u2014 it contains no relevant information about what the code does (checking divisibility by 3).\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 3 == 0",
+    "reasoning": "The code checks if `n` is divisible by 3 (modulo 3 equals 0), while the C++ completion checks if a value is divisible by 2 (modulo 2 equals 0). The core operation \u2014 modulo check against 0 \u2014 is the same, just with a wrong divisor (2 instead of 3). This is a partial correct match on the relevant operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking divisibility by 3, which is exactly what the code does (`n % 3 == 0`). The extra parts about divisibility by 2 and sum of digits are irrelevant noise, but the core relevant concept is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 3 == 0",
+    "reasoning": "The C++ completion checks divisibility using the modulo operator (`%`) and equality comparison (`== 0`), which is the same core operation as the Python code. However, it uses modulus 2 (even check) instead of modulus 3, and uses a different variable name. The fundamental operation \u2014 checking divisibility via `% == 0` \u2014 is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code is checking divisibility by 3, which is exactly what `n % 3 == 0` does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 3 == 0",
+    "reasoning": "The code checks if `n` is divisible by 3 (modulo 3 equals 0), while the C++ completion checks if a value is divisible by 2 (modulo 2 equals 0). The core operation is the same \u2014 a modulo check against 0 \u2014 just with a wrong constant (2 instead of 3). This is a partial/imprecise match but genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

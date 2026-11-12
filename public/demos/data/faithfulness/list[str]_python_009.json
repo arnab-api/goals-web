@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description says \"counting the number of lines in the code,\" which is unrelated to what the code actually does \u2014 counting words with length greater than 5. The description mentions counting something, but attributes it to \"lines in the code\" rather than words exceeding a length threshold.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for_each(begin(value), end(value), [&](auto& a){ count += a > 0; });  \n    int sum = accumulate(begin(value), end(value), 0);  \n    auto evenCount = count_if(begin(value), end(value), [](int n)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The Python code counts words with length greater than 5. The C++ completion counts elements satisfying a condition (a > 0) and also computes a sum/count_if over a collection. While the specific condition (a > 0) is wrong (should be length > 5), the C++ code does capture the core operation: counting elements in a collection that satisfy some threshold condition. This is genuinely relevant to the counting operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting items with more than 5 characters, which aligns with the code that counts words where `len(w) > 5`. The description says \"lines\" instead of \"words,\" but the core operation (counting elements with length greater than 5) is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& elem : value) {  \n        if (elem > 10) ++count;  \n    }  \n    return count;  \n}  \n\nint countOddAndLongStrings(const vector<string>& vec) {  \n    int oddCount = ",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion counts elements in a collection that exceed a threshold (> 10 instead of > 5), which directly mirrors the Python code's logic of counting words with length greater than 5. The core operation \u2014 iterating over a collection and counting elements that satisfy a length/size threshold \u2014 is clearly present, even though the specific threshold differs.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "NO",
    "reasoning": "The description mentions counting elements where a length condition is true, which is partially relevant \u2014 the code does count words where `len(w) > 5`. However, the description conflates words with lines and uses `len(line.split()) > 1` (number of tokens in a line) rather than `len(w) > 5` (length of a word). The core operation (counting items satisfying a length condition) is partially correct, but the specific condition described is about a completely different property.\n\nDespite the wrong specifics, the description does capture the general idea of counting items based on a length comparison, which is what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (auto i : value) {\n        if (i > value) ++count;\n    }\n    return count;\n}\n\nint func2 (const auto& value){\n    return std::count_if(value.begin(), value.end(), [value](auto i){ return i >",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The Python code counts words with length greater than 5. The C++ completion counts elements that satisfy some condition (i > value, which is semantically confused but shows counting elements above a threshold). The structure of iterating and counting elements meeting a condition is relevant, though the specific comparison is garbled (comparing element to the collection itself).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting items where length > 5, which directly matches the code's logic of counting words where `len(w) > 5`. The only minor imprecision is calling them \"lines\" instead of \"words,\" but the core operation (counting elements with length > 5) is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for(auto &elem : value) if(elem.size() > 3) ++count; return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion counts elements in a collection whose size exceeds a threshold, which is exactly what the Python code does (counting words with length > 5). The threshold is wrong (3 vs 5) but the core operation \u2014 iterating over words/elements and counting those whose length/size exceeds some threshold \u2014 is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

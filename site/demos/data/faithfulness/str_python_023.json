@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The code counts alphabetic characters in the string using `isalpha()`, while the description talks about checking for a newline character. These are completely unrelated operations \u2014 one counts letters, the other looks for `\\n`.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(value.begin(), value.end(), [](auto c) { return true; }) > 0;  \n}  \n\nint func2(const auto& value){  \n    return std::accumulate(value.begin(), value.end(), 0, [](int, auto c){ return c || 0;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion uses `std::count_if` over a string/collection and `std::accumulate`, which are relevant to counting characters in a string. The lambda in `count_if` uses `return true` (wrong predicate - should check `isalpha`), but the overall structure of iterating and counting/summing characters is genuinely relevant to what the Python code does (summing a boolean property over characters). The accumulate pattern also mirrors the `sum()` operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it counts the number of alphabetic characters in string `s` by summing up `isalpha()` checks for each character.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(value.begin(), value.end(), [](auto c) { return std::isalpha(c); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of alphabetic characters in a string using `isalpha`. The implementation uses `std::count_if` with `std::isalpha` as the predicate, which is directly equivalent to the Python's `sum(c.isalpha() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description directly and accurately describes what the code does \u2014 it counts the number of alphabetic characters in a string using `isalpha()` and `sum()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(isalpha(c)) count++;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: iterating over characters in a string and counting those that are alphabetic using `isalpha()`. This is a direct and accurate description of what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it counts the number of alphabetic characters in the string `s` by summing the boolean results of `isalpha()` for each character.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& ch : value){\n        if(isalpha(ch)) ++count;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of alphabetic characters in a string using `isalpha()`. This is a direct match in substance, just implemented iteratively instead of with a generator expression.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

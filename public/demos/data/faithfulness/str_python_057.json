@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it retrieves the last character of string `s` (or empty string if `s` is empty), which is exactly \"checking the last character of the string.\"\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.back(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s[-1] if s else ''",
+    "reasoning": "The C++ completion implements `value.back()`, which retrieves the last element of a container \u2014 exactly what `s[-1]` does in Python. The empty check (`if s else ''`) is missing, but the core operation of getting the last element is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it retrieves the last character of string `s` (or empty string if `s` is empty), which is exactly \"checking the last character of the string.\"\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? &value[sizeof(value)-1] : nullptr; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s[-1] if s else ''",
+    "reasoning": "The Python code gets the last character of string `s`, returning empty string if `s` is empty. The C++ completion accesses the last element of a value (using `sizeof(value)-1`) and returns `nullptr` if the value is falsy/empty. This captures the core idea: accessing the last element of a sequence with a null/empty check for the empty case.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it retrieves the last character of string `s` (or empty string if `s` is empty), which is exactly \"checking the last character of the string.\"\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? *(&value + 0) : '\\0'; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s[-1] if s else ''",
+    "reasoning": "The Python code gets the last character of a string `s`, returning an empty string if `s` is empty. The C++ completion returns `*(&value + 0)` (which is just `value` itself, not the last element) when the value is truthy, and `'\\0'` when falsy. The ternary structure mirrors the `if s else ''` pattern, and the `'\\0'` corresponds to the empty/null character fallback. However, `*(&value + 0)` doesn't correctly capture \"last character\" \u2014 it just dereferences the same address. Still, the conditional structure and the null character fallback are genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does \u2014 it retrieves the last character of string `s` (or empty string if `s` is empty), which is exactly \"checking the last character of the string.\"\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? value.back() : '\\0'; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s[-1] if s else ''",
+    "reasoning": "The C++ completion returns the last element of a container (`value.back()`) if the container is non-empty (truthy), otherwise returns a null character. This directly mirrors the Python code which gets the last character of string `s` (`s[-1]`) if `s` is non-empty, otherwise returns an empty string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"counting uppercase letters,\" which is exactly what the code does \u2014 it sums up the count of uppercase characters across all words using `char.isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for(auto& c : value) \n        if(isalpha(c)) \n            count += tolower(c) == c ? 1 : 0; \n    return count; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(sum(1 for char in w if char.isupper()) for w in words)",
+    "reasoning": "The C++ code iterates over characters in a string and counts characters based on case - specifically checking if `tolower(c) == c` which identifies lowercase letters (though the Python code counts uppercase). The core operation is counting characters by case in words, which is genuinely relevant even though the C++ checks for lowercase while Python checks for uppercase.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description \"Counting uppercase letters\" directly describes what the code does \u2014 it counts uppercase characters across all words using `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for(auto& c : value) \n        if(isupper(c)) \n            count += c - 'A' + 1; \n    return count; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(sum(1 for char in w if char.isupper()) for w in words)",
+    "reasoning": "The C++ completion iterates over characters in a value and checks `isupper(c)`, which is directly relevant to counting uppercase characters. While the C++ code accumulates a weighted sum (`c - 'A' + 1`) rather than a simple count, the core operation of checking for uppercase characters is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description \"Counting characters that are uppercase\" is directly relevant to what the code does \u2014 it iterates over words and characters, counting uppercase characters using `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for(auto& c : value) \n        if(isdigit(c)) \n            count += c - '0'; \n    return count; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(sum(1 for char in w if char.isupper()) for w in words)",
+    "reasoning": "The Python code counts uppercase characters across all words. The C++ completion counts digits (using `isdigit`) and sums their numeric values, which is about a different character property (digits vs uppercase letters). However, the C++ code does share the structural concept of iterating over characters and counting/accumulating based on a character property \u2014 it's just the wrong property (digits instead of uppercase). The core operation (character-level iteration and counting based on a character classification) is partially relevant, but the specific property being checked is completely different.\n\nGiven the partial structural similarity but wrong character property, this is borderline. The code does iterate over characters and count based on a character classification function, which is a relevant sub-step, even if the specific classification (digits vs uppercase) is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description \"Counting uppercase letters\" directly describes what the code does \u2014 it counts uppercase characters across all words using `isupper()`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for(auto &c : value) \n        if(isupper(c)) \n            count += c - 'A' + 1; \n    return count; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(sum(1 for char in w if char.isupper()) for w in words)",
+    "reasoning": "The C++ completion iterates over characters in a value and checks `isupper(c)`, which is directly relevant to counting uppercase characters. While the C++ code accumulates a weighted sum (`c - 'A' + 1`) rather than a simple count, it still identifies the core operation: checking for uppercase characters in a string. This is genuinely relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

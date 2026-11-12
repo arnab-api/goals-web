@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies the high-level goal: checking for duplicate elements in a list. The mechanism described (comparing length of list to length of set) is a different implementation than what the code actually does (using `any` with `count > 1`), but the core concept of detecting duplicates is correct.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto maxVal = *std::max_element(value.begin(), value.end());  \n    auto minVal = *std::min_element(value.begin(), value.end());  \n    auto unique = std::set<typename decltype(value)::value_type>(value.begin(), value.end()).size() != value.size();  \n    return",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(nums.count(x) > 1 for x in set(nums))",
+    "reasoning": "The C++ completion checks whether the number of unique elements (via `std::set`) differs from the total size of the collection, which is exactly equivalent to checking if any element appears more than once (i.e., detecting duplicates). This directly corresponds to what the Python code does with `any(nums.count(x) > 1 for x in set(nums))`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking for duplicates, which is exactly what the code does. However, the described method (comparing list length to set length) is different from what the code actually does (using `any` with `count > 1`). Despite the wrong implementation detail, the core concept of checking for duplicates is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::unordered_set<decltype(value)> seen;\n    bool has_duplicate = false;\n    for (const auto& elem : value) {\n        if (!seen.insert(elem).second) {\n            has_duplicate = true;\n        }\n    }\n    return has_duplicate;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(nums.count(x) > 1 for x in set(nums))",
+    "reasoning": "The C++ completion implements a duplicate detection algorithm using an unordered_set to track seen elements, returning true if any element appears more than once. This is exactly what the Python code does \u2014 checking if any element in `nums` has a count greater than 1 (i.e., has duplicates).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies checking for duplicates using `any()` with a generator expression, and mentions converting to a set. The specific mechanism described (comparing lengths) is wrong, but the core concept of checking for duplicates using `any()` and a set is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::make_pair(value, std::set<decltype(value)>{value}.size() != std::set<decltype(value)>(std::begin(value), std::end(value)).size());\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(nums.count(x) > 1 for x in set(nums))",
+    "reasoning": "The C++ completion compares the size of a set constructed from the input with the size of the original collection. This is a classic duplicate-detection approach: if the set size differs from the original size, there are duplicates. The Python code also checks for duplicates (any element appearing more than once). The core idea \u2014 detecting duplicates by using a set \u2014 is genuinely relevant, even though the implementation details differ.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies the task (checking for duplicate elements in the list), which is exactly what the code does. However, it describes a different implementation (comparing lengths of list vs set) rather than the actual implementation (using count() > 1). Since the task/property being checked is the same, this counts as YES.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::unordered_set<decltype(value)> seen;\n    for (const auto& elem : value) {\n        if (!seen.insert(elem).second) return true;\n    }\n    return false;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(nums.count(x) > 1 for x in set(nums))",
+    "reasoning": "The C++ completion implements a duplicate detection algorithm - it uses an unordered_set to track seen elements, and returns true if any element is already in the set (i.e., appears more than once). This is functionally equivalent to what the Python code does: checking if any element in `nums` appears more than once (has count > 1). The core operation of detecting duplicates is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

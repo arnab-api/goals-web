@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"verifying if the list is sorted in non-decreasing order by comparing each element with the next one,\" which is exactly what the code does. The first part about checking against a maximum value is irrelevant noise, but the second part is directly relevant.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto is_sorted = std::is_sorted(std::begin(value), std::end(value));\n    auto max_element = *std::max_element(std::begin(value), std::end(value));\n    return std::make_pair(is_sorted, max_element);\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion checks `std::is_sorted` on the collection, which is directly relevant to what the Python code does (checking if `nums` is non-decreasing, i.e., sorted). The max_element part is extra but doesn't negate the core relevance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it checks if each element is less than or equal to the next element, verifying the list is sorted in non-decreasing order.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    bool is_sorted = true;\n    for (size_t i = 1; i < value.size(); ++i) {\n        if (value[i-1] > value[i]) {\n            is_sorted = false;\n            break;\n        }\n    }\n    return is_sorted;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking whether a sequence is sorted in non-decreasing order by comparing adjacent elements. The variable name `is_sorted`, the comparison `value[i-1] > value[i]`, and the boolean return are all directly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: checking if each element is less than or equal to the next element, and using `all()` to determine if the list is sorted in non-decreasing order.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return is_sorted(value.begin(), value.end());\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion implements `is_sorted`, which checks if a collection is sorted in non-decreasing order \u2014 exactly what the Python code does by checking that each element is \u2264 the next.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: checking if each element is less than or equal to the next one, which verifies the list is sorted in non-decreasing order.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    for (size_t i = 0; i < value.size() - 1; ++i) {\n        if (value[i] > value[i + 1]) return false;\n    }\n    return true;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it iterates through adjacent elements of a sequence and checks if each element is less than or equal to the next one (returning false if any element is greater than the next). This is precisely checking if the sequence is non-decreasing (sorted in ascending order).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

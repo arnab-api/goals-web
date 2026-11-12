@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description mentions checking if the current character is a letter (relevant - the code uses `c.isalpha()`), but then says checking if it's a digit, which is wrong - the code checks if alphabetic characters are lowercase (`c.islower()`), not digits. However, the first part about checking if a character is a letter is genuinely relevant.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool isNumeric = isdigit(value[0]) != 0;  \n    bool isAlpha = isalpha(value[0]) != 0;  \n    return make_pair(isNumeric, isAlpha);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The Python code checks if all alphabetic characters in a string are lowercase. The C++ completion checks if the first character is numeric or alphabetic, but doesn't check for lowercase at all. It does involve `isalpha` which is partially relevant, but it's checking a completely different property (alpha vs numeric classification of first character only, not lowercase check for all characters).\n\nHowever, `isalpha` is a relevant sub-operation used in the Python code (filtering alphabetic characters). The completion uses `isalpha` in a related context, even if the overall logic differs significantly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures what the code does: it checks if all alphabetic characters in the string are lowercase. The description correctly identifies both the filtering for alphabetic characters and the lowercase check.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return is_same_v<char, decltype(value)> && all_of(begin(value), end(value), [](char c){ return isalpha(c) && islower(c); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion checks if all characters in a value are alphabetic and lowercase using `all_of` with `isalpha(c) && islower(c)`, which directly corresponds to the Python code's `all(c.islower() for c in s if c.isalpha())`. The logic is essentially the same \u2014 checking that all alpha characters are lowercase \u2014 though the implementation details differ slightly (the Python filters first, while the C++ combines both conditions).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if characters are lowercase letters, which is exactly what the code does (using `islower()` to verify all alphabetic characters are lowercase). The description is relevant and captures the core operation.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return is_same_v<decltype(value), bool> && value; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The Python code checks if all alphabetic characters in a string are lowercase. The C++ completion checks if a value is of type `bool` and is truthy, which is completely unrelated to checking lowercase characters or iterating over a string's alphabetic characters.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures what the code does: it checks if all alphabetic characters in the string are lowercase. The description correctly identifies both the filtering for alphabetic characters and the lowercase check.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return all_of(begin(value), end(value), [](char c){ return isalpha(c) && islower(c); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion checks that all alphabetic characters in a string are lowercase, which is exactly what the Python code does (checking `c.islower()` for all `c` where `c.isalpha()`). The logic is essentially identical, just implemented in C++.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

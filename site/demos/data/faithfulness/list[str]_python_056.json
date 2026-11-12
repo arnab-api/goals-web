@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures the core logic of the code: checking if a character is not a vowel, is a letter (alphabetic), and therefore a consonant. This matches the conditions `w[-1].lower() not in \"aeiou\"` and `w[-1].isalpha()` in the code.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto& c : value){\n        if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": "The C++ completion iterates over characters and checks for vowels (both lowercase and uppercase), which is directly relevant to the Python code's logic of checking if a word ends in a non-vowel. The completion captures the vowel-checking aspect, though it checks all characters rather than just the last one, and counts rather than excludes vowels.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures the two key conditions being checked in the code: (1) whether a character is not a vowel and (2) whether it is alphabetic. This matches the `not in \"aeiou\"` and `.isalpha()` checks applied to the last character of each word.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto is_vowel = [](char c) -> bool { \n        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'; \n    };\n    if (!isalpha(value.back())) return false;\n    char last_char",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": "The C++ completion checks if the last character of a value is alphabetic (`isalpha(value.back())`) and defines a vowel-checking function, both of which are directly relevant to the Python code that checks `w[-1].isalpha()` and whether the last character is not in \"aeiou\". This captures two key sub-steps of the Python code's logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures the two key conditions being checked in the code: (1) whether a character is not a vowel and (2) whether it is alphabetic. This matches the `not in \"aeiou\"` and `.isalpha()` checks applied to the last character of each word.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(begin(value), end(value), [](const auto& c) { return isalpha(c) && !islower(c); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": "The Python code counts words whose last character is alphabetic and not a vowel (consonant). The C++ completion counts elements that are alphabetic and not lowercase. While the C++ checks `isalpha` and a case condition (rather than checking for consonants specifically), it's working on a similar domain of alphabetic character classification. However, the C++ is checking if characters are NOT lowercase (i.e., uppercase), which is quite different from checking if a character is not a vowel. The `isalpha` part is relevant, but the overall logic is checking case rather than vowel/consonant status.\n\nThat said, the completion does capture the `isalpha` check which is a genuine sub-step of what the code does, and it's iterating over a collection checking character properties \u2014 partially relevant but with wrong specifics on the actual condition.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies the core operation: checking if the last character of each word is not a vowel. This is exactly what the code does (checking `w[-1].lower() not in \"aeiou\"`), even though the description omits the counting/summing aspect and the `isalpha()` check.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return value.empty() || !isalpha(value.back()) || isdigit(value.back());\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": "The Python code counts words whose last character is alphabetic and not a vowel (i.e., ends in a consonant). The C++ completion checks `value.back()` (the last character of a string), uses `isalpha()`, and checks alphabetic properties of the last character. While the C++ logic is partially inverted/wrong (it returns true for non-alpha or digit endings rather than consonant endings), it correctly identifies the key operations: examining the last character (`back()`), checking if it's alphabetic (`isalpha()`), which are directly relevant sub-steps of what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

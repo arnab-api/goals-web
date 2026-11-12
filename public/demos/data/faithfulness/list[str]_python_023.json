@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description talks about checking if a line is the \"first line with any character,\" which is about line ordering/position detection. The code is actually counting words that start with a vowel. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
    "reasoned_verdict": "NO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(value.begin(), value.end(), [](auto x){ return x == 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion counts elements equal to 0, which is unrelated to vowel checking. However, it does use `count_if` which is a counting operation over a collection \u2014 this partially matches the \"counting words that satisfy a condition\" aspect of the Python code. The condition itself (checking for vowels) is not captured at all, but the structure of counting elements satisfying a predicate is present.\n\nThe completion is coherent and shows counting with a predicate over a collection, which is the general structure of what the Python code does (counting words satisfying a condition). However, the specific condition (starting with a vowel) is completely missing, replaced by `x == 0`.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if something starts with a vowel, which is exactly what the code does \u2014 it checks if each word starts with a vowel (using `w[0].lower() in \"aeiou\"`). The description misses the counting/summing aspect but correctly identifies the core vowel-checking operation.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(std::begin(value), std::end(value), [](auto c) { return std::isupper(c); });\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words that start with a vowel (checking `w[0].lower() in \"aeiou\"`). The C++ completion counts uppercase characters using `std::isupper`. While both involve character classification, checking for uppercase letters is completely unrelated to checking if a word starts with a vowel. However, the C++ does use `std::count_if` over a collection with a character predicate, which shares the counting-words-by-character-property structure partially \u2014 but the specific property (uppercase vs. starts with vowel) is entirely different.\n\nThe completion is coherent and uses `count_if` with a character predicate, but the predicate checks for uppercase letters rather than vowels. The structural similarity (counting elements matching a character condition) is superficial; the actual semantic content (uppercase check) is unrelated to vowel detection.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting how many times a condition is true for elements in a list, which is exactly what the code does (counting words that meet a condition). However, the description gives a wrong example (\"checking if a number is even\") that is unrelated to the actual condition (checking if a word starts with a vowel). The core operation \u2014 counting elements satisfying a condition \u2014 is correctly identified, even if the specific condition is wrong.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto i = 0; i < value.size(); ++i){\n        if(value[i] > 0) ++count;\n    }\n    return count;\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion counts elements that are greater than 0, which is a counting operation but checks a numeric condition rather than checking if a word starts with a vowel. There's no mention of vowels, string first characters, or \"aeiou\" \u2014 the counting structure is similar but the predicate is completely unrelated.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The code counts words whose first character is a vowel, and the description correctly identifies the vowel-checking operation that is central to what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return count_if(value.begin(), value.end(), [](char c) { return isalpha(c) && tolower(c) == c; });\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion counts characters that are lowercase alphabetic letters, which is a different operation entirely \u2014 it's checking for lowercase letters, not vowels, and it operates on characters rather than words. However, it does involve `tolower` and character classification, which are partially related concepts (the Python code uses `.lower()` and checks membership in \"aeiou\"). But the core operation (counting words starting with vowels) is not captured \u2014 the C++ checks all characters for being lowercase, not first characters for being vowels.\n\nThe completion is coherent but misses the key aspects: checking the first character of each word and comparing to vowels. The `tolower` is tangentially related but the overall logic is completely different.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   }
  ]
 }

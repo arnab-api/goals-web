@@ -34,7 +34,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description mentions \"checking the current character or element,\" which is partially relevant \u2014 the code is indeed checking a character (the first character of string `s`). However, the description is very generic and doesn't specify what property is being checked (alphabetic), though it does correctly identify the operation as a check on a character/element.\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_tuple(std::is_same_v<decltype(value), bool>, std::is_integral_v<decltype(value)>, std::is_integral_v<decltype(value)> ? static_cast<bool>(value) : false, std::is_integral_v<decltype(value)> ? static_cast<char>(value) : '\\0', std::is",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha()",
+    "reasoning": "The Python code checks if the first character of string `s` is alphabetic (`isalpha()`). The C++ completion is about type checking (bool, integral types) and type casting, which is unrelated to checking if a character is alphabetic. It's checking type properties of a value rather than character classification.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes checking if the first character of a string is alphabetic using `isalpha()`, which matches exactly what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isalpha(value) && isupper(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha()",
+    "reasoning": "The Python code checks if the first character of string `s` is alphabetic using `isalpha()`. The C++ completion also uses `isalpha()` on a value, which is directly relevant to what the code does. The additional `isupper()` check is a wrong extra condition, but the core `isalpha()` operation is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions `isalpha()` which is exactly what the code uses, and correctly identifies that it's checking if a character is alphabetic. The mention of `isupper()` is an extra detail not present in the code, but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isalpha(value) && boolalpha; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha()",
+    "reasoning": "The C++ completion uses `isalpha()` which is exactly what the Python code uses to check if a character is alphabetic. The `boolalpha` part is noise/irrelevant, but the core operation `isalpha(value)` is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description correctly identifies that the code checks if the first character is an alphabetic letter using `isalpha()` and accessing index `[0]`. This is a precise and accurate description of what the code does.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isalpha(value) && islower(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha()",
+    "reasoning": "The code checks if the first character of string `s` is alphabetic using `isalpha()`. The C++ completion also uses `isalpha()`, which is directly relevant to what the code does. The additional `islower()` check is an extra condition not in the original, but the core `isalpha()` operation is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

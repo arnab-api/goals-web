@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"calculating the average of the list of integers,\" which is exactly what the code does \u2014 it computes the sum divided by the length (integer average) of the list `nums`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::accumulate(std::begin(value), std::end(value), 0) / value.size();  \n}  \n\nint sumAndAverage(int* arr, int size){\n    int sum = 0;\n    for(int i = 0; i < size; i++){\n        sum += arr[i];\n",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements divided by the size (count), which is exactly the average/mean calculation that the Python code performs (`sum(nums) // len(nums)`). Both compute the arithmetic mean of a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the average (mean) of a list using integer division, which matches exactly what the code does: `sum(nums) // len(nums)`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::accumulate(value.begin(), value.end(), 0) / value.size();\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements divided by the size (count), which is exactly the average/mean calculation that the Python code performs. This directly matches the core operation of computing `sum(nums) // len(nums)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the average (mean) by summing all elements and dividing by the count, which is exactly what the code does (with integer division).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(value / sizeof(value)); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The Python code computes the average (mean) of a list of numbers using sum divided by count. The C++ completion also performs a division operation, but it divides a value by `sizeof(value)` (the size of the type in bytes), which is completely unrelated to computing an arithmetic mean. The division is there, but it's dividing by a type size rather than a count of elements, making it a coincidental structural similarity rather than a relevant semantic match.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the integer average (mean) of a list, which is exactly what the code does \u2014 it sums the elements and performs integer division by the count, with a fallback of 0 for empty lists.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0) / value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements divided by the size of the collection, which is exactly the average/mean calculation that the Python code performs (sum(nums) // len(nums)). This is directly relevant to the code's operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

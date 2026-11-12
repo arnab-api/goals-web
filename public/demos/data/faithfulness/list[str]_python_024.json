@@ -34,7 +34,15 @@
    "verdict": "NO",
    "reasoning": "The description mentions \"checking if the current character is part of the string,\" which is vague and doesn't capture the key operations: counting words that contain digits, using `any()`, `isdigit()`, or summing. The description is too generic and doesn't identify any specific relevant aspect of what the code does.\n\n<verdict>NO_INFO</verdict>",
    "reasoned_verdict": "NO_INFO",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n        if(isdigit(c)) count++;  \n    }  \n    return count;  \n}  \n\nauto func2 (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if any(char.isdigit() for char in w))",
+    "reasoning": "The C++ completion shows counting digits in a string by iterating over characters and using `isdigit()`, which is directly relevant to the Python code that checks if any character in a word is a digit. The core operation (checking for digit characters) is correctly identified, though the C++ counts all digits while Python uses `any()` to check for existence.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking for the presence of a digit in the string,\" which directly matches the core operation in the code: `any(char.isdigit() for char in w)` checks if any character in a word is a digit. The code then counts words containing digits, but the digit-checking aspect is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto c : value) {  \n        if(isdigit(c)) count++;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if any(char.isdigit() for char in w))",
+    "reasoning": "The C++ completion counts the number of digit characters in a string, which is directly relevant to the Python code that checks if any character in a word is a digit. The C++ uses `isdigit()` and counts occurrences, while the Python uses `any(char.isdigit() ...)`, but both are fundamentally checking for digit characters in strings.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately captures the core operation of the code: checking whether characters are digits. The code counts words that contain at least one digit character, and the description correctly identifies the digit-checking aspect.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (const auto& elem : value) {\n        if (std::is_integral<decltype(elem)>::value && elem % 2 == 0) {\n            count++;\n        }\n    }\n    return count;\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if any(char.isdigit() for char in w))",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion counts elements that are integral types and even (divisible by 2). While the C++ code does involve counting elements from a collection based on a numeric property, it's checking if elements themselves are even integers rather than checking if strings contain digit characters. However, it does capture the core operation of counting items in a collection that meet a numeric/digit-related condition.\n\nThe C++ code iterates over a collection and counts elements meeting a numeric condition - this partially overlaps with the concept of counting words containing digits, though the specific check (even integers vs. digit characters in strings) is different. The counting structure and iteration are relevant, but the actual property being checked is quite different.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description says \"checking if any character in the string is a digit,\" which directly matches the `any(char.isdigit() for char in w)` part of the code. This is a core sub-operation of what the code does (counting words that contain at least one digit).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto &ch : value){\n        if(isdigit(ch)) count++;\n    }\n    return count > 0;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if any(char.isdigit() for char in w))",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion checks if a value (string) contains at least one digit character using `isdigit()`, which is directly relevant to the core operation. The C++ returns `count > 0` which checks for presence of any digit, matching the `any(char.isdigit() ...)` part of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

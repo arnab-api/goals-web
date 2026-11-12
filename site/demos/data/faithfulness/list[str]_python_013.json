@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting how many elements are True, which is exactly what the code does \u2014 it sums up boolean values from `w.istitle()` to count how many words are title-cased. The \"existence check\" part is slightly off (it's a count, not just existence), but counting True values is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool found = false;  \n    int count = 0;  \n    for (const auto& elem : value) {  \n        if (!found && is_integral_v<decltype(elem)>) {  \n            found = any_of(value.begin(), value.end(), [](auto x){ return is_integral(x); });  \n",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(w.istitle() for w in words)",
+    "reasoning": "The Python code counts the number of title-case words in a list. The C++ completion is checking for integral types in a collection, which is completely unrelated to title-case checking. However, it does contain a counting/iteration pattern over elements of a collection, which is structurally similar but semantically irrelevant (integral type checking vs. title case checking).\n\nThe C++ completion is coherent and about a specific thing (checking for integral types), but that thing is completely unrelated to what the Python code does (counting title-cased words).\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting words that start with a capital letter, which is partially relevant \u2014 `istitle()` checks if words are title-cased (first letter uppercase, rest lowercase). The description also mentions checking for uppercase characters, which is loosely related. While \"lines\" vs \"words\" is wrong and the description conflates two different checks, it does capture the core idea of counting capitalized/uppercase elements.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto& c : value) {  \n        if(isupper(c)) count++;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(w.istitle() for w in words)",
+    "reasoning": "The Python code counts words that are title-cased (first letter uppercase, rest lowercase). The C++ completion counts uppercase characters in a string. While not exactly the same operation (counting title-case words vs. counting uppercase characters), it does involve checking for uppercase/capitalization, which is a genuinely relevant sub-concept to what the code is doing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "NO_INFO",
    "reasoning": "The description mentions \"checking if a condition is true and incrementing a counter,\" which is partially relevant \u2014 the code is indeed checking a condition (istitle()) for each word and summing/counting the results. However, the description is quite generic and talks about \"lines\" rather than words, and doesn't mention anything specific about title case or words.\n\nThe description is borderline NO_INFO, but it does capture the core pattern of \"checking a condition and counting/summing the results,\" which maps to what the code does (summing boolean results of a condition check).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto it = begin(value); it != end(value); ++it){\n        if(is_integral_v<decltype(*it)>){\n            count += *it > 0;\n        }\n    }\n    return count;\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(w.istitle() for w in words)",
+    "reasoning": "The Python code counts words that are title-cased (start with uppercase). The C++ completion counts elements that are positive integers (> 0), which is about counting elements meeting a condition in a collection \u2014 structurally similar but semantically wrong. It iterates over a collection and counts elements meeting a condition, which is partially relevant (counting elements satisfying a property), but the specific property (positive integers vs. title case) is completely different. However, the counting pattern over a collection is genuinely relevant as a sub-step.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions counting variables that start with an uppercase letter, which is closely related to what the code does \u2014 it counts words where `w.istitle()` is True (i.e., words that are title-cased, starting with an uppercase letter). The description captures the core operation (counting) and the relevant property (starting with uppercase), even if `istitle()` is slightly more specific than just starting with uppercase.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for(auto &c : value) if(isupper(c)) count++; return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(w.istitle() for w in words)",
+    "reasoning": "The Python code counts words that are title-cased (first letter uppercase, rest lowercase). The C++ completion counts uppercase characters in a string. While not exactly the same operation (counting title-cased words vs. counting uppercase characters), both involve detecting uppercase/title-case properties, which is genuinely relevant to the core concept of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

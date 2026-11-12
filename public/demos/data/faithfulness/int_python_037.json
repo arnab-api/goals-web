@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions \"calculating the sum of its digits,\" which is directly relevant to what the code does (summing the digits of a number). Despite the noisy scaffolding and vague framing about \"checking if the current line is being executed,\" the core operation of digit sum calculation is correctly identified.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\n\nint sumDigits(int number) {\n    int sum = 0;\n    while (number > 0) {\n        sum += number % 10;\n        number /= 10;\n    }\n    return sum;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+    "reasoning": "The C++ completion implements digit sum calculation using `number % 10` to extract digits and accumulating them into `sum`, which is exactly what the Python code does (summing the digits of the absolute value of n). This is a direct match to the underlying operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the sum of digits of a number, which is exactly what the code does (iterating over digits of the absolute value of n and summing them).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto sum = 0;  \n    while (value > 0) {  \n        sum += value % 10;  \n        value /= 10;  \n    }  \n    return sum;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+    "reasoning": "The C++ completion implements digit sum extraction using the modulo-10 method, which is exactly what the Python code does (summing digits of abs(n)). The C++ code correctly extracts digits and accumulates their sum, matching the core operation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the sum of digits of a number, which is exactly what the code does (summing individual digits of the absolute value of n).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value < 0) ? 0 : std::accumulate(std::to_string(value).begin(), std::to_string(value).end(), 0, [](int sum, char digit){ return sum + digit - '0'; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+    "reasoning": "The C++ completion describes summing the digits of a number, using `std::accumulate` over the string representation, subtracting `'0'` to convert characters to integers. This is exactly what the Python code does (sum of digits of `abs(n)`). The handling of negative numbers differs slightly (returns 0 vs using abs), but the core operation is clearly digit sum.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes computing the sum of digits of a number, which is exactly what the code does (summing individual digits of the absolute value of n).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0; \n    while (value > 0) { \n        sum += value % 10; \n        value /= 10; \n    } \n    return sum; \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+    "reasoning": "The C++ completion implements summing the digits of a number using the modulo-10 approach (extracting digits one by one), which is exactly what the Python code does by converting to string and summing individual digits. Both compute the digit sum of a number.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }

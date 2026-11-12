@@ -34,7 +34,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it counts characters in string `s` that satisfy the condition of being a digit (using `isdigit()`).\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for(auto c : value){\n        if(isdigit(c)) ++count;\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of digit characters in a string by iterating through each character and checking `isdigit()`. This is a direct and accurate correspondence.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "indent",
@@ -42,7 +50,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it counts the number of digit characters in string `s` by summing the boolean results of `isdigit()` for each character.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int countDigits = 0;  \n    int countLetters = 0;  \n    for (char c : value) {  \n        if (isdigit(c)) countDigits++;  \n        else if (isalpha(c)) countLetters++;  \n    }  \n    return make_pair(countDigits, countLetters);",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion counts digits in a string using `isdigit(c)` and increments a `countDigits` counter, which is directly relevant to what the Python code does (summing `c.isdigit()` for each character). The C++ also counts letters, which is extra, but the core digit-counting operation is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "var",
@@ -50,7 +66,15 @@
    "verdict": "YES",
    "reasoning": "The description accurately describes what the code does: it counts the number of digit characters in string `s` by summing the boolean results of `isdigit()` for each character.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(auto c : to_string(value)) if(isdigit(c)) count += c == '0';  \n    return make_tuple(count, count_if(begin(to_string(value)), end(to_string(value)), ::isdigit) - count, count_if(begin(to_string(value)), end(to",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The Python code counts the number of digit characters in a string `s`. The C++ completion iterates over characters and checks `isdigit(c)`, which is directly relevant to counting digits. Despite the wrong increment condition (`count += c == '0'` instead of counting all digits), and the truncated/complex ending, the core operation of iterating over characters and applying `isdigit` is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   },
   {
    "pivot": "eq",
@@ -58,7 +82,15 @@
    "verdict": "YES",
    "reasoning": "The description mentions checking if a character is a digit, which is exactly what the code does using `c.isdigit()` for each character in `s`.\n\n<verdict>YES</verdict>",
    "reasoned_verdict": "YES",
-   "judged": true
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (char c : value) {\n        if (isdigit(c)) {\n            ++count;\n        }\n    }\n    return count;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion counts the number of digit characters in a string by iterating through each character and using `isdigit()`, which is exactly what the Python code does with `sum(c.isdigit() for c in s)`. This is a direct match in functionality.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
   }
  ]
 }
