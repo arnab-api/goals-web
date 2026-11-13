@@ -161,8 +161,9 @@
         <h3>Do LLMs have goals?</h3>
         <p>
           Language models now carry out tasks that unfold over thousands of tokens, and they behave
-          <i>as if</i> they were pursuing a goal. We ask whether that behavior is backed by an explicit goal
-          encoding inside the model&rsquo;s computations. We fix three criteria that functionally define a goal:
+          <i>as if</i> they were pursuing a goal. We ask whether that behavior is backed by an <b>explicit goal
+          encoding</b> inside the model&rsquo;s computations. <br>
+          We fix three criteria that functionally define a goal:
           (i) pre-commitment, (ii) plasticity, and (iii) persistence. We find an encoding that meets these criteria
           in the outputs of a sparse set of attention heads. We further ask how a depth-bounded transformer manages to keep such
           a goal alive across a long generation without running out of layers.
@@ -361,18 +362,19 @@
         </div>
       </div>
       <p>
-        In the LM&rsquo;s computations, we look for these criteria in a controlled setup with multi-step coding tasks:
-        the prompt lists several sub-tasks, and we prefill the code up to the point where a good model should start the next one (the <i>frontier</i>).
-        In this setup, we find an encoding that meets all three criteria in the outputs of a sparse set of attention heads.
+        <!-- In the LM&rsquo;s computations, we look for these criteria in a controlled setup with multi-step coding tasks:
+        the prompt lists several sub-tasks, and we prefill the code up to the point where a good model should start the next one (the <i>frontier</i>). -->
+        In a controlled coding setup, we find an encoding that meets all three criteria in the outputs of a sparse set of attention heads.
         <br>
-        When we transplant the collective encoding of these heads into a neutral probe, the LM can verbalize the upcoming action in natural language and implement it in a different programming language. See the figure below, and <a class="demo-cta" href="demo/index.html">browse the demo readouts &rarr;</a>
+        This encoding can be transplanted into a different context to verbalize the upcoming action in natural language and trigger its implementation in a different programming language. 
+        See the figure below, and <a class="demo-cta" href="demo/index.html">browse the demo readouts &rarr;</a>
       </p>
       <figure class="center_image">
         <img src="images/goalscope.svg" alt="GoalScope schema and readout results">
         <figcaption>
           <b>GoalScope.</b> (a) The goal heads&rsquo; outputs at one token form the encoding <i>v<sub>g</sub></i>.
           (b) We plant this encoding into a neutral probe: (c.1) asked to describe what it is doing, the model verbalizes the
-          next action; and (c.2) in an information-less C++ stub, the LM implements the same sub-goal with a different sequence of tokens. <br><b>Right</b>: faithfulness (c.1) and causality (c.2) at four pre-implementation token positions.
+          next action; and (c.2) in an information-less C++ stub, the LM implements the same sub-goal with a different sequence of tokens. <br><b>Right</b>: (c.1) faithfulness measures whether the natural language readout is aligned with the LM's next action; causality (c.2) measures whether the encoding can trigger the same action in a different environment (programming language).
         </figcaption>
       </figure>
       <ul class="findings">
@@ -381,7 +383,7 @@
 
         <li class="finding-more">
           <details>
-            <summary><span class="tag tag-per">persistence</span> The code implementation of a sub-goal can take many tokens. Throughout this implementation, the LM keeps the sub-goal encoding alive in the same attention heads that first formed it.
+            <summary><span class="tag tag-per">persistence</span> The implementation of a goal can take many tokens. Throughout this implementation, the LM keeps the goal encoding alive in the outputs of the attention heads.
             </summary>
             <figure class="fig-side">
               <img loading="lazy" src="images/persistence.svg"
@@ -404,12 +406,12 @@
     <section class="takeaway" id="persistence">
       <h2>How does a depth-bounded transformer LM achieve persistence?</h2>
       <p>
-        The only way a transformer LM can pool information from a previous token is through the attention mechanism, which costs a layer.
+        <!-- The only way a transformer LM can pool information from a previous token is through the attention mechanism, which costs a layer.
         If the LM were to carry a running encoding of the goal from one token to the next, it would have only a limited number of layers to do so.
         As an example, an encoding formed at layer 40 of a 64-layer model has only 24 layers left to pass it on, yet we see goals sustained
-        well beyond that limit.<br>
-        We find that instead of carrying a goal-encoding forward, the LM frequently <b>re-reads</b> the goal from the task specification.
-        Then the LM decides the next action by comparing the re-fetched goal with the progress made so far.
+        well beyond that limit.<br> -->
+        Transformer LMs have a limited number of layers, and the only way they can pool information from a previous token is through the attention mechanism, which costs a layer. How, then, does a transformer LM keep a goal alive in its computation for many tokens? <br>
+        We find that instead of carrying a goal encoding forward across the generated tokens, the LM <b>frequently re-reads</b> the goal from the task specification. Then the LM decides the next action by comparing the re-fetched goal with the progress made so far.
         We call this the <b>non-recurrent goal-seeking</b> account (NRGS) of how the transformer LM achieves persistence.
       </p>
       <figure class="center_image nrgs-fig">
@@ -438,14 +440,14 @@
       <div class="insights">
         <details class="insight">
           <summary>
-            <span class="ins-title">The goal is frequently re-read from the task specification.</span>
-            <span class="ins-brief">When we swap the key-value states that the goal heads read from at a token, while the LM is in the middle of implementing a specific goal, the LM is redirected to implement the next action of the transplanted goal.</span>
+            <span class="ins-title">The LM frequently re-reads the goal from the task specification.</span>
+            <span class="ins-brief">When the LM is in the middle of pursuing a goal, we can control what it reads from the context using the goal heads, and the LM redirects to implement the next action of the transplanted goal.</span>
             <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span>
           </summary>
           <div class="sub-insights">
             <details class="sub-insight">
-              <summary><b>The same computational motif, implemented by the goal heads, works at different levels of
-                the hierarchy.</b> The same KV swap redirects a sub-sub-goal, a sub-goal, and the broader goal itself.
+              <summary><b>The same computational motif, implemented by the same goal heads, works at different levels of
+                the hierarchy.</b> The same intervention can redirect a sub-sub-goal, a sub-goal, and a broader goal, across very different coding situations.
                 <span class="ins-refs">&sect;5.1.1 &middot; App.&nbsp;I.1</span></summary>
               <div class="level-tabs" role="tablist" aria-label="Level of the goal hierarchy">
                 <button type="button" role="tab" aria-selected="false" data-level="goal">Goal</button>
@@ -481,7 +483,7 @@
             </details>
             <details class="sub-insight">
               <summary><b>The task span, not the code progress, dictates the LM&rsquo;s next operation.</b>
-                The next action is <i>pre-committed</i> in the earlier generated code. The goal can be read out via GoalScope, and transplanting it into a different environment (C++) can trigger its execution. However, we find that the LM largely ignores this pre-commitment and instead re-reads the goal from the task span to decide the next operation.
+                The next action is <i>pre-committed</i> in the earlier generated code. A goal encoding extracted from pre-implementation tokens can be decoded via GoalScope, and transplanting it into a different environment (C++) can trigger its execution. However, we find that the LM largely ignores this pre-commitment and instead re-reads the goal from the task span to decide the next operation.
                 <span class="ins-refs">App.&nbsp;J &middot; Fig.&nbsp;27</span></summary>
               <figure class="center_image">
                 <img loading="lazy" src="images/nrgs-task_vs_progress.svg"
@@ -510,7 +512,7 @@
         </details>
         <details class="insight">
           <summary>
-            <span class="ins-title">The next operation is chosen with a mix of different computations.</span>
+            <span class="ins-title">Progress dictates the next action (among other things).</span>
             <span class="ins-brief">The goal heads&rsquo; queries carry part of the &ldquo;what is already
               done&rdquo; signal. Transferring them can redirect the model to implement the next sub-goal in the destination list that hasn't been completed in the source prompt yet. However, this explains only 57% of the cases in our evaluation set. Through targeted interventions, we find non-trivial evidence for other potential computations, such as the order of the tasks and the number of completed tasks, that also participate in selecting the next action.</span>
             <span class="ins-refs">&sect;5.1.2 &middot; App.&nbsp;I.2</span>
@@ -535,7 +537,7 @@
 
     <!-- ===================================================================== 3. beyond code -->
     <section class="takeaway" id="beyond-code">
-      <h2>Can GoalScope read out the LM&rsquo;s next action beyond code?</h2>
+      <h2>Beyond Code</h2>
       <p>
         The goal heads were found on code, but GoalScope reads intentions elsewhere too, with no re-training.
       </p>
@@ -557,12 +559,8 @@
       <h2>Is "goal" the right term for this encoding?</h2>
       <p>
         By our criteria, the encoding is <b>pre-committed</b> (decodable before the action) and <b>plastic</b>
-        (portable to another environment). It is also <b>persistent</b>, but through frequent re-derivation rather
-        than a single running state. Whether that counts as a "goal" depends on whether there is a requirement on
-        the mechanical implementation of persistence: if a goal must be a single state that survives the whole action,
-        then this encoding does not qualify. But if we don&rsquo;t care about the implementation, and only care whether the goal
-        is present during the action, then this encoding qualifies. We leave the semantics of whether
-        this is a &ldquo;goal&rdquo; or not to the reader.
+        (portable to another environment). It is also <b>persistent</b> (sustained throughout the action). However, transformer LMs achieve persistence through frequent re-derivation rather than carrying a single running state. <br>
+        Does this count as a "goal"? The answer depends on whether there is a requirement on the mechanical implementation of persistence: if a goal must be a single state that survives the whole action, then this encoding does not qualify. But if we don&rsquo;t care about the implementation, and only care whether the goal is present when it causes action, then this encoding qualifies. We leave the semantics of whether this is a &ldquo;goal&rdquo; or not to the reader.
       </p>
     </section>
 
