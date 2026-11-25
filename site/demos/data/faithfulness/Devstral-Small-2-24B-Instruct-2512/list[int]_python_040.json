@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_040",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of positive values\n(2) the difference between the maximum and minimum values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - min(nums)\n    return a, b\n</code>",
+ "impl_span": "b = max(nums) - min(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines in the code.",
+   "verdict": "NO",
+   "reasoning": "The description says it's counting the number of lines in the code, which is completely unrelated to what the code does (computing the range of a list by subtracting the minimum from the maximum).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return {value, 0}; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion defines a function returning a pair with the value and 0, which has no relevance to computing the range (max - min) of a list of numbers. There's no mention of max, min, difference, or any range-related operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To find the difference between the maximum and minimum values in the list, subtract the min from the max.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the range (max minus min) of a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int min = *min_element(value.begin(), value.end());int max = *max_element(value.begin(), value.end());return make_pair(max - min, accumulate(value.begin(), value.end(), 0) - min);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion computes `max - min` of a collection, which is exactly what the Python code does (range = max - min). It also includes some extra computation (accumulate/sum), but the core operation of finding min and max elements and computing their difference is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "If the difference between the max and min is zero, then the result is `max - min`; otherwise, it's `max - min` if `max - min` is non-negative, and `max - min` if `max - min` is non-negative, and `max - min` if `",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"difference between max and min\" and \"max - min\" repeatedly, which is exactly what the code computes (`max(nums) - min(nums)`). Despite the repetitive and somewhat incoherent phrasing, it correctly identifies the core operation of computing the range (max minus min). It is not a tight looping pattern of 5 words or fewer dominating the output \u2014 it has some varied sentence structure around the repeated concept.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? (max - min) : (max - min == 0 ? (value ? max - min : max - min != 0 ? max - min : max - min); }",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion repeatedly references `max - min`, which is exactly what the Python code computes (the range of a list of numbers). Despite the syntactic mess and heavy repetition, the core concept of `max - min` is clearly present and directly relevant.\n\nHowever, I need to check if this qualifies as a HEAVY_LOOP. The repeating unit is essentially `max - min` with various conditions, cycling through the same fragment multiple times. The pattern `(max - min) : (max - min == 0 ? (value ? max - min : max - min != 0 ? max - min : max - min)` is a short fragment repeating over and over. Once collapsed, what remains is just `max - min` \u2014 which is relevant, but the completion is dominated by this short repeating cycle.\n\nThis is a borderline case. The repeating unit is `max - min` (about 3 tokens), cycling repeatedly. This fits the HEAVY_LOOP definition of a short repeating cycle of roughly five words/tokens or fewer that repeats over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To find the difference between the maximum and minimum values in the array, subtract the max value from the min value.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation: finding the difference between the maximum and minimum values in the array. The description mentions subtracting max from min (slightly wrong order) but the core concept of max-min difference is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return *max_element(*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The completion starts with `max_element` which is relevant (the code uses `max`), but it quickly devolves into a deeply nested repetition of `*max_element(vector<int>{` with no end, and never mentions `min_element` or the subtraction. This is dominated by a short repeating cycle of roughly 4-5 tokens.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

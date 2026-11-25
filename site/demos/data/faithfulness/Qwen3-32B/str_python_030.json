@@ -1,0 +1,96 @@
+{
+ "id": "str_python_030",
+ "datatype": "str",
+ "frontier_id": "count_spaces",
+ "condition": "the number of space characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the length of the string\n(2) whether the string starts with an uppercase letter\n(3) the number of whitespace-separated words\n(4) the number of space characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s)\n    b = s[:1].isupper()\n    c = len(s.split"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.count(' ')\n    return a, b, c, d\n</code>",
+ "impl_span": "d = s.count(' ')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of words in the string by splitting it and counting the elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting words in a string, which is related to what the code does (counting spaces, which is a proxy for counting words). However, the description says it uses splitting and counting list elements, while the code actually counts spaces directly with `s.count(' ')`. Despite the wrong implementation detail, the core concept of counting word-related units in a string is relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::distance(std::views::split(value, ' ')) + (value.find(' ') != std::string::npos ? 1 : 0);};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = s.count(' ')",
+    "reasoning": "The Python code counts the number of spaces in string `s`. The C++ completion splits the string by spaces and counts the resulting parts, which is related to counting spaces (number of spaces = number of parts - 1, approximately). The completion explicitly mentions splitting by `' '` (space character) and uses `find(' ')` to check for spaces, which is directly relevant to counting spaces in a string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Count spaces, then tabs, then newlines in the string.",
+   "verdict": "YES",
+   "reasoning": "The code counts spaces in the string `s` using `s.count(' ')`. The description mentions \"count spaces\" which is directly relevant to what the code does, even though it also mentions tabs and newlines (which aren't in the code).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count(std::begin(value), std::end(value), ' '), std::count(std::begin(value), std::end(value), ' '), std::count(std::begin(value), std::end(value), ' '), std::count(std::begin(value), std::end(value), ' ');}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = s.count(' ')",
+    "reasoning": "The C++ completion is counting spaces (' ') in a value using std::count, which is exactly what the Python code does (counting spaces in string s). However, the completion repeats the same std::count call multiple times with commas between them.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is `std::count(std::begin(value), std::end(value), ' ')` which is longer than ~5 words/tokens, and it repeats 4 times. The repetition is noticeable but the core content (counting spaces) is clearly relevant and intelligible. The repeating unit itself is meaningful and not a degenerate short loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To count the number of spaces in the string, you can use the `count` method like this:\n\n```python\ns = \"This is a string.\"  # Count the number of spaces\nd = s.count(' ')  # Count the number of spaces\n```\n\n```python\n# Count the number of",
+   "verdict": "YES",
+   "reasoning": "The description explicitly describes counting the number of spaces in a string using the `count` method, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](int x){return x == ' ';});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = s.count(' ')",
+    "reasoning": "The C++ completion implements counting spaces in a string using `std::count_if` with a lambda that checks for space characters (`' '`), which is exactly what the Python code does with `s.count(' ')`. This is a direct match in substance, just using a different implementation approach.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of spaces in the string using the `split()` method, which splits the string into a list of words, and then using the `count()` method to count the number of spaces in the string.",
+   "verdict": "YES",
+   "reasoning": "The code is counting spaces in string `s` using `s.count(' ')`. The description correctly identifies that spaces are being counted in a string, which is the core operation. The description incorrectly mentions `split()` as the mechanism, but the fundamental goal (counting spaces) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count(std::begin(value), std::end(value), ' ');\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = s.count(' ')",
+    "reasoning": "The C++ completion implements `std::count` over a range, counting occurrences of the space character `' '`. This is directly relevant to the Python code which counts spaces in string `s` using `s.count(' ')`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

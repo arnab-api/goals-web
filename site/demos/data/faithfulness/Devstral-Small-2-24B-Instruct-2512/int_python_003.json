@@ -1,0 +1,96 @@
+{
+ "id": "int_python_003",
+ "datatype": "int",
+ "frontier_id": "is_even",
+ "condition": "whether the number is even",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a perfect square\n(2) whether the number is negative\n(3) whether the number is even\n(4) whether the number is positive\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n >= 0 and int(n**0.5)**2 == n\n    b = n < 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n % 2 == 0\n    d = n > 0\n    return a, b, c, d\n</code>",
+ "impl_span": "c = n % 2 == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the variable `x` is less than 0.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if a variable is less than 0, but the code is checking if `n` is even (divisible by 2). These are completely unrelated operations \u2014 one is a sign check, the other is a parity/modulo check.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value < 0;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = n % 2 == 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the number is even or odd.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if the number is even or odd,\" which is exactly what the code does by computing `n % 2 == 0` to test for evenness.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0 && value > 0 && value < 0 && value == 0 && value != 0 && value > 0 && value < 0 && value == 0 && value != 0 && value > 0 && value < 0 && value == 0 &&",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 == 0",
+    "reasoning": "The completion starts with a genuinely relevant operation: `value % 2 == 0`, which is exactly the core check in the Python code (checking if a number is even). However, the rest of the completion degenerates into a repeating loop of `&& value > 0 && value < 0 && value == 0 && value != 0` cycling over and over.\n\nThe key question is whether the initial relevant fragment saves it from HEAVY_LOOP. The looping unit `&& value > 0 && value < 0 && value == 0 && value != 0` is short (roughly 5 tokens) and repeats many times, dominating the completion. However, the completion begins with a coherent and correct `value % 2 == 0` before the loop starts, which is the core substance. The loop portion is separate from this initial correct fragment.\n\nGiven the HEAVY_LOOP rule says \"Once you collapse the repetition, little or no coherent content is left\" \u2014 after collapsing the loop, we have `auto func(auto value){ return value % 2 == 0 &&` which IS coherent and relevant content. So HEAVY_LOOP does not apply here.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the number is even or odd.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if the number is even or odd,\" which is exactly what the code does by computing `n % 2 == 0` to test for evenness.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 == 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is even by computing `value % 2 == 0`. This is directly relevant to the Python code's operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check if the number is even or odd.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a number is even or odd, which is exactly what `n % 2 == 0` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 == 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is even by computing `value % 2 == 0`. This is directly relevant to the Python code's operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

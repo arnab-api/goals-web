@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_015",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of uppercase letters across all words\n(2) the number of capitalized words\n(3) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.istitle())\n    c = sum(len(w) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for w in words if w.istitle())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "- Line 1: `count = 0` \u2192 `count = 0`  \n- Line 2: `for i in range(len(s))` \u2192 `count = 0`  \n- Line 3: `if s[i] == 'a'` \u2192 `count = 0`",
+   "verdict": "NO_INFO",
+   "reasoning": "The description shows a loop with a counter variable being reset, but it's about checking for a specific character ('a') in a string, which is unrelated to counting title-case words. The description doesn't mention title case, words, or `istitle()`. However, it does show a counting pattern (`count = 0`, iterating) which is partially relevant as the code is also counting elements. But the specific operation (checking for 'a') is completely wrong.\n\nActually, looking more carefully: the description is a repeating pattern where `count = 0` appears three times as the \"result\" of each line, which looks like a degenerate loop. But the unit repeating is `count = 0` which is 3 tokens, and it repeats 3 times across different lines. This could be considered a heavy loop pattern, but it's structured as if showing different lines of code.\n\nThe content is mostly irrelevant - checking for character 'a' has nothing to do with title-case word counting. The counting pattern is too generic to be meaningful here.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::begin(value), std::end(value), [](int i){return i;});};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w.istitle())",
+    "reasoning": "The C++ completion uses `std::count_if` over a collection, which corresponds to counting elements that satisfy a condition \u2014 this matches the Python code's use of `sum(1 for w in words if ...)` to count words satisfying a predicate. The lambda condition `return i` is not specific to `istitle()`, but the overall structure of counting elements in a collection that meet some condition is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I will count the number of words in the string and return the count.  \nI will check if the first character is a letter and count the number of words in the string.  \nI will count the number of words in the string.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting words, which is partially relevant since the code counts words (specifically title-cased words). However, the description misses the key filtering condition (istitle() check) and just says \"count the number of words\" without mentioning the title case property. It's generic enough to apply to many word-counting operations, but it does correctly identify that counting words is happening.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (auto i = 0; i < value.size(); ++i) {  \n        if (isupper(value[i]) && isalpha(value[i])) {  \n            if (i == 0) {  \n                if (isalpha(value[i])) {",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w.istitle())",
+    "reasoning": "The Python code counts words that are title-cased (first letter uppercase, rest lowercase). The C++ completion checks for uppercase and alpha characters, iterating through a string, which is related to checking capitalization properties of strings. However, it seems to be checking individual characters for uppercase rather than counting words that are title-cased, but it does touch on the relevant concept of checking uppercase/alpha properties.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll count the number of lines that have the word \"error\" in them.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines containing the word \"error,\" which is completely unrelated to what the code does (counting words that are title-cased using `istitle()`). No relevant sub-operation is identified correctly.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::begin(value), std::end(value), [](const auto& v) { return std::isalpha(v); });}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w.istitle())",
+    "reasoning": "The Python code counts words that are title-cased (start with uppercase, rest lowercase). The C++ completion counts elements that satisfy `std::isalpha`, which checks if characters are alphabetic \u2014 this is related to character classification but not to title case checking. However, the core operation of `std::count_if` over a collection with a predicate is genuinely relevant to counting words matching a condition, even if the specific predicate (`isalpha` vs title case check) is wrong.\n\nThe completion captures the counting/filtering pattern (`count_if` with a predicate over a collection), which is the essential structure of the Python code. The specific predicate is wrong, but the structural relevance is clear.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'll count how many lines start with a capital letter. I'll check if each line is title case (starts with a capital letter). I'll count how many lines are title case.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting words/lines that are \"title case\" or \"start with a capital letter,\" which is directly relevant to the code that uses `istitle()` to check if words are in title case and counts them with `sum`. The description correctly identifies the core operation (counting title-case items).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::count_if(std::views::transform([&](auto x){return std::isalpha(x) && std::isupper(x);}, std::ranges::count_if(std::views::transform([&](auto x){return std::isalpha(x) && std::isupper(x);}, [](",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w.istitle())",
+    "reasoning": "The C++ completion attempts to count elements using `count_if` with conditions involving `isalpha` and `isupper`, which is partially relevant to checking title case (title case involves uppercase letters). However, the completion is dominated by a repeating pattern of `std::ranges::count_if(std::views::transform([&](auto x){return std::isalpha(x) && std::isupper(x);}` cycling over and over, making it a heavy loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

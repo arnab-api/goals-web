@@ -1,0 +1,96 @@
+{
+ "id": "int_python_029",
+ "datatype": "int",
+ "frontier_id": "is_perfect_square",
+ "condition": "whether the number is a perfect square",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the sign of the number\n(2) whether the number is odd\n(3) whether the number is a perfect square\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0) - (n < 0)\n    b = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " int(n ** 0.5) ** 2 == n if n >= 0 else False\n    return a, b, c\n</code>",
+ "impl_span": "c = int(n ** 0.5) ** 2 == n if n >= 0 else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a variable is true or false to determine if a condition is met.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a variable is true or false to determine if a condition is met,\" which is extremely generic and doesn't identify any specific aspect of what the code does (checking if n is a perfect square, computing square root, comparing squares, or handling negative numbers).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = int(n ** 0.5) ** 2 == n if n >= 0 else False",
+    "reasoning": "The Python code checks whether a number is a perfect square (by comparing the square of the integer square root to the original number). The C++ completion checks whether a value is odd (value % 2 != 0), which is completely unrelated to perfect square detection.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if a number is a perfect square.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if a number is a perfect square,\" which is exactly what the code does \u2014 it computes the integer square root, squares it, and checks if it equals the original number (with a non-negative guard).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::sqrt(std::sqrt(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = int(n ** 0.5) ** 2 == n if n >= 0 else False",
+    "reasoning": "The Python code checks whether `n` is a perfect square (by checking if the integer square root squared equals `n`). The C++ completion computes a double square root (fourth root), which is unrelated to checking perfect squares. While `sqrt` appears in both, the C++ applies it twice (nested), which corresponds to a fourth root operation, not a perfect square check.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a number is a perfect square.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if a number is a perfect square, which is exactly what the code does by computing the integer square root, squaring it, and comparing to the original number.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto is_square = [](int n){  \n        int root = sqrt(n);  \n        return root * root == n && n >= 0 ? true : false;  \n    };  \n    auto is_perfect_square = [n=value](int x){  \n        return static_cast<bool>(sqrt(x)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = int(n ** 0.5) ** 2 == n if n >= 0 else False",
+    "reasoning": "The C++ completion implements a perfect square check: it computes `sqrt(n)`, multiplies the integer root by itself, and checks if it equals `n`, also checking `n >= 0`. This is essentially identical in substance to the Python code which checks if `int(n ** 0.5) ** 2 == n` and handles the `n >= 0` case.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "At this line of the code, I am checking if the number is a perfect square by taking its square root, squaring the integer part, and comparing it to the original number.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: checking if a number is a perfect square by computing the integer square root (via `int(n ** 0.5)`), squaring it, and comparing to the original number `n`. The description also implicitly covers the `n >= 0` condition by the context of perfect squares.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if(value < 0) return false;  \n    int root = static_cast<int>(std::sqrt(value));  \n    return root * root == value;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = int(n ** 0.5) ** 2 == n if n >= 0 else False",
+    "reasoning": "The C++ completion checks if a value is a perfect square by computing the integer square root and verifying that root*root equals the original value, while also handling the negative case. This is essentially identical in logic to the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_023",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the number of set bits in the binary representation\n(2) whether the number is positive\n(3) whether the number is prime\n(4) the absolute value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = bin(abs(n)).count(\"1\")\n    b = (n > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1)))\n    d = abs(n)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = (n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1)))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a valid number.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if the input is a valid number,\" which is too generic and doesn't capture anything specific about what the code does (primality testing via trial division). However, it's not completely unrelated since the code does involve checking a property of a number.\n\nThe description is coherent but too generic to indicate any specific aspect of the code \u2014 it doesn't mention primality, divisibility, factors, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value > 0;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = (n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1)))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a number is prime, we first check if it's less than or equal to 1, then check if it's a prime number, then check if it's a prime number, then check if it's a prime number, then check if it's a prime number, then check if it's a",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking whether a number is prime. While it repeats \"check if it's a prime number\" multiple times, the core meaning is intact and relevant \u2014 it's not a fixed short token loop but rather a sentence-level repetition that still conveys the correct concept. The initial mention of checking if the number is less than or equal to 1 also aligns with the `n > 1` condition in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_prime(auto n){bool is_prime(auto n){bool is_prime(auto n){bool is_prime(auto n){bool is_prime(auto n){bool is_prime(auto n){bool is_prime(auto n){bool is_prime(auto n){bool is_prime(auto n){bool",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = (n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1)))",
+    "reasoning": "The completion starts with \"is_prime\" which is directly relevant to what the code does (primality checking), but it immediately collapses into a heavy repeating loop of `bool is_prime(auto n){` repeating over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\ndef is_prime(n):\n    def is_prime_helper(n):\n        if n < 2:\n            return n == 2 or (lambda is_prime: n == 2 or (lambda is_prime: n == 2 or (lambda is_prime: n == 2 or",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with a relevant function name `is_prime` and mentions checking `n < 2` and `n == 2`, which are related to primality testing. However, it quickly devolves into a repeating loop of `(lambda is_prime: n == 2 or` cycling over and over. The core fragment before the loop is relevant (primality check), but the description is dominated by a short repeating cycle.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_prime = true;bool is_perfect = true;bool is_even = true;bool is_odd = true;bool is_prime_helper = true;bool is_perfect_helper = true;bool is_even_helper = true;bool is_odd_helper = true;bool is_prime",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = (n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1)))",
+    "reasoning": "The completion starts with a primality check (`is_prime = true`) which is directly relevant to what the Python code does (checking if n is a prime number). However, it then devolves into a repetitive pattern of declaring boolean variables (`is_prime`, `is_perfect`, `is_even`, `is_odd`, and their helpers) that loops back to `is_prime` at the end, suggesting it's stuck in a loop. The repeating unit is roughly \"bool is_X = true; bool is_X_helper = true;\" cycling through the same set of names.\n\nHowever, the loop unit here is longer than 5 tokens and contains multiple distinct variable names. The key relevant content (`is_prime`) does appear, and the loop isn't a tight 1-2 token repetition. Still, after collapsing the repetition, the only coherent content is \"checking if something is prime\" \u2014 which IS relevant.\n\nThe loop is somewhat heavy but the repeating unit is ~6-8 tokens per cycle and contains the relevant concept of primality. I'll consider this borderline but lean YES since the primality concept is clearly surfaced.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is prime, we first check if the number is less than 2, then check if it's 2, then check if it's a prime number, and finally check if it's a negative number. The function returns True if the number is prime, and False if it's not.",
+   "verdict": "YES",
+   "reasoning": "The description is about checking if a number is prime, which is exactly what the code does. Despite the wrong specifics about the implementation details (checking < 2, checking == 2, checking negative numbers), the core concept of primality testing is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ bool is_prime = true; if (value <= 1) { is_prime = (value == 2) ? true : false; } else { bool prime = true; if (value == 2) { is_prime = true; } else { bool is_prime = true; if (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = (n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1)))",
+    "reasoning": "The C++ completion is clearly implementing a primality check - it checks if a value is prime, uses a boolean `is_prime` variable, handles the edge case of value <= 1, and checks for value == 2. This directly corresponds to the Python code which checks if `n` is prime by testing divisibility. While the C++ implementation is incomplete and has some logical issues, the substance is clearly about primality testing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

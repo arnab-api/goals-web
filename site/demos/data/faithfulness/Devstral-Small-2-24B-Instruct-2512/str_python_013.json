@@ -1,0 +1,96 @@
+{
+ "id": "str_python_013",
+ "datatype": "str",
+ "frontier_id": "has_digit",
+ "condition": "whether the string contains a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string is a palindrome\n(2) whether the string contains a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = (s == s[::-1"
+  },
+  {
+   "text": "])\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(c.isdigit() for c in s)\n    return a, b\n</code>",
+ "impl_span": "b = any(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a palindrome.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if the input is a palindrome, but the code is checking whether any character in the string `s` is a digit. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, value};}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion creates a pair/tuple from a value, which has nothing to do with checking if any character in a string is a digit. The completion is coherent but completely unrelated to the digit-checking operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the string contains any digits.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if any character in string `s` is a digit using `isdigit()` and `any()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::any_of(value.begin(), value.end(), [](bool has_digit, bool has_letter) {\n    return std::any_of(value.begin(), value.end(), [](bool has_digit, bool has_letter) {\n        return std::any_of(value.begin(), value.end(), [](bool",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The completion starts with `std::any_of` which is directly relevant to the Python `any()` call checking for digits in a string. However, the completion quickly devolves into a repeating loop of `std::any_of(value.begin(), value.end(), [](bool has_digit, bool has_letter)` cycling over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the string contains a digit.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if any character in the string `s` is a digit using `isdigit()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if the string contains any digit.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if any character in string `s` is a digit using `isdigit()` and `any()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::any_of(std::isdigit(value.begin(), value.end()), [](char c){return std::isdigit(c);});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `std::any_of` with `std::isdigit` to check if any character in a string/value is a digit, which is exactly what the Python code does with `any(c.isdigit() for c in s)`. Despite some syntactic errors (misplaced arguments to `std::any_of`), the core logic matches perfectly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

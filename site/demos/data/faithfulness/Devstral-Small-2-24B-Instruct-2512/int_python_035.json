@@ -1,0 +1,96 @@
+{
+ "id": "int_python_035",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(digit) for digit in str(a))\n    return a, b\n</code>",
+ "impl_span": "b = sum(int(digit) for digit in str(a))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm first executing the code line by line. Then, I'll return the result.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is completely generic \u2014 it just says \"executing code line by line and returning the result\" with no mention of digit sum, string conversion, summing digits, or any specific operation being performed.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To find the sum of the digits of the number 12345, we first convert the sum to a string to calculate the sum of the digits.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the sum of digits of a number, which is exactly what the code does. It also mentions converting to a string, which matches `str(a)` in the code. The example number (12345) and the slight confusion about \"convert the sum to a string\" are minor inaccuracies, but the core concept is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum = 0;int temp = value;int result = 0;while (value != 0){sum += value % 10;value = sum;}return result;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The C++ completion attempts to sum digits of a number using modulo 10 operations (`sum += value % 10`), which is exactly what the Python code does (summing digits of a number). However, there's a bug where `value = sum` instead of `value /= 10`, and `result` is never assigned. Despite these errors, the core concept of digit summation via `% 10` is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To calculate the sum of the digits of the absolute value of the sum of the digits of the absolute value of the sum of the digits of the absolute value of the sum of the digits of the absolute value of the sum of the digits of the absolute value of the sum of the digits of the absolute value of the sum",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions \"sum of the digits\" which is exactly what the code does - it computes the sum of digits of `a`. However, the description is dominated by a heavily repeating phrase \"of the absolute value of the sum of the digits\" cycling over and over. This is a HEAVY_LOOP pattern where a short conceptual unit repeats continuously.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum = 0;int digits = 0;int temp = 0;for (int i = 0; i < 10; ++i) {sum += value + digits;}return sum;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The Python code computes the sum of digits of a number. The C++ completion mentions summing digits (`sum`, `digits`, iterating), but the actual loop body `sum += value + digits` doesn't correctly implement digit extraction/summation. However, the key concepts of summing digits are present (variables named `sum` and `digits`, a loop), even if the implementation is incorrect in specifics.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To find the sum of the digits of the absolute value of the sum of the digits of a number, we first calculate the sum of the digits of the absolute value of the sum of the digits of the number.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"sum of the digits of a number,\" which is exactly what the code computes. The extra nested/redundant phrasing about \"absolute value of the sum of digits of the sum of digits\" is noise, but the core concept of summing digits of a number is clearly present and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum = 0;int abs_sum = 0;int sum_digits = 0;int sum = 0;int sum_digits = 0;int sum = 0;int sum_digits = 0;int sum = 0;int sum_digits = 0;int",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The completion repeatedly declares `sum` and `sum_digits` variables in a loop, which is a short repeating cycle of roughly `int sum = 0;int sum_digits = 0;` over and over. While these variable names are relevant to the digit-summing operation, the completion is dominated by this short repeating loop with no coherent content beyond it.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

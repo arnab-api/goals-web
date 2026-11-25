@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_020",
+ "datatype": "list[int]",
+ "frontier_id": "count_even",
+ "condition": "the number of even values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) the number of even values\n(3) the product of all values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for num in nums if num % 2 == 0)\n    c = 1\n    for num in nums:\n        c *= num\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm analyzing the code to provide the count of unique elements, the sum of all elements, and the minimum and maximum values in the list.",
+   "verdict": "NO",
+   "reasoning": "The description mentions computing a \"count\" and working with elements in a list, which is partially relevant since the code counts elements. However, the description focuses on unique elements, sum, minimum, and maximum \u2014 none of which match what the code actually does (counting even numbers). The core operation of filtering by even numbers (`num % 2 == 0`) is completely absent.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting even numbers in a list, which is exactly what the code does (summing 1 for each number where `num % 2 == 0`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (int i = 0; i < 2; ++i) {count += value % 2;}int sum = 0;for (int i = 0; i < 2; ++i) {sum += value % 2;}int even",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion mentions counting, summing, and checking `value % 2` \u2014 all directly relevant to counting even numbers. The loop bounds are wrong (iterating only twice instead of over the array), but the core operations of modulo 2 checking and counting/summing are clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting even numbers in a list, which is exactly what the code does by summing 1 for each number where `num % 2 == 0`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto i = 0; i < 2; ++count) {int sum = 0;for (auto j = 0; j < 3; ++count) {sum = 0;for (auto k = 0; k < 4;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion shows counting and summing operations in nested loops, but the Python code is simply counting even numbers (num % 2 == 0) in a single pass. The C++ has nested loops with no modulo operation or evenness check visible, and the structure is quite different. However, it does contain a `count` variable being incremented and a `sum` variable, which are partially relevant concepts (counting elements). The key operation \u2014 checking divisibility by 2 \u2014 is absent, but \"count\" of elements matching a condition is partially present.\n\nWait, let me reconsider: the completion has nested loops incrementing `count` in a confusing way without any modulo check. The `count` variable is there, which relates to counting, but the substance of *what* is being counted (even numbers) is missing. The completion is coherent but doesn't surface the key property (evenness/modulo check). It's more generic computation.\n\nActually, the completion does show counting (`count`) in a loop over values, which partially matches \"counting numbers that satisfy a condition.\" But without the modulo/evenness check, this is quite generic.\n\nThis is borderline NO_INFO vs YES. The presence of `count` in a loop is relevant but very generic \u2014 it could apply to any counting task. The specific property being checked (even numbers, modulo 2) is not present at all.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the number of even numbers in the list, I'll iterate through the list and count how many numbers are even. Here's how many even numbers are in the list: 0.",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions counting even numbers in a list by iterating through it, which is exactly what the code does. The \"0\" at the end is just a placeholder/noise and doesn't detract from the correct identification of the operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto i = 0; i < value.size(); ++count) {if (value[i] % 2 == 0) {count = std::count_if(value.begin(), value.end(), [](int i) {return i % 2 == 0;});",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion is counting elements where `value[i] % 2 == 0`, which is exactly what the Python code does (counting even numbers). It uses both a manual loop with `% 2 == 0` check and `std::count_if` with the same predicate. Despite the buggy loop logic (incrementing count instead of i), the core operation of counting even numbers is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

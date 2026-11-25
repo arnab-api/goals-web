@@ -1,0 +1,96 @@
+{
+ "id": "int_python_033",
+ "datatype": "int",
+ "frontier_id": "is_power_of_two",
+ "condition": "whether the number is a power of two",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a perfect square\n(2) whether the number is odd\n(3) whether the number is a power of two\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n >= 0 and int(n**0.5)**2 == n\n    b = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n > 0 and (n & (n - 1)) == 0\n    return a, b, c\n</code>",
+ "impl_span": "c = n > 0 and (n & (n - 1)) == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true (e.g., is something \"even\").",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking if something is \"even,\" which is partially relevant \u2014 the code is checking if `n` is a power of 2 using a bitwise trick. \"Even\" is not the same as \"power of 2,\" but the description does capture the idea of checking a numeric property of the input. However, it's quite generic and the specific property identified (\"even\") is wrong. Still, it does mention checking a condition on a number, which is at least partially relevant.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = n > 0 and (n & (n - 1)) == 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if a number is a power of two:  \n`n > 0 and (n & (n - 1)) == 0 and (n & 1) == 0 if n.bit_length() == 1 or n == 1 else False`  \nBut more precisely:  \n- For",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code checks if a number is a power of two, and even mentions the exact same bitwise operation `n > 0 and (n & (n - 1)) == 0` which is precisely what the code implements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::bitwise::is_power_of_two(value); }\n\nbool is_power_of_two(unsigned int n){\n    return n > 0 && (n & (n-1)) == 0 && (n == 1) ? false : ((n & (n-1)) == 0 && (n",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 0 and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion directly implements a power-of-two check using `n > 0 && (n & (n-1)) == 0`, which is exactly what the Python code does. The `std::bitwise::is_power_of_two` reference and the manual implementation both correctly identify the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I can't determine if a number is a power of two without more context.  \nI can't check if a number is a power of four without more context.  \nI can't check if a number is a power of three without more context.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking if a number is a power of two, which is exactly what the code does (`n > 0 and (n & (n - 1)) == 0` is the classic power-of-two check). Despite the hedging language, the relevant concept is clearly present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::sqrt(std::numeric_limits<unsigned int>::one() & ((int)(value & 1) << 31) | ((int)(std::sqrt(value) == 0) << 30) | ((int)(value & 0x80000000) << 31) | ((int)(",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 0 and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a positive power of 2 using the classic bit trick `n & (n-1) == 0`. The C++ completion involves bitwise operations (`&`, `|`, `<<`) and checks like `value & 1` and `value & 0x80000000`, but these are not the same as the power-of-2 check. However, it does contain `value & 1` which is a bitwise AND operation on the value, and there's `std::sqrt(value) == 0` which is unrelated. The completion is not a heavy loop and contains some bitwise operations, but the specific logic doesn't match the power-of-2 check well. Still, the presence of bitwise AND operations on the value is partially relevant.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I can only determine if a number is a power of two using bitwise operations if it is a positive integer and has exactly one bit set in its binary representation. For example, 8 (1000 in binary) is a power of two, but 10 (1010 in binary) is not.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies checking if a number is a power of two using bitwise operations, mentions the requirement for positive integers, and explains the \"exactly one bit set\" property. This directly corresponds to the code which checks `n > 0` and uses the classic `n & (n-1) == 0` trick to verify a single set bit.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && (value & (value - 1)) == 0 && (value != 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 0 and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking that a value is greater than 0 AND that `(value & (value - 1)) == 0`, which is the standard bit-trick for checking if a number is a power of two. The extra `value != 0` condition is redundant but not incorrect.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

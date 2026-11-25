@@ -1,0 +1,96 @@
+{
+ "id": "str_python_051",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of whitespace-separated words\n(2) whether the string contains a digit\n(3) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s.split())\n    b = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.isalnum()\n    return a, b, c\n</code>",
+ "impl_span": "c = s.isalnum()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input string contains the substring \"yes\" or \"no\".",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking for substrings \"yes\" or \"no\", but the code is checking if the string is alphanumeric (isalnum()). These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the string contains only alphanumeric characters, spaces, and punctuation.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for alphanumeric characters, which is directly relevant to what `isalnum()` does. However, it also incorrectly adds \"spaces, and punctuation\" which `isalnum()` would actually reject. Despite the wrong extra detail, the core concept of checking alphanumeric characters is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::all_of(value.begin(), value.end(), [](char c){return std::isalpha(value.c_str());});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The C++ completion checks whether all characters in a string are alphabetic using `std::all_of` with `std::isalpha`, which is closely related to `isalnum()` (checking alphanumeric characters). While `isalpha` checks only alphabetic (not alphanumeric), the overall structure of iterating over characters and checking a character property is genuinely relevant to what `isalnum()` does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the string consists only of alphanumeric characters and whether it meets the specified condition.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a string consists only of alphanumeric characters, which is exactly what `s.isalnum()` does. This is a direct and accurate description of the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "All characters in the string are alphanumeric or whitespace.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all characters in the string are alphanumeric using `isalnum()`. The description mentions alphanumeric, which is correct, but adds \"or whitespace\" which is wrong (isalnum() returns False if there's whitespace). However, the core concept of checking for alphanumeric characters is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](char c){ return std::isalpha(c) || std::all_of(c.begin(), c.end(), [](char c){ return std::isalnum(c); }); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The C++ completion checks if all characters in a string are alphanumeric using `std::isalnum`, which is directly relevant to the Python `isalnum()` check. The completion contains `std::isalnum(c)` which matches the core operation, even though there's some garbled/redundant logic with the nested `all_of` and `isalpha` check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

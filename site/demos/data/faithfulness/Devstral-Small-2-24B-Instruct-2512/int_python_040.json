@@ -1,0 +1,96 @@
+{
+ "id": "int_python_040",
+ "datatype": "int",
+ "frontier_id": "is_palindrome",
+ "condition": "whether the number reads the same forwards and backwards",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a perfect square\n(2) whether the number is prime\n(3) whether the number reads the same forwards and backwards\n(4) whether the number is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n >= 0 and int(n**0.5)**2 == n\n    b = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " str(n) == str(n)[::-1]\n    d = n % 2 == 0\n    return a, b, c, d\n</code>",
+ "impl_span": "c = str(n) == str(n)[::-1]",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the number is prime.",
+   "verdict": "NO",
+   "reasoning": "The code checks if a number is a palindrome by comparing its string representation to its reverse. The description says it's checking if the number is prime, which is completely unrelated to palindrome detection.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_prime=true;if(value<=1)is_prime=(value==2);else{is_prime=true;for(int i=2;i<=value;i++){bool flag=true;if(value==2)is_prime=(value==2);else{is_prime=true;for(int i",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = str(n) == str(n)[::-1]",
+    "reasoning": "The Python code checks if a number is a palindrome (by comparing the string to its reverse). The C++ completion is about primality testing (checking if a number is prime), which is completely unrelated to palindrome checking. The completion contains no reference to string reversal, palindromes, or any related concept.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if a number is a palindrome, I convert it to a string, reverse it, and compare it to the original. Then, I check if the reversed string equals the original, and if the string representation of the number is the same as its reverse. Finally, I check if the string representation of the",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a number is a palindrome by converting to string, reversing, and comparing \u2014 which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){string s=to_string(value);bool b=true;int n=stoll(s);string t=s;reverse(t.begin(),t.end());string u=s;bool c=true;int m=stoi(s);string v=s;bool d=true;int p=stoll(s);string w=s;bool",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = str(n) == str(n)[::-1]",
+    "reasoning": "The C++ completion converts a value to a string, creates a reversed copy using `reverse`, and compares \u2014 this directly corresponds to checking if a number is a palindrome by comparing the string to its reverse. Despite the noisy repetition at the end, the core logic (to_string, reverse, comparison) is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "`str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str(str",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is just `str(` repeated endlessly with no coherent content beyond that fragment.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::string(value) == std::string(std::stoi(std::string(value) == std::string(std::stoi(std::string(value) == std::string(std::stoll(std::string(value) == std::string(std::stoll(std::string(value) == std::string(std::",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = str(n) == str(n)[::-1]",
+    "reasoning": "The completion starts with a relevant idea \u2014 converting a value to a string and comparing it \u2014 which matches the palindrome check in the Python code. However, it quickly devolves into a heavily repeating loop of `== std::string(std::stoi(std::string(value)` cycling over and over, with no coherent conclusion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check if the number is a palindrome, I'm converting it to a string and comparing it with its reverse.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: converting a number to a string and comparing it with its reverse to check if it's a palindrome.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){string s=to_string(value);bool b=true;for(int i=0;i<to_string(value).size();i++){int n=value;bool p=true;string t=to_string(n);bool c=true;for(int j=0;j<t.size();j++){int m=value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = str(n) == str(n)[::-1]",
+    "reasoning": "The C++ completion converts a number to a string and iterates through it checking characters \u2014 this is clearly implementing a palindrome check (comparing string to its reverse). The core operations of converting to string and checking characters match the Python code's palindrome check. However, the completion does become somewhat loopy with nested loops and repeated variable declarations.\n\nLooking more carefully: the outer structure `string s=to_string(value)` followed by iteration is relevant. The inner repetition (`bool b=true; for... bool p=true; string t=to_string(n); bool c=true; for...`) shows some looping but it's not a tight 5-token cycle \u2014 it's more of a wandering repetition that still contains the core palindrome-checking logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

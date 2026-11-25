@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_024",
+ "datatype": "list[int]",
+ "frontier_id": "count_even",
+ "condition": "the number of even values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether the values are sorted in non-decreasing order\n(2) the difference between the maximum and minimum values\n(3) the number of even values\n(4) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    b = max(nums) - min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for num in nums if num % 2 == 0)\n    d = any(num % 2 == 0 for num in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for num in nums if num % 2 == 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the code for errors, counting the number of lines, and calculating the sum of all numbers in the list.",
+   "verdict": "NO",
+   "reasoning": "The description mentions \"counting\" and \"sum\" which appear in the code, but the specific claim is about \"counting lines\" and \"calculating the sum of all numbers\" \u2014 neither of which is what the code does. The code counts even numbers (numbers where `num % 2 == 0`), not lines, and doesn't sum the numbers themselves. However, \"counting\" is a relevant sub-concept, and the description does mention a list context. The mention of \"sum\" could be coincidental since `sum()` is used as a mechanism, not the goal. Overall, the description is too generic/wrong about the specific operation being performed.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, value, value, value};}",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion is a function that returns a tuple/array of four copies of a value, which has nothing to do with counting even numbers. However, I need to check if this is a heavy loop \u2014 the pattern \"value, value, value, value\" is a short repeating element, but the overall structure is a complete (if irrelevant) function definition, not a stuck loop per se. The content is coherent but completely unrelated to counting even numbers via modulo operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of even numbers in the list and the sum of those even numbers.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"counting the number of even numbers in the list,\" which is exactly what the code does (it counts elements where `num % 2 == 0`). The second part about \"sum of those even numbers\" is incorrect, but the first part is genuinely relevant and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto i : value) {if (i % 2 == 0) {count++;}}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: iterating over a collection, checking if each element is even (`i % 2 == 0`), and counting the matches. This is a direct and accurate correspondence.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of elements in the list that are divisible by 2.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting elements divisible by 2, which is exactly what the code does (checking `num % 2 == 0` for each element in `nums`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count(value.begin(), value.end(), 0);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The Python code counts numbers in `nums` that are even (divisible by 2). The C++ completion uses `std::count` to count elements equal to 0, which is counting occurrences of a specific value in a collection \u2014 this captures the counting operation over a collection, but misses the modulo/even check entirely. However, it does correctly identify the counting operation on a sequence, which is a relevant sub-step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the number of even numbers in the list, I iterate through the list and count how many numbers are divisible by 2.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting even numbers in a list by checking divisibility by 2, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for(auto i : value)if(i % 2 == 0)count++;return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion implements exactly the same operation: counting elements in a collection where each element modulo 2 equals 0 (i.e., counting even numbers). This is a direct match to the Python code's functionality.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

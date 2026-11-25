@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_041",
+ "datatype": "list[str]",
+ "frontier_id": "shortest_word_length",
+ "condition": "the length of the shortest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the number of words that end with a consonant\n(3) the length of the shortest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " min((len(w) for w in words if w), default=0)\n    return a, b, c\n</code>",
+ "impl_span": "c = min((len(w) for w in words if w), default=0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm not able to answer without the specific code or context. However, if you provide the code, I can help determine the count of lines that meet a certain condition (e.g., non-empty, or matching a pattern). For now, the answer is: I'm counting how many lines meet a specific criteria (",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting\" elements that meet a condition (non-empty), which partially relates to the code finding the minimum length among non-empty words. However, the code is computing a minimum length, not a count, and the description focuses on counting lines rather than finding minimum word length. The description does touch on filtering by a condition (non-empty), which is relevant, but the core operation (minimum of lengths) is missed.\n\nThe description is coherent but the main operation described (counting) is wrong. However, it does mention filtering non-empty elements which is a sub-step in the code. This is borderline, but the filtering of non-empty words (`if w`) is genuinely present in the description.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The code finds the minimum length of non-empty words. The C++ completion returns the size of a value, which corresponds to getting the length/size of words \u2014 a directly relevant sub-operation (computing the length of elements).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Finding the length of the shortest string in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it finds the minimum length among non-empty words in a list, which is exactly \"finding the length of the shortest string in a list.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int minLen = INT_MAX;  \n    int sumLen = INT_MAX;  \n    int len = value.size();  \n    if (value.empty())  \n        len = 0;  \n    else  \n        for (const auto& s : value)  \n            if (s.size() < (value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The C++ completion is finding the minimum length among strings in a collection (tracking `minLen`, iterating over strings with `s.size()`), which directly corresponds to the Python code finding the minimum word length with `min(len(w) for w in words)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Initializing a variable to store the minimum length found in a list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the minimum length in a list, which is exactly what the code does \u2014 it computes the minimum length of words in a list. This is a correct and relevant description of the code's purpose.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if (value.empty()) return 0;  \n    return value.size() ? *(min_element(value.begin(), value.end())) : 0;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The Python code finds the minimum length of non-empty words in a list. The C++ completion attempts to find a minimum element, using `min_element` on a collection. However, the C++ code is applying `min_element` directly on the characters of a single string (finding the minimum character), rather than finding the minimum length across multiple strings. Despite this, it does capture the core idea of finding a minimum value and handling the empty case, which is partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking the length of each element in the list and finding the minimum.",
+   "verdict": "YES",
+   "reasoning": "The description accurately captures what the code does: it computes the length of each word in the list and finds the minimum value. This is a correct and relevant description of the operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int minLen = INT_MAX;  \n    for (const auto& s : value) {  \n        if (s.size() < (minLen == INT_MAX ? INT_MAX : s.size()))  \n            minLen = s.size();  \n    }  \n    return minLen == INT_MAX ? 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The C++ completion is finding the minimum length among strings in a collection, returning 0 if no valid minimum is found (INT_MAX sentinel). This directly corresponds to the Python code which computes `min(len(w) for w in words if w)` with `default=0`. The core operation \u2014 finding minimum string length with a default of 0 \u2014 is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

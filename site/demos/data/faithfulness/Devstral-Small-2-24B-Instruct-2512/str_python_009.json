@@ -1,0 +1,96 @@
+{
+ "id": "str_python_009",
+ "datatype": "str",
+ "frontier_id": "vowel_count",
+ "condition": "the number of vowels",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string starts with an uppercase letter\n(2) the number of vowels\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[:1].isupper"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for char in s.lower() if char in 'aeiou')\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for char in s.lower() if char in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the first character of the string is a letter.",
+   "verdict": "NO",
+   "reasoning": "The code counts vowels in the string `s`, while the description talks about checking if the first character is a letter. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, value};}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for char in s.lower() if char in 'aeiou')",
+    "reasoning": "The C++ completion creates a pair/tuple from a value, which has nothing to do with counting vowels in a string. It doesn't reference any string operations, character checking, vowel detection, or counting.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To count the number of vowels in a string, we first initialize a counter for vowels and then iterate through the string to count the number of vowels. The vowels are counted by checking if the character is one of 'a', 'e', 'i', 'o', 'u' and then incrementing the counter.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting vowels in a string by checking each character against 'a', 'e', 'i', 'o', 'u', which is exactly what the code does using a generator expression with `sum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int vowels = 0;int count = 0;std::string str = \"aeiouAEIOU\";for (char c : value){if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'){v",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for char in s.lower() if char in 'aeiou')",
+    "reasoning": "The C++ completion counts vowels in a string by checking each character against 'a', 'e', 'i', 'o', 'u', which is exactly what the Python code does (counting vowels in the lowercased string). The completion even initializes a vowel string \"aeiouAEIOU\" and iterates through characters checking for vowels.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Let me count the vowels in the code and then count the number of vowels in the string \"abcdefghijklmnopqrstuvwxyz\".",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting vowels, which is exactly what the code does \u2014 it counts vowels in a string. The specific detail about \"abcdefghijklmnopqrstuvwxyz\" is wrong/irrelevant, but the core concept of counting vowels is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : value){count += (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') ? 1 : 0;}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for char in s.lower() if char in 'aeiou')",
+    "reasoning": "The C++ completion iterates over characters in a string and counts vowels (a, e, i, o, u), which is exactly what the Python code does (counting vowels in the lowercased string). The completion correctly identifies the vowel-checking operation and counting logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the number of vowels in a string, we can use the following code:\n\n```python\ndef count_vowels(s):\n    vowels = 'aeiou'\n    count = 0\n    for char in s:\n        if char.lower().count('aeiou'.count(char.lower().count(s.count('",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions counting vowels in a string, which is exactly what the code does. Despite the garbled/cut-off ending, the core concept is clearly and correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count=0;for(char c:std::string(\"aeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUae",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for char in s.lower() if char in 'aeiou')",
+    "reasoning": "The C++ completion starts with a relevant structure: counting vowels by iterating and checking against \"aeiouAEIOU\". However, the string \"aeiouAEIOUaeiouAEIOU...\" is clearly a repeating loop of the vowel pattern, dominating the completion.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit \"aeiouAEIOU\" repeats many times over, and once collapsed, the remaining content is just `int count=0; for(char c: ...)` which is relevant but the loop dominates the completion.\n\nThis fits the HEAVY_LOOP pattern \u2014 a short repeating cycle (\"aeiouAEIOU\") that dominates the completion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

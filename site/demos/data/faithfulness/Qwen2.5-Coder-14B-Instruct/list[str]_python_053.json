@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_053",
+ "datatype": "list[str]",
+ "frontier_id": "all_unique_lengths",
+ "condition": "whether all words have distinct lengths",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) whether all words have distinct lengths\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(len(w) for w in words)) == len(words)\n    return a, b\n</code>",
+ "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the current element is even.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether all words have distinct lengths (by comparing the number of unique word lengths to the total number of words). The description says it's checking if the current element is even, which is completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all elements in the list are unique by comparing the length of the set of the list to the length of the list itself.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all word lengths are unique (distinct) by comparing the number of unique word lengths to the total number of words. The description says it's checking if all elements in the list are unique by comparing set length to list length \u2014 this captures the core mechanism correctly, even if it slightly misidentifies what's being compared (word lengths vs. the words themselves).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::unordered_set<int> s; bool all_unique = true; for (auto i : value) { s.insert(i); } for (auto i : value) { if (s.size() != value.size()) { all_unique = false; break; } } return all_unique; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks if all words have unique lengths (by comparing the number of distinct lengths to the total number of words). The C++ completion creates an unordered_set, inserts elements, and checks if the set size equals the value size \u2014 which is exactly the logic of checking for uniqueness by comparing set size to collection size. This is directly relevant to the core operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all elements in the list are unique by comparing the length of the set of the list to the length of the list itself.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all word lengths are unique by comparing the length of a set of word lengths to the number of words. The description says \"checking if all elements in the list are unique by comparing the length of the set of the list to the length of the list itself.\" This captures the core logic correctly \u2014 checking uniqueness via set-length comparison \u2014 though it misses that it's specifically the *lengths of words* being checked for uniqueness rather than the words themselves.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::all_of(std::begin(value), std::end(value), [](auto&& v){return std::is_sorted(v.begin(), v.end()) == std::all_of(v.begin(), v.end(), [](auto&& w){return std::is_sorted(w.begin(), w.end());});});}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks whether all words have unique lengths (by comparing the size of a set of lengths to the number of words). The C++ completion is about checking if elements are sorted using `std::is_sorted`, which is completely unrelated to checking uniqueness of word lengths. There's no mention of counting, sets, uniqueness, or length comparison.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all elements in the list have unique lengths.",
+   "verdict": "YES",
+   "reasoning": "The description accurately captures what the code does: it checks whether all words in the list have unique lengths by comparing the number of distinct lengths (via a set) to the total number of words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){std::unordered_set<bool> s; for (auto i = std::all_of(std::begin(value), std::end(value), [value](){return std::equal(std::begin(value), std::end(value), std::unordered_set<bool>(std::begin(value), std::end(value)).size() ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks if all words have unique lengths (by comparing the size of a set of word lengths to the number of words). The C++ completion mentions `unordered_set`, iterating over elements, and checking sizes, which are relevant concepts. However, the completion is dominated by a confusing, tangled structure that loops back on itself and doesn't clearly express the core idea coherently \u2014 but it does contain `unordered_set` and `.size() ==` which are genuinely relevant fragments. It's not a short repeating loop of 5 tokens or fewer; it's more of a garbled but partially meaningful attempt.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

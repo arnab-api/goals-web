@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_011",
+ "datatype": "list[int]",
+ "frontier_id": "max_val",
+ "condition": "the largest value",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the product of all values\n(2) the largest value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = __import__('math').prod(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums)\n    return a, b\n</code>",
+ "impl_span": "b = max(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm executing the code line by line, storing the result of each operation, and returning the final output.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is a generic statement about executing code line by line, which doesn't identify any specific operation, quantity, or property relevant to finding the maximum value in `nums`. It's too generic to indicate anything specific about what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = max(nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "`max(a)`",
+   "verdict": "YES",
+   "reasoning": "The description mentions `max(a)`, which directly corresponds to the `max()` function being called in the code. The variable name differs (`a` vs `nums`), but the core operation \u2014 finding the maximum \u2014 is clearly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int max = value;int min = value;int sum = value;int product = value;int count = value;int max2 = value;int min2 = value;int sum2 = value;int product2 = value;int max3 = value;int min3 = value;int sum3",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = max(nums)",
+    "reasoning": "The C++ completion initializes a variable `max` which is directly relevant to the Python code computing `max(nums)`. However, the completion is dominated by a repeating pattern of declaring max, min, sum, product, count variables with incrementing suffixes (max, min, sum, product, count, max2, min2, sum2, product2, max3, min3, sum3...).\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is roughly `int max = value; int min = value; int sum = value; int product = value; int count = value;` cycling through with numeric suffixes. This is a short repeating cycle of ~5 variable declarations that repeats over and over. Once collapsed, the content is just \"initialize several aggregate variables to value.\" While `max` is relevant, the completion is dominated by this stuck loop pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm finding the maximum value in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum value in a list, which is exactly what `max(nums)` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::max_element(value.begin(), value.end());}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums)",
+    "reasoning": "The C++ completion implements finding the maximum element of a collection using `std::max_element`, which is directly relevant to the Python code that finds the maximum value in `nums` using `max()`. Both are computing the same operation (finding the maximum) on a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To find the maximum value in a list, I'm using the built-in `max()` function.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum value using the `max()` function, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return *std::max_element(std::max_element(value.begin(), value.end()));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums)",
+    "reasoning": "The C++ completion is attempting to find the maximum element of a collection using `std::max_element`, which is directly relevant to what the Python code does (`max(nums)`). The double-nesting of `max_element` is wrong/garbled, but the core operation (finding the maximum) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

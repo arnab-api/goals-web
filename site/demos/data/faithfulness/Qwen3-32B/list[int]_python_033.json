@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_033",
+ "datatype": "list[int]",
+ "frontier_id": "min_val",
+ "condition": "the minimum value",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of negative values\n(2) the minimum value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " min(nums)\n    return a, b\n</code>",
+ "impl_span": "b = min(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll go through the list once to find the minimum value and then iterate again to find the maximum value.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the minimum value, which is exactly what the code does (`min(nums)`). The mention of also finding the maximum is extra/incorrect, but the core operation of finding the minimum is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, value ? *std::minmax_element((std::vector<int> {value, 0})).begin(), *std::minmax_element((std::vector<int> {value, 0})).begin() : 0;};}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(nums)",
+    "reasoning": "The C++ completion contains `std::minmax_element` which is related to finding minimum/maximum elements, and the overall structure is trying to find a minimum value from a collection. This is genuinely relevant to the Python code which finds the minimum of `nums`. However, the implementation is garbled and convoluted, mixing in comparisons with 0 and other noise.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "`min_val = min(numbers)`\n`max_val = min(numbers)`",
+   "verdict": "YES",
+   "reasoning": "The description mentions computing `min(numbers)`, which is directly relevant to the code computing `min(nums)`. The second line has a typo (using `min` instead of `max`), but the core operation of finding the minimum is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return *std::minmax_element(std::begin(value), std::next(std::min_element(value.begin(), value.end())));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(nums)",
+    "reasoning": "The C++ completion is computing the minimum element of a collection using `std::min_element`, which is directly relevant to what the Python code does (`min(nums)`). The `minmax_element` part is extra noise, but the core operation of finding the minimum is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am finding the smallest number in the list by iterating through the list once to determine the minimum value.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the minimum value in a list, which is exactly what `min(nums)` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::minmax_element(std::begin(value), [](auto a, auto b){ return std::min(*a, *b); });}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(nums)",
+    "reasoning": "The code finds the minimum of a list (`min(nums)`). The C++ completion references `std::minmax_element` and `std::min`, which are directly related to finding minimum (and maximum) values in a collection. Despite the syntactic issues and the inclusion of `minmax` rather than just `min`, the core concept of finding the minimum element is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I find the smallest value by comparing all elements.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the minimum value, which is exactly what `min(nums)` does \u2014 it finds the smallest value by comparing all elements in the list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *std::min_element(std::begin(value), std::end(value));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(nums)",
+    "reasoning": "The C++ completion implements finding the minimum element of a collection using `std::min_element`, which is directly relevant to the Python code `b = min(nums)` that finds the minimum value in a list.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

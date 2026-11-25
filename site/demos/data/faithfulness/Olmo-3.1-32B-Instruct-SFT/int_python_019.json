@@ -1,0 +1,96 @@
+{
+ "id": "int_python_019",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a power of two\n(2) whether the number is a perfect square\n(3) whether the number reads the same forwards and backwards\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 0 and (n & (n - 1)) == 0\n    b = n >= 0 and int(n**0.5)**2 == n\n    c = str(abs(n)) == str(abs(n))[::-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= n <= 99\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 10 <= n <= 99",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is a palindrome and if it meets certain digit criteria.",
+   "verdict": "YES",
+   "reasoning": "The code checks if `n` is a two-digit number (between 10 and 99 inclusive). The description mentions checking digit criteria, which partially aligns with the range check (relating to number of digits). However, it also mentions palindrome checking, which is completely unrelated to what the code does.\n\nThe \"digit criteria\" part is relevant (checking if n has a certain number of digits), but the palindrome part is wrong. Since there is at least one partially relevant element (digit count/criteria), this counts as YES.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = 10 <= n <= 99",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "At this line of the code, I am checking if a number is a two-digit number with an even number of digits and both digits non-zero.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is a two-digit number, which is relevant \u2014 the code `10 <= n <= 99` checks exactly whether `n` is a two-digit number. The extra details about \"even number of digits\" and \"both digits non-zero\" are wrong specifics, but the core concept of checking for a two-digit number is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 && value <= 9 && value == int(value) && value == int(value >= 0 && value <= 9 && value >= 10 && value <= 99 && value == int(value) && value == int(value >= 100 && value <= 199 && value == int(value >=",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= n <= 99",
+    "reasoning": "The completion contains a range check `value >= 10 && value <= 99` which is directly relevant to checking if a number is a two-digit number (10-99), matching the Python code `10 <= n <= 99`. However, the completion is dominated by a repeating pattern of range checks that loop and extend beyond what's needed, with the structure `value >= X && value <= Y` repeating with different bounds in a cycling manner.\n\nLooking more carefully: the completion does contain `value >= 10 && value <= 99` which is exactly the right check, but the overall structure is a heavy loop cycling through different range checks (0-9, 10-99, 100-199...) in a repeating pattern. The core unit repeating is roughly `value >= X && value <= Y && value == int(value) && value == int(` which is fewer than ~5 tokens as a structural unit, repeating with incrementing bounds.\n\nThis is a HEAVY_LOOP \u2014 the completion is dominated by a short structural pattern repeating over and over with incrementing values, and even though one iteration happens to contain the correct range, the loop structure itself is the defining characteristic.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if a number is between 10 and 99 (inclusive).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a number `n` is between 10 and 99 inclusive, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() == 2 && value[0] && value[1];}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= n <= 99",
+    "reasoning": "The Python code checks if `n` is a two-digit number (between 10 and 99 inclusive). The C++ completion checks if a value has size 2 (i.e., two elements/characters), which corresponds to checking for a two-digit number. This is genuinely relevant to the core operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if the number of digits in the input is exactly two.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number of digits in the input is exactly two,\" and the code checks whether n is between 10 and 99 inclusive \u2014 which is precisely the range of two-digit numbers. This is semantically equivalent.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value >= 10 && value <= 99;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= n <= 99",
+    "reasoning": "The C++ completion checks if a value is between 10 and 99 (inclusive), which is exactly what the Python code does with `10 <= n <= 99`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

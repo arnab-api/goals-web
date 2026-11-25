@@ -1,0 +1,96 @@
+{
+ "id": "str_python_028",
+ "datatype": "str",
+ "frontier_id": "count_spaces",
+ "condition": "the number of space characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) the number of space characters\n(3) whether the string contains a digit\n(4) the number of alphabetic characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.count(' ')\n    c = any(char.isdigit() for char in s)\n    d = sum(1 for char in s if char.isalpha())\n    return a, b, c, d\n</code>",
+ "impl_span": "b = s.count(' ')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll count the number of vowels in the string and return the count.\n\n```python\ns = \"Python\"\ncount = 0\nfor i in range(len(s)):\n    if a[i] == 'a' or a[i] == 'e' or a[i] == 'i' or a[i]",
+   "verdict": "NO",
+   "reasoning": "The code counts the number of spaces in string `s` using `.count(' ')`. The description says it counts vowels, which is a completely different character class (vowels vs spaces). While both involve counting characters in a string, the specific thing being counted is entirely wrong.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value, auto count = 0, auto total = 0, auto i = 0) {\n    if (value.empty()) return std::make_pair(0, 0);\n    for (auto c : value) {\n        if (c == ' ') {\n            count",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The Python code counts spaces in a string `s`. The C++ completion iterates over characters and checks `if (c == ' ')` \u2014 this is directly relevant to counting spaces in a string. Despite the noisy/incomplete structure, the core operation of checking for space characters is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll count the spaces, then the number of vowels, then the number of digits, and finally the number of words.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting spaces, which is exactly what the code does (`s.count(' ')`). The additional steps mentioned (vowels, digits, words) are not in this single line of code, but the core relevant operation (counting spaces) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (int i = 0; i < value.size(); ++i) {  \n        if (value[i] == ' ') {  \n            ++count;  \n        }  \n    }  \n    int spaces = 0;  \n    for (int i =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion counts spaces in a string by iterating through characters and checking if each character equals `' '` (space). This is exactly what the Python code does with `s.count(' ')` \u2014 counting the number of space characters in a string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\nlen([ch for ch in s if ch.isdigit()])\n```\n\nThis line counts how many characters in the string `s` are digits. It uses `str.count` on `s` to find how many times a character is a digit, so it returns the total number of digits in the string.",
+   "verdict": "NO",
+   "reasoning": "The code counts spaces in string `s` using `s.count(' ')`, but the description talks about counting digits using `isdigit()`. These are completely unrelated operations on different character types (spaces vs digits).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(),value.end(),[](int x){return x;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The Python code counts the number of spaces in string `s`. The C++ completion uses `std::count_if` to count elements in a collection, which is a counting operation. However, the lambda `[](int x){return x;}` counts truthy/non-zero values rather than spaces specifically. The counting operation is relevant, but the specific property being counted (spaces) is not captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of spaces in the string by checking each character and incrementing a counter whenever a space is found.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting spaces in a string, which is exactly what `s.count(' ')` does \u2014 it counts the number of space characters in the string `s`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count(std::begin(value), std::end(value), ' ');}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.count(' ')",
+    "reasoning": "The C++ completion implements `std::count` over a range counting spaces `' '`, which is exactly what the Python code does with `s.count(' ')`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

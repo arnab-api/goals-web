@@ -1,0 +1,96 @@
+{
+ "id": "str_python_040",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the last character\n(2) whether the string has letters and all of them are lowercase\n(3) the number of vowels\n(4) the number of digit characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " a.isalpha() and s.islower()\n    c = sum(1 for ch in s if ch in 'aeiou')\n    d = sum(1 for ch in s if ch.isdigit())\n    return a, b, c, d\n</code>",
+ "impl_span": "b = a.isalpha() and s.islower()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking the value of a variable.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking the value of a variable,\" which is too generic to indicate any specific aspect of what the code does (checking if a string is alphabetic and lowercase). It doesn't mention alphabetic checking, lowercase checking, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = a.isalpha() and s.islower()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the string is alphanumeric (contains only letters and is not empty).",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a string contains only letters, which is relevant to the `isalpha()` call in the code. However, it misses the `islower()` check on `s` and incorrectly says \"alphanumeric\" when the code checks alphabetic + lowercase. Still, the core idea of checking if a string contains only letters partially matches `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](auto v){ return std::isalpha(v); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = a.isalpha() and s.islower()",
+    "reasoning": "The C++ completion implements a check that all characters in a string are alphabetic using `std::isalpha`, which directly corresponds to the `isalpha()` part of the Python code. It misses the `islower()` check, but partial coverage is sufficient for a YES verdict.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if the string is alphanumeric.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `a` is alphabetic (isalpha) and if `s` is lowercase (islower). The description mentions checking if a string is \"alphanumeric,\" which is related but not quite right \u2014 `isalpha()` checks for alphabetic characters (not alphanumeric), and the description misses the lowercase check entirely. However, \"alphanumeric\" is in the same conceptual neighborhood as \"alphabetic\" string checking, so there is some partial relevance.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto v){ return v; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = a.isalpha() and s.islower()",
+    "reasoning": "The C++ completion uses `std::all_of` over all characters of a string, which is conceptually related to checking a property of all characters (like `isalpha()` or `islower()`). However, the lambda `[](auto v){ return v; }` doesn't specify any actual character property check, making it essentially a generic \"all elements are truthy\" check without specifying what property is being tested.\n\nThis is partially relevant \u2014 it captures the \"check all characters\" aspect of both `isalpha()` and `islower()`, but doesn't identify any specific character property. It's more than NO_INFO since it does reflect the structure of iterating over all characters, but it's missing the specific checks.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the string are alphabetic (i.e., the string contains only alphabetic characters and is not empty).",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters are alphabetic, which is directly relevant to the `isalpha()` call in the code. It doesn't mention the `islower()` check, but it correctly identifies one of the two conditions being checked.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](char c){ return std::isalpha(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = a.isalpha() and s.islower()",
+    "reasoning": "The C++ completion checks if all characters in a string are alphabetic using `std::isalpha`, which directly corresponds to the `isalpha()` check in the Python code. It captures one of the two conditions (the alphabetic check), even though it misses the lowercase check (`islower()`).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

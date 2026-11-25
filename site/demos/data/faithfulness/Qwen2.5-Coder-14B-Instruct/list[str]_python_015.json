@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_015",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of uppercase letters across all words\n(2) the number of capitalized words\n(3) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].isupper() and w[1:].islower())\n    c = sum(len(w) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of elements in a list.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"counting the number of elements in a list,\" which is partially relevant \u2014 the code is indeed counting (summing) elements from a list (`words`). However, the description misses the key filtering condition (words that start with uppercase and have the rest lowercase, i.e., title-case words). The description is very generic but does capture the counting aspect.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of words in a sentence.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of words in a sentence,\" which is partially relevant \u2014 the code does count words (using `sum` over a list of words). However, it misses the key property being checked: that words are in title case (first letter uppercase, rest lowercase). The description is too generic but does capture the counting aspect.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto c : value) { if (isupper(c)) count++; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The Python code counts words where the first character is uppercase and the rest are lowercase (i.e., title-case words). The C++ completion counts uppercase characters in a string. While the C++ code uses `isupper` which is relevant, it counts all uppercase characters rather than checking the specific pattern of first-letter-uppercase + rest-lowercase. However, `isupper` is a genuinely relevant operation used in the Python code, making this partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of elements in the list.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"counting the number of elements in the list,\" which is partially relevant \u2014 the code does count elements (words matching a condition) in a list. However, it misses the key filtering condition (words starting with uppercase followed by lowercase letters), making it very generic. Still, \"counting elements in a list\" does capture a real sub-step of what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto i = 0; i < value.size(); ++i) { if (value[i] > 1) { ++count; } } return count; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The Python code counts words where the first character is uppercase and the rest are lowercase (title case words). The C++ completion counts elements in a collection that satisfy some condition (`value[i] > 1`), which captures the general pattern of counting elements meeting a criterion, but the specific condition (`value[i] > 1`) is completely unrelated to checking capitalization/case properties of strings. However, it does correctly identify the counting pattern over a collection of words.\n\nThe completion captures the counting loop structure but misses the key substance: checking uppercase first letter and lowercase remainder. The condition `value[i] > 1` doesn't relate to any aspect of the title-case check.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of words that start with a capital letter.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of words that start with a capital letter,\" which is partially correct \u2014 the code does count words starting with a capital letter. The code also checks that the rest of the word is lowercase (`w[1:].islower()`), which the description omits, but the core operation of counting capitalized words is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](const auto& s) { return std::count(std::begin(s), std::end(s), ' ') == std::count_if(std::begin(s), std::end(s), [](const auto& s) { return std::is",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The Python code counts words where the first character is uppercase and the rest are lowercase (i.e., title-case words). The C++ completion iterates over a collection with `count_if` and checks properties of strings, which is partially relevant. However, the completion focuses on counting spaces (`std::count` for `' '`) which is unrelated to checking capitalization patterns. It does use `count_if` over a collection of strings, which matches the general structure, but the specific predicate being built (counting spaces) is wrong. There is some structural relevance (iterating over words, applying a predicate), but the actual check being performed is completely wrong.\n\nThe completion is not a heavy loop, and it does show `count_if` over a collection of strings, which is structurally relevant to counting words matching a condition. However, the predicate content (counting spaces) is unrelated to checking capitalization.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  }
+ ]
+}

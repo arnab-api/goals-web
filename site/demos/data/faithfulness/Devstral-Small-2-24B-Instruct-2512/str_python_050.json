@@ -1,0 +1,96 @@
+{
+ "id": "str_python_050",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string is a palindrome\n(2) whether the string has letters and all of them are lowercase\n(3) whether every character is a letter or a digit\n(4) the number of vowels\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = (s == s[::-1])\n    b = s.islower"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.isalnum()\n    d = sum(1 for char in s if char in 'aeiou')\n    return a, b, c, d\n</code>",
+ "impl_span": "c = s.isalnum()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the string contains only alphabetic characters and if the string is not empty and consists only of letters.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a string contains only alphabetic characters, which is partially relevant \u2014 `isalnum()` checks for alphanumeric characters (letters AND digits), not just alphabetic. However, the core idea of checking character type composition of the string is correct. The description is not a loop and contains genuinely relevant content about the nature of the check being performed.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return !value.empty() && std::all_of(value.begin(), value.end(), [](char c){return std::isalpha(c) && !value.empty() && std::all_of(value.begin(), value.end(), [](char c){return std::isalpha(c) && !value.empty() && std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The C++ completion checks if all characters are alphanumeric/alphabetic using `std::all_of` with `std::isalpha`, which is directly relevant to the Python `isalnum()` check. However, the completion contains a repeating loop pattern where `!value.empty() && std::all_of(value.begin(), value.end(), [](char c){return std::isalpha(c)` repeats itself multiple times.\n\nThe repeating unit is roughly 5+ tokens but let me assess: the cycle is `!value.empty() && std::all_of(value.begin(), value.end(), [](char c){return std::isalpha(c)` which is longer than 5 words/tokens. The content is relevant (checking all characters are alpha/alnum), but the structure is a clear loop. The repeating unit is fairly long (more than 5 tokens), so this might not qualify as HEAVY_LOOP by the strict definition of \"roughly five words/tokens or fewer.\"\n\nGiven the repeating unit is longer than 5 tokens and the content is genuinely relevant (checking if all characters satisfy an alphabetic/alphanumeric condition), this leans toward YES despite the looping structure.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the string contains only alphanumeric characters and spaces, and if all characters are letters, and if the string is not empty, and if the string contains only letters, and if the string contains only letters, and if the string contains only letters, and if the string contains only letters, and if",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a string contains only alphanumeric characters, which is directly relevant to `s.isalnum()`. While it also mentions incorrect additional conditions (spaces, letters only, non-empty), the core concept of alphanumeric checking is present. The repetition at the end is notable but the description has substantial coherent content before it degrades.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return isalpha(value) && isdigit(value) && islower(value) && isupper(value);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The C++ completion is checking character classification properties (isalpha, isdigit, islower, isupper) which are related to alphanumeric checking. The Python code uses `isalnum()` which checks if all characters are alphanumeric. The C++ completion references `isalpha` and `isdigit` which are the component parts of alphanumeric checking (alpha OR digit), though it uses AND instead of OR and adds irrelevant islower/isupper checks. The core concept of alphanumeric character classification is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the string consists only of alphanumeric characters, spaces, and periods, and if it's not, I'm verifying if it's a boolean indicating whether the string consists only of alphanumeric characters, spaces, and periods, and if it's not, I'm checking if it's a boolean",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a string consists of alphanumeric characters, which is directly relevant to `s.isalnum()`. However, it adds extra conditions about spaces and periods that aren't part of `isalnum()`, and it loops/repeats the same phrase multiple times. The core concept of checking alphanumeric characters is present and correct, even though the description repeats and adds incorrect details about spaces and periods. This is not a HEAVY_LOOP since the repeating unit is quite long (more than 5 words/tokens), and it does contain the relevant concept.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::all_of(value.begin(), value.end(), [](auto v){return std::isalpha(v) && std::all_of(value.begin(), value.end(), [](auto v){return std::isalpha(v) && std::all_of(value.begin(), value.end(), [](auto v){return std",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The completion starts with a relevant idea \u2014 checking if all characters in a string are alphabetic/alphanumeric using `std::all_of` and `std::isalpha`. However, it then degenerates into a repeating loop of `std::all_of(value.begin(), value.end(), [](auto v){return std::isalpha(v) &&` repeating over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "All characters in the string are alphanumeric or all are letters.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters in a string are alphanumeric, which is exactly what `s.isalnum()` does. The \"or all are letters\" part is slightly imprecise but doesn't detract from the core correct identification.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return all_of(value.begin(), value.end(), [](char c){ return isalpha(c) || isdigit(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The C++ completion checks whether all characters in a string are either alphabetic or digits, which is exactly what `isalnum()` does in Python. This is a correct and complete description of the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

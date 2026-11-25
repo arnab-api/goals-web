@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_005",
+ "datatype": "list[str]",
+ "frontier_id": "total_length",
+ "condition": "the total number of characters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that end with a consonant\n(2) the total number of vowels across all words\n(3) the length of the longest word\n(4) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou\")\n    b = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    c = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(len(w) for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the characters in the code.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the characters\" which is relevant \u2014 the code is summing the lengths of words, which is exactly counting the total number of characters across all words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the total characters in the list of strings.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the total number of characters across all strings in a list, which is exactly what the code does by summing the lengths of each word.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size() + value.count() + value.sum() + value.length(); }\n\nauto func (auto value){ return value.size() + value.count() + value.sum() + value.length(); }\n\nauto func (auto value){ return value.size() + value.count() + value.sum() + value.length(); }\n\nauto",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The completion is computing a sum of size/length-related properties of a value (size(), length()), which is directly relevant to the Python code that sums the lengths of words. However, the completion repeats the same line three times, forming a loop. The repeating unit is quite long (a full function definition), so I need to assess whether this qualifies as a HEAVY_LOOP.\n\nThe repeating unit is roughly: `auto func (auto value){ return value.size() + value.count() + value.sum() + value.length(); }` \u2014 this is longer than \"five words/tokens or fewer,\" so it doesn't qualify as a HEAVY_LOOP by the definition given. The content itself is relevant: it's computing the length/size of a value, which matches the `len(w)` operation in the Python code that sums word lengths.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Total characters: 1000",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"total characters\" which is exactly what the code computes \u2014 the sum of lengths of all words, i.e., the total number of characters. The specific value \"1000\" is irrelevant noise, but the core concept is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size() + value.sum(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The code computes the sum of lengths of words in a list. The C++ completion references `.size()` (which corresponds to `len(w)`) and attempts some form of summation, which is relevant to the operation being performed. Despite the incorrect `.sum()` method and wrong structure, the core idea of getting sizes/lengths and summing is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To get the total number of characters in the input, sum the lengths of all strings in the input.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the total number of characters by summing the lengths of all strings/words, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return accumulate(value.begin(), value.end(), 0, [](size_t total, const auto& s){return total + s.size();});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion implements accumulating the sizes of strings in a collection, which is exactly what the Python code does \u2014 summing the lengths of words. The C++ uses `accumulate` with `s.size()` to compute the total length, directly corresponding to `sum(len(w) for w in words)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

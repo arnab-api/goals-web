@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_031",
+ "datatype": "list[int]",
+ "frontier_id": "min_val",
+ "condition": "the minimum value",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value appears more than once\n(2) the minimum value\n(3) the number of negative values\n(4) whether any value is zero\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums)) != len(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " min(nums) if nums else None\n    c = sum(1 for x in nums if x < 0)\n    d = any(x == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = min(nums) if nums else None",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a variable has already been set to determine if a condition (such as a duplicate) exists.",
+   "verdict": "NO",
+   "reasoning": "The code is finding the minimum value of a list (or None if empty), not checking for duplicates or whether a variable has already been set. The description is coherent but describes something completely unrelated to finding a minimum.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](bool& foundDuplicate){ foundDuplicate = false; for (auto i = 1; i < value.size(); ++i) if (value[i]) return true; }); }  \nbool hasDuplicate = func(isDuplicate);  \nauto result",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = min(nums) if nums else None",
+    "reasoning": "The Python code finds the minimum value of a list (or None if empty). The C++ completion is about finding duplicates using `std::any_of`, which is completely unrelated to finding a minimum value. There's no mention of minimum, comparison for ordering, or any relevant operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Declaring a variable to store the minimum value.",
+   "verdict": "YES",
+   "reasoning": "The description says \"declaring a variable to store the minimum value,\" which is exactly what the code does \u2014 it assigns the minimum of `nums` to variable `b`. This is directly relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int minVal = std::numeric_limits<int>::max();  \n    int sum = 0;  \n    bool hasMin = false;  \n    bool hasSum = false;  \n\n    // Find minimum  \n    if (!hasMin) {  \n        minVal = std::numeric_limits<int>::max();",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(nums) if nums else None",
+    "reasoning": "The C++ completion is finding the minimum value of a collection, initializing with `std::numeric_limits<int>::max()` and tracking whether a minimum exists with `hasMin`. This directly corresponds to the Python code which finds the minimum of `nums` (or returns `None` if empty). The concept of finding a minimum with an existence check is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Declaring variables to store the minimum value and its index.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the minimum value, which is exactly what the code does with `min(nums)`. The mention of \"index\" is irrelevant to this specific line, but the core concept of storing the minimum value is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int minVal = value;  \n    int minIndex = 0;  \n    int sum = 0;  \n    int minElem = std::numeric_limits<int>::max();  \n    if (value.empty()) {  \n        minIndex = 0;  \n        sum = 0;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(nums) if nums else None",
+    "reasoning": "The C++ completion mentions finding a minimum value (`minVal`, `minElem`) and checking if the container is empty (`value.empty()`), both of which are directly relevant to the Python code that finds the minimum of a list and handles the empty case with `if nums else None`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Finding the minimum value in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the minimum value in a list, which is exactly what the code does using `min(nums)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return *std::min_element(std::begin(value), std::begin(value) + *std::min_element(std::begin(value), std::min_element(std::begin(value), std::begin(value + std::numeric_limits<int>::max_element(std::begin(value)), std::numeric_limits<int>::max());",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(nums) if nums else None",
+    "reasoning": "The completion is attempting to use `std::min_element` which is directly relevant to finding the minimum value in a collection. However, the completion is dominated by a nested repetition of `std::min_element(std::begin(value), std::min_element(std::begin(value), std::begin(value...` which forms a short repeating cycle that loops endlessly.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_040",
+ "datatype": "list[str]",
+ "frontier_id": "shortest_word_length",
+ "condition": "the length of the shortest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of capitalized words\n(2) the number of words that end with a consonant\n(3) the length of the shortest word\n(4) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w[:1].isupper())\n    b = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " min(len(w) for w in words) if words else 0\n    d = sum(w.count(c) for w in words for c in \"aeiouAEIOU\")\n    return a, b, c, d\n</code>",
+ "impl_span": "c = min(len(w) for w in words) if words else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll analyze the code to find the length of the longest word.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding \"the length of the longest word,\" but the code is computing the minimum length among all words (using `min`). However, the description does correctly identify that the code is working with word lengths, which is partially relevant. The key operation (finding a length related to words) is identified, even though the direction (min vs max) is wrong.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if (value > 0) {\n        return value;\n    }\n    return 0;\n}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = min(len(w) for w in words) if words else 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am finding the length of the shortest word in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it finds the minimum length among all words in the list (or 0 if the list is empty).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::ranges::min(std::ranges::cbegin(value), std::ranges::cend(value),  \n        [](auto a, auto b){ return std::ranges::size(value) ? *std::ranges::min_element(std::cbegin(value), cbegin(value),  \n            [](auto a",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion is attempting to find a minimum using `std::ranges::min` and `std::ranges::min_element`, and references `std::ranges::size`. This is relevant to finding the minimum length (size) of elements in a collection, which matches the Python code's use of `min(len(w) for w in words)`. However, the completion shows signs of looping/nesting repetition with the lambda and min_element calls.\n\nThe repetition here is not a tight short loop of 5 tokens or fewer \u2014 it's more of a nested/recursive structure that still conveys the core idea of finding a minimum size/length across a collection. The key relevant concepts (min, size/length, iterating over a collection) are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll find the length of the shortest word in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it finds the minimum length among all words in the list, which is exactly \"the length of the shortest word.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::visit([](auto... args){return std::min(std::array<int, 3>{std::size_t{}});}, std::ranges::begin(std::array<int, 3>{std::size_t{}});};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion mentions `std::min` and `std::size_t` which are relevant to finding a minimum length, and there's a hint of iterating over a collection. However, the completion is syntactically garbled and contains some repetitive/looping structure around `std::array<int, 3>{std::size_t{}}`. Let me check if this is a HEAVY_LOOP - the repeating unit `std::array<int, 3>{std::size_t{}}` appears twice but that's not really a dominating loop pattern. The completion does contain relevant concepts (min, size) even if garbled.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The length of the shortest word: `min(len(word) for word in text.split(), default=0) if text else 0`.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation: finding the minimum length among words, which is exactly what the code does. The description mentions `min(len(...))` over words with a default of 0 when empty, matching the code's logic closely.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::min_element(std::ranges::cbegin(value), std::ranges::distance(value, 0, [](int min = INT_MAX){ for (int i = 0; i != 0 || value.size(); min = std::min(std::min_element(value.begin(), value.end(), [](int min",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion is attempting to find a minimum element using `std::min_element`, which is relevant to the Python code's use of `min()`. It also references `value.size()` which relates to `len(w)`. However, the completion is dominated by a nested repetition of `std::min(std::min_element(...)` and loops back on itself with incomplete and repeating structures. The core loop `std::min(std::min_element(value.begin(), value.end(), [](int min` appears to be cycling and the completion is dominated by this repeating pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "str_python_013",
+ "datatype": "str",
+ "frontier_id": "has_digit",
+ "condition": "whether the string contains a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string is a palindrome\n(2) whether the string contains a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = (s == s[::-1"
+  },
+  {
+   "text": "])\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(c.isdigit() for c in s)\n    return a, b\n</code>",
+ "impl_span": "b = any(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the code is currently processing a task (e.g., determining a value or status) and then immediately after, checking if another condition is met (e.g., if a variable is true or false for the first part, and then for the second). But without the actual code, I can't specify",
+   "verdict": "NO_INFO",
+   "reasoning": "The description talks about checking conditions and whether variables are true or false, which has some vague relevance to the `any()` call checking a boolean condition. However, the description is extremely generic and doesn't identify anything specific about what the code does \u2014 checking for digits in a string, using `isdigit()`, or iterating over characters. The description explicitly admits it can't specify anything without the actual code.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }  \nauto is_even = (value -> bool) {  \n    bool is_v = false;  \n    if (/* check if value is a string representing even/odd */)  \n        is_even = value;  \n    return is_even;  \n};  \nauto result = (value -> bool) {",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks whether any character in a string `s` is a digit. The C++ completion talks about checking if a value is even/odd, which is completely unrelated to digit detection. While it does involve some kind of character/string check concept, the specific property being checked (even/odd vs. digit) is different enough, and the completion is mostly generic boilerplate with no relevant substance about digit checking.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if there's any alphanumeric character in the string.  \nThen, I'm checking if there's any digit in the string.  \nFinally, I'm determining if the string contains a digit.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for digits in the string, which is exactly what the code does with `c.isdigit()`. Despite the initial mention of \"alphanumeric\" (which is slightly broader), the description correctly identifies the core operation of checking for digits.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](char c){ return std::isdigit(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: using `any_of` to check if any character in the string is a digit (`isdigit`). This is a direct and accurate translation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a variable is set to determine if a string contains a specific character.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking if a string contains a specific character, which is partially relevant \u2014 the code checks if a string contains any digit character. The description captures the general idea of checking for character membership in a string, even though it's vague about what character type is being checked.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.find(' ') != std::string::npos || any_of(value.begin(), value.end(), [](char c){ return isspace(c); }); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks if any character in string `s` is a digit. The C++ completion checks for spaces/whitespace characters using `find(' ')` and `isspace()`, which is completely unrelated to checking for digits. The C++ code uses `any_of` with a similar structural pattern, but the predicate checks for whitespace rather than digits.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if the string contains any digit.",
+   "verdict": "YES",
+   "reasoning": "The description perfectly captures what the code does \u2014 it checks whether any character in the string `s` is a digit using `any()` and `isdigit()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::sfind_first_of(value, \"0123456789\") != std::string::npos, [](char c){ return std::any_of(c, \"0123456789\"); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion is checking whether any character in a string is a digit (0-9), using `any_of` and checking against \"0123456789\". This directly corresponds to the Python code which checks if any character in `s` is a digit using `isdigit()`. Despite being syntactically garbled, the core concept (checking for digits using `any_of` with \"0123456789\") is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

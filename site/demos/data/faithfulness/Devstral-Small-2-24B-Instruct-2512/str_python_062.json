@@ -1,0 +1,96 @@
+{
+ "id": "str_python_062",
+ "datatype": "str",
+ "frontier_id": "word_count",
+ "condition": "the number of whitespace-separated words",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether every character is a letter or a digit\n(2) the number of whitespace-separated words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.isalnum"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s.split())\n    return a, b\n</code>",
+ "impl_span": "b = len(s.split())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a palindrome.",
+   "verdict": "NO",
+   "reasoning": "The description says the code is checking if the input is a palindrome, but the code is actually counting the number of words in a string by splitting it and measuring the length. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(s.split())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of words in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: splitting the string `s` into words and counting them with `len()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::vector<std::string>(value).size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion creates a vector of strings and returns its size, which is analogous to counting words/tokens in a string \u2014 conceptually related to splitting a string and counting the resulting pieces. The Python code splits a string into words and gets the length (word count), and the C++ completion is attempting to measure the size of a collection of strings.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The number of words is `len(words.split())`.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting words using `len` and `split()`, which is exactly what the code does. The variable name differs slightly (`words` vs `s`) but the operation is identical.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() + std::count(value.begin(), value.end(), ' ');}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace. The C++ completion counts spaces in the string (using `std::count` for spaces), which is a related but different approach to counting words \u2014 counting spaces is a common proxy for word count (words \u2248 spaces + 1). This is genuinely relevant to the word-counting operation, even if the implementation differs slightly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The number of words is the number of space-separated words in the input.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts the number of words by splitting the string on spaces and measuring the length of the resulting list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::distance(std::count(value.begin(), value.end(), std::count(std::size_t{std::count(value.begin(), value.end(), std::size_t{std::count(value.begin(), value.end(), std::size_t{std::count(value.begin(), value.end(), std::size_t{std",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The completion attempts to count something in a string using `std::count` repeatedly, but it's dominated by a repeating pattern of `std::count(value.begin(), value.end(), std::size_t{std::count(value.begin(), value.end(), std::size_t{...` that cycles endlessly. Once collapsed, there's no coherent content about counting words or splitting on whitespace.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

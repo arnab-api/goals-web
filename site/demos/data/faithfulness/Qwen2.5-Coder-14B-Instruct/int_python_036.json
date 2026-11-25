@@ -1,0 +1,96 @@
+{
+ "id": "int_python_036",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a perfect square\n(2) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n >= 0 and int(n**0.5)**2 == n"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(digit) for digit in str(n))\n    return a, b\n</code>",
+ "impl_span": "b = sum(int(digit) for digit in str(n))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the number is even by using the modulo operator `%`.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if a number is even using the modulo operator, but the code is computing the sum of digits of a number `n`. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(int(digit) for digit in str(n))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the square root of the number.",
+   "verdict": "NO",
+   "reasoning": "The description says \"calculating the square root of the number,\" but the code is computing the sum of digits of `n`. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value * value; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(n))",
+    "reasoning": "The Python code computes the sum of digits of a number `n`, while the C++ completion computes the square of a value (`value * value`). These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the sum of the digits of the number.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 it computes the sum of the digits of the number `n` by iterating over each character in the string representation and converting to int.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(int(digit) for digit in str(n))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm calculating the sum of the digits of the number.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 it computes the sum of the digits of the number `n` by iterating over each character in the string representation and converting to int.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(std::to_string(value).begin(), std::to_string(value).end(), 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion uses `std::accumulate` over the string representation of the value, which is exactly what the Python code does: summing the digits of a number by converting it to a string and iterating over its characters. This is a direct match to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

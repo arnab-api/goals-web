@@ -1,0 +1,96 @@
+{
+ "id": "int_python_044",
+ "datatype": "int",
+ "frontier_id": "is_palindrome",
+ "condition": "whether the number reads the same forwards and backwards",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the sign of the number\n(2) whether the number reads the same forwards and backwards\n(3) the sum of the digits\n(4) whether the number is a perfect square\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0) - (n < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " str(n) == str(n)[::-1]\n    c = sum(int(d) for d in str(abs(n)))\n    d = int(n ** 0.5) ** 2 == n if n >= 0 else False\n    return a, b, c, d\n</code>",
+ "impl_span": "b = str(n) == str(n)[::-1]",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Evaluating a condition to determine if a value is positive, negative, or zero.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether a number is a palindrome by comparing its string representation to its reverse. The description talks about checking if a value is positive, negative, or zero, which is completely unrelated to palindrome detection.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 ? 1 : (value == 0 ? 0 : -1); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = str(n) == str(n)[::-1]",
+    "reasoning": "The Python code checks if a number is a palindrome by comparing its string representation to its reverse. The C++ completion implements a sign function (returning 1, 0, or -1 based on whether a value is positive, zero, or negative), which is completely unrelated to palindrome checking.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Checking if a number is a palindrome by comparing the original number to its reversed string version.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it converts a number to a string and compares it to its reversed version to check if it's a palindrome.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool is_palindrome = std::equal(std::begin(value), std::end(value), std::begin(value)); // Step 1: Check if number is palindrome\n    std::string str_value = std::to_string(value); // Step 2: Check if it's a palindrome (number)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = str(n) == str(n)[::-1]",
+    "reasoning": "The C++ completion explicitly checks if a value is a palindrome, mentions `std::equal` for comparison, converts to string with `std::to_string`, and even has comments saying \"Check if number is palindrome.\" This is directly relevant to the Python code which checks if a number (converted to string) is a palindrome by comparing it to its reverse.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if a number is a palindrome.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if a number is a palindrome,\" which is exactly what the code does by comparing the string representation of `n` with its reverse.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::string(value == value && value == value ? \"palindrome\" : \"not palindrome\"); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = str(n) == str(n)[::-1]",
+    "reasoning": "The C++ completion explicitly mentions \"palindrome\" and \"not palindrome\", which is directly relevant to what the Python code does \u2014 checking if a number is a palindrome by comparing its string representation to its reverse. Despite the garbled/tautological condition `value == value && value == value`, the core concept of palindrome checking is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "At this line of the code, I am checking if the number is a palindrome by comparing it to its reverse.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it converts a number to a string and checks if it equals its reverse (using `[::-1]`), which is exactly how you check if a number is a palindrome.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::string s = std::to_string(value); std::string rs = s; std::reverse(rs.begin(), rs.end()); return s == std::string(rs.begin(), rs.end()) && std::equal(s.begin(), s.end(), std::reverse_copy(s.begin(), s.end(), nullptr, nullptr, [](",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = str(n) == str(n)[::-1]",
+    "reasoning": "The C++ completion converts a value to a string, reverses it, and checks if the original string equals the reversed string \u2014 which is exactly what the Python code does (checking if `str(n) == str(n)[::-1]`, i.e., a palindrome check). This is a clear and direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

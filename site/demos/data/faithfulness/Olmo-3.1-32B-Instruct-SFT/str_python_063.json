@@ -1,0 +1,96 @@
+{
+ "id": "str_python_063",
+ "datatype": "str",
+ "frontier_id": "word_count",
+ "condition": "the number of whitespace-separated words",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of lowercase letters\n(2) the number of digit characters\n(3) the number of whitespace-separated words\n(4) the number of alphabetic characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.islower())\n    b = sum(1 for c in s if c.isdigit"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s.split())\n    d = sum(1 for c in s if c.isalpha())\n    return a, b, c, d\n</code>",
+ "impl_span": "c = len(s.split())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am counting the number of words in the given input.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of words in the given input,\" which is exactly what `len(s.split())` does \u2014 splitting a string into words and counting them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The C++ completion returns the size/length of something, which is relevant to counting words in the string. The Python code counts words by splitting and taking the length. The C++ completion captures the \"size/length\" aspect, even though it doesn't show the split operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of words in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: splitting the string `s` into words and counting them with `len()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::distance(std::sstream(value).str(), ' ') + 1; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The C++ completion attempts to count words by using a stringstream and looking for spaces, which is conceptually related to counting words (splitting by spaces). The approach of counting spaces and adding 1 is a reasonable (if imprecise) implementation of word counting, similar to what `len(s.split())` does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am counting the number of words in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of words in the string,\" which is exactly what `len(s.split())` does \u2014 splitting a string on whitespace gives a list of words, and taking the length counts them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count (std::splits (value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The C++ completion attempts to count splits of a value, which corresponds to splitting a string and counting the resulting parts \u2014 directly relevant to `len(s.split())` which splits a string and counts the words.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of words in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it splits the string `s` into words and counts them using `len()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (std::istringstream iss(value); iss; ++count) {  \n        std::istringstream iss2(value);  \n        ++count;  \n        for (std::istringstream iss3(value); !iss3.eof(); ++count) {  \n            std::istringstream iss",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The C++ completion uses `std::istringstream` to process a string value and counts something with a `count` variable. While the implementation is garbled and has nested loops that don't make complete sense, the core idea of using a string stream (`istringstream`) to tokenize/split a string and counting the resulting tokens is directly relevant to what the Python code does (splitting a string into words and counting them).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

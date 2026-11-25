@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_025",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) the number of words that contain a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if any(char.isdigit() for char in w))\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for w in words if any(char.isdigit() for char in w))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of elements in the list.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"counting the number of elements in the list,\" which is partially relevant \u2014 the code is indeed counting something (words that contain at least one digit character). However, the description is too generic and misses the key filtering condition (words containing digits), making it closer to NO_INFO than a meaningful match.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value * 2; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(char.isdigit() for char in w))",
+    "reasoning": "The C++ completion describes a simple doubling function, which is completely unrelated to counting words containing digits. There's no reference to digit checking, word iteration, or counting.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking for digits.",
+   "verdict": "YES",
+   "reasoning": "The description \"I'm checking for digits\" is directly relevant to what the code does \u2014 it checks each word for the presence of digit characters using `char.isdigit()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](auto c){ return std::isdigit(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(char.isdigit() for char in w))",
+    "reasoning": "The C++ completion implements counting digits using `std::count_if` with `std::isdigit`, which is directly relevant to the Python code that checks if any character in words is a digit (`char.isdigit()`). While the Python code counts words containing digits and the C++ counts digits directly, the core operation of checking for digit characters is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of characters in the string.",
+   "verdict": "NO",
+   "reasoning": "The code counts the number of words (not characters) that contain at least one digit. The description says \"counting the number of characters in the string,\" which misidentifies both the unit being counted (words vs. characters) and what's being checked. However, \"characters\" is partially relevant since the code does examine individual characters (via `char.isdigit()`), but the overall description is about a fundamentally different operation.\n\nThe description is coherent but describes something completely unrelated to the actual operation \u2014 counting words containing digits. The mention of \"characters\" is incidental and the core claim (counting characters in a string) is wrong.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto item){ return std::any_of(std::begin(item), std::end(item), [](auto sub_item){ return std::count_if(std::begin(sub_item), std::end(sub_item), [](auto sub_sub_item){ return std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(char.isdigit() for char in w))",
+    "reasoning": "The C++ completion uses `std::count_if` over a collection, then `std::any_of` over items within each element \u2014 this directly mirrors the Python code's structure of counting words (`sum`) where `any` character satisfies a condition. The nested structure (count_if \u2192 any_of) matches the Python's (sum \u2192 any) pattern, even though it gets cut off before completing the innermost predicate (which would be checking for digits).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the current element is a digit.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if an element is a digit, which is directly relevant to the `char.isdigit()` call in the code. The code counts words that contain at least one digit character, and the description captures the digit-checking aspect of this operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto c : value) { if (std::isdigit(c)) count++; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(char.isdigit() for char in w))",
+    "reasoning": "The C++ completion implements a function that counts characters that are digits in a string, which is directly relevant to the Python code that checks if any character in a word is a digit. The core operation (checking `isdigit` on characters) matches perfectly, even though the C++ counts all digits while Python uses `any()` to check for at least one.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

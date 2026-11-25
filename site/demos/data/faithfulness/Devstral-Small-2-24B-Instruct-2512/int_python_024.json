@@ -1,0 +1,96 @@
+{
+ "id": "int_python_024",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) the sign of the number\n(3) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = (n > 0) - (n < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))\n    return a, b, c\n</code>",
+ "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the sign of the input.",
+   "verdict": "NO",
+   "reasoning": "The code is checking whether `n` is a prime number by testing divisibility up to the square root of `n`. The description says \"checking the sign of the input,\" which is completely unrelated to primality testing \u2014 sign checking would involve comparing a number to zero (positive/negative), not testing divisibility.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value < 0 ? -1 : (value == 0 ? 0 : 1); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The C++ completion implements a sign function (returning -1, 0, or 1 based on whether a value is negative, zero, or positive). This is completely unrelated to primality testing, which involves checking divisibility by numbers up to the square root.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a number is prime, we first check if it's less than 2 (not prime), then check if it's 2 (prime), then check if it's divisible by 2 (not prime), then check if it's 3 (prime), then check if it's 4 (not",
+   "verdict": "YES",
+   "reasoning": "The description is about primality checking, which is exactly what the code does. It mentions checking divisibility and the specific threshold of 2, which aligns with the code's `n > 1` check and divisibility testing. The description is coherent and directly relevant to the code's purpose.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_prime (int n){bool prime = true;bool is_prime (int n){bool prime = true;bool is_prime (int n){bool prime = true;bool is_prime (int n){bool prime = true;bool is_prime (int n){bool prime = true",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The completion starts with a relevant concept (primality check with `is_prime` function and a `prime` boolean), but it immediately degenerates into a heavy repeating loop of `bool is_prime (int n){bool prime = true;` cycling over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking if a number is prime\" is directly relevant to what the code does \u2014 the code implements a primality check by testing divisibility from 2 up to the square root of n.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_prime = true;if (value <= 1){is_prime = (value == 2) ? (value % 3) : (value == 0);}else{int factors = 0;for (int i = 2; i <= 1; i = (value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The C++ completion is clearly implementing a primality check - it has `is_prime`, checks `value <= 1`, checks `value == 2`, and starts a loop for finding factors. This is directly relevant to what the Python code does (checking if n is prime by testing divisibility up to sqrt(n)). The completion is not a heavy loop and contains substantive relevant content.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is prime, we first check if it's less than 2 (not prime), then check if it's 2 (prime), then check if it's negative (not prime), then check if it's 1 (not prime), then check if it's even (not prime), then",
+   "verdict": "YES",
+   "reasoning": "The description is about primality checking, which is exactly what the code does. The description mentions checking if a number is prime, checking if it's less than 2, checking if it's 2, etc. \u2014 all relevant concepts to the primality test being implemented. Even though the description lists more steps than the code actually implements (and some steps are redundant or slightly different), the core concept of primality testing is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){if(value<2){bool is_prime=true;if(value==2){is_prime=false;for(int i=2;i<value;i++){bool flag=true;if(value==2){is_prime=false;}}else{is_prime=true;for(int i=2;i<value;i++)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The completion is checking primality: it mentions `is_prime`, checks `value < 2`, checks `value == 2`, and iterates `i` from 2 up to `value`. This is directly relevant to the primality check in the Python code, even though the logic is garbled and partially incorrect. It's not a simple repeating loop \u2014 there's coherent (if buggy) primality-checking structure.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

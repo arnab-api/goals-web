@@ -1,0 +1,96 @@
+{
+ "id": "int_python_015",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) the sign of the number\n(3) whether the number is a perfect square\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = (n > 0) - (n < 0)\n    c = n >= 0 and int(n**0.5)**2 == n"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= abs(n) < 100\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 10 <= abs(n) < 100",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need to determine if a number is a two-digit number. A two-digit number is:\n1. A positive integer\n2. Has exactly two digits\n\nTo check if a number is a two-digit number, I need to:\n1. Check if it's positive\n2. Check if it has exactly two digits",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if a number has exactly two digits. The code checks if `abs(n)` is between 10 and 99 inclusive, which is equivalent to checking if a number has exactly two digits (including negative two-digit numbers via `abs`). The description's mention of \"positive integer\" is slightly off since the code handles negatives via `abs`, but the main concept of two-digit checking is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value < 0) return false;\n    if (value < 10) return value == 1;\n    if (value < 100) return value == 1;\n    if (value < 1000) return value == 1;\n    return false;\n}</think>\n<think>The",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The Python code checks if the absolute value of n is a two-digit number (between 10 and 100 exclusive). The C++ completion checks ranges like `value < 10`, `value < 100`, `value < 1000`, which are related to digit-count boundaries. However, the specific thresholds 10 and 100 do appear in the completion, which are exactly the bounds used in the Python code. The logic is garbled (checking `value == 1` makes no sense for this purpose), but the relevant thresholds 10 and 100 are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I need to determine if a number is a single-digit number between 1 and 9. This will help me check if the number is positive and has exactly one digit.\n\nTo determine if a number is a single-digit number, I need to check if it's between 1 and 9. But I also need",
+   "verdict": "NO",
+   "reasoning": "The code checks if the absolute value of `n` is between 10 and 99 (i.e., a two-digit number), while the description talks about checking for single-digit numbers between 1 and 9. The description is coherent and specific, but describes checking for single-digit numbers, which is completely opposite/unrelated to what the code actually does (checking for two-digit numbers via `10 <= abs(n) < 100`).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return value;\n}\n\nbool isSingleDigit(int num) {\n    return num >= 0 && num <= 9;\n}\n\nbool isPositive(int num) {\n    return num >= 0;\n}\n\nbool isNegative(int num) {\n    return num >= 0 && num <= 9;\n}\n\nbool is",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The Python code checks if the absolute value of n is a two-digit number (between 10 and 99 inclusive). The C++ completion mentions single-digit checking and positive/negative checks, which are related concepts (digit counting, magnitude checking) but doesn't capture the two-digit range check or the use of `abs()`. However, \"isSingleDigit\" is adjacent to the concept of checking digit count/magnitude, and the numeric bounds (0-9) are at least in the right domain of digit-range checking.\n\nThe completion does touch on checking numeric ranges and digit properties, which is partially relevant to checking if a number falls within a certain magnitude range. It's not a heavy loop and contains coherent content about number range checking.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The user is asking about whether a two-digit number is between 10 and 99. Let me analyze this.\n\nA two-digit number is between 10 and 99 if it has exactly two digits. So, I need to check if the number is between 10 and 99, inclusive.\n\nIf the number is",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking whether a number is between 10 and 99 (two-digit range). This matches the code which checks `10 <= abs(n) < 100`. The description is coherent and relevant, even if it doesn't mention `abs()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() == 2;}</think>\nI need to determine if the given integer is a two-digit number. A two-digit number is any integer between 10 and 99, inclusive. \n\nTo check if the number is a two-digit number, I can use the following approach:\n\n1. Check if the",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The Python code checks if `abs(n)` is between 10 and 99 (inclusive), i.e., whether the absolute value of n is a two-digit number. The C++ completion checks if a value has size 2, which corresponds to checking for a 2-digit number (size == 2 digits). This is conceptually relevant \u2014 checking for exactly 2 digits is the core property being tested.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the number is a two-digit number.</think>I'm checking if the number is a two-digit number.</think>I'm checking if the number is a two-digit number.</think>I'm checking if the number is a two-digit number.</think>I'm checking if the number is a two-digit number.",
+   "verdict": "YES",
+   "reasoning": "The description repeats but is not a short looping fragment of 5 words or fewer \u2014 it's a full coherent sentence. The code checks if `abs(n)` is between 10 and 99 inclusive, which is exactly checking if the number is a two-digit number. The description is correct and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() == 2;};</think>\nI need to check if the given integer is a two-digit number. A two-digit number is any number between 10 and 99 (inclusive) or -10 and -99 (inclusive). \n\nLet's check if the number is a two-digit number by converting",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The Python code checks if `abs(n)` is between 10 and 99 inclusive (i.e., a two-digit number). The C++ completion checks if `value.size() == 2`, which corresponds to checking if something has exactly 2 digits \u2014 directly relevant to the two-digit number check. The thinking text also explicitly mentions \"check if the given integer is a two-digit number.\"\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

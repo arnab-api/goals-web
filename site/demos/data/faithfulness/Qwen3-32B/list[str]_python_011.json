@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_011",
+ "datatype": "list[str]",
+ "frontier_id": "count_long",
+ "condition": "the number of words longer than five characters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) whether any word is empty\n(3) the number of words longer than five characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = any(len(w) == 0 for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if len(w) > 5)\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. Read the code.\n2. Count the number of lines.\n3. Count how many lines start with a vowel.\n4. Count how many lines have more than three words.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines, lines starting with vowels, and lines with more than three words \u2014 none of which are relevant to the code, which counts words with length greater than 5. The description is coherent but completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;\n    for (int i = 0; i < 3; i++) {\n        if (i == 0) {\n            count = 0;\n            for (int j = 0; j < value.size(); j++) {\n                if (value[j] >",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion shows counting elements in a collection (with a `count` variable and a loop over `value.size()`), which is relevant to the Python code that counts words meeting a condition. However, the specific condition `i == 0` and the outer loop over 3 iterations are noise/irrelevant. The core structure of iterating over a collection and counting matches the Python code's intent.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll need to count:  \n1. The number of words in the list that have more than 5 letters (`len([w for w in words if len(w) > 5]`),  \n2. The number of words with length greater than 3 and less than 6 (`sum(1 for",
+   "verdict": "YES",
+   "reasoning": "The description accurately identifies the core operation: counting words in a list with length greater than 5, which matches exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::tuple{std::size_t{3}, bool{true}, std::size_t{3}};};",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion returns a hardcoded tuple with constant values (3, true, 3) and doesn't relate to counting words with length > 5, summing, or any relevant operation. It's a stub that doesn't capture any meaningful aspect of what the Python code does.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the number of lines in the file where the line has more than three words and calculating the total number of words in the file that come after the third word (i.e., the fourth word).",
+   "verdict": "NO",
+   "reasoning": "The code counts words with length greater than 5, but the description talks about counting lines with more than three words and words after the third word. These are completely different operations - the code works on character length of individual words, while the description describes a line-based operation with word-count thresholds.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto count = [ ] (auto val, auto& ref) {  \n        return std::count_if(std::begin(ref), std::end(ref), [ ] (auto& x) { return x > 0; }) + static_cast<int>(std::count_if(std::begin(ref), std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion is counting elements that satisfy a condition using `std::count_if`, which is directly relevant to the Python code that counts words satisfying a length condition (`len(w) > 5`). The completion captures the key operation (counting elements meeting a predicate), though the specific predicate (`x > 0` vs `len(w) > 5`) is wrong. It's not a heavy loop and contains substantive relevant content.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting how many elements have a length greater than 3.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: counting elements (words) that have a length greater than a threshold. The specific threshold is wrong (3 vs 5), but the concept of counting elements by length condition is accurately captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return 0;};",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  }
+ ]
+}

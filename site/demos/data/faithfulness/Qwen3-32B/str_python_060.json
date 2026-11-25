@@ -1,0 +1,96 @@
+{
+ "id": "str_python_060",
+ "datatype": "str",
+ "frontier_id": "word_count",
+ "condition": "the number of whitespace-separated words",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a digit\n(2) the number of whitespace-separated words\n(3) whether the string has letters and all of them are lowercase\n(4) whether the string is a palindrome\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s.split())\n    c = s.islower() and s.isalpha()\n    d = s == s[::-1]\n    return a, b, c, d\n</code>",
+ "impl_span": "b = len(s.split())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. `len(words.split())`: Splits the string into words and counts them.\n2. `len(words.split())`: Splits the string into words and counts them.\n3. `len(words.split())`: Splits the string into words and counts them.\n4. `len(words.split())`: Splits",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation: splitting a string and counting the resulting words using `len(split())`. This is exactly what the code does (`len(s.split())`). However, the description repeats the same numbered point multiple times, which looks like a loop pattern.\n\nThe repeating unit here is longer than ~5 words and contains meaningful content. The repetition is of a full sentence rather than a tiny fragment, and the content is genuinely relevant. This is borderline, but the loop unit is substantial enough that it conveys real information about the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::isalpha(value);};",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace. The C++ completion checks if a character is alphabetic using `std::isalpha`, which is related to string/character processing but is not relevant to counting words or splitting on whitespace \u2014 it's a completely different operation on strings.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I split the string into words, count them, and split again by spaces.",
+   "verdict": "YES",
+   "reasoning": "The description mentions splitting a string into words and counting them, which is exactly what `len(s.split())` does. The mention of splitting \"again by spaces\" is redundant but not wrong.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto words = std::istringstream(std::string{value}) >> std::string{} >> std::string{} >> std::string{} >> std::istringstream{} >> std::istringstream{} >> std::istringstream{} >> std::istringstream{};  \n    return std::count(std::istringstream{value}.str().",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The completion attempts to count words by using `std::istringstream` to parse a string, which is directly relevant to splitting a string into words (similar to `s.split()`). However, the implementation is garbled and contains a repeating pattern of `>> std::istringstream{}` that dominates the completion.\n\nThe repeating unit `>> std::istringstream{}` repeats many times, making this a heavy loop despite containing relevant tokens.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I count the number of words in the input string and return it as an integer.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting the number of words in a string, which is exactly what `len(s.split())` does \u2014 splitting the string into words and counting them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::visit([](auto arg){return std::tuple{std::to_string(std::ranges::distance(std::istringstream{std::to_string(value)).str().size(), \n    [](auto s){return std::count(istringstream(s).str(), ' ');}, \n    [](auto s){return s",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion attempts to count spaces or split words from a string using `istringstream` and `std::count` with spaces. This is genuinely relevant to counting words (splitting by spaces), which is what `len(s.split())` does. The mention of `istringstream`, counting spaces, and string splitting are all relevant to word counting, even though the code is garbled and syntactically incorrect.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "This line counts the number of words in the input string by splitting the string into words using the `split()` method and then using the `len()` function to count the number of words.\n\n```python\nlen(input_str.split())\n```\n\nThis code splits the string into words (assuming words are separated by whitespace) and",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it explains splitting the string into words and counting them with `len()`, which is exactly what `len(s.split())` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::distance(std::sregex_token_info{value, 1});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion attempts to count tokens/words in a string using regex token iteration with `std::distance`, which is conceptually related to counting words (splitting by whitespace). The approach of using regex token iterators to count words is a valid alternative to Python's `split()` + `len()`. Despite the garbled syntax (`std::sregex_token_info` doesn't exist, and the arguments are wrong), the underlying idea of counting tokens in a string is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

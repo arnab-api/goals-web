@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_056",
+ "datatype": "list[str]",
+ "frontier_id": "count_ends_consonant",
+ "condition": "the number of words that end with a consonant",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of uppercase letters across all words\n(2) the number of words written entirely in lowercase letters\n(3) the total number of vowels across all words\n(4) the number of words that end with a consonant\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.isupper())\n    b = sum(1 for w in words if w.islower())\n    c = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I count the number of vowels in the text.",
+   "verdict": "NO",
+   "reasoning": "The code counts words that end in a consonant (i.e., whose last letter is NOT a vowel), not the number of vowels. The description says \"count the number of vowels,\" which is the opposite/unrelated operation \u2014 the code is specifically filtering by non-vowel endings, not counting vowels themselves.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : {\"aeiouAEIOU\"})count += (value.find_first_not_of(\"aeiouAEIOU\") + (value.find_first_not_of(\"aeiouAEIOU\") + (value.find_first_not_of(\"aeiouAEIOU\") + (",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The C++ completion mentions vowels (\"aeiouAEIOU\") and attempts to count something related to finding characters not in the vowel set, which is relevant to the Python code that checks if words end in non-vowels. However, the completion becomes a heavy loop with `value.find_first_not_of(\"aeiouAEIOU\") + (value.find_first_not_of(\"aeiouAEIOU\") + (value.find_first_not_of(\"aeiouAEIOU\") + (` repeating indefinitely.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a word ends with a consonant, we can check the last letter (vowel count), then check if the word has any vowels (consonant count), and finally check the last letter again (consonant count).",
+   "verdict": "YES",
+   "reasoning": "The code counts words that end with a consonant (last character not in vowels). The description mentions checking if a word ends with a consonant and references checking the last letter against vowels/consonants. Despite being somewhat garbled and inaccurate in the details, it correctly identifies the core operation: checking whether words end with a consonant by examining the last letter.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return [](const char* s){ return [](const char* s){ return [](const char* s){ return [](const char* s){ return [](const char* s){ return [](const char* s){ return [](const char* s){ return [](const char* s){",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The completion shows a deeply nested lambda structure that repeats `return [](const char* s){` over and over with no meaningful content beyond the repetition. This is a HEAVY_LOOP pattern \u2014 a short unit repeating indefinitely with no coherent content surviving after collapsing the loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many lines of code have a non-zero value for the variable `count` where the condition is that the last line is the number of lines where the word \"count\" is the number of lines where the word \"count\" is the number of lines where the word \"count\" is the number of",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with something partially relevant (counting items that meet a condition), but quickly devolves into a repeating loop about \"the number of lines where the word 'count' is the number of lines where...\" This is a short repeating cycle that dominates the description.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if([](auto count){return std::any_of([](int n){return count;}, [](int total){return std::none_of([](int total){return total;}, [](int total){return std::any_of([](int total){return total;}, [](",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The Python code counts words whose last character is not a vowel. The C++ completion uses `count_if`, `any_of`, and `none_of` \u2014 these are relevant counting/filtering operations \u2014 but the completion quickly devolves into a deeply nested, looping structure with `[](int total){return total;}` repeating over and over. The looping pattern dominates the completion after the initial `count_if` call.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if the last word in a list of words ending with a vowel, I'll count how many words end with a consonant and then check if the last word ends with a vowel. Here's how I'll do it:\n\n1. Initialize a counter for words ending with a consonant.\n2. Iterate through the",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting words that end with a consonant, which is directly relevant to what the code does (counting words where the last character is not a vowel/consonant check). The description correctly identifies the core operation of checking word endings against vowels and counting consonant-ending words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{'a','e','i','o','u'},[](int count){return std::count_if(std::vector<int>{'a','e','i','o','u'},[](int count){return std::count_if(std::vector<int>{'a",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The C++ completion shows `count_if` with a vector of vowels `{'a','e','i','o','u'}`, which is relevant to checking whether characters are vowels (as the Python code does with `not in \"aeiou\"`). However, the completion quickly devolves into a repeating loop of `std::count_if(std::vector<int>{'a','e','i','o','u'},[](int count){return std::count_if(std::vector<int>{'a','e','i','o','u'}...` which is a short repeating cycle dominated by the same pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

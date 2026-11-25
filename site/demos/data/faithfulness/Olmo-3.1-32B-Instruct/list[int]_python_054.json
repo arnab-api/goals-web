@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_054",
+ "datatype": "list[int]",
+ "frontier_id": "is_sorted",
+ "condition": "whether the values are sorted in non-decreasing order",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) whether the values are sorted in non-decreasing order\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 0 else True\n    return a, b\n</code>",
+ "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 0 else True",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Declaring and initializing a variable to store the result of a function that determines the maximum value in a list.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether a list is sorted in non-decreasing order (all elements satisfy nums[i] <= nums[i+1]). The description talks about finding the maximum value in a list, which is completely unrelated to checking sortedness.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? std::pair<bool,std::vector<int>>{value.size(), value}; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 0 else True",
+    "reasoning": "The Python code checks if a list is non-decreasingly sorted (or empty). The C++ completion checks if the value is empty and returns a pair, which partially captures the empty check that appears in the Python code. However, it doesn't capture the main sorting/ordering check at all, and the empty check alone is a very minor sub-component. The completion is also somewhat malformed syntactically but does contain intelligible content about checking emptiness.\n\nThe empty check is a genuine sub-step in the Python code, so this partially qualifies as relevant content.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the list is sorted and whether it is in ascending order.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a list is sorted in ascending order, which is exactly what the code does by verifying that each element is less than or equal to the next element.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool is_sorted = true;  \n    for(int i = 1; i < std::size(value); ++i){  \n        for(int j = 1; j < std::size(value); ++j){  \n            is_sorted = true;  \n            for(int k = 1; k <",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 0 else True",
+    "reasoning": "The C++ completion checks if a collection is sorted using a boolean `is_sorted` flag and iterating through the elements, which directly corresponds to what the Python code does (checking if `nums` is non-decreasing). Despite the nested loop structure being incorrect (the Python uses a single pass), the core concept of checking sortedness with an `is_sorted` boolean is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if a variable is set to indicate whether the list is sorted.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking whether a list is sorted, which is exactly what the code does \u2014 it checks if all consecutive elements are in non-decreasing order (i.e., the list is sorted). The description correctly identifies the core operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_sorted(value.begin(), value.end(), [](bool& sorted, const std::vector<bool>& v){ sorted = true; for(auto& b : v){ if(b) sorted = std::is_sorted(value.second.begin(), value.second.end()); } return value.second; } ); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 0 else True",
+    "reasoning": "The C++ completion is about checking if a collection is sorted using `std::is_sorted`, which is directly relevant to what the Python code does (checking if `nums` is non-decreasing, i.e., sorted). Despite the garbled lambda syntax and incorrect implementation details, the core concept of checking sortedness is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the list is sorted in ascending order.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the list is sorted in ascending order,\" which is exactly what the code does \u2014 it verifies that each element is less than or equal to the next one across the entire list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool is_sorted = true;  \n    for(size_t i = 1; i < std::size(value); ++i)  \n        is_sorted = std::is_sorted(value, value + std::size(value) - 1);  \n    return std::equal(value, std::is_sorted(value,",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 0 else True",
+    "reasoning": "The C++ completion is checking whether a collection is sorted, using `is_sorted` variable, `std::is_sorted`, and iterating through elements. This directly corresponds to the Python code which checks if `nums` is non-decreasing (i.e., sorted). The core concept matches perfectly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "str_python_024",
+ "datatype": "str",
+ "frontier_id": "count_digits",
+ "condition": "the number of digit characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a digit\n(2) the number of digit characters\n(3) the number of whitespace-separated words\n(4) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isdigit() for c in s)\n    c = len(s.split())\n    d = all(c.isalnum() for c in s)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = sum(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is met, counting elements, and then verifying another condition.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"counting elements\" which is relevant since the code counts digit characters in a string using `sum()`. However, the description is quite generic and doesn't specify what is being counted (digits) or what the overall operation is (just summing/counting, not verifying another condition in this line).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of characters in the string,\" which is partially relevant \u2014 the code is counting something in the string. However, it misses the key specificity: it's counting only the *digit* characters, not all characters. Still, counting characters in a string is a relevant sub-concept, and the description isn't completely unrelated.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of characters in the string,\" which is partially relevant \u2014 the code is counting something in the string. However, it's counting specifically the number of *digit* characters, not all characters. The description is close but misses the key specificity (digits). Still, counting characters in a string is a relevant sub-concept.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto v){ return std::count_if(std::begin(value), std::end(value), [v](auto w){ return std::distance(std::begin(value), std::end(value)); }, std::count_if(std::begin(value),",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion is attempting to count elements in a sequence using `std::count_if` with iterators over a range, which is relevant to counting digit characters in a string. However, the completion devolves into a nested, repetitive structure of `std::count_if(std::begin(value), std::end(value), ...)` that loops without coherent termination or a digit-checking predicate.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is roughly `std::count_if(std::begin(value), std::end(value),` which repeats multiple times and dominates the completion. Once collapsed, little coherent content remains beyond the iteration framework.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of digits in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts the number of digit characters in string `s` by summing the boolean results of `isdigit()` for each character.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](char c){ return std::isdigit(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion implements `std::count_if` with `std::isdigit` over a range, which is exactly what the Python code does: counting the number of digit characters in a string. This is a direct and accurate translation of the same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

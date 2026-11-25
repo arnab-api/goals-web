@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_051",
+ "datatype": "list[str]",
+ "frontier_id": "any_empty",
+ "condition": "whether any word is empty",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words shorter than three characters\n(2) whether any word is empty\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) < 3"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(len(w) == 0 for w in words)\n    return a, b\n</code>",
+ "impl_span": "b = any(len(w) == 0 for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true,\" which is too generic to indicate any specific aspect of the code (checking for empty words, using `any`, `len`, etc.). It doesn't identify any relevant operation or property being checked.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if any element in the list is `True`.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if any element in the list is True,\" which is a generic description of the `any()` function. The code is specifically checking if any word in `words` has length 0 (i.e., is an empty string). The description captures the `any()` operation but misses the specific property being checked (empty strings/zero length), making it too generic to confirm understanding of what the code actually does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion checks if a value is empty (`.empty()`), which directly corresponds to checking if a word has length 0 (`len(w) == 0`). This is the core operation being performed in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if any element in the list is True.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if any element in the list is True,\" which captures the use of `any()` on a list/iterable. The code does use `any()` to check if any word has length 0 (i.e., is an empty string). The description is partially correct \u2014 it identifies the `any()` operation, though it misses the specific condition (empty word check).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if any element in the list is an empty string.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if any element is an empty string (empty word), which corresponds exactly to `len(w) == 0` \u2014 checking for zero-length strings in the `words` list using `any()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](const auto& v){ return v.empty(); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` to check if any element in a collection is empty (`.empty()`), which directly corresponds to the Python code checking if any word has length 0. This is essentially the same operation implemented in C++.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

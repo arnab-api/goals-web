@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_021",
+ "datatype": "list[str]",
+ "frontier_id": "count_starts_vowel",
+ "condition": "the number of words that start with a vowel",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) the total number of vowels across all words\n(3) the number of words that start with a vowel\n(4) the number of words shorter than three characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w))\n    b = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    d = sum(1 for w in words if len(w) < 3)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Please provide the code for analysis.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is simply asking for code to analyze, which is completely generic and contains no information about what the code does (counting words starting with vowels).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return count_if(cbegin(value), cend(value), [](auto c){return isalpha(c);});}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion counts characters that are alphabetic (`isalpha`), which is related to character classification but doesn't capture the key operation of checking if the first character is a vowel. However, it does show iteration over a collection and counting elements meeting a character-based condition, which shares structural similarity but misses the vowel-checking and first-character aspects entirely.\n\nThe C++ code is coherent and about counting elements meeting a character property, but the specific property (alphabetic vs. vowel) and the structural aspect (first character of each word) are both wrong. This is completely unrelated to checking if a word starts with a vowel.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll check the first letter of each word and count:\n- Words starting with a vowel (a, e, i, o)\n- Words starting with a consonant (b, c, d, f)\n\n```python\ntext = \"This is a test\"\n\nvowel_count = 0\nconsonant",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking the first letter of each word and counting words starting with vowels (a, e, i, o). It mentions vowels specifically, which matches the code's check against \"aeiou\". The description is slightly incomplete (missing 'u' from vowels and adds an unrelated consonant count), but the main concept is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::count_if(std::views::filter(std::views::count_if([](auto c) { return std::ranges::begin(c) | std::ranges::views::filter([](auto v) { return std::ranges::begin(c) | std::views::count_if([](auto",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The C++ completion attempts to use `count_if` and `filter` operations on a collection, which is relevant to the Python code that counts words meeting a condition. However, the completion becomes a repeating loop with the pattern of `std::ranges::begin(c) | std::views::count_if([](auto` cycling repeatedly, making it a heavy loop dominated by a short repeating unit.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll need to see the code to count the lines that meet the condition.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting lines that meet a condition,\" which is vaguely related to the code counting words that meet a condition (starting with a vowel). However, it's too generic and doesn't identify any specific aspect of what the code does \u2014 no mention of vowels, first characters, words, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(),value.end(),[](auto x){return x>0;});}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion counts elements that are greater than 0, which is unrelated to checking for vowel-starting words. However, it does use `count_if` which is conceptually similar to the `sum(1 for w in words if ...)` pattern \u2014 counting elements that satisfy a condition. The condition itself (x > 0) is completely wrong (should be checking if first character is a vowel), but the counting-with-predicate structure is partially relevant.\n\nThe completion captures the \"count elements satisfying a condition\" structure but the condition is entirely unrelated to vowels or string starting characters. This is borderline, but since the core operation (counting with a filter) is identified, even if the predicate is wrong, I'll lean toward YES for the counting pattern.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'll count how many lines start with a letter (case-sensitive). \n\nExample: If the line starts with \"apple\", \"banana\", \"carrot\" \u2192 count how many lines start with a letter (like \"apple\", \"banana\", \"carrot\" \u2192 count how many lines start with a letter).\n\nI",
+   "verdict": "YES",
+   "reasoning": "The code counts words that start with a vowel (a, e, i, o, u), checking the first character case-insensitively. The description says \"lines start with a letter\" which is partially relevant (it's about counting words/lines based on their first character), but it says \"case-sensitive\" when the code is case-insensitive, and crucially it says \"start with a letter\" rather than \"start with a vowel\" \u2014 missing the key vowel constraint. However, the description does capture the general idea of counting items based on their first character. The examples given (\"apple\", \"banana\", \"carrot\") include both vowel-starting and non-vowel-starting words, suggesting the description misses the vowel filter entirely.\n\nDespite missing the vowel specificity, the description does identify the operation of counting words/lines based on their first character, which is a relevant sub-step. However, \"starts with a letter\" vs \"starts with a vowel\" is a significant miss of the core property being checked.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(std::begin(value), std::end(value), [](auto c){ return std::ispunct(c); });  \n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion counts punctuation characters using `std::ispunct`, which is checking a character property but the wrong one (punctuation instead of vowels). However, it does capture the general idea of counting elements that satisfy a character-based predicate using `count_if`, which is partially relevant. The specific character check (`ispunct` vs vowel check) is wrong, but the counting operation over a collection with a character predicate is a relevant structural match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

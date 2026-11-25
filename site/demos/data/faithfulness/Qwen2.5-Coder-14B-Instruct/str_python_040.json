@@ -1,0 +1,96 @@
+{
+ "id": "str_python_040",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the last character\n(2) whether the string has letters and all of them are lowercase\n(3) the number of vowels\n(4) the number of digit characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.islower() and s.isalpha()\n    c = sum(1 for char in s if char in 'aeiou')\n    d = sum(1 for char in s if char.isdigit())\n    return a, b, c, d\n</code>",
+ "impl_span": "b = s.islower() and s.isalpha()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true, then performing a calculation, and finally, I'm printing the results.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description talks about checking a condition, performing a calculation, and printing results \u2014 this is too generic and doesn't identify any specific aspect of what the code does (checking if a string is lowercase and alphabetic). No specific operation, method, or property is mentioned.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = s.islower() and s.isalpha()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all characters in the string are lowercase and if the string contains at least one digit.",
+   "verdict": "NO",
+   "reasoning": "The description correctly identifies checking if all characters are lowercase, which matches `s.islower()`. However, it incorrectly states the code checks for \"at least one digit\" \u2014 the code actually checks `s.isalpha()` (all alphabetic characters), which is essentially the opposite of containing a digit. Despite the wrong second part, the first part (lowercase check) is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ bool is_alpha = std::isalpha(value); bool is_digit = std::islower(value); bool is_upper = std::isupper(value); bool is_lower = std::islower(value); bool is_alnum = std::isalnum(value); bool is_alpha_lower = std::isalpha(value) && std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.islower() and s.isalpha()",
+    "reasoning": "The C++ completion checks `isalpha` and `islower` on a value, which are exactly the two properties checked in the Python code (`s.isalpha()` and `s.islower()`). Despite some noise (checking `isdigit`, `isupper`, `isalnum`), the core relevant operations are present and even combined at the end with `&&`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if all characters in the string are lowercase and if the string contains only alphabetic characters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes both conditions being checked: `islower()` checks if all characters are lowercase, and `isalpha()` checks if the string contains only alphabetic characters.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) && std::islower(value) && std::isupper(value) && std::isalnum(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.islower() and s.isalpha()",
+    "reasoning": "The C++ completion checks `std::isalpha(value)` and `std::islower(value)`, which are exactly the two operations performed in the Python code (`s.isalpha()` and `s.islower()`). The extra checks (`isupper`, `isalnum`) are wrong additions, but the core relevant operations are present and correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the string are alphabetic and if the string contains only lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes both operations in the code: checking if all characters are alphabetic (`s.isalpha()`) and checking if all characters are lowercase (`s.islower()`), combined with a logical AND.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) && std::islower(value) && std::isalpha(value) == std::islower(value) && std::isalpha(value) == std::islower(value) && std::isalpha(value) == std::islower(value) && std::isalpha(value) ==",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = s.islower() and s.isalpha()",
+    "reasoning": "The C++ completion correctly identifies both key operations: `std::isalpha` and `std::islower`, combined with `&&` \u2014 which directly mirrors the Python code's `s.isalpha()` and `s.islower()` combined with `and`. The trailing repetition is noise, but the core logic is captured in the first part before the loop begins.\n\nHowever, the completion becomes dominated by a repeating pattern of `std::isalpha(value) == std::islower(value) &&` cycling over and over. The initial fragment `std::isalpha(value) && std::islower(value)` is correct, but the rest is a stuck loop.\n\nThe key question is whether the initial correct fragment saves it from HEAVY_LOOP. The loop unit is roughly `std::isalpha(value) == std::islower(value) &&` (about 5-6 tokens), repeating multiple times and dominating the completion. This qualifies as HEAVY_LOOP.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

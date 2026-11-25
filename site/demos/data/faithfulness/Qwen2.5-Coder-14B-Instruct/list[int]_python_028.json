@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_028",
+ "datatype": "list[int]",
+ "frontier_id": "count_odd",
+ "condition": "the number of odd values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the difference between the maximum and minimum values\n(2) the number of odd values\n(3) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = max(nums) - min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for x in nums if x % 2 != 0)\n    c = any(x % 2 == 0 for x in nums)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the length of the list.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking the length of the list,\" but the code is counting the number of odd elements in `nums` (elements where `x % 2 != 0`). While both involve counting, \"length of the list\" specifically means counting all elements regardless of condition, whereas the code counts only odd numbers \u2014 these are completely different operations conceptually.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of odd numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting odd numbers in a list, which is exactly what the code does (summing 1 for each element where x % 2 != 0, i.e., odd numbers).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count_odd = 0; int count_even = 0; for (auto i : value) { if (i % 2 == 0) { count_even++; } else { count_odd++; } } return std::make_pair(count_odd, count_even); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion counts odd and even numbers in a collection, which is directly relevant to what the Python code does (counting odd numbers where `x % 2 != 0`). The C++ code iterates over values, checks `i % 2 == 0` to distinguish odd/even, and counts both \u2014 the Python code does essentially the same thing but only returns the odd count.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of elements in the list,\" which is partially relevant \u2014 the code does count elements (using `sum` with a generator), but it specifically counts only the odd elements (where `x % 2 != 0`). The description captures the counting aspect but misses the filtering condition. However, since counting elements is a genuine sub-step of what the code does, this qualifies as a partial match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto v){ return v % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion uses `std::count_if` with a modulo-2 check (`v % 2 == 0`), which is directly relevant to counting elements based on their parity (odd/even). The Python code counts odd numbers (`x % 2 != 0`) while the C++ counts even numbers (`v % 2 == 0`), but the core operation \u2014 counting elements by their remainder when divided by 2 \u2014 is the same concept.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of odd numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting odd numbers in a list, which is exactly what the code does by summing 1 for each element where x % 2 != 0 (i.e., odd numbers).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (int i = 0; i < value.size(); i++) { if (value[i] % 2 != 0) count++; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion implements counting elements where `x % 2 != 0` (odd numbers) in a collection, which is exactly what the Python code does with `sum(1 for x in nums if x % 2 != 0)`. The logic is identical: iterate through elements, check if each is odd, and count them.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

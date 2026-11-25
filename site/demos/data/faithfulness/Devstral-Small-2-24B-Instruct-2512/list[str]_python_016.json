@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_016",
+ "datatype": "list[str]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of characters across all words\n(2) the number of capitalized words\n(3) the length of the shortest word\n(4) the number of distinct words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(len(w) for w in words)\n    b = sum(1 for w in words if w[:1].isupper())\n    c = min(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(words))\n    return a, b, c, d\n</code>",
+ "impl_span": "d = len(set(words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "The code has no output.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"The code has no output,\" which is a generic, uninformative statement that doesn't describe what the code is actually doing (computing the number of distinct/unique words by taking the length of a set).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = len(set(words))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To count distinct words, sort the list, and return the count.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting distinct words, which is exactly what the code does by creating a set from `words` and taking its length. The mention of \"sort the list\" is an incorrect implementation detail, but the core concept of counting distinct words is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = len(set(words))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The number of unique values in `set(data)` is `len(set(data))`.",
+   "verdict": "YES",
+   "reasoning": "The description talks about finding the number of unique values using `len(set(...))`, which is exactly what the code does \u2014 it computes `len(set(words))` to get the count of distinct words. The variable names differ slightly (data vs words) but the operation is identical.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set<int>(std::set",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = len(set(words))",
+    "reasoning": "The completion is dominated by a repeating pattern of `std::set<int>(std::set<int>(` that cycles endlessly. While `std::set` is relevant to the Python code's use of `set()`, the content is a stuck loop with no additional coherent information beyond the repeated token.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The number of distinct elements in the list is equal to the length of the set of the list.",
+   "verdict": "YES",
+   "reasoning": "The description talks about counting distinct elements using a set and comparing to the length, which is exactly what the code does \u2014 it computes the number of distinct words by converting to a set and taking its length. The description is relevant and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::set(value).size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(set(words))",
+    "reasoning": "The C++ completion creates a set from a value and returns its size, which directly corresponds to finding the number of unique elements (distinct words) via `len(set(words))`. This is essentially the same operation implemented in C++.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

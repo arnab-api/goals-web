@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_007",
+ "datatype": "list[str]",
+ "frontier_id": "total_length",
+ "condition": "the total number of characters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is empty\n(2) the number of capitalized words\n(3) the length of the longest word\n(4) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(len(w) == 0 for w in words)\n    b = sum(1 for w in words if w[:1].isupper())\n    c = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(len(w) for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the length of the list, summing the values, and finding the maximum.",
+   "verdict": "NO",
+   "reasoning": "The description mentions \"summing the values\" which is relevant (the code uses `sum`), and \"counting the length\" is partially relevant (the code uses `len`). However, \"finding the maximum\" is not relevant, and the description says \"length of the list\" rather than lengths of words. Still, there are genuine partial matches to the actual computation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\nauto func (auto value){ return value; }\nauto func (auto value){ return value; }\nauto func (auto value){ return value; }\nauto func (auto value){ return value; }\nauto func (auto value){ return value; }\nauto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Let's compute the total.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"compute the total\" which is generic but does align with what the code does (summing lengths). However, it doesn't mention anything specific about lengths, words, or any particular property being computed.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::tuple{ std::accumulate(value.begin(), value.end(), 0), std::accumulate(value.begin(), value.end(), 0), std::accumulate(value.begin(), value.end(), 0), std::accumulate(value.begin(), value.end(), 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::accumulate` over a collection, which is relevant to summing values (analogous to `sum(...)` in Python). However, the accumulate is repeated 4 times identically in a tuple, which looks like a loop artifact. The key question is whether this is a HEAVY_LOOP \u2014 the repeating unit is `std::accumulate(value.begin(), value.end(), 0),` which is roughly 6-7 tokens, repeated 4 times. This is borderline, but the repetition is not extremely tight (the unit is larger than \"five words/tokens or fewer\"), and the core concept of accumulation/summing is genuinely relevant to what the Python code does (summing lengths of words).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the total number of characters in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the total number of characters in the list,\" which is exactly what the code does \u2014 it sums the lengths of all words in the `words` list to get the total character count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::accumulate` to sum values from a collection, which corresponds to the `sum(...)` operation in the Python code. The Python code sums the lengths of words, and while the C++ doesn't explicitly show `len`/`.size()`, it captures the core accumulation/summation operation over a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To get the total number of characters in the list, you can use the `sum` function. Here's how:\n\n```python\ntotal_chars = sum(len(item) for item in list)\n```\n\nThis will sum the lengths of all items in the list.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation being performed: summing the lengths of all items in a list to get the total number of characters. This matches exactly what the code does with `sum(len(w) for w in words)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return accumulate(value.begin(), value.end(), 0, [](size_t sum, auto& v){return sum + v.size();});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: it accumulates the sum of sizes/lengths of elements in a collection (words). The `accumulate` with a lambda summing `v.size()` directly mirrors `sum(len(w) for w in words)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

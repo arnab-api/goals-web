@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_014",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words shorter than three characters\n(2) the number of capitalized words\n(3) whether all words have distinct lengths\n(4) the number of words that contain a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) < 3"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].isupper())\n    c = len(set(len(w) for w in words)) == len(words)\n    d = sum(1 for w in words if any(c.isdigit() for c in w))\n    return a, b, c, d",
+ "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll count the lines of code and the number of lines that are uppercase letters, and the number of lines that are lowercase letters, and the number of lines that are digits.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting items that are uppercase letters, which is partially relevant to what the code does (counting words that start with an uppercase letter using `isupper()`). However, the description also incorrectly frames it as counting \"lines\" and adds irrelevant elements like lowercase letters and digits. Despite the noise, the core concept of counting uppercase-related items is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::begin(value), std::end(value), [](auto x){return x % 2 == 0;});};",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The Python code counts words that start with an uppercase letter. The C++ completion counts elements satisfying a condition using `count_if`, which is conceptually similar (counting elements that match a predicate), but the specific predicate (`x % 2 == 0`, checking for even numbers) is completely unrelated to checking if a word starts with an uppercase letter. However, the use of `count_if` with a predicate is a relevant structural match to the counting operation.\n\nThe completion captures the \"counting elements matching a condition\" pattern, which is the core operation. The specific predicate is wrong, but the overall structure of counting items satisfying some property is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll check each word in the list and count how many have the first letter capitalized and how many are all uppercase. \n\nFor the capital letters, I'll use `isupper()` to check if the first letter is uppercase. \n\nFor the uppercase words, I'll use `istitle()` to check if the word",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking each word in a list, counting how many have the first letter capitalized, and using `isupper()` to check if the first letter is uppercase \u2014 all of which are directly relevant to what the code does. The extra mention of \"all uppercase\" and `istitle()` is noise but doesn't negate the correct core description.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::ranges::count_if(std::views::filter(std::views::transform([](auto c) { return std::isupper(c); }), [](auto c) { return std::isupper(c); }) | [](auto c) { return std::isupper(c); } | [](auto c",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The C++ completion is attempting to count elements that satisfy `std::isupper`, which is directly relevant to the Python code's use of `w[0].isupper()`. However, the completion is dominated by a repeating pattern of `[](auto c) { return std::isupper(c); }` cycling over and over, making it a heavy loop despite containing a relevant fragment.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many times the word \"the\" appears in the text.",
+   "verdict": "NO",
+   "reasoning": "The description says it's counting occurrences of the word \"the\", but the code is counting words that start with an uppercase letter. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::begin(value), std::end(value), [](int x){return x % 2 == 0;});}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The Python code counts words that start with an uppercase letter. The C++ completion counts elements satisfying a condition (even numbers via `x % 2 == 0`), which uses `count_if` \u2014 a counting operation similar in spirit to the Python `sum(1 for ...)` pattern. However, the specific condition (checking uppercase first character) is completely absent; instead it checks for even numbers. The `count_if` structure is relevant as a counting mechanism, but the actual property being checked is entirely wrong.\n\nDespite the wrong condition, the use of `count_if` to count elements satisfying a predicate does capture the core operation (counting items that meet a condition), which is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'll count how many words in the list have the first character in uppercase (assuming the word is considered capitalized if it starts with an uppercase letter and the rest can be any case). For example, `sum(1 for word in words if word.isupper())` would count words starting with uppercase letters.\n\n```python",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: counting words in a list where the first character is uppercase. The description mentions \"count how many words in the list have the first character in uppercase\" which matches the code exactly. The example code is slightly different (using `isupper()` on the whole word vs `w[0].isupper()`), but the conceptual description is accurate.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isupper(value[0]) && std::all_of(std::begin(value), std::end(value), [](auto c){ return std::isupper(c); });  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The C++ completion checks if the first character of a value is uppercase using `std::isupper(value[0])`, which is directly relevant to the Python code's `w[0].isupper()` check. The additional `std::all_of` part checking all characters are uppercase is wrong (the Python code only checks the first character), but the core operation of checking `value[0]` for uppercase is correct and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

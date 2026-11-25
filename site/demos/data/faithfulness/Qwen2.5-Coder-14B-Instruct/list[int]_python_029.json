@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_029",
+ "datatype": "list[int]",
+ "frontier_id": "count_odd",
+ "condition": "the number of odd values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of positive values\n(2) the number of odd values\n(3) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for x in nums if x % 2 != 0)\n    c = any(x % 2 == 0 for x in nums)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the variable `x` is equal to 5.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if `x` equals 5, but the code is counting odd numbers (elements where `x % 2 != 0`). The description mentions `x` as a variable being checked, which is a shared element, but the actual operation (counting odd numbers via modulo) is completely unrelated to checking equality with 5.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of elements in the list that are even.",
+   "verdict": "NO",
+   "reasoning": "The code counts elements where `x % 2 != 0`, which means it's counting **odd** numbers, not even numbers. The description says \"counting the number of elements in the list that are even,\" which is the opposite of what the code does. However, the description does correctly identify the general operation (counting elements based on even/odd parity) and the data structure (a list), just with the wrong parity condition.\n\nGiven the instructions say wrong specifics don't count against it, and the description correctly identifies the counting operation and the even/odd property being checked (just inverted), this is a partial but relevant match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count_odd = 0, count_even = 0; for (auto i : value) { if (i % 2 != 0) count_odd++; if (i % 2 == 0) count_even++; } return std::make_pair(count_odd, count_even); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion counts odd numbers (and even numbers) in a collection using `i % 2 != 0`, which is directly relevant to what the Python code does \u2014 summing the count of odd elements. The completion correctly identifies the modulo-2 check for odd numbers.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of odd numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting odd numbers in a list, which is exactly what the code does by summing 1 for each element where x % 2 != 0 (i.e., odd numbers).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int odd_count = 0; int even_count = 0; for (auto i : value) { if (i % 2 != 0) odd_count++; if (i % 2 == 0) even_count++; } return std::make_pair(odd_count, even_count); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion counts odd numbers (and even numbers) in a collection using `i % 2 != 0`, which is exactly the operation the Python code performs when summing elements where `x % 2 != 0`. The core operation of counting odd elements is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of odd numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting odd numbers in a list, which is exactly what the code does by summing 1 for each element where x % 2 != 0 (i.e., odd numbers).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto x){ return x % 2 != 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion implements `std::count_if` with the predicate `x % 2 != 0`, which is exactly counting elements where the modulo 2 is not zero (i.e., odd numbers) \u2014 directly matching what the Python code does with `sum(1 for x in nums if x % 2 != 0)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

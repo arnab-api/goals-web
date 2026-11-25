@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_055",
+ "datatype": "list[int]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of even values\n(2) the number of positive values\n(3) the number of distinct values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 == 0)\n    b = sum(1 for x in nums if x > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(nums))\n    return a, b, c\n</code>",
+ "impl_span": "c = len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "- Line 1: `len(set(data))` \u2192 Counts unique elements.\n- Line 2: `len(data)` \u2192 Counts total unique elements.\n\n```python\ndata = [1, 2, 3, 4, 5, 6]\nunique_count = len(set(data))  #",
+   "verdict": "YES",
+   "reasoning": "The description mentions `len(set(data))` which counts unique elements \u2014 this is directly relevant to what the code does (`len(set(nums))`). The description correctly identifies the core operation of counting unique elements using a set.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::ranges::distance(std::views::keys(std::views::keys(value | std::views::keys | std::views::keys | std::views::keys | std::views::keys | std::views::keys | std::views::keys | std::views::keys | std::views::",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = len(set(nums))",
+    "reasoning": "The completion starts with a relevant idea \u2014 using `std::views::keys` to extract unique keys (similar to getting unique elements) and `std::ranges::distance` to count them, which relates to counting distinct elements (like `len(set(nums))`). However, the completion is dominated by a repeating pattern of `| std::views::keys` that loops endlessly, making it a HEAVY_LOOP situation.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "- Use a set to get the unique elements (len(set(data)) gives the count of unique elements)\n- Convert the data to a set, then use len() to count unique elements\ndata = [1, 2, 3, 4, 5, 6]\nunique_data = set(data)",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes using a set to find unique elements and then using `len()` to count them, which is exactly what the code does (`len(set(nums))`). The description is clearly relevant and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::unordered_set<int>(std::vector<int>(std::set<int>(value.begin(), value.end())).size();  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(set(nums))",
+    "reasoning": "The C++ completion is computing the size of a set constructed from a collection (using `std::set<int>(value.begin(), value.end())`), which directly corresponds to counting the number of unique elements (`len(set(nums))`). The approach is slightly convoluted but the core operation \u2014 finding the count of distinct elements \u2014 is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the number of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts unique elements by converting `nums` to a set (removing duplicates) and then taking the length.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set<int>(std::views::counted{value, 1, 2});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(set(nums))",
+    "reasoning": "The Python code counts the number of unique elements in `nums` by converting to a set. The C++ completion mentions `std::set<int>` which is relevant to the concept of finding unique elements, but it's using `std::views::counted` with a single value rather than a collection, and the overall structure doesn't really capture counting unique elements from a list. However, the use of `std::set` is genuinely relevant to the deduplication/uniqueness aspect of the code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts unique elements by converting `nums` to a set (removing duplicates) and then taking the length.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::set<int>(std::vector<int>(std::begin(std::set<int>(value.begin(), value.end()))).size();\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(set(nums))",
+    "reasoning": "The C++ completion is creating a `std::set` from the input (to get unique elements) and then getting the size, which directly corresponds to counting the number of unique elements in `nums` via `len(set(nums))`. Despite the syntactic mess (mismatched parentheses, redundant conversions), the core operation \u2014 converting to a set and getting its size \u2014 is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

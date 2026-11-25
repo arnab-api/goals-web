@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_007",
+ "datatype": "list[str]",
+ "frontier_id": "total_length",
+ "condition": "the total number of characters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is empty\n(2) the number of capitalized words\n(3) the length of the longest word\n(4) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(len(w) == 0 for w in words)\n    b = sum(1 for w in words if w[:1].isupper())\n    c = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(len(w) for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if you understand the context. If not, I'll explain after the next point.  \nIf the list is not empty, I'm determining its length.  \nIf the list is empty, I'm setting the length to 0.  \nIf the list exists, I'm calculating the sum of its elements",
+   "verdict": "YES",
+   "reasoning": "The code computes the sum of the lengths of words in a list. The description mentions \"determining its length\" and \"calculating the sum of its elements\" \u2014 these are partially relevant (sum is mentioned, length is mentioned), though the description conflates list length with word lengths and adds irrelevant conditional logic. However, it does touch on both \"sum\" and \"length\" which are the core operations.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? 0 : value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion defines a function that returns the size of a value (or 0 if empty), which is directly related to computing the length of each word. The Python code sums the lengths of all words, and while the C++ doesn't show the summation or iteration, it correctly identifies the core operation of getting the size/length of each element.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm calculating the total length of all strings in a list, by summing their lengths.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the total length of all strings in a list by summing their individual lengths, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int count = 0;  \n    for(const auto& s : value)  \n        sum += s.size();  \n    int totalLength = 0;  \n    for(const auto& str : value)  \n        totalLength += std::accumulate(std::begin(str",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion iterates over a collection and accumulates the sizes/lengths of elements, which directly corresponds to summing the lengths of words. It shows `sum += s.size()` and a similar `totalLength` accumulation pattern, both matching the Python code's intent.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I cannot provide the total because the previous part of your question asks for the sum of all elements, but the code to compute that would require the total variable. However, since you also ask for the count (which may be None if not defined yet), here\u2019s how you might handle it:\n\n```python\ntotal =",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"sum of all elements\" and computing a \"total,\" which is partially relevant since the code computes a sum. However, it conflates summing elements with summing lengths of words, and the rest is generic scaffolding noise. Still, \"sum\" is genuinely relevant to what the code does (computing a sum of word lengths), and it's not a heavy loop.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    for (int i = 0; i < value.size(); ++i)  \n        sum += value.sum;  \n    int total = sum;  \n    int count = 0;  \n    for (int i = 0; i < value.size(); ++",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion shows iterating over a collection and accumulating a sum, which is directly relevant to what the Python code does (summing lengths of words). The `sum += value.sum` line attempts to accumulate some property of each element, analogous to summing `len(w)` for each word. Despite the syntactic issues (`value.sum` instead of `value[i].size()`), the core operation of iterating and summing is captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Summing the lengths of all strings in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it sums the lengths of all words (strings) in the `words` list using a generator expression with `len()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0; for(const auto& s: value) for(char c: s) sum+=std::strlen(s.c_str())+1; return sum; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion is computing a sum over a collection of strings, iterating through each string and accumulating lengths \u2014 which is directly relevant to what the Python code does (summing the lengths of words). The implementation detail of using `strlen` per character rather than per string is wrong/inefficient, but the core concept of summing string lengths is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

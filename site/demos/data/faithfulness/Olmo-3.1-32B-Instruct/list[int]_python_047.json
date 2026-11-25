@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_047",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether all values are positive\n(2) the integer mean of the values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(x > 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) // len(nums) if nums else 0\n    return a, b\n</code>",
+ "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm not currently processing any input to determine what this line of code is doing, as that depends on the specific code and context. However, to check if a value is set and to get its length (for example, in Python):\n\n```python\ndef process_data(data):\n    # Check if data is provided and",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking if a value is set and getting its length, which are partially relevant (the code does check if `nums` is non-empty and uses `len(nums)`). However, the description misses the core operation of computing the average (sum divided by length), and the mention of \"length\" seems incidental. The description is mostly generic and about checking/length rather than computing an average/mean.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? value : nullptr; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of a list of numbers,\" which is exactly what the code does \u2014 it computes the integer average (sum divided by length) of `nums`, with a guard for an empty list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int count = value.size();  \n    int total = std::accumulate(value.begin(), value.begin() + (value.size() > 0 ? (sum = 0, int(value.begin() + value.size()/2)) : 0), 0);",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The Python code computes the average (sum divided by length) of a list, handling the empty case. The C++ completion computes a sum using `std::accumulate`, gets the size/count, and attempts some division-related operation (value.size()/2). It captures the key ingredients: summing elements, getting the count/size, and some form of division \u2014 even though the implementation is garbled and uses median-like division rather than full sum/length.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of a list of numbers,\" which is exactly what the code does \u2014 it computes the integer average (sum divided by length) of `nums`, with a guard for an empty list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    if (!value.size()) return (int)value.sum();  \n    int avg = value.average();  \n    return (int)(value.size() ? (value.sum() / value.size()) : 0);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum divided by the size (average) of a collection, with a check for empty case returning 0. This directly mirrors the Python code which computes `sum(nums) // len(nums)` (integer average) with `if nums else 0` for the empty case.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Calculating the integer average of the numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the integer average (sum divided by length) of a list of numbers, which is exactly what the code does using integer division.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0, cnt=0; for(int i=0; i<value.size(); ++i) sum+=value[i], cnt=value.size()>0 ? (int)std::accumulate(value.begin(), value.end(), 0)/value.size() : 0; return sum/cnt;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements and divides by the count (size), which is exactly what the Python code does: computing the average (sum // len). It also handles the empty case with a ternary operator checking `value.size() > 0`, mirroring the `if nums else 0` guard. Despite being somewhat garbled/redundant in implementation, the core operation is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

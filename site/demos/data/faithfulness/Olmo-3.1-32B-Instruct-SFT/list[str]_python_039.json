@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_039",
+ "datatype": "list[str]",
+ "frontier_id": "longest_word_length",
+ "condition": "the length of the longest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) the length of the longest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max((len(w) for w in words), default=0)\n    return a, b\n</code>",
+ "impl_span": "b = max((len(w) for w in words), default=0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am calculating the sum of all even numbers in a list.",
+   "verdict": "NO",
+   "reasoning": "The description says \"calculating the sum of all even numbers in a list,\" but the code is finding the maximum word length using `max` and `len`. These are completely unrelated operations \u2014 no summing, no even number filtering.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = max((len(w) for w in words), default=0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am finding the length of the longest increasing subsequence in a list.",
+   "verdict": "NO",
+   "reasoning": "The code finds the maximum length among words in a list, which is about finding a maximum length. However, the description specifically says \"longest increasing subsequence,\" which is a completely different algorithmic concept (LIS involves ordering/comparison of values, not word lengths). The description is coherent but describes something unrelated to what the code actually does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int max = 0;  \n    for (int i = 0; i < value.size(); i++){  \n        if (i == 0) {  \n            int max = 0;  \n            for (int j = 0; j < value.size(); j++){  \n                if (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion shows finding a maximum value by iterating through elements, with a variable `max` initialized to 0. This is directly relevant to the Python code which computes the maximum length of words. The nested loop structure is a bit garbled/redundant, but the core concept of finding a maximum is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am finding the maximum value in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"finding the maximum value in the list,\" which is relevant because the code uses `max()` to find the maximum length among words. While it omits the detail that it's computing lengths of words first, identifying the `max` operation is a correct partial description.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = max((len(w) for w in words), default=0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am finding the length of the longest word in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum length among words in a list, which is exactly what the code does using `max` with a generator expression over `len(w)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int max_length = 0;  \n    for (const auto& item : value) {  \n        if (item.length() > max_length) {  \n            max_length = item.length();  \n        }  \n    }  \n    return max_length;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion implements finding the maximum length among a collection of strings, which is exactly what the Python code does \u2014 it iterates over words, tracks the maximum length, and returns it.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

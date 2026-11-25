@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_041",
+ "datatype": "list[str]",
+ "frontier_id": "shortest_word_length",
+ "condition": "the length of the shortest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the number of words that end with a consonant\n(3) the length of the shortest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " min(len(w) for w in words) if words else 0\n    return a, b, c\n</code>",
+ "impl_span": "c = min(len(w) for w in words) if words else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll determine the length of each string in the list and return the shortest length.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it computes the length of each word in the list and finds the minimum (shortest) length.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return sizeof(value);}\nauto func (auto value){return sizeof(value);}\nauto func (auto value){return sizeof(value);}\nauto func (auto value){return sizeof(value);}\nauto func (auto value){return sizeof(value);}\nauto func (auto value){return sizeof(value);}\nauto func (auto value){return sizeof(value);}",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = min(len(w) for w in words) if words else 0",
+    "reasoning": "The completion is dominated by a short repeating cycle (`auto func (auto value){return sizeof(value);}`) that repeats over and over. While `sizeof` could loosely relate to finding a length/size, the content is entirely a stuck loop with no coherent additional information.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am finding the length of the shortest word in the list by first finding the length of the shortest word, then the length of the shortest word if we ignore the last word if it has a length, then the length of the shortest word if we ignore the last word if it has a length.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"finding the length of the shortest word in the list,\" which is exactly what the code does (computing the minimum word length). The repetitive/looping tail is noise, but the core relevant content is present and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value? std::ranges::cbegin(value):std::ranges::end(value);};",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = min(len(w) for w in words) if words else 0",
+    "reasoning": "The code finds the minimum length of words in a list. The C++ completion deals with iterators (cbegin/end) on a value, which is somewhat related to iterating over a collection, but it's about returning iterators rather than finding minimum length. However, it does reference `std::ranges` operations on a collection, which could be tangentially related to processing the words collection. The core operation (finding minimum length) is not captured - this looks more like a conditional iterator selection, not a min-length computation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am determining the length of the shortest word in the list by first finding the list of word lengths, then taking the minimum value.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it finds the minimum length among all words in the list. The description correctly identifies both the operation (finding word lengths) and the aggregation (taking the minimum value).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return value ? std::optional<int>{*std::optional<int>{std::optional<int>{0}} : std::optional<int>{0};  \n}",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "c = min(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion is syntactically broken and deals with optional types returning 0, but doesn't capture the key operations of the Python code: finding the minimum length across words, iterating over a collection, or computing string lengths. The content is too garbled and unrelated to be considered relevant.\n\n<verdict>MALFORMED</verdict>",
+    "reasoned_verdict": "MALFORMED"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The length of the shortest word in the sentence.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code computes: the minimum length among all words, which is the length of the shortest word. This is a direct and correct description of the operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::min(std::strlen(std::begin(value)); std::min(std::strlen(std::end(value)); std::min(std::strlen(std::min_element(std::begin(value), std::end(value))));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion is attempting to find the minimum string length across a collection, using `std::min` and `std::strlen` on elements of a collection (using `std::begin`/`std::end`). This is directly relevant to what the Python code does: finding the minimum length (`min(len(w) for w in words)`). While the C++ is syntactically garbled and uses incorrect combinations of functions, the core operations (min, strlen/length) are clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

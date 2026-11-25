@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_010",
+ "datatype": "list[str]",
+ "frontier_id": "count_long",
+ "condition": "the number of words longer than five characters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) the number of words longer than five characters\n(3) the number of words that start with a vowel\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if len(w) > 5)\n    c = sum(1 for w in words if w and w[0].lower() in 'aeiou')\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am counting how many times a specific condition is met in a loop.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting how many times a condition is met in a loop, which is exactly what the code does \u2014 it counts words meeting a length condition. The description is generic but does capture the core operation (counting elements satisfying a condition).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting how many numbers in a list are greater than 5 and how many are not.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting how many items in a list are greater than 5, which is partially relevant \u2014 the code does count items where `len(w) > 5`. The description confuses words/strings with numbers, but the core operation (counting items exceeding a threshold of 5) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion computes the size of a value, which corresponds to `len(w)` in the Python code. This is directly relevant to checking the length of words, which is a key sub-step in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many numbers are greater than 10 in a list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting elements that exceed a threshold, which is conceptually similar to what the code does (counting words with length > 5). However, the description says \"numbers greater than 10\" while the code counts words with length greater than 5 \u2014 the domain (numbers vs. word lengths) and threshold are wrong, but the core operation of counting elements exceeding a threshold is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion returns the size of a value, which corresponds to `len(w)` in the Python code. While it doesn't capture the full logic (summing counts of words with length > 5), it correctly identifies the key operation of computing the size/length of elements, which is a relevant sub-step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting how many words in a list have more than 5 letters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting words with more than 5 letters, which matches exactly what the code does (summing 1 for each word where len(w) > 5).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](const std::string& s){return s.size() > 5;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion implements `std::count_if` over a collection of strings, counting elements where `s.size() > 5`, which is exactly what the Python code does: counting words with length greater than 5. This is a direct match in both operation and threshold.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

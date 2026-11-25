@@ -1,0 +1,96 @@
+{
+ "id": "int_python_058",
+ "datatype": "int",
+ "frontier_id": "absolute_value",
+ "condition": "the absolute value",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a multiple of three\n(2) the absolute value\n(3) the sum of the digits\n(4) the number of set bits in the binary representation\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n % 3 == 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " abs(n)\n    c = sum(int(d) for d in str(abs(n)))\n    d = bin(abs(n)).count('1')\n    return a, b, c, d\n</code>",
+ "impl_span": "b = abs(n)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the condition is met.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is met,\" which is extremely generic and doesn't identify any specific operation (absolute value computation), quantity, or property relevant to the code. It could apply to virtually any line of code.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The Python code computes the absolute value of `n`. The C++ completion checks if a value is even (divisible by 2), which is completely unrelated to computing an absolute value.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm taking the absolute value of the number, then checking if it's even or odd, then computing the sum of its digits, and finally returning the result.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"taking the absolute value of the number\" which is exactly what the code does (`abs(n)`). The additional steps mentioned (checking even/odd, sum of digits) are not present in this single line, but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {abs(value), value < 0 ? abs(value) : value, value, abs(value), value < 0 ? abs(value) : value, value, abs(value), value < 0 ? abs(value) : value, value, abs(value), value < 0 ? abs(value) : value,",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The completion contains `abs(value)` which is directly relevant to the Python code `b = abs(n)`. However, the pattern `abs(value), value < 0 ? abs(value) : value, value` repeats multiple times in a clear loop. Let me check if this qualifies as HEAVY_LOOP.\n\nThe repeating unit is `abs(value), value < 0 ? abs(value) : value, value,` \u2014 this is roughly 10 tokens repeating over and over. The threshold for HEAVY_LOOP is \"roughly five words/tokens or fewer.\" This repeating unit is longer than five tokens, so it doesn't strictly qualify as HEAVY_LOOP by that criterion.\n\nHowever, the core content \u2014 `abs(value)` \u2014 is directly relevant to the Python code computing `abs(n)`. Despite the repetition, the substance (absolute value computation) is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the absolute value of the variable `x` and storing it in `abs_x`.",
+   "verdict": "YES",
+   "reasoning": "The description mentions calculating the absolute value, which is exactly what the code does with `abs(n)`. The variable names differ (x/abs_x vs n/b), but the core operation \u2014 computing absolute value \u2014 is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return abs(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `abs(value)`, which is exactly what the Python code does with `abs(n)`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "`abs(x)`",
+   "verdict": "YES",
+   "reasoning": "The description mentions `abs(x)`, which is directly relevant to the code that calls `abs(n)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return abs(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `abs(value)`, which is exactly what the Python code does with `abs(n)`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

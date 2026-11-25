@@ -1,0 +1,96 @@
+{
+ "id": "str_python_041",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a digit\n(2) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.islower() for c in s if c.isalpha())\n    return a, b\n</code>",
+ "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true,\" which is too generic to indicate any specific aspect of the code (checking if all alphabetic characters are lowercase). It doesn't mention lowercase, alphabetic characters, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all characters in the string are lowercase and if all characters are alphabetic, respectively.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters are lowercase, which is directly what the code does with `c.islower()`. The second part about checking if all characters are alphabetic is slightly off (the code uses `c.isalpha()` as a filter condition, not as a separate check), but the core operation of checking lowercase is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) && std::islower(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion checks if a character is alphabetic AND lowercase, which is exactly the core operation in the Python code (checking `c.islower()` for characters where `c.isalpha()`). This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if all characters in the string are lowercase and if the string contains at least one digit.",
+   "verdict": "NO",
+   "reasoning": "The description correctly identifies that the code checks if all alphabetic characters in the string are lowercase. However, it incorrectly adds a condition about checking for at least one digit, which is not present in the code. The core operation (checking lowercase) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_integral_v<decltype(value)> && std::is_same_v<decltype(value), bool>; };",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The Python code checks whether all alphabetic characters in a string are lowercase. The C++ completion checks if a value is an integral type and specifically a bool type, which is completely unrelated to checking lowercase characters or string properties.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the string are alphabetic and if the string contains at least one lowercase letter.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all alphabetic characters in the string are lowercase (`c.islower()`), not whether the string contains \"at least one lowercase letter.\" However, the description correctly identifies that the code is examining lowercase properties of characters in a string, which is partially relevant. The description gets the general domain right (checking lowercase/alphabetic properties) but mischaracterizes the logic slightly \u2014 the code requires ALL alpha chars to be lowercase, not just \"at least one.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) && std::islower(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion checks if a character is alphabetic AND lowercase, which is exactly the core operation in the Python code (checking `c.isalpha()` and `c.islower()` for each character). This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

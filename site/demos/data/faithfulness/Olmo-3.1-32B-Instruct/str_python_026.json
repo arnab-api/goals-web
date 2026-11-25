@@ -1,0 +1,96 @@
+{
+ "id": "str_python_026",
+ "datatype": "str",
+ "frontier_id": "count_digits",
+ "condition": "the number of digit characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of space characters\n(2) the number of digit characters\n(3) whether the string is a palindrome\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.count('"
+  },
+  {
+   "text": " ')\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isdigit() for c in s)\n    c = s == s[::-1]\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I cannot determine the exact number of times without additional context, but I can count occurrences of specific characters if needed.  \nAnswer:  \n- Counting occurrences of a specific character (like a space) can be done with `.count()`.  \n- For brevity, let's answer for \"number of spaces\"",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting occurrences of specific characters,\" which is relevant to what the code does (counting digit characters in a string). However, it specifically mentions spaces and `.count()` rather than digits and `isdigit()`, so it's partially off. Still, the core concept of counting character occurrences is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count=0; int sum=0; for(char c : value) if(c==' ') ++count; for(char c : value) if(std::isspace((unsigned char)c)) ++sum; return std::make_pair(count, sum); } // Not used, but for clarity\n// Actually, let's",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The Python code counts the number of digit characters in a string `s`. The C++ completion counts spaces (using both `c==' '` and `std::isspace`) in a string, which is related (iterating over characters and counting those matching a condition) but counts spaces rather than digits. The core operation of iterating over characters and counting those matching a character-class predicate is present, but the specific property being checked (spaces vs digits) is wrong. However, the structural similarity (character iteration + counting) is genuinely relevant as a partial match.\n\nThe completion is not a heavy loop and is coherent. It correctly identifies the pattern of iterating over characters and counting those matching a condition, even though it uses the wrong character class (spaces instead of digits).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of digits that are numbers (0-9) in the input string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting digits (0-9) in the input string, which is exactly what the code does using `isdigit()` and `sum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int digits = 0, numbers = 0, alnums = 0;  \n    for (char c : value)  \n        if (std::isdigit(c)) ++numbers;  \n    for (char c : value)  \n        if (std::isdigit(c) && std::find_if(value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion counts digits in a string by iterating over characters and checking `std::isdigit(c)`, which is exactly what the Python code does (counting digit characters in `s`). The variable names differ slightly but the core operation is identical.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of digits that are numbers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of digits that are numbers,\" which directly corresponds to the code that counts digit characters in string `s` using `isdigit()`. This is clearly relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (char c : value) if (std::isdigit(c)) ++count; return std::make_pair(std::count_if(value.begin(), value.end(), ::isdigit), std::count_if(value.begin(), value.end(), ::isdigit)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion counts the number of digit characters in a string, which is exactly what the Python code does (summing `c.isdigit()` for each character). The implementation uses `std::isdigit` and iteration over characters, directly mirroring the Python logic, even if it redundantly returns a pair of the same count.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting digits that are numbers.",
+   "verdict": "YES",
+   "reasoning": "The description \"Counting digits that are numbers\" directly matches what the code does \u2014 it counts the number of digit characters in string `s` using `isdigit()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), ::isdigit); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `std::count_if` with `::isdigit` to count the number of digit characters in a string, which is exactly what the Python code does with `sum(c.isdigit() for c in s)`. This is a direct and accurate translation of the same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

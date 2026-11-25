@@ -1,0 +1,96 @@
+{
+ "id": "int_python_050",
+ "datatype": "int",
+ "frontier_id": "is_odd",
+ "condition": "whether the number is odd",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is prime\n(2) whether the number is odd\n(3) whether the number is a power of two\n(4) the absolute value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n % 2 != 0\n    c = n > 0 and (n & (n - 1)) == 0\n    d = abs(n)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = n % 2 != 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is prime.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking if a number is prime,\" but the code is checking if a number is odd (n % 2 != 0). While primality and oddness are related concepts (primes > 2 are odd), the code is specifically checking for oddness, not primality. However, checking if a number is odd can be considered a sub-step in some primality checks, so there is a tangential relationship. But the description claims the whole operation is a primality check, which is not what this single line does \u2014 it's checking the modulo 2 condition, which is more directly about odd/even than prime/composite.\n\nThe description is coherent but describes something completely different from what the code does. The code checks if n is odd; primality checking is a distinct, more complex operation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = n % 2 != 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if a number is odd.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if a number is odd,\" which is exactly what `n % 2 != 0` does \u2014 it checks whether n is odd by testing if the remainder when divided by 2 is non-zero.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 2 != 0",
+    "reasoning": "The code checks if `n` is odd (n % 2 != 0), while the C++ completion checks if a value is even (value % 2 == 0). Both involve the modulo 2 operation to check parity \u2014 the only difference is the direction of the check (odd vs even), which is a minor specifics difference that doesn't count against it.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if a number is even.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if a number is even,\" but the code checks if `n % 2 != 0`, which tests for oddness (not evenness). However, the description correctly identifies the core operation: checking even/odd status via modulo 2. The concept is directly relevant (even vs. odd is the same domain), just inverted.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = n % 2 != 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the number is odd.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if a number is odd (n % 2 != 0 is exactly the standard oddness check).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 != 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 2 != 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value modulo 2 is not equal to 0 (i.e., checking if a number is odd). This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_019",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether the values are sorted in non-decreasing order\n(2) the largest value\n(3) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    b = max(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(nums)) != len(nums)\n    return a, b, c\n</code>",
+ "impl_span": "c = len(set(nums)) != len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking for duplicates in a list,\" which is exactly what the code does \u2014 it compares the length of a set (unique elements) to the length of the original list to detect duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    auto result = false; \n    auto found = false; \n    for (auto i = 0; i < value.size(); ++i) { \n        if (i > 0 && value[i] == value[i-1]) { \n            result = true; \n        } \n        if",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(set(nums)) != len(nums)",
+    "reasoning": "The C++ completion checks for duplicate values in a collection by comparing adjacent elements (after sorting, presumably), which is directly relevant to the Python code that checks for duplicates using `len(set(nums)) != len(nums)`. The core operation \u2014 detecting whether any element appears more than once \u2014 is correctly identified, even if the implementation approach differs slightly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates in a list\" is exactly what the code does \u2014 it compares the length of a set (which removes duplicates) to the original list length to detect if any duplicates exist.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::unordered_set<int> seen; bool has_duplicates = false; for (auto i = 0; i < value.size(); ++i) { if (seen.find(value[i]) != seen.end()) { has_duplicates = true; } seen.insert(value[i]); } return std::make_pair(std::adjacent",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(set(nums)) != len(nums)",
+    "reasoning": "The C++ completion implements duplicate detection using an unordered_set, checking if elements already exist in the set before inserting them. This is directly relevant to the Python code which checks for duplicates by comparing the length of a set to the original list length. Both approaches detect whether duplicates exist in the input.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking for duplicates in a list,\" which is exactly what the code does \u2014 it compares the length of a set (unique elements) to the length of the original list to detect duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](auto v){ return std::count(std::begin(value), std::end(value), v) > 1; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(set(nums)) != len(nums)",
+    "reasoning": "The Python code checks whether there are duplicate elements in `nums` (by comparing the length of the set to the length of the list). The C++ completion checks if any element in `value` appears more than once (count > 1), which is exactly detecting duplicates. This is genuinely relevant to the code's purpose.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking for duplicates in a list by comparing the length of the list with the length of a set created from the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: checking for duplicates by comparing the length of the original list with the length of a set created from it.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [&value] (auto i) { return std::count(std::begin(value), std::end(value), i) > 1; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(set(nums)) != len(nums)",
+    "reasoning": "The Python code checks if there are duplicate elements in `nums` by comparing the length of the set to the length of the list. The C++ completion checks if any element in `value` appears more than once (count > 1), which is functionally equivalent to detecting duplicates. This is directly relevant to the duplicate-detection operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

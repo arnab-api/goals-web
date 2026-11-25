@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_041",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of distinct values\n(2) the difference between the maximum and minimum values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - min(nums)\n    return a, b\n</code>",
+ "impl_span": "b = max(nums) - min(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm calculating the sum of two numbers.",
+   "verdict": "NO",
+   "reasoning": "The description says \"calculating the sum of two numbers,\" but the code computes the range (max minus min) of a list. While both involve two numbers and an arithmetic operation, \"sum\" is the wrong operation \u2014 the code performs subtraction, not addition. However, the description does correctly identify that two numbers are being combined arithmetically, which is partially relevant.\n\nActually, reconsidering: the description says \"sum\" which implies addition, while the code does subtraction. The operation is completely wrong. But the description does capture that two quantities are being combined. This is borderline, but \"sum\" specifically means addition, not subtraction, and the code is computing a range/difference \u2014 a fundamentally different operation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: computing the difference between the maximum and minimum values (which is the range) of a list called `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::max_element(value.begin(), value.end()) - std::min_element(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion computes the difference between the maximum and minimum elements of a collection, which is exactly what the Python code does (max(nums) - min(nums)). This is a direct match in substance, even though the C++ uses iterators rather than values directly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the range (max minus min) of a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::max(value, value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion mentions `std::max` which is partially relevant (the code uses `max`), but it applies `max` to a single value compared against itself rather than finding the max of a collection, and completely misses the `min` and subtraction aspects. However, it does surface the `max` operation which is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Finding the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the range (max minus min) of a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *std::max_element(std::begin(value), std::max_element(value)) - *std::min_element(std::max_element(value), std::min_element(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion computes the difference between `max_element` and `min_element` of a collection, which is exactly what the Python code does (max - min of nums). Despite the garbled/incorrect syntax (passing iterators incorrectly to max/min_element), the core operation \u2014 subtracting the minimum from the maximum element \u2014 is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

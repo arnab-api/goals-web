@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_049",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) the integer mean of the values\n(3) the difference between the maximum and minimum values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) // len(nums)\n    c = max(nums) - a\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(nums) // len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am finding the minimum value in a list.",
+   "verdict": "NO",
+   "reasoning": "The description says \"finding the minimum value in a list,\" but the code is computing the average (sum divided by length) of a list. These are completely unrelated operations \u2014 minimum value vs. arithmetic mean.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of a list of numbers,\" which is exactly what the code does \u2014 it computes the sum of `nums` divided by the length of `nums`, which is the average (integer division).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int count = 0;  \n    int avg = 0;  \n    for(int i = 0; i < value.size(); i++){  \n        sum += value[i];  \n        count += 1;  \n        avg = sum / count;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion computes a running average by summing elements and dividing by the count, which is exactly what the Python code does (computing the mean/average of a list). The completion correctly identifies summing elements and dividing by the count/length.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of a list of numbers,\" which is exactly what the code does \u2014 it computes the sum of `nums` divided by the length of `nums`, which is the average (integer division).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int count = 0;  \n    for (int i = 0; i < value.size(); i++)  \n    {  \n        sum += value[i];  \n        count += 1;  \n    }  \n    return sum/count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion computes the sum of elements divided by the count, which is exactly the arithmetic mean \u2014 identical in substance to what the Python code does (`sum(nums) // len(nums)`). This is a direct match in concept and implementation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Calculating the average of a list of integers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of a list of integers,\" which is exactly what the code does \u2014 it computes the sum divided by the length (integer division average) of `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int count = 0;  \n    for(int i = 0; i < value.size(); i++){  \n        sum += value;  \n        count = (value.size() + value/2);  \n    }  \n    return sum/count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion computes a sum over elements and divides by a count, which directly corresponds to computing an average (sum divided by length). The gold code computes `sum(nums) // len(nums)`, which is integer division of the sum by the count \u2014 the C++ completion captures this core operation of summing elements and dividing by a size-related quantity, even if the count calculation is slightly off.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

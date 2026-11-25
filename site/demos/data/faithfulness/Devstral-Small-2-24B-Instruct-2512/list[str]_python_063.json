@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_063",
+ "datatype": "list[str]",
+ "frontier_id": "total_uppercase_letters",
+ "condition": "the total number of uppercase letters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is empty\n(2) the total number of uppercase letters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(len(w) == 0 for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(w.count(c) for w in words for c in w if c.isupper())\n    return a, b\n</code>",
+ "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the variable `result` is `None` and returning `True` if it is, otherwise `False`.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable is `None` and returning True/False, which is completely unrelated to what the code does (counting uppercase characters across all words in a list). No relevant operation or concept is identified correctly.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the uppercase letters in the string and storing the result in the variable `uppercase_count`.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting uppercase letters, which is exactly what the code does \u2014 it counts uppercase characters across all words using `isupper()`. The variable name mentioned is different (`uppercase_count` vs `b`), but that's a minor irrelevant detail.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : value){if (c == '\\0'){break;}count += (int)isupper(value);}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+    "reasoning": "The Python code counts the total number of uppercase characters across all words. The C++ completion also counts uppercase characters using `isupper()`, iterating over characters in a string. The logic is related (counting uppercase characters), though the C++ has bugs (passing `value` instead of `c` to `isupper`). The core concept of counting uppercase characters is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\ncount = sum(1 for _ in range(total))\n```",
+   "verdict": "NO_INFO",
+   "reasoning": "The description shows a generic sum/count pattern but doesn't mention anything specific about the code's actual operation: counting uppercase characters across words. It's coherent but too generic to indicate any specific aspect of what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum=0;for(auto s=0;auto c=value;sum+=value?value=0,sum=value?value=0,sum=value?value=0,sum=value?value=0,sum=value?value=0,sum=value?value=0,",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+    "reasoning": "The completion shows a heavy repeating loop pattern: `sum=value?value=0,sum=value?value=0,sum=value?value=0,...` repeating the same short fragment over and over. Even though it contains `sum` which is relevant, the content is dominated by this stuck loop with no coherent meaning extractable.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the total number of uppercase letters in the string, we iterate over each character, sum the counts of uppercase letters, and return the total.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: counting the total number of uppercase letters across all words by iterating over characters and summing counts. This matches the code's logic of iterating over words and characters, checking for uppercase letters with `isupper()`, and summing the results.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto c : value){int sum = 0;for (char ch : value){sum += std::accumulate(value.begin(), value.end(), 0, [](int total, int total){return std::accumulate(value.begin(), value.end(), 0, [",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+    "reasoning": "The Python code counts uppercase characters across all words. The C++ completion shows iteration over characters and counting/accumulation, which is somewhat relevant. However, looking more carefully, the completion contains a nested loop structure with `std::accumulate` calling itself recursively in a lambda, which forms a repeating pattern: `std::accumulate(value.begin(), value.end(), 0, [](int total, int total){return std::accumulate(value.begin(), value.end(), 0, [` \u2014 this is a short repeating cycle that dominates the completion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

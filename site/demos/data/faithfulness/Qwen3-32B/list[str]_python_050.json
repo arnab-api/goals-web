@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_050",
+ "datatype": "list[str]",
+ "frontier_id": "any_empty",
+ "condition": "whether any word is empty",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of characters across all words\n(2) the number of words that contain a digit\n(3) whether any word is empty\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(len(w) for w in words)\n    b = sum(1 for w in words if any(c.isdigit() for c in w"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(len(w) == 0 for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "c = any(len(w) == 0 for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check if the line has any characters, then I'll check if it has any numbers, then I'll check if it has any letters.",
+   "verdict": "NO",
+   "reasoning": "The code checks if any word in `words` has length 0 (i.e., is an empty string). The description talks about checking for characters, numbers, and letters \u2014 which is completely unrelated to checking for empty words/strings. The description doesn't mention emptiness, length, or zero-length words at all.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::any_of(value.begin(), value.end(), [](auto v){return v;});};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion implements `any_of` over a collection, which corresponds to the `any()` function in the Python code. However, the lambda just returns `v` (checking truthiness) rather than checking for empty strings (`len(w) == 0`). The core operation of checking if any element satisfies a condition is captured, but the specific condition (empty string check) is missing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if there is any element in the list that is an empty string, then checking if any element is a boolean (specifically if any is `True` if any element is `None`, and finally checking if any element is an instance of `str` (whether any element is `True`, and whether",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if any element in the list is an empty string, which is directly relevant to what the code does (checking if any word has length 0, i.e., is an empty string). The rest of the description is garbled and irrelevant, but the first part correctly identifies the core operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value == 0 ? std::any_of(std::begin(value), std::end(value), [](auto v){ return v == 0; }); };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion checks if any element equals 0 using `std::any_of`, which is directly relevant to the Python code's use of `any()` to check if any word has length 0. The completion captures both the `any` operation and the `== 0` check, even though the implementation details are garbled (the ternary operator usage is nonsensical).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if there is at least one:  \n- `has_at_least_one`: True if there is at least one, otherwise False.  \n- `first`: True if found, otherwise False.  \n- `last`: True if found, otherwise False.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking \"if there is at least one\" which is relevant to the `any()` function in the code. However, the rest of the description with `has_at_least_one`, `first`, `last` variables is generic/unrelated noise. The core concept of \"at least one\" matches the `any()` operation, but there's no mention of empty words or zero-length strings.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::holds_alternative<bool>(value);  \n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion checks if a value holds a boolean alternative (using `std::holds_alternative<bool>`), which is about type checking with `std::variant`. The Python code checks if any word in a list has zero length (empty string check). These are completely unrelated operations - one is a type check, the other is a length/emptiness check on strings.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if any of the values in the list are empty strings.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if any element satisfies an \"empty\" condition, and specifically mentions empty strings, which corresponds to checking if the length of a word equals 0. This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return value == \"\" || value == \" \";  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion checks if a value equals an empty string `\"\"`, which is directly relevant to the Python code that checks if any word has length 0 (i.e., is an empty string). The check for `\" \"` (space) is an extra condition not in the original, but the core concept of detecting empty/blank strings is captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

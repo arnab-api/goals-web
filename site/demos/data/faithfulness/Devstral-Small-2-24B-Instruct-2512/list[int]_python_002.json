@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_002",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of distinct values\n(2) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(x % 2 == 0 for x in nums)\n    return a, b\n</code>",
+ "impl_span": "b = any(x % 2 == 0 for x in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the list is empty or not.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking if the list is empty or not,\" but the code is checking whether any element in `nums` is even (divisible by 2). These are completely unrelated operations \u2014 emptiness check vs. even-number detection.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, true};}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion is a generic function stub that returns a pair with a boolean `true`, but doesn't relate to checking if any element is even (divisible by 2). It doesn't mention modulo, evenness, or any iteration over elements.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Checking if any element in the list has a value of `True` for the presence of any element in the list has a value of `True` for the presence of any element in the list has a value of `True` for the presence of any element in the list has a value of `True` for the",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description contains a repeating cycle of roughly \"any element in the list has a value of `True` for the presence of\" that loops over and over. While it mentions \"any element in the list\" which is partially relevant, the description is dominated by a short repeating unit and collapses into a loop with no coherent additional content.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of(has_even(value), has_odd(value));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion mentions `any_of` and `has_even`, which are relevant to checking if any element is even (the core operation of the Python code). Despite the garbled syntax and incorrect inclusion of `has_odd`, the key concepts of \"any\" and \"even\" are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the list contains any even numbers.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if any element in `nums` is even (divisible by 2), which is exactly what `any(x % 2 == 0 for x in nums)` computes.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of([](bool b){return b;}, value != 0);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The code checks if any number in `nums` is even (divisible by 2). The C++ completion uses `any_of` which relates to the `any()` operation, but the condition `value != 0` is checking for non-zero rather than checking for even numbers (x % 2 == 0). However, it does capture the `any_of` concept which is directly relevant to the `any()` function being used.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if any number in the list is even, which is exactly what the code does using `any()` with a modulo-2 check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of(std::vector<int>{value % 2 == 0},[](bool b){return b;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion checks if any element satisfies `value % 2 == 0`, which is exactly what the Python code does \u2014 checking if any number in `nums` is even. The implementation approach is different (wrapping a single value vs. iterating over a collection), but the core operation (`% 2 == 0` with `any`) is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

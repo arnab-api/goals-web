@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_057",
+ "datatype": "list[str]",
+ "frontier_id": "count_ends_consonant",
+ "condition": "the number of words that end with a consonant",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) whether any word is a palindrome\n(3) the number of words that end with a consonant\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = any(w == w[::-1] for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the number of elements in the list is greater than 0.",
+   "verdict": "NO",
+   "reasoning": "The code counts words whose last character is a consonant (alphabetic but not a vowel). The description talks about checking if the number of elements is greater than 0, which is unrelated to counting words ending in consonants.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the number of words in a given text is even.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if the number of words is even, but the code is actually counting words that end in a consonant (non-vowel alphabetic character). These are completely unrelated operations \u2014 the code doesn't check for evenness, and it filters by the last character being a consonant rather than simply counting all words.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of elements in the list `nodes` that satisfy the condition of having a `neighbors` attribute with a truthy value.",
+   "verdict": "NO",
+   "reasoning": "The code counts words whose last character is a consonant (alphabetic but not a vowel). The description talks about counting nodes with a truthy `neighbors` attribute, which is completely unrelated to checking vowels/consonants in words.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto item){ return item % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": "The Python code counts words whose last character is a non-vowel alphabetic character. The C++ completion counts elements satisfying a condition using `count_if`, which is related to counting, but the specific condition (`item % 2 == 0`, checking for even numbers) is completely unrelated to checking last characters of words for consonants. However, the use of `count_if` does capture the counting aspect of the operation.\n\nThe completion does capture the counting/filtering pattern (count_if with a predicate), which is genuinely relevant to what the code does (counting words that satisfy a condition). The specific predicate is wrong, but the structural idea of counting elements that pass a filter is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of words in a sentence that end with a consonant.",
+   "verdict": "YES",
+   "reasoning": "The description accurately captures what the code does: it counts words where the last character is alphabetic and not a vowel (i.e., ends with a consonant).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](const auto& item) { return std::count_if(std::begin(item), std::end(item), [](const auto& c) { return std::count_if(std::begin(item), std::end(item), [](const auto& d",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": "The C++ completion uses `count_if` over a collection of words (`value`), and then applies another `count_if` on each item (word), which relates to checking characters within words. However, the nested structure doesn't quite capture the \"last character\" check or the vowel check specifically. It does capture the core operation of counting words based on some character-level property, which is partially relevant.\n\nThe completion is not a heavy loop (the repeating lambda nesting is building toward something, not stuck on a trivial cycle), and it does show counting over words and characters within words, which is relevant to the gold code's structure of counting words based on a property of their characters.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "str_python_011",
+ "datatype": "str",
+ "frontier_id": "vowel_count",
+ "condition": "the number of vowels",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of alphabetic characters\n(2) the number of vowels\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isalpha"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for c in s if c.lower() in 'aeiou')\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for c in s if c.lower() in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am **reading a value from the console input** and **storing it in a variable**.",
+   "verdict": "NO",
+   "reasoning": "The description says the code is reading from console input and storing in a variable, but the code is actually counting vowels in a string `s` using a generator expression. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for c in s if c.lower() in 'aeiou')",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of vowels in a given string.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 it counts vowels in a string by iterating through characters and checking if they are vowels.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int vowels = 0, consonants = 0; for (char c : value) { if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') { if (c == 'a') { int vowelCount =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting vowels in a string, which is exactly what the Python code does (counting characters that are vowels). The C++ code iterates over characters and checks if each is a vowel ('a', 'e', 'i', 'o', 'u'), directly matching the Python's `c.lower() in 'aeiou'` check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am counting the number of vowels in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting vowels in a string, which is exactly what the code does \u2014 it sums 1 for each character in `s` that is a vowel (checking against 'aeiou' after lowercasing).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for c in s if c.lower() in 'aeiou')",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"counting the number of vowels in the string,\" which is exactly what the code does \u2014 it iterates over characters, checks if each is a vowel (via `c.lower() in 'aeiou'`), and sums the count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (char c : value) {  \n        if (std::count_if(value.begin(), value.end(), [](char c){  \n            return std::count_if(value.begin(), value.end(), [](char c){  \n                return std::isalpha(c) && std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.lower() in 'aeiou')",
+    "reasoning": "The C++ completion starts with a loop over characters in a string and begins counting, which is relevant to the Python code that counts vowels in a string. However, it then devolves into a nested `std::count_if` loop that repeats itself without completing, becoming a heavy loop pattern with the `count_if(value.begin(), value.end()` structure repeating.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_017",
+ "datatype": "list[str]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the length of the longest word\n(2) the number of distinct words\n(3) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(words))\n    c = sum(sum(1 for ch in w if ch.lower() in 'aeiou') for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = len(set(words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Declaring a variable to store the count of items in a list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"count of items in a list,\" which is partially relevant \u2014 the code is counting the number of unique words (distinct elements) by using `set()` to deduplicate and `len()` to count. The description captures the counting aspect but misses the uniqueness/deduplication part. Still, counting items is a genuine sub-step of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    int max_val = 0;  \n    for (const auto& v : value) {  \n        if (v.size() == 0) {  \n            int sum = 0;  \n            int max_ = 0;  \n            int n = v",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The Python code counts the number of unique words by converting a list to a set and taking its length. The C++ completion iterates over a collection (`value`) and seems to be counting or tracking something about elements, but it diverges into checking `v.size() == 0` (empty elements) and computing sums/maximums, which is unrelated to counting unique elements. However, it does iterate over a collection and uses a `count` variable, which is partially relevant to counting elements, though the uniqueness/set aspect is missing.\n\nThe completion is not a heavy loop, not malformed, and contains some partial relevance (iterating over a collection, counting), but the core operation (finding unique elements via set) is not captured. The `count` variable and iteration are weakly relevant but the logic diverges significantly.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Declaring a set to store unique words from a list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions creating a set to store unique words from a list, which is exactly what the code does \u2014 it converts `words` to a set to get unique words, then takes the length. The description correctly identifies the core operation (set of unique words) even though it doesn't mention the `len` part.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<std::string> uniqueWords;  \n    for(const auto& word : value)  \n        uniqueWords.insert(word);  \n    return uniqueWords.size();  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an unordered set of strings from a collection of words and returns its size, which is exactly what the Python code does \u2014 counting unique words using a set and getting its length.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting unique elements in a list.",
+   "verdict": "YES",
+   "reasoning": "The description \"Counting unique elements in a list\" is directly relevant to what the code does \u2014 it converts `words` to a set (removing duplicates) and then counts the unique elements with `len()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<decltype(value)> uniqueSet;  \n    int uniqueCount = 0;  \n    uniqueSet.insert(value);  \n    ++value;  \n    uniqueCount = static_cast<int>(uniqueSet.size());  \n    return std::make_pair(uniqueSet.size(), uniqueSet);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an `unordered_set` to track unique elements and counts the size of that set \u2014 which is exactly what the Python code does: converting `words` to a `set` and getting its length to count unique words. The implementation details differ slightly but the core concept (unique set + size) matches well.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting unique elements in a set after converting the list to a set.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting unique elements by converting a list to a set and getting its length, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::set<std::string>{ value.begin(), std::distance(value.begin(), std::unique(value.begin(), value.end())) };  \n}  \n\nauto unique_count (auto const& values){  \n    return std::set<std::string>{ values.begin(), std::distance(values.begin(), std::unique(values",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion is attempting to count unique elements by using `std::set` and `std::unique`, which directly relates to the Python code's use of `set(words)` to find unique words. The core concept of finding the number of distinct/unique elements from a collection is clearly present, even though the implementation has some syntactic issues and incorrectly mixes `std::distance` with `std::set` construction.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

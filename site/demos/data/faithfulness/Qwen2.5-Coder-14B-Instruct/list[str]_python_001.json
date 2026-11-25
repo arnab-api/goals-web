@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_001",
+ "datatype": "list[str]",
+ "frontier_id": "has_palindrome",
+ "condition": "whether any word is a palindrome",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) whether any word is a palindrome\n(3) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(w == w[::-1] for w in words)\n    c = sum(len(w) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = any(w == w[::-1] for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true,\" which is too generic to indicate any specific aspect of the code (palindrome checking, iterating over words, using `any`, etc.).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if any element in the list is a palindrome.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if any word in `words` is equal to its reverse (i.e., is a palindrome), using `any()` over a generator expression.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto item){ return item == \"yes\"; }) && std::any_of(value.begin(), value.end(), [](auto item){ return item.size() > 5; }) && std::any_of(value.begin(), value.end(), [](auto item){ return std::",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The Python code checks if any word in `words` is a palindrome (w == w[::-1]). The C++ completion uses `std::any_of` to check conditions on a collection, which matches the `any()` structure of the Python code. However, the conditions checked (item == \"yes\", item.size() > 5) are completely unrelated to palindrome checking \u2014 there's no reversal or palindrome comparison anywhere in the completion.\n\nThe completion does correctly identify the `any_of` pattern applied to a collection of strings, which is partially relevant to the structure. But the actual property being checked (palindrome) is not surfaced at all.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if any element in the list is even.",
+   "verdict": "NO",
+   "reasoning": "The code checks if any word in `words` is a palindrome (equal to its reverse), but the description says it's checking if any element is even. These are completely unrelated operations \u2014 palindrome checking vs. even number checking.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](auto item){ return item % 2 == 0; }) || std::any_of(std::begin(value), std::end(value), [](auto item){ return std::is_same<decltype(item), bool>::value; }) || std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The Python code checks if any word in a list is a palindrome (equal to its reverse). The C++ completion uses `std::any_of` which correctly captures the \"any\" aspect, but the lambda checks for even numbers (`item % 2 == 0`) and type checking (`std::is_same<decltype(item), bool>`), neither of which relates to palindrome checking. However, the `std::any_of` pattern is genuinely relevant to the `any()` operation in the Python code.\n\nThe completion captures the `any_of` operation correctly, which is a relevant sub-step, even though the predicate inside is wrong. This is a partial but genuine match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if any element in the list is a palindrome.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if any word in `words` is a palindrome (by comparing each word to its reverse `w[::-1]`), and uses `any()` to return True if at least one palindrome exists.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](const auto& val){ return std::any_of(val.begin(), val.end(), [](const auto& v){ return std::equal(v.begin(), v.end(), v.begin(), [](const auto& w){ return std::any_of(w.begin(), w.end(),",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The Python code checks if any word in a list is a palindrome (equal to its reverse). The C++ completion uses `std::any_of` which corresponds to the `any()` check, and attempts to check some equality condition. However, it doesn't clearly surface the palindrome check (comparing a string to its reverse), and instead shows nested `any_of` calls which don't match the structure. Despite this, it does capture the `any_of` concept correctly, which is the outer operation. The completion is not a heavy loop (the repeating structure is nested, not a short cycle), and it does contain the relevant `std::any_of` operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

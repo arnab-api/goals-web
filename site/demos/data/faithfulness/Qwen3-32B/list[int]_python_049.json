@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_049",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) the integer mean of the values\n(3) the difference between the maximum and minimum values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " int(sum(nums) / len(nums))\n    c = max(nums) - a\n    return a, b, c\n</code>",
+ "impl_span": "b = int(sum(nums) / len(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Assuming the code is:  \n\n```python\n# Line 1: Calculate the average\n# Line 2: Calculate the floor of the average\n# Line 3: Calculate the ceiling of the average\n```\n\n```python\nimport statistics\n\ndef process_data(data):\n    average = statistics.mean(data)",
+   "verdict": "YES",
+   "reasoning": "The description mentions calculating the average, which is exactly what the code does (computing `sum(nums) / len(nums)` is the mean/average). The description also mentions floor of the average, which relates to the `int()` conversion in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value){return value;};\nauto func3 (auto value){return value;};\nauto func4 (auto value){return value;};\nauto func5 (auto value){return value;};\nauto func6 (auto value){return value;};\nauto func7 (auto value){return value;};\nauto",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "b = int(sum(nums) / len(nums))",
+    "reasoning": "The C++ completion is just a series of identity function definitions with no relevance to computing a sum, average, or any arithmetic operation on a list of numbers.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I calculate the average of the numbers, then round it to the nearest integer.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (sum divided by length) and converting to an integer, which is exactly what the code does. The mention of \"round to nearest integer\" is slightly imprecise (int() truncates rather than rounds), but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = value;\n    int count = value;\n    int mean = value;\n    \n    for (int i = 0; i < value; i++) {\n        sum += value;\n        mean = sum / 2;\n    }\n    \n    return mean;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(sum(nums) / len(nums))",
+    "reasoning": "The C++ completion mentions `sum`, `count`, and `mean` \u2014 all directly relevant to computing an average/mean. The Python code computes the mean (average) of a list by summing elements and dividing by count. The C++ code attempts to compute a mean using sum and division, which aligns conceptually with the Python code's operation, even though the implementation details are wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am calculating the average of the integers in the list by first summing them up and then dividing by the total number of integers, rounded down to the nearest integer.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average of a list of integers by summing them and dividing by the count, which is exactly what the code does. The mention of \"rounded down to the nearest integer\" correctly captures the `int()` truncation behavior.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return value - (value / 2);\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = int(sum(nums) / len(nums))",
+    "reasoning": "The code computes the average (mean) of a list of numbers using sum/len. The C++ completion computes `value - (value/2)`, which is essentially `value/2` (half of a value), not an average. While division is involved, the C++ completion doesn't capture the key operations of summing elements and dividing by count \u2014 it's just halving a single value, which is unrelated to computing a mean.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The integer average of the variables.",
+   "verdict": "YES",
+   "reasoning": "The description says \"the integer average of the variables,\" which directly matches what the code does: computing the sum of `nums` divided by the length (i.e., the average) and converting it to an integer with `int()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (int)(value / 2); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = int(sum(nums) / len(nums))",
+    "reasoning": "The Python code computes the mean (average) of a list by dividing the sum by the length. The C++ completion divides a value by 2, which is a fixed constant rather than the length of the list. However, the core operation of division to compute an average-like quantity is partially present \u2014 it performs a division and casts to int, which matches the integer truncation aspect. But dividing by 2 (a constant) rather than by `len(nums)` is a meaningfully different operation from computing a mean.\n\nThe completion does capture the integer cast and division, but misses the sum and the dynamic length. It's not completely unrelated (division + int cast is present), but it's quite far from the actual computation. I'll consider this a partial match \u2014 the int cast and division are relevant sub-steps, even if the operands are wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

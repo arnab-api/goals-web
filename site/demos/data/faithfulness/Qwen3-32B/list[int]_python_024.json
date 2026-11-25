@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_024",
+ "datatype": "list[int]",
+ "frontier_id": "count_even",
+ "condition": "the number of even values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether the values are sorted in non-decreasing order\n(2) the difference between the maximum and minimum values\n(3) the number of even values\n(4) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    b = max(nums) - min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for x in nums if x % 2 == 0)\n    d = any(x % 2 == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. Count the number of even numbers.\n2. Count the number of odd numbers.\n3. Count the number of negative numbers.\n4. Count the number of positive numbers.",
+   "verdict": "YES",
+   "reasoning": "The description's first item (\"Count the number of even numbers\") is directly relevant to what the code does \u2014 it counts elements where `x % 2 == 0`, which are even numbers. The additional items are noise/distractors but the first item is a correct match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::begin(value), std::end(value), [](auto x) { return x % 2 == 0; });};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting elements in a collection where `x % 2 == 0` (i.e., even numbers). It uses `std::count_if` with the same modulo condition, which is directly equivalent to the Python generator expression with `sum`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I will count even numbers, and check for evenness.  \nI will count the even numbers.  \nI will check for evenness.  \nI will check if the number is even.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies counting even numbers and checking for evenness, which is exactly what the code does (summing 1 for each element where x % 2 == 0).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int even_count = 0;  \n    for (int i = 0; i < value.size(); i++) {  \n        if (value[i] % 2 == 0) {  \n            even_count += 1;  \n        }  \n    }  \n    int even = 0;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion counts even numbers in a collection by checking `% 2 == 0` and incrementing a counter, which is exactly what the Python code does with `sum(1 for x in nums if x % 2 == 0)`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many times a number appears in the list.",
+   "verdict": "NO",
+   "reasoning": "The description mentions counting occurrences in a list, which is partially relevant (it's counting elements), but it says \"how many times a number appears\" which implies frequency/occurrence counting of a specific value, whereas the code is counting elements that satisfy a condition (being even). The core operation of counting is present, but the specific property being checked (even numbers) is missed, and \"how many times a number appears\" suggests something different (like counting duplicates or a specific value's frequency).\n\nHowever, \"counting how many times a number appears in the list\" is not completely unrelated \u2014 it does involve counting elements in a list, which is the right general operation. The description captures the counting aspect but misidentifies what's being counted.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(),value.end(),[](auto x){return x%2==0?1:0;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion implements `std::count_if` over a collection, counting elements where `x % 2 == 0`, which is exactly what the Python code does \u2014 counting even numbers in `nums`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of even numbers in the list.\n\n```python\ndef count_evens(nums):\n    return sum(1 for num in nums if num % 2 == 0)\n```\n\nThe function returns the count of even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting even numbers in a list, which is exactly what the code does (summing 1 for each element where x % 2 == 0).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return 0;  \n}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  }
+ ]
+}

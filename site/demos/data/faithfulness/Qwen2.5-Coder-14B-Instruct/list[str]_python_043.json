@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_043",
+ "datatype": "list[str]",
+ "frontier_id": "shortest_word_length",
+ "condition": "the length of the shortest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of uppercase letters across all words\n(2) the length of the shortest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " min(len(w) for w in words)\n    return a, b\n</code>",
+ "impl_span": "b = min(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm calculating the length of a string.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"calculating the length of a string,\" which is partially relevant \u2014 the code does compute lengths (using `len(w)`) of strings in a collection. However, it also finds the minimum of those lengths, which is not mentioned. Still, the core operation of computing string length is identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = min(len(w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the length of the shortest string in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it computes the minimum length among all words in the list, which is exactly \"the length of the shortest string in a list.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::min_element(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::min_element` to find the minimum value in a collection, which is conceptually related to finding the minimum (of word lengths) in the Python code. While the Python code uses `min()` with a generator expression over word lengths, the C++ completion captures the core idea of finding a minimum across a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the length of the shortest string in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it computes the minimum length among all words in a list, which is exactly \"the length of the shortest string in a list.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::min_element(std::begin(value), std::end(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::min_element` on a collection, which is conceptually related to finding a minimum value across a collection. The Python code finds the minimum length of words in a list. The C++ completion captures the \"find minimum in a collection\" idea, even though it doesn't specifically address string lengths.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm finding the length of the shortest string in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the minimum length among all words in the list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::min_element(std::begin(value), std::end(value))->size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(len(w) for w in words)",
+    "reasoning": "The C++ completion finds the minimum element in a collection and returns its size, which is directly relevant to the Python code that finds the minimum length (`len`) among words in a list. The operation (min + size/length) matches the substance of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_045",
+ "datatype": "int",
+ "frontier_id": "last_digit",
+ "condition": "the last decimal digit",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the number of digits\n(2) whether the number is odd\n(3) the last decimal digit\n(4) the sign of the number\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = len(str(abs(n)))\n    b = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " abs(n) % 10\n    d = 1 if n > 0 else -1 if n < 0 else 0\n    return a, b, c, d\n</code>",
+ "impl_span": "c = abs(n) % 10",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll extract the last digit of the number.",
+   "verdict": "YES",
+   "reasoning": "The description says \"extract the last digit of the number,\" which is exactly what `abs(n) % 10` does \u2014 it computes the last digit of the absolute value of n.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value){return value;};\nauto func3 (auto value){return value;};\nauto func4 (auto value){return value;};\nauto func5 (auto value){return value;};\nauto func6 (auto value){return value;};\nauto func7 (auto value){return value;};\nauto",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The completion is a series of identity function definitions that repeat with slight name variations (func, func2, func3, etc.), carrying no relevant content about computing the last digit of a number or using modulo/abs operations.\n\n<verdict>MALFORMED</verdict>",
+    "reasoned_verdict": "MALFORMED"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "The line `x % 10` gives the last digit (absolute value).\n\nExample:\n- For `x = 123`, the last digit is `3`.\n- For `x = -45`, the last digit is `5`.\n- For `x = 7`, the last digit is",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code extracts the last digit using `% 10` and mentions taking the absolute value, which matches `abs(n) % 10` exactly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 10;};\nauto func (auto value){return value % 10;};\nauto func (auto value){return value % 10;};\nauto func (auto value){return value % 10;};",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The completion shows a function that computes `value % 10`, which is directly relevant to the Python code computing `abs(n) % 10`. However, the completion is dominated by a short repeating unit (`auto func (auto value){return value % 10;};`) that repeats over and over \u2014 this is a HEAVY_LOOP pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The line `x = num % 10` gets the last digit of the number.  \nThe line `last_digit = num % 10` gets the last digit of the number (same as `x = num % 10`).  \nThe line `second_last = num % 10`",
+   "verdict": "YES",
+   "reasoning": "The description talks about getting the last digit of a number using `% 10`, which is exactly what the code does (`abs(n) % 10` extracts the last digit). The description correctly identifies the operation and its purpose, even though it uses different variable names.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 10;};\nvalue = value % 10;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The completion shows `value % 10`, which is exactly the modulo 10 operation performed in the Python code `abs(n) % 10`. This is directly relevant to the core operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The last digit of the number, modulo 10.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is computing the last digit of a number using modulo 10, and also correctly notes the use of `abs()` implicitly (working with the absolute value). This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return abs(value%10);}\nauto func (auto value){return value%10;}\nauto func (auto value){return value%10;}\nauto func (auto value){return value%10;}\nauto func (auto value){return value%10;}\nauto func (auto value){return value%",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The completion shows `value % 10` and `abs(value % 10)`, which directly corresponds to the Python code computing `abs(n) % 10`. However, the completion repeats the same function definition multiple times. Let me check if this is a HEAVY_LOOP situation.\n\nThe repeating unit is `auto func (auto value){return value%10;}` which is roughly 7-8 tokens, repeating 4-5 times. This is borderline, but the unit itself is longer than \"roughly five words/tokens or fewer.\" Additionally, the first line contains the full correct answer `abs(value%10)` which matches the gold code perfectly. The loop contains genuinely relevant content and the repeating unit is not extremely short.\n\nGiven the first line captures the exact operation (`abs(value%10)`) and the repeating portion (`value%10`) is also directly relevant, and the repeating unit is somewhat longer than the threshold for HEAVY_LOOP, I'll consider this YES \u2014 though it's a close call.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

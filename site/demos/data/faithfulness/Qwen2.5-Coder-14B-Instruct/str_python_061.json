@@ -1,0 +1,96 @@
+{
+ "id": "str_python_061",
+ "datatype": "str",
+ "frontier_id": "word_count",
+ "condition": "the number of whitespace-separated words",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a space\n(2) the number of whitespace-separated words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = ' ' in s"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s.split())\n    return a, b\n</code>",
+ "impl_span": "b = len(s.split())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true and then performing an action based on that.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is too generic \u2014 it just says \"checking a condition and performing an action,\" which could describe virtually any code. It doesn't mention counting words, splitting a string, measuring length, or any specific aspect of what the code actually does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(s.split())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of words in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of words in the string,\" which is exactly what `len(s.split())` does \u2014 splitting a string on whitespace gives a list of words, and taking the length counts them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(value), std::end(value), ' ') + 1; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion counts spaces in a string and adds 1, which is equivalent to counting words (splitting by spaces). This is directly relevant to what the Python code does \u2014 `len(s.split())` counts the number of words by splitting on whitespace, and counting spaces + 1 is a common equivalent approach.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the number of words in the input string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 splitting a string and counting the resulting parts gives the number of words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](const auto& str) { return std::size(str); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace. The C++ completion counts elements in a collection using `count_if` with a size check, which relates to counting items (words/strings) in a sequence. While the implementation approach differs (it's checking if strings are non-empty rather than directly counting words), it's operating on a collection of strings and counting them, which is conceptually related to word counting.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of words in the string by splitting it based on spaces.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes splitting a string and counting the resulting words, which is exactly what `len(s.split())` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(std::istringstream(value)), std::end(std::istringstream(value)), ' ') + 1; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion counts spaces in a string and adds 1, which is equivalent to counting words (splitting by spaces). This is directly relevant to what the Python code does \u2014 `len(s.split())` counts the number of words by splitting on whitespace. The C++ approach of counting spaces + 1 is a valid alternative implementation of the same concept.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

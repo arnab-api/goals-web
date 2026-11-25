@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_042",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of odd values\n(2) the difference between the maximum and minimum values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 != 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - min(nums)\n    return a, b\n</code>",
+ "impl_span": "b = max(nums) - min(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll calculate the difference between the maximum and minimum values in the list. Then I'll find the sum of all even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description's first sentence (\"calculate the difference between the maximum and minimum values in the list\") is directly relevant to what the code does \u2014 computing `max(nums) - min(nums)`. The second sentence about summing even numbers is irrelevant, but the first part is a clear and accurate description of the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::accumulate(std::begin(value), std::end(value), 0, [i=0](int a, int b) mutable {return std::accumulate(std::begin(value), std::end(value), 0, [i=0](int a, int b) mutable {return std::accumulate",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The completion uses `std::accumulate` repeatedly in a loop pattern, and doesn't mention `max`, `min`, or range/difference computation. The accumulate function computes a sum, not a max-min difference. Moreover, the completion is dominated by a repeating pattern of `std::accumulate(std::begin(value), std::end(value), 0, [i=0](int a, int b) mutable {return std::accumulate` cycling over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I find the maximum and minimum values in the list, then compute and return the difference between max and min.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the range (max minus min) of a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int max_val = *std::max_element(std::begin(value) , std::end(value)) ;  \n    int min_val = *std::max_element(std::begin(value) , std::end(value)) ;  \n    return std::abs(max_val - min_val) ;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion computes `max_element` and `min_element` (though it mistakenly uses `max_element` for both), then returns the absolute difference between them. This directly corresponds to `max(nums) - min(nums)` in the Python code, capturing the core operation of finding the range of a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the range (max minus min) of a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::abs(value[0] - value[1]);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion computes the absolute difference between two elements, which is conceptually related to computing the range (max - min) of a collection. While the implementation differs (using indexed elements vs max/min functions), the core operation of finding a difference between values is captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm calculating the difference between the maximum and minimum values in the list.  \nmax_val = max(numbers) - min(numbers)  \ndifference = max_val - min(numbers)  \nmax_diff = max(numbers) - min(numbers)  \nresult = max(numbers) - min(numbers)  \nmax_diff = max(numbers) -",
+   "verdict": "YES",
+   "reasoning": "The description clearly describes computing the difference between the maximum and minimum values in a list, which is exactly what the code does (`max(nums) - min(nums)`). The repetition is more of an elaboration/reinforcement rather than a degenerate stuck loop, as it consistently conveys the correct operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::ranges::max(std::ranges::max(std::ranges::max_element(value).value() - std::ranges::min_element(value).value());}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion is computing the difference between the maximum and minimum elements of a collection, which is exactly what the Python code does (max(nums) - min(nums)). Despite the syntactic issues and redundant nesting, the core operation is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

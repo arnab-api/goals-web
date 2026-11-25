@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_016",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of odd values\n(2) the number of positive values\n(3) whether the values are sorted in non-decreasing order\n(4) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 != 0)\n    b = sum(1 for x in nums if x > 0)\n    c = all(nums[i] <= nums[i+1] for i in range(len(nums)-1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(nums)) != len(nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = len(set(nums)) != len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking for duplicates in a list by comparing each element with its next one.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for duplicates in a list, which is exactly what the code does (detecting duplicates by comparing set length to list length). The specific method described (comparing each element with its next one) is wrong, but the core concept of duplicate detection is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::adjacent_find(std::begin(value), std::end(value), [](auto a, auto b){ return std::equal(std::begin(a), std::end(a), std::begin(b)); }) != std::end(value) && std::adjacent_find(std::begin(value), std::end(value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(set(nums)) != len(nums)",
+    "reasoning": "The Python code checks whether there are duplicate elements in `nums` by comparing the length of the set (unique elements) to the original length. The C++ completion uses `std::adjacent_find` to find adjacent equal elements, which is a way to detect duplicates (though only in sorted sequences). The core concept of detecting duplicates/equal elements is present in the C++ completion, even if the approach differs (adjacent comparison vs. set uniqueness).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking for duplicates in the list.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates in the list\" is exactly what the code does \u2014 it compares the length of a set (which removes duplicates) to the original list length to detect if any duplicates exist.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::unordered_set<int> seen; auto has_duplicates = false; for (auto i = 0; i < value.size(); ++i) { if (value[i] > 1) { has_duplicates = true; } if (seen.find(value[i]) != seen.end()) { return false; } seen",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(set(nums)) != len(nums)",
+    "reasoning": "The C++ completion is checking for duplicates using an `unordered_set` (the `seen` set and `seen.find()` check), which is directly relevant to what the Python code does \u2014 comparing the length of a set to the original list to detect duplicates. The completion correctly identifies the core operation of using a set to track seen elements and checking if an element already exists in it.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates in a list\" is exactly what the code does \u2014 it compares the length of a set (which removes duplicates) to the original list length to detect duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){std::unordered_set<int> seen;bool has_duplicate = false;for (auto i = 0; i < value.size(); ++i) {if (seen.find(i) != seen.end()) {has_duplicate = true;}seen.insert(value[i]);}return std::unordered_map<int, bool>(value.begin",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(set(nums)) != len(nums)",
+    "reasoning": "The C++ completion describes checking for duplicates using an unordered_set, which is exactly what the Python code does (comparing the length of a set to the original list to detect duplicates). The approach of using a set to find duplicates is directly relevant, even though the implementation details differ slightly (using `find` on index `i` instead of `value[i]` is a bug, but the overall structure is correct).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking for duplicates in a list,\" which is exactly what the code does \u2014 it compares the length of the set of `nums` to the length of `nums` to detect duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::unordered_set<int> seen; for (auto i = 0; i < value.size(); ++i) { if (seen.find(value[i]) != std::end(std::unordered_multiset<int>(std::begin(value), std::end(value)))) { return true; } } return false; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(set(nums)) != len(nums)",
+    "reasoning": "The C++ completion is checking for duplicates in a collection using an unordered_set, which is exactly what the Python code does (checking if the set of nums has a different length than nums, i.e., detecting duplicates). The C++ implementation uses `seen.find()` and an unordered_set/multiset to detect repeated elements, which aligns with the core operation of finding duplicates.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

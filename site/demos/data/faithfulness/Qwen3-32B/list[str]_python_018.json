@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_018",
+ "datatype": "list[str]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether all words have distinct lengths\n(2) the number of distinct words\n(3) the number of words shorter than three characters\n(4) the length of the longest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(len(w) for w in words)) == len(words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(words))\n    c = sum(1 for w in words if len(w) < 3)\n    d = max(len(w) for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = len(set(words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "- Line 1: `len(set([len(set(x)) for x in [range(2)] + [len(set([len(set(x)) for x in [len(set(x)) for x in [x for x in [x for x in [x for x in [x for x in [x for",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with something relevant \u2014 \"len(set(\" \u2014 which matches the code's use of `len(set(...))`. However, the rest immediately collapses into a heavy repeating loop of `len(set(x)) for x in` cycling over and over with no coherent content remaining.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::visit([](auto x){return std::visit([](auto x){return std::visit([](auto x){return std::visit([](auto x){return std::visit([](auto x){return std::visit([](auto x){return std::visit([](auto x){return",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The completion is dominated by a repeating pattern of `std::visit([](auto x){return` cycling over and over, with no coherent content beyond this short repeating unit.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "- Line 1: `len(set(text))` \u2013 counts unique characters  \n- Line 2: `len(set(text))` \u2013 counts unique words  \n- Line 3: `len(set(text))` \u2013 counts unique word lengths  \n- Line 4: `len(set(text))` \u2013 counts unique word",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting unique words using `len(set(...))`, which is exactly what the code does (`len(set(words))`). Despite the noise and repetition in the description, it correctly identifies the core operation of counting unique elements with `len(set(...))` and even mentions \"unique words\" specifically.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 1;\n    int uniqueCount = 1;\n    int length = 1;\n    int distinctCount = 1;\n\n    for (int i = 2; i < 4; ++i) {\n        if (i == 1) {\n            a = value.size();",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion mentions counting unique/distinct elements (`uniqueCount`, `distinctCount`) and also references `value.size()`, which relates to finding the length of a set of words. The Python code computes the number of unique words using `len(set(words))`, and the C++ completion captures both the uniqueness/distinctness aspect and the size/length measurement.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll need to know the specific code context to answer, but generally:\n\n1. Count unique elements: `len(set(data))`\n2. Count total elements: `len(data)`\n3. Count unique values: `len(set(data))`\n4. Count data types: `len(set(data))`, `len(data",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions `len(set(data))` as counting unique elements, which is exactly what the code does with `len(set(words))` \u2014 counting the number of unique words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::tuple{std::to_string(value), std::to_string(std::ranges::distance(std::views::transform(value, [](auto x) {return std::ranges::distance(std::views::transform(value, [](auto x) {return std::ranges::distance(std::views::transform(value, [](",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The Python code counts the number of unique words (using `set` to deduplicate, then `len`). The C++ completion attempts to use `std::ranges::distance` and `std::views::transform` in a nested/recursive pattern, but it devolves into a heavy repeating loop of `std::ranges::distance(std::views::transform(value, [](auto x) {return std::ranges::distance(std::views::transform(value, [](auto x) {return...` with no coherent conclusion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of unique elements in the data structure by converting it into a set and measuring its length.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: converting `words` to a set to get unique elements, then measuring the length to count them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::unordered_set<std::string>::size();  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an unordered_set of strings and returns its size, which directly corresponds to finding the number of unique elements (words) in a collection \u2014 exactly what `len(set(words))` does in Python.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_030",
+ "datatype": "int",
+ "frontier_id": "is_power_of_two",
+ "condition": "whether the number is a power of two",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number reads the same forwards and backwards\n(2) whether the number is a power of two\n(3) the sum of the digits\n(4) the number of digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = str(abs(n)) == str(abs(n))[::-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (n & (n - 1)) == 0 if n > 0 else False\n    c = sum(int(d) for d in str(abs(n)))\n    d = len(str(abs(n)))\n    return a, b, c, d\n</code>",
+ "impl_span": "b = (n & (n - 1)) == 0 if n > 0 else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a palindrome.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n` is a power of 2 (using the classic bitwise trick `n & (n-1) == 0`). The description says it's checking if the input is a palindrome, which is completely unrelated to power-of-2 detection.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, value, value, value};}",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "b = (n & (n - 1)) == 0 if n > 0 else False",
+    "reasoning": "The C++ completion creates a tuple/array of repeated values, which has no relevance to checking if a number is a power of 2 (using bitwise AND with n-1). This appears to be a degenerate pattern repeating \"value\" with no meaningful content related to the code's operation.\n\n<verdict>MALFORMED</verdict>",
+    "reasoned_verdict": "MALFORMED"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if a number is a power of two, we can use bitwise operations. A number is a power of two if it's strictly positive and (b) it's divisible by 1, (c) it's a boolean check for the second condition, (d) it's a boolean check for the",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if a number is a power of two using bitwise operations, and mentions the requirement that the number is strictly positive. These are the two key aspects of what the code does. The description trails off with some garbled repetition but the core substance is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value == 0;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = (n & (n - 1)) == 0 if n > 0 else False",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the number is a power of two by verifying if it's positive and if it's a power of two, then checking if it's a power of two by seeing if it's positive and if it's a power of two, then checking if it's a power of two by seeing if it's",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description correctly identifies that the code is checking if a number is a power of two and mentions the positivity check. However, the description loops with \"checking if it's a power of two by seeing if it's positive and if it's a power of two\" repeating multiple times. The loop unit is roughly \"checking if it's a power of two by seeing if it's positive and if it's a power of two\" \u2014 this is longer than five words/tokens, and the first occurrence is coherent and correct before the repetition begins.\n\nThe repeating unit here is quite long (more than 5 words), and the first sentence is fully coherent and correct. This is borderline, but the loop unit is too long to qualify as HEAVY_LOOP per the definition of \"roughly five words/tokens or fewer.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return (value & (value != 0)) == (value == 0) && (value == 0) && (value == 0);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n & (n - 1)) == 0 if n > 0 else False",
+    "reasoning": "The Python code checks if `n` is a power of 2 using the classic bit trick `(n & (n-1)) == 0` with `n > 0`. The C++ completion contains the key operation `value & (value != 0)` which is a garbled version of `value & (value - 1)`, and it does reference the `== 0` comparison and the `!= 0` check (analogous to `n > 0`). While the specifics are wrong (using `value != 0` instead of `value - 1`), the relevant ingredients (bitwise AND, comparison to zero, positivity check) are all present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check if a number is a power of two, we can use bitwise operations. The number is a power of two if it's positive and (num & (num & (num != 0)) == num) evaluates to true, which means the number is a power of two.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core concept: checking if a number is a power of two using bitwise operations, and mentions the condition that the number must be positive. The specific bitwise formula mentioned is garbled/incorrect, but the overall purpose and approach are correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value & (value &",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = (n & (n - 1)) == 0 if n > 0 else False",
+    "reasoning": "The completion starts with the correct operation `(value & (value - 1))` pattern but immediately collapses into a repeating loop of `(value & (value & (value & ...` which dominates the entire output. The core relevant fragment is present but the completion is dominated by a short repeating cycle.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

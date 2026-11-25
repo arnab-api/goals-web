@@ -1,0 +1,96 @@
+{
+ "id": "str_python_010",
+ "datatype": "str",
+ "frontier_id": "vowel_count",
+ "condition": "the number of vowels",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a space\n(2) whether the string contains a digit\n(3) the number of vowels\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = ' ' in s\n    b = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for char in s if char.lower() in 'aeiou')\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for char in s if char.lower() in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 counting vowels in a string.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto c : value) { if (std::isalpha(c)) count++; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for char in s if char.lower() in 'aeiou')",
+    "reasoning": "The Python code counts vowels in a string, while the C++ completion counts alphabetic characters (using `std::isalpha`). Both iterate over characters in a string and count characters matching a condition, but the condition is wrong (all alphabetic vs. only vowels). However, the structure is partially relevant \u2014 it's counting characters in a string based on a character property, which is a related operation. The key ingredient of counting characters in a string is present, even if the specific filter is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of vowels in the given string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting vowels in a string, which is exactly what the code does \u2014 it iterates over characters, checks if each is a vowel (using `.lower()` and membership in 'aeiou'), and sums the count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { if (isalpha(ch)) count += std::count(value.begin(), value.end(), ch); } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for char in s if char.lower() in 'aeiou')",
+    "reasoning": "The Python code counts vowels in a string. The C++ completion iterates over characters and counts occurrences, which is related to counting characters in a string. However, the C++ checks `isalpha(ch)` (any letter) rather than checking for vowels specifically, and the counting logic is different (counting all occurrences of each alpha character rather than just vowels). Despite these differences, the core operation \u2014 iterating over a string and counting characters based on a condition \u2014 is genuinely relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of vowels in the given string.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 counting vowels in a string.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto v){ return std::count(std::begin(v), std::end(v), [](auto x){ return x; }); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for char in s if char.lower() in 'aeiou')",
+    "reasoning": "The C++ completion uses `std::count_if` over a range with a lambda, which is relevant to counting elements that satisfy a condition. However, the inner lambda uses `std::count` in a way that doesn't specifically check for vowels - it just returns `x` (the element itself). The structure of iterating and counting elements matching a predicate is partially relevant, but the actual vowel-checking logic is absent. Still, `count_if` over characters is genuinely related to the counting operation in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 counting vowels in a string.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || ch == 'A' || ch == 'E' || ch == 'I' ||",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for char in s if char.lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting vowels in a string, checking for both lowercase and uppercase vowels (a, e, i, o, u, A, E, I...), which is exactly what the Python code does - counting characters that are vowels (case-insensitive). This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_044",
+ "datatype": "list[str]",
+ "frontier_id": "total_vowels",
+ "condition": "the total number of vowels across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the length of the shortest word\n(2) the total number of characters across all words\n(3) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = min(len(w) for w in words)\n    b = sum(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(w.lower().count(ch) for w in words for ch in 'aeiou')\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(w.lower().count(ch) for w in words for ch in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Counting the total number of occurrences of a specific event and summing them up.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"counting the total number of occurrences of a specific event and summing them up,\" which is partially relevant \u2014 the code does sum counts. However, the description is too generic and doesn't identify that the code is counting vowels ('aeiou') in words, which is the specific substance of what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0; for(const auto& item: value){ if(item.second) sum+=item.second; } std::vector<int> counts; for(const auto& item: value){ if(item){ // not used, but for clarity } } int total=0; for(const auto& item: value){ total",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = sum(w.lower().count(ch) for w in words for ch in 'aeiou')",
+    "reasoning": "The Python code counts vowels ('aeiou') across all words. The C++ completion shows summing values from a collection, which is relevant (it's accumulating counts), but it doesn't specifically mention vowels or characters. However, it does show the pattern of iterating and summing, which is a core operation in the Python code. The completion is not a heavy loop and contains intelligible content about summing/accumulating values from a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of vowels in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts vowels (a, e, i, o, u) across all words in a collection.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int vowel_count = 0;  \n    const char* vowels = \"aeiouAEIOU\";  \n    int sum = 0;  \n    for(const char* p = value; *p; ++p)  \n        for(const char* v = value; *v; ++v)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.lower().count(ch) for w in words for ch in 'aeiou')",
+    "reasoning": "The C++ completion explicitly counts vowels, initializing a `vowel_count` variable and defining a `vowels` string containing \"aeiouAEIOU\". This is directly relevant to the Python code which counts vowel occurrences across words. The implementation approach (iterating through characters and checking against vowels) aligns with the core operation, even though the loop logic is slightly garbled at the end.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the total number of vowels in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts the total number of vowels (characters in 'aeiou') across all words in a collection. This is a direct and correct characterization of the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0; for(char c : value){ if(std::isalpha(c)){ int cnt=0; for(char ch : value){ if(std::isalpha(ch)) cnt+=std::count_if(value.begin(), value.end(), [](char c){ return std::isalpha(c); }); } int total=",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.lower().count(ch) for w in words for ch in 'aeiou')",
+    "reasoning": "The Python code counts vowels across all words. The C++ completion counts alphabetic characters (using `std::isalpha`) rather than specifically vowels, but it does involve iterating over characters and counting them with `std::count_if`. The core operation of iterating over characters and counting a character property is present, though it checks for alphabetic characters rather than vowels specifically. This is partially relevant but not a heavy loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the total number of vowels in a string by iterating through each character and checking if it is a vowel.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting vowels, which is exactly what the code does - it counts occurrences of vowels ('aeiou') across all words. The description mentions iterating through characters and checking if they're vowels, which matches the code's logic.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count=0; for(const auto& c: value) for(const auto& s: c) if(isalpha(c)) for(const auto& ch: s) if(isvowel(ch)) count+=1; return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.lower().count(ch) for w in words for ch in 'aeiou')",
+    "reasoning": "The C++ completion is counting vowels across a collection of strings, which is exactly what the Python code does (summing vowel counts across words). The completion iterates over words, characters, and checks for vowels (`isvowel(ch)`), which directly corresponds to counting vowel characters in each word.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

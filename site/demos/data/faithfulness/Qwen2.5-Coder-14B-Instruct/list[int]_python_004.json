@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_004",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether the values are sorted in non-decreasing order\n(2) whether any value is even\n(3) the sum of all values\n(4) the number of odd values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(nums[i] <= nums[i+1] for i in range(len(nums)-1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(num % 2 == 0 for num in nums)\n    c = sum(nums)\n    d = sum(1 for num in nums if num % 2 != 0)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = any(num % 2 == 0 for num in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the list is sorted.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking if the list is sorted,\" but the code is checking whether any number in the list is even (using `num % 2 == 0`). These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; };",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if any element in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if any element in the list is even, which is exactly what the code does using `any()` with a modulo-2 check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if any element in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it uses `any()` to check if any number in `nums` is even (divisible by 2).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto v){ return v % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion implements `std::any_of` checking if any element `v % 2 == 0` (even number) over a collection, which is exactly what the Python code does with `any(num % 2 == 0 for num in nums)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if any number in `nums` is even (divisible by 2), which is exactly what `any(num % 2 == 0 for num in nums)` computes.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto x){ return x % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion implements `std::any_of` checking if any element `x % 2 == 0` (even number) over a collection, which is exactly what the Python code does with `any(num % 2 == 0 for num in nums)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

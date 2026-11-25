@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_047",
+ "datatype": "list[str]",
+ "frontier_id": "total_vowels",
+ "condition": "the total number of vowels across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is empty\n(2) the number of words written entirely in lowercase letters\n(3) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(len(w) == 0 for w in words)\n    b = sum(1 for w in words if w.islower"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(w.count(v) for w in words for v in 'aeiouAEIOU')\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(w.count(v) for w in words for v in 'aeiouAEIOU')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of vowels in the string,\" which is exactly what the code does \u2014 it counts occurrences of vowel characters (both uppercase and lowercase) across all words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { if (isalpha(ch)) { count += 1; } } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.count(v) for w in words for v in 'aeiouAEIOU')",
+    "reasoning": "The Python code counts the total number of vowels (both lowercase and uppercase) across all words. The C++ completion counts characters that are alphabetic (`isalpha`), which is related but counts ALL letters rather than just vowels. However, it does capture the core structure: iterating over characters and counting them, which is a relevant sub-operation. The check is wrong (isalpha vs. isvowel), but the counting-characters-in-strings approach is genuinely related.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the total number of vowels in all the words within the given text.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts the total number of vowels (both lowercase and uppercase, as indicated by 'aeiouAEIOU') across all words in the `words` collection.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { if (isalpha(ch)) { count += 3; } else if (isvowel(ch)) { count += 1; } } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.count(v) for w in words for v in 'aeiouAEIOU')",
+    "reasoning": "The Python code counts the total number of vowel characters across all words. The C++ completion is iterating over characters and checking for vowels (using `isvowel`), which is directly relevant to counting vowels. However, it also checks `isalpha` and adds 3 for alphabetic characters, which is wrong/irrelevant. Despite the wrong specifics, the core idea of iterating over characters and checking for vowels (`isvowel`) is present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the total number of characters in all the strings within the list.",
+   "verdict": "NO",
+   "reasoning": "The code is counting vowels (specifically 'aeiouAEIOU') across all words, not all characters. The description says \"total number of characters\" which is related but misses the key specificity \u2014 it's counting vowels only, not all characters. However, it does correctly identify the operation of counting characters across strings in a list, which is partially relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { count += ch; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.count(v) for w in words for v in 'aeiouAEIOU')",
+    "reasoning": "The Python code counts vowels across all words. The C++ completion iterates over characters in a value and accumulates a count, which is a relevant sub-step (iterating over characters and counting), though it adds `ch` (the character value) rather than checking if it's a vowel. The core structure of iterating and counting is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the total number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the total number of vowels in the string,\" which is exactly what the code does \u2014 it sums up the count of each vowel character across all words in the `words` list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { count += std::count(ch, value); } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.count(v) for w in words for v in 'aeiouAEIOU')",
+    "reasoning": "The Python code counts vowels across all words. The C++ completion attempts to count characters in a collection, using a loop and `std::count`, which is conceptually related to counting occurrences of something in a string/collection. However, the `std::count(ch, value)` call has the arguments reversed/wrong, and it doesn't specifically check for vowels. Still, the core idea of counting characters within strings using a loop and count operation is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

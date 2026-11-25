@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_049",
+ "datatype": "list[str]",
+ "frontier_id": "any_empty",
+ "condition": "whether any word is empty",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) whether any word is empty\n(3) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(len(w) == 0 for w in words)\n    c = sum(w.count(v) for v in \"aeiou\" for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = any(len(w) == 0 for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the list is empty.",
+   "verdict": "NO",
+   "reasoning": "The code checks if any word in `words` has a length of zero (i.e., is an empty string), not whether the list itself is empty. However, checking for empty strings is conceptually related to checking for emptiness \u2014 the description captures the \"empty\" concept but misidentifies what is being checked (a word within the list vs. the list itself). This is partially relevant since the core operation involves detecting emptiness.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the list is empty.",
+   "verdict": "NO",
+   "reasoning": "The code checks if any word in `words` has a length of 0 (i.e., is an empty string), not whether the list itself is empty. The description conflates \"empty string\" with \"empty list\" \u2014 these are related but distinct concepts. However, \"checking if something is empty\" is partially relevant since the code does check for emptiness (of strings), so there's a conceptual overlap.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto x){ return x == 0; }) && std::any_of(value.begin(), value.end(), [](auto x){ return x > 0; }) && std::any_of(value.begin(), value.end(), [](auto x){ return x < 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` which directly corresponds to Python's `any()`. It checks for elements equal to 0 (`x == 0`), which corresponds to checking `len(w) == 0`. The extra conditions checking for positive and negative values are wrong/irrelevant, but the core operation of using `any_of` to find an element equal to 0 is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if any element in the list is True.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if any element in the list is True,\" which partially captures the use of `any()` to check if a condition holds for any element. However, it misses the specific condition being checked (whether any word has length 0, i.e., is an empty string). The description is generic but does identify the `any()` operation correctly.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the list contains an empty string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the list contains an empty string,\" which is exactly what the code does \u2014 it uses `any()` to check if any word `w` in `words` has length 0 (i.e., is an empty string).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion checks if a value is empty (`.empty()`), which directly corresponds to checking if a word has length 0 (`len(w) == 0`). This is the core operation being performed in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

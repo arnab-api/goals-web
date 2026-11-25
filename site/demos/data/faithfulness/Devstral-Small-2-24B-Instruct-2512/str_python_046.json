@@ -1,0 +1,96 @@
+{
+ "id": "str_python_046",
+ "datatype": "str",
+ "frontier_id": "has_space",
+ "condition": "whether the string contains a space",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) whether the string contains a space\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " ' ' in s\n    return a, b\n</code>",
+ "impl_span": "b = ' ' in s",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the first character of the input is a letter.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether a space character `' '` is present in the string `s`, but the description says it's checking if the first character is a letter. These are completely unrelated operations \u2014 one checks for space membership, the other checks the first character's type.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return {value, value > 0}; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = ' ' in s",
+    "reasoning": "The C++ completion checks if a value is greater than 0, which is completely unrelated to checking for the presence of a space character in a string. The code is about membership/containment testing for a specific character, while the completion is about a numeric comparison.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the string contains a space.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks whether a space character `' '` is present in the string `s`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.find(' ') != std::string::npos;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = ' ' in s",
+    "reasoning": "The C++ completion checks whether a space character `' '` exists in a string using `find(' ') != std::string::npos`, which is exactly what the Python code does with `' ' in s`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the string contains the substring \"hello\" and if the list has any element that is a boolean.",
+   "verdict": "NO",
+   "reasoning": "The description mentions checking if a string contains a substring, which has some relevance to the code (checking if a space character is in string `s`). However, the description says the substring is \"hello\" (wrong) and adds an unrelated boolean check. The core operation (substring/membership check in a string) is partially correct, but the description is coherent and specific about \"hello\" and boolean checks, which are completely wrong details. Since the description does identify the operation of checking string containment (even if the specific substring is wrong), this counts as a partial match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.find(' ') != std::string::npos;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = ' ' in s",
+    "reasoning": "The C++ completion checks whether a space character `' '` exists in a string using `find(' ') != std::string::npos`, which is exactly what the Python code does with `' ' in s`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if there's a space in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks whether a space character `' '` is present in the string `s`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::isspace(' ') == ' ';}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = ' ' in s",
+    "reasoning": "The C++ completion is checking for a space character (' ') using `std::isspace`, which is relevant to checking if a space exists in the string `s`. The Python code checks if a space character `' '` is in the string `s`, and the C++ completion references checking for a space `' '`, even though the implementation details differ (it's checking `isspace` incorrectly, but the space character is correctly identified as the target).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

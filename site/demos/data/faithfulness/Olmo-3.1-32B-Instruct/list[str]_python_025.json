@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_025",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) the number of words that contain a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if any(ch.isdigit() for ch in w))\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for w in words if any(ch.isdigit() for ch in w))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm not currently processing any specific data or performing any counts.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description claims no specific computation is being performed, which is completely unrelated to the code that counts words containing at least one digit character.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    for(int i = 0; i < value.size(); ++i){  \n        if(i < value.size()/2){  \n            for(auto x : value){  \n                // count elements (but only for first half, then for second half)  \n                int count",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(ch.isdigit() for ch in w))",
+    "reasoning": "The C++ completion shows iterating over a collection and counting elements, which is partially relevant (counting/summing over words). However, it doesn't capture the key operation of checking for digits in words. The loop structure and sum variable are relevant, but the \"first half/second half\" logic is completely unrelated to what the Python code does.\n\nDespite the partial relevance of the counting/summing structure, the completion doesn't identify anything about digit checking or the `any` condition on characters. The \"first half/second half\" concept is entirely wrong. However, there is a sum variable and iteration over a collection, which are genuine sub-steps.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if each item in a list contains a digit, and counting how many do.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks each word in a list to see if it contains a digit (using `any(ch.isdigit() for ch in w)`) and counts how many words satisfy this condition (using `sum(1 for ...)`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count_with_digit = 0;  \n    for (const auto& item : value) {  \n        if (std::isdigit(item)) {  \n            count_with_digit += 1;  \n        }  \n    }  \n    int count_with_digit2 = 0;  \n    for (const auto",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(ch.isdigit() for ch in w))",
+    "reasoning": "The C++ completion counts items that contain digits using `std::isdigit`, which is directly relevant to the Python code that counts words containing at least one digit character. The C++ version iterates over a collection and checks `isdigit` on each item, matching the core operation of the Python code (though it counts individual digit characters rather than words containing digits, the key concepts of digit-checking and counting are present).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many times a condition is true.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting how many times a condition is true,\" which is genuinely relevant \u2014 the code counts words (using `sum` with a generator) that satisfy a condition (containing at least one digit character). This correctly captures the core operation of counting items meeting a condition.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (auto x : value){  \n        if (x){  \n            ++count;  \n        }  \n    }  \n    return count;  \n}  \n\nauto func2 (auto value){  \n    int sum = 0;  \n    for (auto x :",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(ch.isdigit() for ch in w))",
+    "reasoning": "The C++ completion shows counting elements that satisfy a condition (iterating over a collection and incrementing a counter), which corresponds to the `sum(1 for w in words if ...)` pattern in the Python code. It captures the counting/summing aspect of the operation, though it misses the digit-checking part specifically.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if any element in the list meets a condition (e.g., contains a digit).",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if any element in a list meets a condition, specifically containing a digit, which is exactly what the code does \u2014 it counts words that contain at least one digit character.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(const auto& item : value){  \n        if(std::any_of(item.begin(), item.end(),  \n                      [](const std::string& s){  \n                          return std::any_of(s.begin(), s.end(),  \n                                            [](char c){ return std::isdigit",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(ch.isdigit() for ch in w))",
+    "reasoning": "The C++ completion iterates over items in a collection and uses `std::any_of` to check characters with `std::isdigit`, which directly mirrors the Python code's logic of iterating over words and checking if any character is a digit. The core operations (iteration, `any_of`, `isdigit`) are all present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_019",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a power of two\n(2) whether the number is a perfect square\n(3) whether the number reads the same forwards and backwards\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 0 and (n & (n - 1)) == 0\n    b = n >= 0 and int(n**0.5)**2 == n\n    c = str(abs(n)) == str(abs(n))[::-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= abs(n) <= 99\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 10 <= abs(n) <= 99",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need to determine if a number is a two-digit positive integer. Let me analyze the code:\n\n```python\ndef is_two_digit_number(n):\n    # Check if the number is positive and has exactly 2 digits\n    if n >= 0 and n < 10:\n        return True\n    elif n",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core concept: checking if a number is a two-digit number. The code checks if `abs(n)` is between 10 and 99 inclusive, which corresponds to checking for two-digit numbers (by absolute value). The description mentions \"two-digit positive integer\" which is relevant, though it slightly misses the `abs()` aspect. The partial code shown is wrong (checking `n < 10` returns True which is incorrect), but the stated goal matches the code's intent.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value >= 0 && value < 10;}</think>\n<think>The user wants me to check if a given value is a two-digit positive integer. Let's analyze the requirements:\n\n1. The value should be a two-digit number.\n2. The value should be positive.\n3. The value should be an integer",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The Python code checks if `abs(n)` is between 10 and 99 inclusive (i.e., whether n is a two-digit number in absolute value). The C++ completion checks if `value >= 0 && value < 10`, which is a range check on a number \u2014 it's in the right conceptual territory (checking a numeric range), but the range it checks (0 to 10) is completely wrong for two-digit numbers. However, it does capture the idea of a range/bounds check on a numeric value, which is partially relevant. The specific bounds are wrong but the operation (range check) is the same type of operation.\n\nActually, looking more carefully: the code checks `value >= 0 && value < 10`, which would identify single-digit non-negative numbers, not two-digit numbers. The concept of checking a numeric range is present, but the specific range is entirely wrong and points to a different property (single-digit vs two-digit).\n\nThe completion does perform a range check, which is the same type of operation as the Python code. While the bounds are wrong, the structural similarity (range check on a number) means it's at least partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the input is a single-digit number.</think>I'm checking if the input is a single-digit number.</think>I'm checking if the input is a single-digit number.</think>I'm checking if the input is a single-digit number.</think>I'm checking if the input is a single-digit number.",
+   "verdict": "NO",
+   "reasoning": "The code checks if the absolute value of n is between 10 and 99 inclusive (i.e., a two-digit number). The description says it's checking for a single-digit number, which is the wrong range/concept. However, the description does correctly identify the general nature of the operation (checking digit count of a number), just with wrong specifics. The description repeats but is not a heavy loop (the unit is longer than ~5 tokens and it's not a degenerate mathematical expression loop).\n\nActually, let me reconsider: the description says \"single-digit\" but the code checks for two-digit numbers (10-99). The description identifies the concept of checking digit count, which is partially relevant, even though the specific digit count is wrong. Per the grading rules, wrong specifics (wrong constant/threshold) still count as YES if the quantity/operation is identified. The operation here is checking the number of digits, which the description does identify (just with wrong value).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}</think>I need to determine if a given value is a two-digit number. The function should check if the value is a two-digit number and return true if it is, and false otherwise. Additionally, I need to determine if the value is a two-digit number and return true if it is, and false",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The C++ completion starts with a trivial identity function `auto func(auto value){return value;}` but then in the \"think\" portion mentions checking if a value is a two-digit number, which is exactly what the Python code does (checking if abs(n) is between 10 and 99 inclusive). However, the actual C++ code portion is just a pass-through function with no relevant logic. The relevant content appears in the natural language reasoning part, not in actual code logic.\n\nThe completion does contain the concept of \"two-digit number\" which is genuinely relevant to what the code checks (10 <= abs(n) <= 99 is precisely the range of two-digit numbers). This is not a heavy loop, and the substance is relevant despite the C++ stub being trivial.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The user is asking about a two-digit number. A two-digit number is any integer between 10 and 99, inclusive. However, the user specified that the number should be exactly two digits, meaning it must be between 10 and 99.\n\nLet's check if the number 5 is a two-digit number",
+   "verdict": "YES",
+   "reasoning": "The description talks about checking if a number is a two-digit number (between 10 and 99 inclusive), which is exactly what the code does \u2014 it checks whether the absolute value of `n` falls in the range [10, 99], i.e., whether `n` is a two-digit number (including negative two-digit numbers via `abs`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() == 2;}\n\nI'm not sure if this is what you're looking for, but I'll assume that you want a function that returns whether a given integer is between 10 and 99 (inclusive). If that's the case, then the function would be:\n\n```cpp\nbool is_two",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The C++ completion checks if a value has size == 2, which corresponds to checking if a number has exactly 2 digits (i.e., is between 10 and 99 in absolute value). The subsequent text even explicitly mentions \"between 10 and 99 (inclusive)\" and \"two digits.\" This is directly relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The user is asking about a two-digit number. I need to check if the number has exactly two digits. A two-digit number is any number between 10 and 99 (inclusive), or any number between -10 and -99 (but since we're dealing with digits, we're only considering integers from 0",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking whether a number has exactly two digits, mentions the range 10 to 99 (inclusive), and even notes the handling of negative numbers via absolute value. This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }</think>\nI'm a two-digit number. I'm a number between 10 and 99. I'm a number between 10 and 99. I'm a number between 10 and 99. I'm a number between 10 and 99. I'm a number between 10",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The completion mentions \"a number between 10 and 99\" which is directly relevant to the code checking if `abs(n)` is between 10 and 99 (i.e., checking if it's a two-digit number). However, the phrase \"I'm a number between 10 and 99\" repeats heavily. Let me check if this qualifies as HEAVY_LOOP.\n\nThe repeating unit is \"I'm a number between 10 and 99.\" which is longer than roughly five words/tokens - it's about 8 words. The repetition is present but the content itself is meaningful and relevant. The initial part also says \"I'm a two-digit number\" which adds a slightly different framing. This is borderline, but the repeating unit is longer than the ~5 word threshold for HEAVY_LOOP, and the content is clearly relevant to checking two-digit numbers (10-99 range).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

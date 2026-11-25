@@ -1,0 +1,96 @@
+{
+ "id": "str_python_027",
+ "datatype": "str",
+ "frontier_id": "count_digits",
+ "condition": "the number of digit characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) the number of digit characters\n(3) whether the string contains a space\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isdigit() for c in s)\n    c = ' ' in s\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the code at this line is executing and if there's an error when trying to access a variable (to see if it exists or has a value), before moving on to the next step.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable exists or has a value/error, which is completely unrelated to what the code does (counting the number of digit characters in a string). The code is summing boolean results of `isdigit()` checks across characters in `s`.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? 1 : 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The Python code counts the number of digit characters in a string `s`. The C++ completion defines a function that returns 1 or 0 based on a boolean/truthy value, which could represent converting a boolean digit-check result to an integer (similar to how `isdigit()` returns a boolean that gets summed). This is a partial but relevant fragment \u2014 it captures the boolean-to-integer conversion aspect of the digit counting operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of digits in the input that are numbers.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting digits in the input string, which matches exactly what the code does (summing `isdigit()` checks for each character in `s`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count=0; for(char c: std::to_string(value)) if(std::isdigit(c)) ++count; int num_digits=0; for(char c: std::to_string(value)) if(std::isdigit(c)) { auto it=value.begin(); while(it!=value.end()) { if(std::isdigit(*",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion is counting digits in a value by iterating over characters and checking `std::isdigit(c)`, which is directly relevant to what the Python code does (summing the number of digit characters in string `s`). The completion does repeat the loop twice and then starts to degenerate, but the core operation (counting digits using isdigit) is clearly present and relevant before the loop degenerates.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of words in the string.",
+   "verdict": "NO",
+   "reasoning": "The code counts the number of digit characters in the string `s`, not words. The description says \"counting the number of words,\" which is a completely different operation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (int i = 0; i < value.size(); ++i++){ if (i == 0) count += std::count_if(value.begin(), value.end(), [](int v){ return std::count_if(value.begin(), value.end(), [](){ return std::get<1",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion is counting digits in a string using `std::count_if`, which is directly relevant to what the Python code does (counting digit characters with `isdigit()`). Despite the garbled/incomplete syntax and nested `count_if` confusion, the core operation of counting elements matching a condition in a string/container is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of digits in the string that are numeric characters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting numeric/digit characters in a string, which is exactly what the code does using `isdigit()` and `sum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (char c : value) if (std::isdigit(c)) ++count; return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of digit characters in a string by iterating through each character and checking `isdigit`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

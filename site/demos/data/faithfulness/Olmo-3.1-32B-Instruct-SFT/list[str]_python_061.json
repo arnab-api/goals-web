@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_061",
+ "datatype": "list[str]",
+ "frontier_id": "total_uppercase_letters",
+ "condition": "the total number of uppercase letters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of characters across all words\n(2) the total number of uppercase letters across all words\n(3) whether any word is a palindrome\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(sum(c.isupper() for c in w) for w in words)\n    c = any(w == w[::-1] for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(sum(c.isupper() for c in w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am calculating the sum of all numbers in a list.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"calculating the sum of all numbers in a list,\" which is partially relevant \u2014 the code does compute a sum (actually a nested sum). However, the description is too generic and doesn't capture the specific operation being performed (counting uppercase characters across words). \"Sum of all numbers in a list\" could describe almost any summation and doesn't identify the uppercase character counting aspect.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(sum(c.isupper() for c in w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of uppercase letters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts the number of uppercase letters across all words by using `isupper()` on each character and summing the results.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int count = 0;  \n    int sum_upper = 0;  \n    for (const auto& item : value) {  \n        if (std::isupper(item)) {  \n            sum += 1;  \n        }  \n        if (std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(sum(c.isupper() for c in w) for w in words)",
+    "reasoning": "The C++ completion shows iterating over items and checking `std::isupper()`, incrementing a sum counter. This directly corresponds to counting uppercase characters, which is exactly what the Python code does (counting uppercase letters with `c.isupper()`). The completion captures the core operation even if it's missing the outer loop over words.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of vowels in a string.",
+   "verdict": "NO",
+   "reasoning": "The code counts uppercase letters across all words, not vowels. The description mentions counting vowels, which is a completely different property of the input.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(sum(c.isupper() for c in w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of uppercase letters in the string,\" which is exactly what the code does \u2014 it sums up `c.isupper()` across all characters in all words, counting uppercase letters.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](char c){return std::isdigit(c);});}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(sum(c.isupper() for c in w) for w in words)",
+    "reasoning": "The Python code counts uppercase letters across all words, while the C++ completion counts digits (using `std::isdigit`). Both involve counting characters by a character property using a similar structural approach (iterating over characters with a predicate), but the specific property being checked is completely wrong \u2014 uppercase vs. digit are unrelated character properties.\n\nHowever, the structural similarity (counting characters matching a property) is a partial match. The question is whether \"counting characters by property\" is specific enough to count as relevant. The code counts uppercase characters; the completion counts digits. These are different character classification functions with no conceptual overlap beyond \"character classification.\"\n\nGiven that the specific property (uppercase vs digit) is completely different, and the task is about uppercase letters, I'll consider this NO \u2014 the completion identifies a character-counting operation but gets the wrong character property entirely, making it unrelated to what the code actually does.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  }
+ ]
+}

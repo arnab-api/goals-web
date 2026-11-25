@@ -1,0 +1,96 @@
+{
+ "id": "str_python_043",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of uppercase letters\n(2) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.islower() for c in s if c.isalpha())\n    return a, b\n</code>",
+ "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am checking if a number is even.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if a number is even, but the code is checking whether all alphabetic characters in a string are lowercase. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all characters in the string are alphabetic.",
+   "verdict": "NO",
+   "reasoning": "The code checks if all alphabetic characters in the string are lowercase (using `islower()`), not merely whether they are alphabetic. The description only captures the alphabetic filtering part (`c.isalpha()`) but misses the key operation being performed \u2014 checking for lowercase. However, it does correctly identify one relevant sub-step of the code (filtering to alphabetic characters).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am checking if the variable is a boolean and then if it is True or False.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable is a boolean and whether it's True or False, which is unrelated to what the code actually does. The code checks whether all alphabetic characters in string `s` are lowercase using `islower()`. The description misses the actual operation entirely \u2014 there's no boolean type-checking happening in this code.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the string are alphabetic (i.e., the string contains only letters and is not empty).",
+   "verdict": "NO",
+   "reasoning": "The code checks if all alphabetic characters in the string are lowercase (not just whether they are alphabetic). The description mentions checking if characters are alphabetic, which is partially relevant (the `c.isalpha()` filter), but misses the key operation: checking for lowercase. However, \"alphabetic\" is a sub-component of what the code does.\n\nThe description captures the `isalpha()` filtering aspect but completely misses the `islower()` check, which is the primary purpose of the code. Still, it does identify a genuine sub-step of the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](char c){ return std::isalpha(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion uses `std::all_of` to check all characters, and references `std::isalpha` which is one of the two conditions used in the Python code. However, it's checking if all characters ARE alpha (rather than using alpha as a filter to check if they're lowercase). Still, it captures the \"all characters\" + \"isalpha\" aspects, which are genuinely relevant sub-components of what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

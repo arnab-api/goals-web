@@ -1,0 +1,96 @@
+{
+ "id": "int_python_052",
+ "datatype": "int",
+ "frontier_id": "is_odd",
+ "condition": "whether the number is odd",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the sign of the number\n(2) the number of set bits in the binary representation\n(3) whether the number is odd\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0) - (n < 0)\n    b = bin(abs(n)).count(\"1"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n % 2 != 0\n    return a, b, c\n</code>",
+ "impl_span": "c = n % 2 != 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the number is even (True if even, False if odd).",
+   "verdict": "YES",
+   "reasoning": "The code checks `n % 2 != 0`, which is True when n is **odd**, not even. The description says it's checking if the number is even, which is the opposite logic. However, the description does correctly identify that the code is checking even/odd parity of a number, which is genuinely relevant to what the code does \u2014 just with the True/False assignment backwards.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto is_even (auto value){return value % 2;};\nauto is_odd (auto value){return value % 2;};\nauto is_positive (auto value){return value % 2;};\nauto is_negative (auto value){return value % 2;};\nauto is_multiple_of_three (auto value){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 != 0",
+    "reasoning": "The C++ completion defines `is_even` and `is_odd` functions using `value % 2`, which is directly relevant to checking whether a number is odd (the Python code checks `n % 2 != 0`). The core operation `% 2` appears multiple times and the concept of odd/even is explicitly named.\n\nHowever, the completion is dominated by a repeating pattern of short function definitions all returning `value % 2`, cycling through `is_even`, `is_odd`, `is_positive`, `is_negative`, etc. This is a short repeating cycle (roughly the same structure over and over). The question is whether this qualifies as HEAVY_LOOP.\n\nThe repeating unit is slightly longer than 5 tokens and the function names do vary, but the structure is essentially the same template repeated. Still, the relevant content (`% 2`, `is_odd`, `is_even`) is present and not just noise \u2014 the variation in names shows it's not a pure stuck loop. I'll consider this borderline but lean YES since the core concept (modulo 2, odd/even) is clearly surfaced.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the number is odd.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 checking if n is odd by verifying the remainder when divided by 2 is not zero.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 1; };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 != 0",
+    "reasoning": "The C++ completion checks if a value is odd by computing `value % 2 == 1`, which is directly relevant to the Python code that checks `n % 2 != 0` (also checking for odd numbers). The operation and concept are essentially identical.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if the number is even (True if even, False otherwise).",
+   "verdict": "YES",
+   "reasoning": "The code checks if `n % 2 != 0`, which is True when the number is **odd**, not even. However, the description mentions checking if the number is even, which is the complementary concept \u2014 it correctly identifies the core operation (checking parity/even-odd property using modulo 2), just with the True/False logic inverted.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 != 0",
+    "reasoning": "The C++ completion checks if a value is odd using `value % 2 != 0`, which is exactly what the Python code does with `n % 2 != 0`. This is a direct match in both operation and logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "A number is \"odd\" if it has a remainder of 1 when divided by 2. So, if a number % 2 == 1, it's odd. \n\nFor example, 5 % 2 == 1 \u2192 True (it's odd), 6 % 2 == 1 \u2192",
+   "verdict": "YES",
+   "reasoning": "The description is about checking if a number is odd by computing n % 2, which is exactly what the code does. The description correctly identifies the modulo 2 operation and the concept of oddness, even though it uses `== 1` instead of `!= 0` (functionally equivalent for positive integers, and the same concept).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 != 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 != 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is odd by computing `value % 2 != 0`. This is a direct match to the gold code's logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

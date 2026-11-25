@@ -1,0 +1,96 @@
+{
+ "id": "int_python_021",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is odd\n(2) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " True if n > 1 else False\n    if n == 2:\n        return a, b\n    if n % 2 == 0:\n        return a, False\n    for i in range(3, int(n ** 0.5) + 1, 2):\n        if n",
+ "impl_span": "b = True if n > 1 else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am checking if a condition is true (e.g., checking if a number is even before checking if it's odd), thus determining the order of operations for a simple task.",
+   "verdict": "NO_INFO",
+   "reasoning": "The code checks if `n > 1` and assigns a boolean result. The description mentions checking if a condition is true and determining a boolean value, which is partially relevant. However, the specific example given (\"checking if a number is even before checking if it's odd\") is unrelated to the actual condition being checked (`n > 1`). The description is coherent but the relevant content is very generic \u2014 it just says \"checking if a condition is true\" without identifying anything specific about the actual operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; } // check if odd  \nauto isOdd = func(42); // step 1: check oddness  \nauto result = (isOdd ? \"odd\" : \"not odd\"); // step 2: determine if odd  \nreturn result == \"odd\"; // returns",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = True if n > 1 else False",
+    "reasoning": "The Python code checks if `n > 1` (a simple threshold comparison), while the C++ completion is checking if a value is odd (divisible by 2). These are completely different operations \u2014 one checks a magnitude threshold, the other checks parity. The C++ output is coherent and specific but about an entirely unrelated property.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Checking if a number is prime.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n > 1`, which is a necessary condition for primality (primes must be greater than 1). While this single line doesn't fully implement a primality check, it's a relevant sub-step in determining whether a number is prime.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    // Check if value is prime\n    bool isPrime = true;\n    if (value <= 1) {\n        isPrime = false;\n        for (int n = 2; n <= sqrt(value); n++) {\n            if (n > 1) { // Now check for primality",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = True if n > 1 else False",
+    "reasoning": "The Python code checks if `n > 1` and sets a boolean accordingly. The C++ completion checks if `value <= 1` and sets `isPrime = false`, which is directly related to the `n > 1` check (it's the complement). While the C++ goes further to mention primality checking, the core operation of checking whether a value is greater than 1 is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if a number is prime.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n > 1`, which is a necessary condition for primality (primes must be greater than 1). While the code itself is just one step of a primality check, the description \"checking if a number is prime\" is genuinely relevant \u2014 this is a sub-step in determining primality.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return is_prime(value); }\n\nbool is_prime(int n){\n    bool result = false;\n    if(n < 2) return false;\n    for(int i = 2; i <= sqrt(static_cast<int>(is_prime_helper(n)))); ++i{\n        // check for primality\n        bool prime = false",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = True if n > 1 else False",
+    "reasoning": "The Python code simply checks if `n > 1` and returns True/False accordingly. The C++ completion is about primality testing (`is_prime`), which involves checking if `n < 2` (related to the `n > 1` check) and iterating through potential factors. While primality testing does involve checking `n > 1` as a base case, the C++ completion goes far beyond that into actual prime checking logic, which is not what the Python code does \u2014 the Python code only checks if `n > 1`, not if it's prime. However, the `n < 2` check is directly relevant to the `n > 1` condition in the Python code, making it partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if a number is prime by testing divisibility from 2 up to the square root of the number.",
+   "verdict": "NO",
+   "reasoning": "The code simply checks if `n > 1` and assigns a boolean, with no divisibility testing or square root computation. The description mentions primality testing via divisibility up to the square root, which is completely unrelated to what this single line does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if (value < 2) return true;  \n    for (int i = 2; i * i <= value; ++i) {  \n        bool isPrime = true;  \n        for (int j = 2; j <= value; ++j) {  \n            bool prime = true",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = True if n > 1 else False",
+    "reasoning": "The Python code checks if `n > 1` (i.e., whether n is greater than 1). The C++ completion implements a primality check, which does involve checking `value < 2` as a base case \u2014 this is directly related to the `n > 1` threshold in the Python code. However, the C++ goes much further into prime-checking logic (nested loops, isPrime flags) which is completely unrelated to the simple `n > 1` comparison. The `value < 2` check is genuinely relevant to the Python code's condition.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

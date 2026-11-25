@@ -1,0 +1,96 @@
+{
+ "id": "str_python_011",
+ "datatype": "str",
+ "frontier_id": "vowel_count",
+ "condition": "the number of vowels",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of alphabetic characters\n(2) the number of vowels\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isalpha"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for c in s.lower() if c in 'aeiou')\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for c in s.lower() if c in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines of code.",
+   "verdict": "NO",
+   "reasoning": "The description says \"counting the number of lines of code,\" but the code is actually counting the number of vowels in a string. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;int sum = 0;for (int i = 0; i < 2; ++i){count += value[i];sum += value[i];}return {count, sum};}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s.lower() if c in 'aeiou')",
+    "reasoning": "The Python code counts vowels in a string. The C++ completion iterates over elements and counts/sums them, but it's iterating over only 2 elements (hardcoded `i < 2`) and doesn't involve any vowel checking or character comparison. However, it does contain a counting operation (`count`) which is partially relevant to the concept of counting characters. The loop structure and counting variable are somewhat relevant, but there's no vowel detection or string-specific logic.\n\nThe completion shows a generic counting/summing loop without any vowel-specific logic, but the counting operation is at least partially aligned with what the code does (counting elements that satisfy a condition).\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting vowels in a string.",
+   "verdict": "YES",
+   "reasoning": "The description \"Counting vowels in a string\" directly matches what the code does \u2014 it iterates over the lowercased string and counts characters that are vowels ('aeiou').\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int vowels = 0;int consonants = 0;for (char c : \"aeiouAEIOUaeiou\".substr(0, value)){vowels += (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s.lower() if c in 'aeiou')",
+    "reasoning": "The C++ completion is counting vowels, which is exactly what the Python code does (counting vowels in a string). It initializes a `vowels` counter, iterates over characters, and checks if each character is a vowel ('a', 'e', 'i', 'o', 'u'), which directly corresponds to checking `c in 'aeiou'` in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of vowels in the following code:\n\n```python\ndef count_vowels(text):\n    vowels = 'aeiou'\n    count = 0\n    for char in text:\n        if char in vowels:\n            count += 1\n    return count\n\ndef count_consonants(text):",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions counting the number of vowels, which is exactly what the code does \u2014 it sums up characters in `s.lower()` that are in `'aeiou'` (vowels). The description is directly relevant despite being wrapped in chat scaffolding and containing a partial code example.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : {'a', 'e', 'i', 'o', 'u'}) {count += value.count([](int c) {return value.count(0);});}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s.lower() if c in 'aeiou')",
+    "reasoning": "The C++ completion is attempting to count vowels - it iterates over {'a', 'e', 'i', 'o', 'u'} and tries to count occurrences, which directly corresponds to counting vowels in the Python code. Despite the garbled/incorrect implementation details (the lambda and count usage is wrong), the core concept of iterating over vowels and counting them is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 it counts vowels in a string by iterating through the lowercased characters and checking membership in 'aeiou'.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count=0;for(char c:std::string(\"aeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUae",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s.lower() if c in 'aeiou')",
+    "reasoning": "The completion starts with a relevant approach \u2014 counting vowels by iterating and checking against \"aeiouAEIOU\" \u2014 but then the string \"aeiouAEIOUaeiouAEIOU...\" repeats many times in a loop pattern. The core repeating unit is \"aeiouAEIOU\" cycling over and over, making this a HEAVY_LOOP situation despite the relevant fragment at the start.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

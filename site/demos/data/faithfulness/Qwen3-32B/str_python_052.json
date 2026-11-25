@@ -1,0 +1,96 @@
+{
+ "id": "str_python_052",
+ "datatype": "str",
+ "frontier_id": "first_is_letter",
+ "condition": "whether the first character is a letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of space characters\n(2) whether the first character is a letter\n(3) whether the string is a palindrome\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.count('"
+  },
+  {
+   "text": " ')\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s[0].isalpha() if s else False\n    c = s == s[::-1]\n    return a, b, c\n</code>",
+ "impl_span": "b = s[0].isalpha() if s else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. The first character is checked if it is a letter using `isalpha()`, and stored in `is_letter`.\n2. The second character is checked if it is a letter using `isalpha()`, stored in `is_letter`.\n3. The third character is checked if it is a letter using `is",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if a character is a letter using `isalpha()`. The code checks the first character of `s`, and the description mentions checking the first character with `isalpha()`. The rest of the description (checking second, third characters) is noise/repetition that doesn't match the code, but the first part is accurate.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::isalpha(value);};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion implements `std::isalpha` on a value, which is directly relevant to the Python code's use of `.isalpha()` to check if the first character is alphabetic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "1. `is_first_char_alpha = len(s) > 0 and (isalpha if len(s) >= 1 else False)\n2. is_second_char_upper = len(s) > 1 and (s[1].isalpha() if len(s) >= 2 else False)\n3. is_third",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the first character is alpha (`is_first_char_alpha`) and checking the length of `s` before accessing characters, which is directly relevant to what the code does (`s[0].isalpha() if s else False`). The second and third points are extraneous, but the first point captures the core operation correctly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isalpha(value) ? std::make_pair(std::isalpha(value), std::ispunct(value), std::islower(value)) : std::make_pair(std::isalpha(value), std::ispunct(value), std::islower(value));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion uses `std::isalpha()` which is directly relevant to the Python code's use of `.isalpha()`. The code checks if the first character of a string is alphabetic, and the completion captures the core `isalpha` check, even though it adds irrelevant extras like `ispunct` and `islower`, and has a nonsensical ternary that returns the same thing in both branches.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if the first character is a letter and returning whether the second character is a letter and the type of the third character (True if the first is a letter, False otherwise, then checking if the second is a letter using isalpha(), then checking if the first character using isalpha() and whether the second character is",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the first character is a letter using `isalpha()`, which is exactly what the code does. Despite being garbled and repetitive (mentioning second and third characters which aren't in the code), it correctly identifies the core operation of checking if the first character is alphabetic using `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isalpha(static_cast<bool>(std::islower(value)) ? std::isalpha(value) : std::islower(value), std::isalpha(static_cast<bool>(std::islower(value)) ? true : false);  \n};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion contains `std::isalpha` which is directly relevant to what the Python code does (checking if a character is alphabetic). Despite the garbled and incorrect syntax with nested calls, the core operation `isalpha` is present and relevant. It's not a clean loop, just malformed/garbled code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "`str[0].isalpha()` checks if the first character is a letter. `str[0].isalpha()` returns `True` if the first character is a letter and `False` otherwise. In Python, `str[0].isalpha()` checks if the first character is a letter using `str",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it mentions `str[0].isalpha()`, checking if the first character is a letter, and returning True/False. This is directly relevant to the code which checks `s[0].isalpha()`. The description does repeat itself but is not a degenerate loop (the repeated units are longer than 5 tokens and carry coherent meaning).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isalpha(std::isalpha(value));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion uses `std::isalpha()`, which is directly relevant to what the Python code does \u2014 checking if a character is alphabetic. The nested call is incorrect syntactically/semantically, but the core operation (`isalpha`) is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

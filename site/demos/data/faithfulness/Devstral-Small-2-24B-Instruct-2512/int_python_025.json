@@ -1,0 +1,96 @@
+{
+ "id": "int_python_025",
+ "datatype": "int",
+ "frontier_id": "is_perfect_square",
+ "condition": "whether the number is a perfect square",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a multiple of three\n(2) whether the number is a perfect square\n(3) the last decimal digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n % 3 == 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (n ** 0.5).is_integer()\n    c = n % 10\n    return a, b, c\n</code>",
+ "impl_span": "b = (n ** 0.5).is_integer()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the condition is met.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"I'm checking if the condition is met,\" which is too generic to indicate any specific aspect of the code. It doesn't mention square roots, perfect squares, integer checking, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = (n ** 0.5).is_integer()",
+    "reasoning": "The Python code checks whether the square root of `n` is an integer (i.e., whether `n` is a perfect square). The C++ completion checks whether a value is even (divisible by 2), which is a completely unrelated property \u2014 divisibility by 2 has nothing to do with checking if a number is a perfect square.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Let me check if the number is a perfect square.",
+   "verdict": "YES",
+   "reasoning": "The description says \"check if the number is a perfect square,\" which is exactly what the code does by computing n ** 0.5 and checking if it's an integer.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value*value;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n ** 0.5).is_integer()",
+    "reasoning": "The Python code checks if the square root of n is an integer (i.e., whether n is a perfect square). The C++ completion computes `value * value`, which is the inverse operation (squaring a number) and is directly related to the concept of perfect squares. This is a relevant sub-operation to the task.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the number is a perfect square.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number is a perfect square,\" which is exactly what the code does \u2014 it computes the square root of `n` and checks if it's an integer, which is the definition of a perfect square.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value * value == is_prime(value) ? \"prime\" : \"not prime\";}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n ** 0.5).is_integer()",
+    "reasoning": "The Python code checks whether the square root of `n` is an integer (i.e., whether `n` is a perfect square). The C++ completion checks if a value is prime, which is completely unrelated to checking perfect squares. However, `value * value` appears in the completion, which is related to squaring \u2014 but the context is checking primality, not perfect squares. The `value * value` fragment is somewhat relevant to the square root check concept, but it's embedded in a primality check context that is unrelated.\n\nThe `value * value` part does touch on the squaring operation relevant to perfect square checking, but the overall completion is about primality testing, which is a completely different concept. This is a borderline case, but the `value * value` fragment does capture a sub-step of the perfect square check (squaring relates to square roots).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "`math.isqrt(n) == int(math.sqrt(n) % n == 0)` is a perfect square check.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is a perfect square, which is exactly what the code does (checking if n's square root is an integer). The specific implementation details differ (the description mentions math.isqrt and modulo operations while the code uses `** 0.5` and `.is_integer()`), but the core concept is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value == static_cast<int>(std::sqrt(value) * std::sqrt(value) == static_cast<int>(std::sqrt(value) % 2 == 0);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n ** 0.5).is_integer()",
+    "reasoning": "The C++ completion attempts to check if the square root of a value is a perfect square by computing `std::sqrt(value)` and comparing it to an integer cast, which is directly relevant to the Python code's `(n ** 0.5).is_integer()` check. However, the completion is syntactically garbled and mixed up with an extra modulo check. Despite the noise, the core concept of computing `sqrt(value)` and comparing to an integer is present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

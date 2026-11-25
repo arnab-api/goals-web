@@ -1,0 +1,96 @@
+{
+ "id": "int_python_035",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(digit) for digit in str(a))\n    return a, b\n\n# Example usage:\n# abs_val, sum_of_digits = func(-123)\n# print(abs_val, sum_of_digits)  # Output: 123 6\n</code>",
+ "impl_span": "b = sum(int(digit) for digit in str(a))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need the line of code to first evaluate the absolute value of a number and then sum its digits. Let's assume the number is 1234.\n\n1. Evaluate the absolute value: `abs(1234)` which gives `1234`.\n2. Sum the digits of the absolute",
+   "verdict": "YES",
+   "reasoning": "The description mentions summing the digits of a number, which is exactly what the code does. The mention of `abs()` is an extra step not in the code, but the core operation \u2014 summing digits \u2014 is correctly identified and even illustrated with an example (1234).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int absValue = std::abs(value);\n    int sum = 0;\n    while(value != 0){ \n        sum = sum + absValue; \n        value = absValue; \n        absValue = std::abs(value);\n        int result = sum;\n        sum = 0;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The Python code computes the sum of digits of a number. The C++ completion attempts to compute a sum using `std::abs` and a while loop, but the logic is wrong (it's not extracting individual digits via modulo). However, it does reference summing and uses `std::abs` on a value in a loop structure. The key relevant elements are present: summing something related to a number's digits (though the digit extraction via `% 10` is missing). Still, the concept of summing parts of a number is present, and it's not a heavy loop.\n\nWait, let me reconsider. The C++ code is accumulating `absValue` (the whole absolute value) into `sum` repeatedly, not extracting digits. It's not doing digit extraction at all. The while loop condition `value != 0` is relevant to digit sum algorithms, but the body doesn't do `% 10` or `/= 10`. The completion is coherent but the actual operation (summing digits) is not clearly represented \u2014 it seems to be summing the whole number repeatedly. However, the structure (while loop, sum variable, working with a number) is suggestive of a digit-sum algorithm even if incorrectly implemented.\n\nThe completion has relevant structural elements (sum variable, while loop over value, working with digits of a number conceptually) but the actual digit extraction is missing. I'll lean YES since the overall structure resembles a digit-sum computation pattern.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I need the code to analyze first. Please provide the number or the code snippet. If you want to know the sum of its digits, I will provide that too. Let's start by knowing the number or code snippet. \n\nFor example, if the number is 1234:\n- Sum of digits:",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"sum of digits\" which is exactly what the code computes \u2014 it converts a number to a string, iterates over each digit, converts each to an integer, and sums them. Despite the conversational/scaffolding noise, the core concept of \"sum of digits\" is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0; \n    while(value){ \n        sum += abs(value); \n        value = abs(value); \n        int tempSum = 0; \n        while(value){ \n            tempSum += abs(value); \n            sum += tempSum; \n            int digitSum = 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The C++ completion is attempting to compute a sum involving the digits of a number, which is directly relevant to what the Python code does (summing the digits of a number). While the implementation is garbled and incorrect (using `abs(value)` instead of extracting individual digits via modulo), the core concept of computing a sum from a value is present. It's not a heavy loop - it's a malformed but partially coherent attempt.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To answer your question, I need to first break down what you're asking for. You want to know the sum of the digits of a number and then the sum of those digits individually if they are digits of the same number. Let's take the number 1234 as an example.\n\n1. **Sum",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"sum of the digits of a number,\" which is exactly what the code computes \u2014 it converts a number to a string, iterates over each character, converts each to an integer, and sums them. This is directly relevant to the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0;\n    int digits = 0;\n    int temp = value;\n    while (temp > 0) {\n        sum += temp;\n        digits += temp;\n        temp = std::accumulate(std::to_string(sum).begin(), std::to_string(sum).end(), 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The Python code computes the sum of digits of a number `a`. The C++ completion attempts to sum digits using a while loop and `std::to_string`, which is relevant to digit extraction. However, the logic is garbled (adding `temp` directly instead of extracting digits, and using `std::accumulate` on the string representation in a confused way). Despite the incorrect implementation details, the core concepts of summing digits, using `to_string`, and iterating are all present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I need to know the specific line or the number you want to calculate the sum of its digits. Please provide the number.",
+   "verdict": "YES",
+   "reasoning": "The description asks for a number to calculate the sum of its digits, which is exactly what the code does \u2014 it computes the sum of digits of the variable `a`. Despite being phrased as a user prompt rather than a description of the code, it correctly identifies the core operation (sum of digits).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0;\n    int absValue = std::accumulate(std::to_string(std::abs(value)).begin(), std::to_string(std::abs(value)).end(), 0, [](int x){ return std::accumulate(std::abs(x).digits(), 0); });\n    return absValue",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The C++ completion is computing the sum of digits of a number, which is exactly what the Python code does (summing the integer value of each digit in the string representation of `a`). Despite the garbled/incorrect C++ syntax, the core idea of accumulating digit values from the string representation of a number is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

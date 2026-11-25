@@ -1,0 +1,96 @@
+{
+ "id": "str_python_018",
+ "datatype": "str",
+ "frontier_id": "starts_upper",
+ "condition": "whether the string starts with an uppercase letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of digit characters\n(2) whether the string starts with an uppercase letter\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isdigit"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s) > 0 and s[0].isupper()\n    return a, b\n</code>",
+ "impl_span": "b = len(s) > 0 and s[0].isupper()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Checking if a condition is met and storing the result.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is met and storing the result,\" which is extremely generic and could apply to virtually any line of code that evaluates a boolean expression. It doesn't mention anything specific about the string length check, the first character access, or the uppercase check.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? 1 : 0; }  \nauto is_first = value;  \nreturn is_first;  \nauto is_second = value ? 1 : 0;  \nreturn std::pair<bool, int>(is_second, is_second); // is_second is set before, so this is valid",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = len(s) > 0 and s[0].isupper()",
+    "reasoning": "The Python code checks if a string is non-empty and starts with an uppercase letter. The C++ completion deals with a ternary operator returning 1 or 0 based on a boolean value, and mentions \"is_first\" which loosely relates to checking the first element, but the overall content is too generic and doesn't capture the key operations (length check, uppercase check). However, \"is_first\" could be seen as a partial hint toward checking the first character.\n\nThe completion is somewhat coherent but doesn't clearly identify the uppercase check or the length check. The \"is_first\" variable name is suggestive but not specific enough to count as genuinely relevant content about what the code does.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Checking if the first character of the string is an uppercase letter (i.e., checking if the string starts with an alphabetic character and if it's uppercase).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if the string is non-empty and if the first character is an uppercase letter. The description correctly identifies both the \"first character\" aspect and the \"uppercase\" check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value && !std::isspace(static_cast<bool>(std::begin(value) && *std::begin(value) && std::isalpha(*std::begin(value)) && std::isdigit(std::begin(value))); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s) > 0 and s[0].isupper()",
+    "reasoning": "The C++ completion is checking properties of the first character of a sequence (using `std::begin(value)` to get the first element), which relates to checking the first character of a string. It checks `std::isalpha` on the first character, which is partially relevant to checking if the first character is uppercase (both involve character classification). However, it also checks `std::isdigit` and `std::isspace`, which are unrelated. The key relevant fragment is accessing the first character (`*std::begin(value)`) and checking alphabetic properties, which partially aligns with `s[0].isupper()`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if a condition is true, then checking if a value is a boolean.",
+   "verdict": "NO",
+   "reasoning": "The description mentions \"checking if a condition is true\" which is vaguely relevant, but the second part about \"checking if a value is a boolean\" is completely unrelated to what the code does (checking if string is non-empty and starts with an uppercase letter). The description doesn't identify any of the actual operations: length check, uppercase check, or string indexing.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? true : false; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(s) > 0 and s[0].isupper()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the first character of the string is an uppercase letter (i.e., if the string starts with an uppercase alphabetic character).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if the string is non-empty and if the first character is uppercase. This is a precise and relevant description.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isupper(static_cast<bool>(std::string(value).front() && std::isupper(std::string(value).front() && std::isalpha(std::string(value).front()) && std::isupper(std::string(value).front() && std::isalpha(*std::begin(value) &&",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s) > 0 and s[0].isupper()",
+    "reasoning": "The C++ completion checks `std::isupper` on the first character (`front()`) of a string value, which directly corresponds to the Python code checking `s[0].isupper()`. It also implicitly handles non-empty strings by accessing `.front()`. Despite being syntactically malformed and repetitive, the core operation (checking if the first character is uppercase) is clearly present.\n\nHowever, the completion does have a repeating pattern with `std::isupper(std::string(value).front() && ...` cycling, but it's not a tight short loop \u2014 it has meaningful content about checking the first character with `isupper`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_028",
+ "datatype": "int",
+ "frontier_id": "is_perfect_square",
+ "condition": "whether the number is a perfect square",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is negative\n(2) whether the number is even\n(3) whether the number is odd\n(4) whether the number is a perfect square\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n < 0\n    b = (n % 2 == 0)\n    c = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (n ** 0.5).is_integer()\n    return a, b, c, d\n</code>",
+ "impl_span": "d = (n ** 0.5).is_integer()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I check if the number is a perfect square, then I check if it's divisible by 4, then I check if it's divisible by 10, and finally I check if it's a perfect cube.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is a perfect square, which is exactly what the code does (checking if the square root is an integer). The additional checks (divisible by 4, by 10, perfect cube) are not present in the code, but the first part is directly relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::sqrt(value) + std::sqrt(value) + std::sqrt(value) + std::sqrt(value);};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = (n ** 0.5).is_integer()",
+    "reasoning": "The C++ completion repeatedly calls `std::sqrt(value)`, which is directly relevant to the Python code that checks if the square root of `n` is an integer. However, the completion is dominated by a short repeating pattern (`+ std::sqrt(value)`) that loops multiple times, leaving no coherent additional content beyond the repeated sqrt calls.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I check if it's a perfect square.",
+   "verdict": "YES",
+   "reasoning": "The description \"I check if it's a perfect square\" is directly relevant to what the code does \u2014 it computes the square root of `n` and checks if it's an integer, which is exactly how you test for a perfect square.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::sqrt(value) == std::floor(std::sqrt(value)) ? std::sqrt(value) : std::pow(value, 0.5) * std::abs(value % static_cast<int>(std::pow(std::floor(std::sqrt(value)), 2));\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = (n ** 0.5).is_integer()",
+    "reasoning": "The C++ completion checks whether the square root of a value is an integer by comparing `std::sqrt(value) == std::floor(std::sqrt(value))`, which is directly equivalent to what the Python code does with `(n ** 0.5).is_integer()`. The rest of the expression is garbled/noisy but the core operation is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To determine if a number is a perfect square, I check if it's the square of an integer by seeing if its square root is an integer.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a number is a perfect square by verifying its square root is an integer, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::sqrt(value) * std::pow(value, 0.5) == std::floor(sqrt(value));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = (n ** 0.5).is_integer()",
+    "reasoning": "The C++ completion computes `std::sqrt(value)` and compares it to `std::floor(sqrt(value))`, which is checking whether the square root is an integer (i.e., whether the value is a perfect square). This is exactly what the Python code does with `(n ** 0.5).is_integer()`. The extra `* std::pow(value, 0.5)` is noise/wrong, but the core idea of checking if the square root is an integer is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is a perfect square, we can check if the square root of the number is an integer. We can do this by taking the square root of the number and then checking if the square of the integer square root of the number is equal to the number.\n\nFor example, 16 is a",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if a number is a perfect square by examining whether its square root is an integer. This is exactly what the code does: computing `n ** 0.5` (the square root) and calling `.is_integer()` on it. The description is coherent and directly relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 ? std::sqrt(value) == std::floor(std::sqrt(value)) : false; };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = (n ** 0.5).is_integer()",
+    "reasoning": "The C++ completion checks whether the square root of a value is a perfect square by comparing `std::sqrt(value)` to `std::floor(std::sqrt(value))`, which is directly equivalent to checking if the square root is an integer (what `is_integer()` does in Python). This is highly relevant to the gold code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

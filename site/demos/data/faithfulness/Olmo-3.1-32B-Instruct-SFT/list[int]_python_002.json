@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_002",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of distinct values\n(2) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(x % 2 == 0 for x in nums)\n    return a, b\n</code>",
+ "impl_span": "b = any(x % 2 == 0 for x in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am checking if a number is even or odd.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is even or odd, which is directly relevant to what the code does \u2014 it checks if any number in `nums` is even using `x % 2 == 0`. The description correctly identifies the even/odd check, even if it doesn't mention the `any()` aspect.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the list is empty and if any element is even.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if any element is even, which is directly relevant to what the code does (`x % 2 == 0` checks for even numbers, and `any()` checks if any element satisfies this). The \"checking if the list is empty\" part is wrong but doesn't negate the correct identification of the core operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of (std::begin (value), std::end (value), [](auto v){ return v; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements `std::any_of` over a collection, which directly corresponds to the `any(...)` operation in the Python code. While the lambda predicate `return v;` is incomplete (missing the `% 2 == 0` check for even numbers), the core structure of checking if any element satisfies a condition is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if a number is even, and if it is, I am also checking if a given boolean is true.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is even, which is directly relevant to the `x % 2 == 0` operation in the code. The second part about checking a boolean is somewhat off (the code uses `any()` to check if any element satisfies the condition, not checking a separate boolean), but the core operation of checking for even numbers is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if any number in the list is even, which is exactly what the code does using `any()` with a generator that checks `x % 2 == 0` for each element.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto x){ return x % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: using `any_of` (equivalent to Python's `any`) to check if any element `x` in the collection satisfies `x % 2 == 0` (even number check). This is a near-perfect translation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

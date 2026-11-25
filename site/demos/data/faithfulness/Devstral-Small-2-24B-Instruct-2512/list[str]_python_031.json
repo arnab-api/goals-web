@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_031",
+ "datatype": "list[str]",
+ "frontier_id": "count_all_lowercase",
+ "condition": "the number of words written entirely in lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of capitalized words\n(2) the total number of characters across all words\n(3) the number of words written entirely in lowercase letters\n(4) the number of words that contain a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w[:1].isupper())\n    b = sum(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.islower())\n    d = sum(1 for w in words if any(ch.isdigit() for ch in w))\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for w in words if w.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the characters in the input.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"counting the characters in the input,\" but the code is counting the number of words (not characters) that are all lowercase. While \"counting\" is partially relevant, the description identifies the wrong unit (characters vs. words) and misses the lowercase condition entirely, making it too imprecise to be genuinely relevant.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "`sum(1 for s in words if s.islower())` \u2192 counts lowercase words\n`sum(1 for s in words if s.isalpha())` \u2192 counts lowercase words\n`sum(1 for s in words if s.isdigit())` \u2192 counts lowercase words\n`sum(1 for s in",
+   "verdict": "YES",
+   "reasoning": "The description starts with a correct and relevant statement: it accurately describes counting lowercase words using `sum(1 for s in words if s.islower())`, which matches the code exactly. The subsequent lines introduce wrong variants but the first entry is clearly correct and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return islower(value) && isalpha(value);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion uses `islower()` which is directly relevant to checking if characters/words are lowercase, matching the Python code's use of `w.islower()`. The completion also counts/filters based on this condition, which aligns with the `sum(1 for w in words if w.islower())` pattern.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "`sum(1 for x in data if x.isalpha() and x.islower() and x.isdigit() and x.isupper() and x.isascii() and x.isnumeric() and x.isascii() and x.islower() and x.isupper() and x.isdigit() and x.isas",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with a relevant pattern \u2014 `sum(1 for x in data if x.islower())` \u2014 which correctly identifies the core operation: counting elements that satisfy `islower()`. However, it then devolves into a repeating loop of chained conditions (`isalpha`, `islower`, `isdigit`, `isupper`, `isascii`, `isnumeric`, repeating). The loop unit is roughly 5-6 tokens cycling through these method names repeatedly.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating cycle is a sequence of `.isXXX()` method names that keeps cycling, dominating the description. However, the description does open with a coherent and correct fragment before the loop begins. The loop itself contains `islower` which is relevant, but the loop is clearly degenerate.\n\nGiven that the opening fragment is genuinely relevant and coherent (sum of elements satisfying islower), and the loop portion, while dominating, still contains the relevant `islower` token, I need to decide: is this HEAVY_LOOP or YES? The HEAVY_LOOP criterion says \"dominated by a short repeating cycle... once you collapse the repetition, little or no coherent description is left.\" Here, collapsing the repetition leaves the opening `sum(1 for x in data if x.isalpha() and x.islower())` which IS coherent and relevant. So this is borderline \u2014 but the opening is meaningful enough to qualify as YES rather than HEAVY_LOOP.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value, [](auto v){ return v == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The Python code counts words that are entirely lowercase. The C++ completion uses `std::count_if` which is a counting operation, but it checks if elements equal 0 rather than checking for lowercase. However, the core operation \u2014 counting elements that satisfy a condition \u2014 is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of lines where the word count is equal to the number of lines where all characters are lowercase.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that are entirely lowercase using `islower()`. The description mentions counting things where \"all characters are lowercase,\" which is genuinely relevant to what the code does (the `islower()` check). The description gets confused about \"lines\" and \"word count equality,\" but the core concept of checking for all-lowercase characters is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](const auto& s){return std::all_of(s.begin(), s.end(), [](const auto& s){return std::count_if(s.begin(), s.end(), [](const auto& s){return std::count_if(s.begin(), s.end",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion is attempting to count elements in a collection that satisfy a condition related to character properties (using `std::all_of` with character-level checks), which is relevant to checking if words are all lowercase. However, the completion devolves into a nested repeating pattern of `std::count_if(s.begin(), s.end(), ...)` that loops without terminating coherently.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is `std::count_if(s.begin(), s.end(),` which repeats multiple times in a nested fashion. While the outer structure has some coherent content (`std::count_if` over a collection, `std::all_of` checking character properties), the tail collapses into a stuck loop of the same pattern.\n\nThe outer structure does contain genuinely relevant content (counting words where all characters satisfy a condition), but the completion is dominated by the repeating `count_if(s.begin(), s.end()` pattern at the end.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

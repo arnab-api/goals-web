@@ -1,0 +1,96 @@
+{
+ "id": "str_python_023",
+ "datatype": "str",
+ "frontier_id": "count_letters",
+ "condition": "the number of alphabetic characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a digit\n(2) the number of space characters\n(3) whether the string contains a space\n(4) the number of alphabetic characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = any(c.isdigit() for c in s)\n    b = s.count(' ')\n    c = ' ' in s"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for c in s if c.isalpha())\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for c in s if c.isalpha())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll count the letters in the word.",
+   "verdict": "YES",
+   "reasoning": "The description says \"count the letters in the word,\" which is exactly what the code does \u2014 it counts alphabetic characters in string `s` using `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for c in s if c.isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I count letters, then count words, then count the letters in the string, then count the letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting letters in a string, which is exactly what the code does (counting alphabetic characters). The repetition is slightly odd but not a degenerate loop, and the core relevant operation (counting letters) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto result = 0;  \n    for (auto i = 0; auto ch : value) {  \n        if (isalpha(ch)) {  \n            result += isalpha(value) ? 1 : 0;  \n            result += isalpha(value) ? 1 : 0;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for c in s if c.isalpha())",
+    "reasoning": "The C++ completion is counting alphabetic characters using `isalpha()`, which is exactly what the Python code does with `c.isalpha()`. It iterates over characters and increments a result counter for alphabetic characters. Despite the buggy double-increment and wrong argument to the second `isalpha` call, the core logic (iterating, checking `isalpha`, counting) is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of characters in the string,\" which is partially relevant \u2014 the code is indeed counting characters, but specifically only alphabetic characters (using `isalpha()`). The description captures the counting aspect but misses the filtering to only alphabetic characters. However, counting characters is a genuine sub-step of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return static_cast<int>(std::isalpha(value));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for c in s if c.isalpha())",
+    "reasoning": "The C++ completion implements a function that checks if a character is alphabetic using `std::isalpha`, which is exactly the core operation in the Python code. The Python code counts alphabetic characters using `c.isalpha()`, and the C++ completion captures this same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count letters, we can use the `isalpha()` method, which returns `True` for alphabetic characters. Using `isalpha()`, we can check each character in the string and count how many are alphabetic. Here's how we can do it:\n\n```python\ncount = sum(1 for c",
+   "verdict": "YES",
+   "reasoning": "The description directly describes counting alphabetic characters using `isalpha()`, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(value.begin(), value.end(), ::isalpha);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for c in s if c.isalpha())",
+    "reasoning": "The C++ completion uses `std::count_if` with `::isalpha` to count alphabetic characters in a string, which is exactly what the Python code does with `sum(1 for c in s if c.isalpha())`. This is a direct and accurate translation of the same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_028",
+ "datatype": "list[str]",
+ "frontier_id": "count_all_lowercase",
+ "condition": "the number of words written entirely in lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) whether all words have distinct lengths\n(3) the number of words shorter than three characters\n(4) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5)\n    b = len(set(len(w) for w in words)) == len(words)\n    c = sum(1 for w in words if len(w) < 3"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.islower())\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for w in words if w.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need to analyze the code to determine if a string contains lowercase letters, uppercase letters, digits, or special characters. Let me break this down:\n\n1. Check if a string contains only lowercase letters\n2. Check if a string contains only lowercase letters\n3. Check if a string contains only lowercase letters\n4",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for lowercase letters, which is directly relevant to what the code does \u2014 it counts words that are entirely lowercase using `islower()`. The description correctly identifies the lowercase-checking aspect, even though it frames it as checking a string rather than counting words. The repetition in the list is notable but the core concept (lowercase letters / `islower`) is genuinely relevant and not a degenerate short-token loop.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    for (auto& item : items) {\n        if (item == value) {\n            count++;\n        }\n    }\n    return count;\n}\n\nauto func (auto value){ \n    int count = 0;\n    for (auto& item : items) {\n        if",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion shows counting items that match a condition (incrementing a counter in a loop), which is structurally similar to the Python code that counts words matching a condition (`islower()`). However, the specific condition being checked (`item == value`) is an equality check rather than checking if a word is lowercase. The core operation of counting elements satisfying a condition is present, though the specific predicate is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I need to analyze a piece of code to determine if a string contains all lowercase letters, all uppercase letters, all digits, and all lowercase letters again. I'll need to check each condition and return the appropriate result.\n\nLet me break down the requirements:\n\n1. Check if the string contains all lowercase letters\n2.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a string contains all lowercase letters, which is directly relevant to what the code does \u2014 it counts words where `w.islower()` is True. The description is noisy and partially wrong (it mentions uppercase, digits, etc.), but the core concept of checking for lowercase letters is present and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0;\n    int lower = 0;\n    int upper = 0;\n    int lower = 0;\n    int upper = 0;\n    int lower = 0;\n    int upper = 0;\n    int lower = 0;\n    int upper = 0;",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The completion starts with relevant content (counting lowercase with `lower` variable, tracking `count`), but then immediately falls into a heavy repeating loop of `int lower = 0; int upper = 0;` cycling over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I need to determine if a string consists of lowercase letters and is entirely lowercase. The string is considered lowercase if all its characters are lowercase. A character is lowercase if it is a letter and all its characters are lowercase. \n\nTo check if a string is entirely lowercase, I need to count how many characters in the string",
+   "verdict": "YES",
+   "reasoning": "The description discusses checking if strings are lowercase using `islower()`, which is exactly what the code does. The code counts words where `w.islower()` is true, and the description talks about determining if strings consist of lowercase letters. The description correctly identifies the core operation (checking for lowercase) even though it focuses on characters rather than words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (std::islower(value)) return true;\n    if (std::islower(value)) return true;\n    if (std::islower(value)) return true;\n}</think>\n<think>The user wants me to implement a function that checks if a string consists of all lowercase letters. The function should return",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion repeatedly calls `std::islower(value)`, which is directly relevant to the Python code's use of `w.islower()` to check for lowercase words. However, the completion is dominated by a short repeating cycle of `if (std::islower(value)) return true;` repeated three or more times, with no other coherent content beyond this loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if a string is all lowercase.</think>I'm checking if a string is all lowercase.</think>I'm checking if a string is all lowercase.</think>I'm checking if a string is all lowercase.</think>I'm checking if a string is all lowercase.</think>I'm checking if a string is all lowercase",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a string is all lowercase, which is relevant \u2014 the code uses `w.islower()` to check each word for being all lowercase, then counts them. The description correctly identifies the `islower()` operation. However, it repeats the same sentence many times. The repeating unit is longer than ~5 words and the content is coherent and relevant, so this doesn't qualify as HEAVY_LOOP.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    auto result = 0;\n    for (auto& c : value) {\n        if (c == tolower(c)) {\n            result++;\n        }\n    }\n    return result;\n}</think>\nI need to count the number of strings that are all lowercase. The problem states that the string is all lowercase",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The Python code counts words where the entire word is lowercase (`w.islower()`). The C++ completion counts characters that are lowercase within a single value, which is a related but slightly different operation (character-level vs word-level). However, the core concept of checking for lowercase using `tolower` and counting is genuinely relevant to the task of counting lowercase items.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

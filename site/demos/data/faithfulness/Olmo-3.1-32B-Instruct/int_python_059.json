@@ -1,0 +1,96 @@
+{
+ "id": "int_python_059",
+ "datatype": "int",
+ "frontier_id": "absolute_value",
+ "condition": "the absolute value",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number has exactly two digits\n(2) the absolute value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (10 <= abs(n) <= 99"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " abs(n)\n    return a, b\n</code>",
+ "impl_span": "b = abs(n)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Checking if a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"Checking if a condition is true,\" which is too generic to indicate any specific aspect of the code. The code is computing the absolute value of `n` and assigning it to `b`, which is not a condition check at all. The description doesn't mention absolute value, magnitude, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value > 0) && (value == (value & 1)); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The Python code computes the absolute value of `n`. The C++ completion checks if a value is positive AND odd (using bitwise AND with 1). This is completely unrelated to computing an absolute value \u2014 it's checking oddness/positivity, not taking an absolute value.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "1. Getting the absolute value of the input number.\n2. Returning both the absolute value and the original number (after converting to absolute if needed).",
+   "verdict": "YES",
+   "reasoning": "The description mentions getting the absolute value of the input number, which is exactly what `b = abs(n)` does. The second point is slightly off (the code only assigns, doesn't return), but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int abs_val = std::abs(value);  \n    return abs_val;  \n}  \n\nauto get_abs_value (int x){  \n    int abs_x = std::abs(x);  \n    int abs_result = x < 0 ? std::abs(x) : x; // Step 1: Compute",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion clearly implements `std::abs()` to compute the absolute value of an input, which is exactly what the Python code does with `abs(n)`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm evaluating the current value or state.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is too generic \u2014 \"evaluating the current value or state\" doesn't indicate anything specific about computing an absolute value, working with a variable `n`, or any related operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = abs(n)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Returning the absolute value of the input number.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes taking the absolute value of the input number `n`, which is exactly what `abs(n)` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::abs(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `std::abs(value)`, which is directly relevant to the Python code that computes `abs(n)` \u2014 both compute the absolute value of an input.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

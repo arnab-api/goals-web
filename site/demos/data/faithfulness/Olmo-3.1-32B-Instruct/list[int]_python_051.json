@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_051",
+ "datatype": "list[int]",
+ "frontier_id": "is_sorted",
+ "condition": "whether the values are sorted in non-decreasing order",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of distinct values\n(2) whether the values are sorted in non-decreasing order\n(3) the number of negative values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 1 else True\n    c = sum(1 for x in nums if x < 0)\n    return a, b, c\n</code>",
+ "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 1 else True",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I cannot execute code or check conditions in this context. However, here\u2019s how you can determine if a line checks for \"are we done with this check?\" (i.e., is the function complete for uniqueness/order):\n\n1. **Check if all elements are processed for uniqueness:**  \n   - Set a boolean after iterating",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if \"all elements are processed\" and references order/uniqueness checking with a boolean result. The code is checking if a list is non-decreasing (sorted in ascending order) by comparing consecutive elements. The description partially captures the idea of checking order across all elements with a boolean result, even though it's vague and wrapped in chat scaffolding.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool is_sorted = true;  \n    for(int i = 0; i < value.size(); ++i){  \n        if(i == 0){  \n            bool sorted = true;  \n            for(auto& v : value){  \n                bool is_sorted_flag = true;  \n                for(size_t j",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 1 else True",
+    "reasoning": "The C++ completion is checking whether a collection is sorted, which is exactly what the Python code does (checking if `nums[i] <= nums[i+1]` for all consecutive pairs). The completion uses a boolean `is_sorted` flag and iterates through the collection, which matches the core logic of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the list is sorted in ascending order.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks whether all consecutive elements satisfy `nums[i] <= nums[i+1]`, which is exactly checking if the list is sorted in non-decreasing (ascending) order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool is_sorted = true;  \n    bool sorted = true;  \n    for(int i = 1; i < std::size(value); ++i){  \n        if(value[i] < value[i-1]) sorted = false;  \n    }  \n    return std::is_sorted(value) && sorted",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 1 else True",
+    "reasoning": "The C++ completion checks whether an array is sorted by iterating through elements and comparing adjacent values, which is exactly what the Python code does (checking if each element is <= the next). The completion even uses `std::is_sorted` and a manual loop checking `value[i] < value[i-1]`, both directly relevant to the sorting check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a value is true or false (to see if something is sorted or not), then checking if a list is sorted.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a list is sorted, which is exactly what the code does \u2014 it checks whether all consecutive elements satisfy `nums[i] <= nums[i+1]`, i.e., whether the list is in non-decreasing (sorted) order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_sorted(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 1 else True",
+    "reasoning": "The C++ completion implements `std::is_sorted`, which checks if a collection is sorted in non-decreasing order \u2014 exactly what the Python code does by checking that each element is \u2264 the next. This is directly relevant to the code's purpose.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check if a list is sorted in ascending order in Python:  \n`all(x <= y for x, y in zip(lst, lst[1:]) if list == sorted(lst)`  \n\nBut to check if sorted:  \n`all(lst[i] <= lst[i+1] for i in range(len(lst)-1",
+   "verdict": "YES",
+   "reasoning": "The description is about checking if a list is sorted in ascending order, which is exactly what the code does. It even shows the same pattern of comparing adjacent elements `lst[i] <= lst[i+1]` for `i in range(len(lst)-1)`, which matches the code almost exactly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool is_sorted = true;  \n    for(int i = 0; i < size(value) - 1; i++){  \n        if(i + 1 < size(value) && std::is_sorted(value, value + size(value) - 1) == true){  \n            for(int i =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1)) if len(nums) > 1 else True",
+    "reasoning": "The C++ completion is checking whether a sequence is sorted, which is exactly what the Python code does (checking if `nums[i] <= nums[i+1]` for all consecutive pairs). The completion explicitly uses `std::is_sorted` and iterates through the elements, directly corresponding to the Python code's logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

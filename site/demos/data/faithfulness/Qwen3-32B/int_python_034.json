@@ -1,0 +1,96 @@
+{
+ "id": "int_python_034",
+ "datatype": "int",
+ "frontier_id": "is_power_of_two",
+ "condition": "whether the number is a power of two",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is positive\n(2) whether the number is a power of two\n(3) the last decimal digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (n > 0) and (n & (n - 1)) == 0\n    c = abs(n) % 10\n    return a, b, c\n</code>",
+ "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check if the number is even, then check if it's a multiple of 3, and finally check if it's a multiple of 5.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n` is a positive power of 2 using the classic bit-trick `n & (n-1) == 0`. The description talks about checking if a number is even, a multiple of 3, and a multiple of 5 \u2014 none of which are what the code does. The description is coherent but completely unrelated to the actual operation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value){return value;};\nauto func3 (auto value){return value;};\nauto func4 (auto value){return value;};\nauto func5 (auto value){return value;};\nauto func6 (auto value){return value;};\nauto func7 (auto value){return value;};\nauto",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The completion is a series of identity function stubs that simply return their input unchanged. This has no relevance to checking if a number is a power of two (using bitwise AND with n-1). The content is repetitive identity functions with no conceptual connection to the code's operation.\n\nHowever, I need to check if this is a HEAVY_LOOP. The pattern \"auto func (auto value){return value;};\" repeats with incrementing numbers, which is a short repeating cycle dominated by the same structure. Once collapsed, there's no coherent content related to the code.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "A number is a power of two if it is greater than zero and (n & (n - 1)) == 0.",
+   "verdict": "YES",
+   "reasoning": "The description perfectly describes what the code does \u2014 checking if n is a power of two by verifying n > 0 and that n & (n-1) == 0.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value > 0 && (value & (value - 1) ) == 0 && (value & (value >> 1) ) == value;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion implements exactly the same check as the Python code: `value > 0 && (value & (value - 1)) == 0`, which is the standard power-of-two test. There's an extra condition appended (`(value & (value >> 1)) == value`) that is incorrect/redundant, but the core logic matches perfectly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\n# Check if the number is a power of two (including zero)\nis_power_of_two = (n > 0) and (n & (n - 1) == 0)\n```\n\n```python\n# Check if the number is a power of two\nis_power_of_two = (",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code checks if a number is a power of two, and even reproduces the exact implementation using the bitwise AND trick `(n & (n - 1) == 0)` with the `n > 0` guard.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return (value != 0) ? (1 << (value & 1) : 0) ? (value & (1 << (value & 32)) ? (value & (1 << (value & 64)) ? 0 : (value & (1 << (value & 1",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a positive power of 2 using the classic `n & (n-1) == 0` trick. The C++ completion attempts to check if a value is a power of 2 using bit manipulation with `1 <<` and `value & ...` operations, and checks `value != 0`. While the implementation is garbled and syntactically broken, it contains genuinely relevant concepts: checking non-zero value and using bitwise AND operations related to powers of 2.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "A number is a power of two if it is greater than zero and (x & (x & (x != 0 and (x & (x & (x != 0 and (x & (x & (x != 0 and (x & (x & (x == 0 and (x",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with a genuinely relevant statement: \"A number is a power of two if it is greater than zero and (x & (x...\" which correctly identifies the power-of-two check using bitwise AND, matching exactly what the code does. However, it then devolves into a repeating loop of \"(x & (x & (x != 0 and...\" before collapsing. The initial fragment is relevant, but the description is dominated by a short repeating cycle of roughly \"(x & (x & (x != 0 and\" repeating over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && (value & (value & (value != 0 && (value & (value & (value != 0 && (value & (value != 0 && (value & (value & (value != 0 && (value & (value & (value != 0 && (",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The completion starts with the correct check `value > 0 && (value & (value & ...` which is clearly attempting to implement the power-of-two check (n > 0) && (n & (n-1)) == 0. However, it quickly degenerates into a repeating loop of `(value & (value != 0 && (value & (value & ...` that cycles endlessly.\n\nThis is a HEAVY_LOOP \u2014 a short repeating unit dominates the completion, and once collapsed, little coherent content remains beyond the initial fragment.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

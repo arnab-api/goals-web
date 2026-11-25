@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_057",
+ "datatype": "list[str]",
+ "frontier_id": "count_ends_consonant",
+ "condition": "the number of words that end with a consonant",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) whether any word is a palindrome\n(3) the number of words that end with a consonant\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = any(w == w[::-1] for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the condition is met.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if the condition is met,\" which is too generic to indicate any specific aspect of the code. It doesn't mention counting words, checking last characters, vowels, or any relevant detail.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a word ends with a consonant, we can check the last letter of the word and see if it is a vowel. Here's a concise approach:\n\n```python\ndef ends_with_consonant(word):\n    vowels = 'bcdfghjklmnpqrstvwxyz'\n    return word",
+   "verdict": "YES",
+   "reasoning": "The description is about checking if a word ends with a consonant by examining its last letter and comparing against vowels/consonants. The code does exactly this - it counts words where the last character is NOT in \"aeiou\" (i.e., ends with a consonant). The description correctly identifies the core operation: checking the last letter of a word against vowels to determine if it's a consonant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Here's the count of lines where the condition is true:\n```python\ncount = sum(1 for _ in range(len([x for x in range(len([y for y in range(len([z for z in range(len([w for w in range(len([k for k in range(len([m for m",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with a somewhat relevant phrase (\"count of lines where the condition is true\") but then devolves into a deeply nested, heavily looping structure of `range(len([... for ... in range(len([...` that repeats endlessly. The looping pattern dominates the description and no coherent content about checking vowels or word endings remains.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{},[](int x){return std::count_if(std::vector<int>{},[](int y){return std::count_if(std::vector<int>{},[](int z){return std::count_if(std::vector<int>{},[](int w){",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The completion shows a deeply nested `std::count_if` structure that loops repeatedly with the same pattern. The core unit `std::count_if(std::vector<int>{},[](int ...)` repeats over and over with no coherent content beyond the repetition. This is a HEAVY_LOOP pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the number of strings in the list that end with a vowel, we iterate through the list and use a generator expression to count how many strings have a length greater than the count of strings ending with a vowel.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that end with a **consonant** (not a vowel), but the description says it counts words ending with a vowel \u2014 that's the opposite. However, the description does correctly identify the general operation: counting strings in a list based on whether they end with a vowel (the concept of vowels at the end of words is central to both). The description gets the vowel/consonant relationship backwards and adds irrelevant noise about \"length greater than count,\" but the core subject matter (counting words based on their ending character relative to vowels) is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{0},[](int n){return std::count_if(std::vector<int>{0},[](int n){return std::count_if(std::vector<int>{0},[](int n){return std::count_if(std::vector<int>{0},[",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The completion shows `std::count_if` repeated in a nested loop pattern. While `count_if` is conceptually related to counting elements that satisfy a condition (which the Python code does), the completion is dominated by a short repeating cycle of `std::count_if(std::vector<int>{0},[](int n){return` that loops over and over with no coherent content beyond the loop itself.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

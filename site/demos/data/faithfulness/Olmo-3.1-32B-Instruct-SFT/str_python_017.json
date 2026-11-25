@@ -1,0 +1,96 @@
+{
+ "id": "str_python_017",
+ "datatype": "str",
+ "frontier_id": "starts_upper",
+ "condition": "whether the string starts with an uppercase letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of digit characters\n(2) whether the string contains a space\n(3) whether the string starts with an uppercase letter\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isdigit())\n    b = ' ' in s"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s and s[0].isupper()\n    return a, b, c\n</code>",
+ "impl_span": "c = s and s[0].isupper()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a condition is true or false.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is too generic \u2014 it just says \"checking if a condition is true or false,\" which applies to virtually any boolean expression and doesn't identify any specific aspect of what the code does (checking if a string is non-empty and starts with an uppercase letter).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = s and s[0].isupper()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the first character of the string is uppercase, if the string starts with a digit, and if the string is a palindrome.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the first character of the string is uppercase, which is directly relevant to what the code does (`s[0].isupper()`). The other parts (digit check, palindrome) are wrong/irrelevant, but the first part is correct and substantive.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? value : value[0] == 'A' && value[0] == value.front() && value[0] == value[0]; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s and s[0].isupper()",
+    "reasoning": "The C++ completion checks if the first character of a string exists (non-empty check) and examines `value[0]`, which is directly relevant to checking the first character of the string. While the specific check (`== 'A'`) is wrong (should be checking if it's uppercase), and the redundant conditions are noise, the core idea of checking the first character after verifying the string is non-empty matches the Python code's logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am checking if the first character of the string is a letter.",
+   "verdict": "YES",
+   "reasoning": "The description says it's checking if the first character of the string is a letter, while the code checks if the first character is uppercase. Both involve examining the first character of the string, and \"isupper\" is a related but more specific property than \"is a letter.\" This is partially relevant \u2014 the first character check is correct, though \"is a letter\" vs \"is uppercase\" is an imprecision rather than a completely unrelated concept.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = s and s[0].isupper()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the first character of the string is an uppercase letter.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if the string `s` is non-empty and if its first character is an uppercase letter using `isupper()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() && isupper(value[0]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s and s[0].isupper()",
+    "reasoning": "The C++ completion checks if a string is empty and if the first character is uppercase, which is directly relevant to the Python code that checks if a string is non-empty and if its first character is uppercase. The logic has a bug (using `&&` instead of `!empty() &&`), but the key operations \u2014 checking the first character with `isupper` and handling the string \u2014 are clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

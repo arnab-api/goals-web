@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_018",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is even\n(2) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(nums.count(x) > 1 for x in nums)\n    return a, b\n</code>",
+ "impl_span": "b = any(nums.count(x) > 1 for x in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true,\" which is too generic to indicate any specific aspect of the code (checking for duplicates, counting occurrences, using `any`, etc.).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(nums.count(x) > 1 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking for duplicates.",
+   "verdict": "YES",
+   "reasoning": "The description \"I'm checking for duplicates\" is directly relevant to what the code does \u2014 it checks if any element in `nums` appears more than once (i.e., has a count greater than 1), which is exactly checking for duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set<int> {value.begin(), value.end()}.size() > 1; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(nums.count(x) > 1 for x in nums)",
+    "reasoning": "The Python code checks if any element appears more than once in `nums` (i.e., checks for duplicates). The C++ completion checks if the size of a set constructed from the collection is greater than 1, which relates to uniqueness/duplicates but in a different way \u2014 it checks if there are at least 2 distinct elements, not if any element repeats. However, the core concept of using a set to detect something about element uniqueness/duplicates is genuinely relevant to duplicate detection, even if the exact logic differs.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates in a list\" is directly relevant to what the code does \u2014 it uses `any` and `count > 1` to detect if any element appears more than once in `nums`, which is exactly checking for duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto x){ return x == std::unique(value.begin(), value.end()); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(nums.count(x) > 1 for x in nums)",
+    "reasoning": "The C++ completion uses `std::any_of` to check for some property across elements, which aligns with the `any()` call in Python. It also attempts to detect duplicates, though using `std::unique` incorrectly (comparing an element to an iterator). The core idea of checking for duplicates using `any_of` is genuinely relevant to what the Python code does (checking if any element appears more than once).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking for duplicates.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates\" is directly relevant to what the code does \u2014 it checks if any element in `nums` appears more than once (i.e., has a count > 1), which is exactly duplicate detection.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](auto x){ return std::count(std::begin(value), std::end(value), x) > 1; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(nums.count(x) > 1 for x in nums)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it uses `std::any_of` to check if any element `x` in the collection has a count greater than 1 (i.e., appears more than once), which is precisely what `any(nums.count(x) > 1 for x in nums)` does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

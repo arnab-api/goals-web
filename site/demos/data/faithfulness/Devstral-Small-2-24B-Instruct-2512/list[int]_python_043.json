@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_043",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) whether any value is even\n(3) the difference between the maximum and minimum values\n(4) whether any value is zero\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums)\n    b = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - a\n    d = any(x == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max(nums) - a",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the value of `x` is greater than `y`.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if x is greater than y, which is a comparison operation. The code computes a difference between max(nums) and a, which is an arithmetic operation, not a comparison. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value > 0;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "`max_val = max(min_val, max_val) - min(max_val, max_val) - max(min_val, max_val) - max(min_val, max_val) - max(min_val, max_val) - max(min_val, max_val) - max(min_val, max_val) - max(min_val,",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a short repeating cycle: `max(min_val, max_val) - max(min_val, max_val) - ...` repeating over and over. Once collapsed, there's no coherent description left beyond the looping fragment.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int min_val = *std::min_element(std::vector<int>{value - *std::max_element(std::vector<int>{*std::min_element(std::vector<int>{*std::max_element(std::vector<int>{*std::min_element(std::vector<int>{*std::max_element(std::vector",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The completion contains nested alternating min/max element calls that repeat in a cycle (`min_element`, `max_element`, `min_element`, `max_element`...), forming a heavy loop. While it does mention `max_element` and `min_element` which are relevant to finding max/min values, the content is dominated by a short repeating pattern of these nested calls that never terminates coherently.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the difference between the maximum and minimum values of the list, then finding the sum of the list, and finally computing the difference between the max and min values.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is a difference involving the maximum of a list. The description mentions \"calculating the difference between the maximum and minimum values of the list,\" which is partially relevant \u2014 it correctly identifies that the maximum is being used and that a difference is being computed. The description is wrong about what `a` represents (calling it the minimum rather than whatever `a` actually is), but the core operation (difference involving max) is captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value - (value > 0 ? (value < 0 ? (value - (value > 0 ? (value < 0 ? (value - (value > 0 ? (value < 0 ? (value - (value > 0 ? (value < 0 ? (value - (",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The completion shows a repeating pattern of `value - (value > 0 ? (value < 0 ?` that cycles continuously. This is a short repeating unit (roughly 5 tokens) that dominates the entire completion, and collapsing it leaves no coherent content.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The difference between the maximum and minimum values in the list is calculated as `max(list) - min(list)`.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is the maximum minus some value `a`. The description talks about computing the difference between max and min values (`max(list) - min(list)`). The description correctly identifies that the maximum is being subtracted from something, though it incorrectly identifies the subtracted value as `min(list)` rather than `a`. The core operation (difference involving the maximum) is partially correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return max(value)-min(value);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The code computes `max(nums) - a` where `a` appears to be some value (possibly `min(nums)`). The C++ completion computes `max(value) - min(value)`, which captures the key operation of finding the range (max minus min) of a collection. This is genuinely relevant to the subtraction of max from another value.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

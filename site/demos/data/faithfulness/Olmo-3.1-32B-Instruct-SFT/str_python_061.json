@@ -1,0 +1,96 @@
+{
+ "id": "str_python_061",
+ "datatype": "str",
+ "frontier_id": "word_count",
+ "condition": "the number of whitespace-separated words",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a space\n(2) the number of whitespace-separated words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = ' ' in s"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s.split())\n    return a, b\n</code>",
+ "impl_span": "b = len(s.split())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a variable is defined and then printing its value.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable is defined and printing its value, which is completely unrelated to what the code does (splitting a string and counting the number of words/tokens). No relevant operation or concept is identified.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; };",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(s.split())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of words in a string.",
+   "verdict": "YES",
+   "reasoning": "The description directly describes counting words in a string, which is exactly what `len(s.split())` does \u2014 splitting a string into words and counting them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (int i = 0; i < value.size(); i++){  \n        if (value[i] == ' '){  \n            count++;  \n        }  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion counts spaces in a string, which is directly related to counting words (splitting by spaces). While the Python code uses `split()` to count words and the C++ counts spaces (which gives word count - 1 for simple cases), the core operation of identifying word boundaries via spaces is the same concept.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am **counting the number of words in the string**.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of words in the string,\" which is exactly what `len(s.split())` does \u2014 splitting a string on whitespace gives a list of words, and `len()` counts them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_tuple(value.size(), value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The code counts the number of words in a string by splitting on whitespace and getting the length. The C++ completion returns `value.size()` which relates to counting/size, but it's operating on the value directly rather than splitting into words first. However, `size()` is a relevant operation (counting), even if the splitting step is missing.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of words in the string.",
+   "verdict": "YES",
+   "reasoning": "The description \"Counting the number of words in the string\" is directly relevant to what the code does \u2014 `s.split()` splits the string into words and `len()` counts them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    bool in_word = false;  \n    for (int i = 0; i < value.size(); i++){  \n        if (isspace(value[i])){  \n            count += 1;  \n        }  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion counts spaces in a string, which is closely related to counting words (splitting by whitespace). While it counts spaces rather than words directly (off by one, and doesn't handle the `in_word` boolean it declares), the core operation of iterating through a string and detecting whitespace to count word boundaries is genuinely relevant to `len(s.split())`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

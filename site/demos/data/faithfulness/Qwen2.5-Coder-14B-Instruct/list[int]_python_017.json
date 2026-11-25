@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_017",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of odd values\n(2) whether any value is even\n(3) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 != 0)\n    b = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(nums.count(x) > 1 for x in nums)\n    return a, b, c\n</code>",
+ "impl_span": "c = any(nums.count(x) > 1 for x in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if any element in the list is True, indicating the presence of duplicates.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for duplicates in a list, which is exactly what the code does \u2014 it checks if any element appears more than once (count > 1) using `any()`. The description correctly identifies both the use of `any()` and the concept of detecting duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](auto item){ return item; }) && std::any_of(std::begin(value), std::end(value), [](auto item){ return !item; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(nums.count(x) > 1 for x in nums)",
+    "reasoning": "The C++ completion uses `std::any_of` on a collection, which is directly relevant to the Python code's use of `any()`. However, the C++ completion checks for both truthy and falsy elements (existence of true and false items), rather than checking for duplicates (count > 1). The `std::any_of` usage is genuinely relevant even though the predicate logic doesn't match the duplicate-checking semantics.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates in a list\" is directly relevant to what the code does \u2014 it uses `count(x) > 1` to detect if any element appears more than once, which is exactly duplicate detection.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::unordered_set<int> seen; bool has_duplicate = false; for (auto i = 0; i < value.size(); ++i) { if (seen.find(value[i]) != seen.end()) { has_duplicate = true; break; } seen.insert(value[i]); } return std::make_pair(std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(nums.count(x) > 1 for x in nums)",
+    "reasoning": "The C++ completion implements a duplicate detection algorithm using an unordered_set to track seen elements, checking if any element appears more than once. This is exactly what the Python code does \u2014 checking if any element in `nums` has a count greater than 1 (i.e., has a duplicate). The implementation strategy differs slightly but the core concept is identical.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if any element in the list appears more than once.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if any element in `nums` has a count greater than 1, meaning it appears more than once in the list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::unordered_set{std::any_of(value.begin(), value.end(), [](const auto& v){return std::unordered_map{std::adjacent_find(v.begin(), v.end(), [](const auto& w){return std::unordered_set{std::any_of(w.begin(), w.end(), [](const auto",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = any(nums.count(x) > 1 for x in nums)",
+    "reasoning": "The Python code checks if any element in `nums` appears more than once (i.e., checks for duplicates). The C++ completion mentions `std::any_of` which is relevant to the \"any\" check, and `std::adjacent_find` which is a common way to find duplicates in sorted sequences. However, the completion is dominated by a deeply nested repeating pattern of `std::unordered_set{std::any_of(...std::unordered_map{std::adjacent_find(...std::unordered_set{std::any_of(...` that cycles repeatedly.\n\nThis is a HEAVY_LOOP pattern - the structure `unordered_set{any_of(...unordered_map{adjacent_find(...unordered_set{any_of(` repeats in a cycle of roughly 5-6 tokens, and the repetition dominates the completion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates in a list\" is directly relevant to what the code does \u2014 it uses `count(x) > 1` to detect if any element appears more than once, which is exactly duplicate detection.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [&value] (auto i) { return std::count(std::begin(value), std::end(value), i) > 1; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(nums.count(x) > 1 for x in nums)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it uses `any_of` to check if any element in the collection appears more than once (count > 1), which directly mirrors `any(nums.count(x) > 1 for x in nums)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

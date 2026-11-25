@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_028",
+ "datatype": "list[str]",
+ "frontier_id": "count_all_lowercase",
+ "condition": "the number of words written entirely in lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) whether all words have distinct lengths\n(3) the number of words shorter than three characters\n(4) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5)\n    b = len(set(len(w) for w in words)) == len(words)\n    c = sum(1 for w in words if len(w) < 3"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.islower())\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for w in words if w.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines where the code does the following:\n\n1. Checks if a variable is even or odd.\n2. Counts the number of lines where the code checks if a variable is even or odd.\n3. Counts the number of lines where the code checks if a variable is even or odd",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable is even or odd, which is completely unrelated to what the code does (counting words that are all lowercase). The description loops on \"counts the number of lines where the code checks if a variable is even or odd\" but this is a short enough repetition that it reads more as a coherent (if wrong) statement repeated a couple of times rather than a degenerate token loop.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the string contains only lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the string contains only lowercase letters,\" which is relevant to what the code does \u2014 it uses `islower()` to check each word for being all lowercase, and counts how many words satisfy that condition. The description correctly identifies the core operation (`islower()` / checking for lowercase), even though it misses the counting/summing aspect.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::all_of(value, [](auto s){return std::ranges::all_of(s, [](auto c){return std::ranges::all_of(s, [](auto c){return std::ranges::all_of(s, [](auto c){return std::r",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion is checking if strings are all lowercase using `all_of` with character-level checks, which is relevant to the `islower()` check in the Python code. However, the completion is dominated by a repeating pattern: `std::ranges::all_of(s, [](auto c){return std::ranges::all_of(s, [](auto c){return std::ranges::all_of(s, [](auto c){return std::r` \u2014 the same nested `all_of` call repeats over and over in a stuck loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of lines where the variable `count` is incremented.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines where a variable `count` is incremented, which is unrelated to what the code does (counting words that are all lowercase). However, there is a vague conceptual overlap in that both involve counting something \u2014 but the specific thing being counted (lowercase words vs. lines where count is incremented) is completely different and the description doesn't identify any relevant property of the input.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](auto v){ return std::all_of(value.begin(), value.end(), [](auto v){ return std::any_of(value.begin(), value.end(), [](auto v){ return std::none_of(value.begin(), value.end(), [](auto v){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The completion starts with a relevant idea \u2014 `std::count_if` over a collection with a lambda \u2014 which maps to counting words that satisfy a condition. However, it quickly devolves into a nested, repeating pattern of `std::all_of`, `std::any_of`, `std::none_of` lambdas that cycle without resolution. The initial `count_if` fragment is relevant, but the rest is a stuck loop of STL algorithm names.\n\nThis is dominated by a short repeating cycle of `std::all_of / std::any_of / std::none_of` with the same lambda structure repeating over and over, making it a HEAVY_LOOP.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of strings in the list that consist solely of lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts strings in `words` that consist solely of lowercase letters using `islower()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::views::transform(std::views::filter(std::views::count_if(std::views::transform(std::views::filter(std::views::count_if(std::views::transform(std::views::filter(std::views::count_if(std::views::transform(std::views::filter(std",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The completion starts with a relevant idea \u2014 `std::count_if` with `std::views::filter` and `std::views::transform` on a range, which corresponds to counting elements that satisfy a condition (like `islower()`). However, the completion quickly devolves into a heavily repeating loop of the same pattern `count_if(std::views::transform(std::views::filter(` cycling over and over with no termination or coherent content remaining.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

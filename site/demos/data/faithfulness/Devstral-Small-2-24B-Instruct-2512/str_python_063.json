@@ -1,0 +1,96 @@
+{
+ "id": "str_python_063",
+ "datatype": "str",
+ "frontier_id": "word_count",
+ "condition": "the number of whitespace-separated words",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of lowercase letters\n(2) the number of digit characters\n(3) the number of whitespace-separated words\n(4) the number of alphabetic characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.islower())\n    b = sum(1 for c in s if c.isdigit"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s.split())\n    d = sum(1 for c in s if c.isalpha())\n    return a, b, c, d\n</code>",
+ "impl_span": "c = len(s.split())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm splitting the input string into words and counting the number of words, spaces, and letters. Then, I'm counting the number of words, spaces, and letters. Finally, I'm counting the number of words, spaces, and letters.",
+   "verdict": "YES",
+   "reasoning": "The description mentions splitting the input string into words and counting the number of words, which is exactly what the code does (`s.split()` splits into words, `len()` counts them). The repetition is just looping text, but the core relevant content (splitting into words and counting) is present and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ // Split the string into words and count the number of words.\n    int count = 0;\n    stringstream ss(value);\n    vector<string> words = split(value);\n    int word_count = words.size();\n    int letter_count = count_words(value);\n    int digit_count = count(value);\n    int space_count",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The C++ completion explicitly mentions splitting a string into words and counting the number of words, which is exactly what the Python code does (`len(s.split())`). It uses a stringstream and vector to split and count words, directly matching the operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To count the number of words, split the string by spaces, and then count the number of elements in the list of words.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes splitting a string by spaces and counting the resulting elements, which is exactly what the code does with `s.split()` and `len()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ // Split into words\n    stringstream ss(value);\n    vector<string> words = split(value, ' '); // Split into words\n    int count = 0; // Split into words\n    stringstream ss(value);\n    vector<string> words = split(value, ' '); // Split into words",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The C++ completion describes splitting a string into words and counting them, which is exactly what the Python code does (`s.split()` splits into words, `len()` counts them). However, the completion has significant repetition of the same lines. Let me check if this is a HEAVY_LOOP.\n\nThe repeating unit is roughly: `vector<string> words = split(value, ' '); // Split into words` followed by `int count = 0; // Split into words` followed by `stringstream ss(value);` \u2014 this is more than 5 tokens/words and contains meaningful content about splitting into words and counting. It's not a tight short loop but rather a few lines repeated. The content is genuinely relevant (splitting into words, counting), and the repeating unit is complex enough that it's not a pure degenerate loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To count the number of words in the string, I split the string into words and then count the number of elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting words by splitting the string and counting elements, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(value.begin(), value.end(), ' '); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace. The C++ completion counts spaces in a string, which is closely related to counting words (number of words \u2248 number of spaces + 1). This is a relevant sub-step/approximation of the same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of words in the input string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting words in a string, which is exactly what `len(s.split())` does \u2014 splitting by whitespace gives a list of words, and `len()` counts them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count(value.begin(), value.end(), std::count(value.begin(), value.end(), std::count(value.begin(), value.end(), std::count(value.begin(), value.end(), std::count(value.begin(), value.end(), std::count(value.begin(), value.end(), std::count(value.begin(), value.end(),",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = len(s.split())",
+    "reasoning": "The completion shows `std::count` repeated in a heavy loop pattern. While `std::count` is somewhat related to counting, the nested repetition of `std::count(value.begin(), value.end(), std::count(value.begin(), value.end(), ...` is a clear HEAVY_LOOP with a short repeating unit that dominates the entire completion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_013",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is a palindrome\n(2) the number of capitalized words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(w == w[::-1] for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[0].isupper())\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I will count the number of even numbers in the list, then check if the count is greater than zero, and then return the count of even numbers and the count of numbers divisible by 3.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting even numbers and numbers divisible by 3, which is completely unrelated to what the code does (counting words that start with an uppercase letter). No relevant operation or property is identified correctly.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::visit([](int i, int& count, int& total) mutable {count = 0; total = 0; for (auto v : value) if (a) ++count; else if (b) ++total; else return 0; return 0;); return 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The Python code counts words that start with an uppercase letter. The C++ completion shows a counting loop over elements with a `count` variable being incremented based on a condition, which is conceptually relevant (counting elements that satisfy a condition). However, it also introduces a `total` variable and multiple branches that aren't present in the Python code, making it partially relevant but not a heavy loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll count the number of words that are capitalized (i.e., words that are uppercase and areTitleCase).\n\n```python\ntext = ['apple', 'Banana', 'Cherry', 'Dog', 'Elephant']\ncount = sum(1 for word in text if word.isupper())\nprint(count)\n``",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting words that are capitalized/uppercase, which is directly relevant to what the code does (counting words where the first character is uppercase). The description correctly identifies the core operation of counting capitalized words, even though it conflates `isupper()` with `isupper()` on the first character specifically.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(value.begin(), value.end(), [](const auto& s) { return std::isupper(std::get<0>(s)) && std::all_of(s.begin(), s.end(), [](const auto& c) { return std::isalpha(c) && std::isupper(c",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The C++ completion uses `std::count_if` over a collection and checks `std::isupper` on the first character (`std::get<0>(s)`), which directly corresponds to counting words whose first character is uppercase. The additional `std::all_of` check is extra/wrong, but the core operation (counting elements where the first character is uppercase) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of vowels and calculating the length of the input string.",
+   "verdict": "NO",
+   "reasoning": "The description mentions counting something and calculating a length, but specifically says \"vowels\" which is unrelated to what the code does (counting words starting with uppercase letters). The description is coherent but describes something completely different from the actual operation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return ++value;};",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The C++ completion defines a simple increment function, which has no relevance to counting words that start with an uppercase letter. There's no mention of uppercase checking, character inspection, counting, or string operations.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "This line counts how many words in the list have the first character as uppercase (i.e., sum(1 for word in lst if word.isupper())).",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code counts words with an uppercase first character, which is exactly what the code does. The parenthetical note slightly misrepresents the implementation (using `word.isupper()` instead of `word[0].isupper()`), but the core concept of counting words with uppercase characteristics is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(std::begin(value), std::end(value), [](int i){ return std::isalpha(i) && std::isupper(i); });  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The Python code counts words that start with an uppercase letter. The C++ completion counts elements that are uppercase alphabetic characters using `std::isupper`. While the C++ version checks all characters rather than just the first character, it correctly identifies the core operation: counting items based on uppercase character checking. This is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

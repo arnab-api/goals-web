@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_047",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether all values are positive\n(2) the integer mean of the values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(x > 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) // len(nums)\n    return a, b\n</code>",
+ "impl_span": "b = sum(nums) // len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a valid number.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking if the input is a valid number,\" which is completely unrelated to what the code does \u2014 computing the average (mean) of a list of numbers. The code performs arithmetic operations (sum and integer division) to calculate a mean value, not any validation check.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, value > 0};}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The code computes the average (mean) of a list of numbers using integer division. The C++ completion checks if a value is greater than 0, which is unrelated to computing a sum, dividing by length, or finding an average. However, it does reference a \"value\" being processed, which is too generic to count as relevant.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To compute the average, sum all the elements and divide by the count.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing an average by summing elements and dividing by count, which is exactly what the code does (integer division of sum by length).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum = 0;double avg = 0;return {value, sum, avg};}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion mentions computing a sum and an average (avg), which are directly relevant to what the Python code does \u2014 it computes the sum of nums and divides by the length (i.e., computes an average/mean). The completion captures both the sum and average concepts, even though the implementation is incomplete.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the sum of the integers and then computing their average.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average by summing the integers and dividing by the count, which is exactly what the code does (using integer division).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return accumulate(values.begin(), values.end(), value);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The code computes the average (sum divided by length) of a list of numbers. The C++ completion uses `accumulate` to compute a sum of values, which is directly relevant to the `sum(nums)` part of the Python code. While it doesn't show the division by length, it captures the key operation of summing the collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To compute the average of the numbers, I first sum all the numbers and then divide the sum by the count of numbers. The average is then rounded to the nearest integer.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (sum divided by count), which is exactly what the code does. The mention of \"rounded to the nearest integer\" is slightly imprecise (it's integer division/floor, not rounding), but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return accumulate(accumulate(values.begin(), values.end(), 0) / values.size(), 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion computes `accumulate(values.begin(), values.end(), 0) / values.size()`, which is the sum of elements divided by the count \u2014 exactly the average/mean computation that the Python code performs (`sum(nums) // len(nums)`). The outer `accumulate` call is nonsensical, but the core relevant operation is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_046",
+ "datatype": "int",
+ "frontier_id": "last_digit",
+ "condition": "the last decimal digit",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is prime\n(2) the number of digits\n(3) the last decimal digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))\n    b = len(str(abs(n"
+  },
+  {
+   "text": ")))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " abs(n) % 10\n    return a, b, c\n</code>",
+ "impl_span": "c = abs(n) % 10",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "The line is: `123456789`.  \nThe code is: `123456789`.  \nThe last digit is: `9`.  \nThe first digit is: `1`.  \nThe number of digits: `3`.  \nThe last digit is:",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"last digit\" which is directly relevant to what the code does \u2014 `abs(n) % 10` computes the last digit of n. Despite the noisy scaffolding and partial/looping structure, the key concept of extracting the last digit is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value){return value % 10;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The completion shows a repeating pattern of `auto func (auto value){return value;}` with one instance containing `value % 10` which is directly relevant to the modulo 10 operation in the Python code. However, this is dominated by a short repeating cycle of essentially the same function stub, with the relevant `% 10` appearing only once amid many repetitions of the base pattern.\n\nThe loop unit is roughly \"auto func (auto value){return value;}\" repeating over and over, which qualifies as a HEAVY_LOOP even though one iteration contained the relevant `% 10`.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "The line `x = num % 10` gets the last digit of the number.\n\nThe line `y = num // 10 % 10` gets the last digit of the number.\n\nThe line `z = num % 10` gets the last digit of the number.",
+   "verdict": "YES",
+   "reasoning": "The description talks about getting the last digit of a number using modulo 10, which is exactly what the code does (`abs(n) % 10` extracts the last digit). The description correctly identifies the operation and its purpose, even though it uses different variable names and has some repetition.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 10;};\nauto func (auto value){return value < 10 ? value : value % 10;};\nauto func (auto value){return value < 10 ? value : value % 10;};\nauto func (auto value){return value < 10 ? value :",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The completion shows a function that computes `value % 10`, which is exactly the modulo 10 operation in the Python code. While it doesn't include the `abs()` part, it correctly identifies the core operation of extracting the last digit via `% 10`. The repetition is present but the content is coherent and not a degenerate loop \u2014 each iteration shows a slightly different but related implementation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am identifying the last digit of a number by taking the remainder when divided by 10.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes taking the last digit of a number using modulo 10, which is exactly what the code does (with the addition of `abs()` to handle negative numbers).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value%10;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The C++ completion computes `value % 10`, which is directly relevant to the Python code that computes `abs(n) % 10`. The modulo 10 operation is the core operation being performed, even though the `abs()` part is missing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The last digit of the number, even if it is 0.",
+   "verdict": "YES",
+   "reasoning": "The description \"The last digit of the number, even if it is 0\" is directly relevant to what the code does \u2014 `abs(n) % 10` computes the last digit of the absolute value of n, which is exactly the last digit of the number regardless of whether it's 0.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 10; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The C++ completion implements modulo 10 operation on a value, which is directly relevant to the Python code that computes `abs(n) % 10`. The completion captures the `% 10` part correctly, missing only the `abs()` component.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

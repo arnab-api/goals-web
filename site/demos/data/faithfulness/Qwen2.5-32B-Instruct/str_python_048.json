@@ -1,0 +1,96 @@
+{
+ "id": "str_python_048",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of uppercase letters\n(2) whether the string contains a space\n(3) whether the string contains a digit\n(4) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isupper())\n    b = ' ' in s\n    c = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.isalnum() for c in s)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = all(c.isalnum() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need to see the line of code to answer your question accurately, but generally, I'm evaluating the code to check if it performs an operation or returns a value indicating whether the operation was successful. If you provide the line, I can give a more precise answer.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is generic and doesn't identify any specific aspect of what the code does (checking if all characters in a string are alphanumeric). It just says \"evaluating code to check if it performs an operation or returns a value indicating whether the operation was successful,\" which could apply to virtually any code.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && value < 10 ? \"Single Digit Positive\" : (value == 0 ? \"Zero\" : (value > 9 && value < 100 ? \"Multi Digit Positive\" : (value == 100 ? \"Perfect\" : \"Mixed\"))); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion is about categorizing numeric values into ranges (single digit, multi-digit, zero, etc.), which is completely unrelated to checking whether all characters in a string are alphanumeric. The code checks character properties (`isalnum`), while the completion deals with numeric range comparisons on a single value.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if the line of code ensures that only alphabetic characters are checked, I'll assume you want to know if the code verifies that a string contains only letters. If the line of code in question is meant to check this, it would typically use a method or combination of methods to ensure each character in the string",
+   "verdict": "YES",
+   "reasoning": "The code checks if all characters in string `s` are alphanumeric (letters or digits) using `isalnum()`. The description talks about checking for \"only alphabetic characters\" or \"only letters,\" which is close but not exactly right (alphanumeric includes digits too). However, the description does correctly identify the core concept: iterating over characters in a string and checking a character property. This is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::all_of(value.begin(), value.end(), ::isdigit) && \n           !value.empty() && \n           std::all_of(value.begin(), value.end(), [](char c){ return std::isspace(c) || std::isalnum(c); }) && \n           std::any_of(value.begin(),",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` with `std::isalnum` to check that all characters in a string are alphanumeric, which directly corresponds to the Python code's `all(c.isalnum() for c in s)`. Despite extra conditions (the `isdigit` and `isspace` parts being somewhat wrong/redundant), the core relevant operation is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I need to see the line of code to analyze it. However, if you want a brief answer on what the line does, provide the line, and I'll check it for you. Now, to answer your question comprehensively:\n\n1. **Line of Code Analysis**:\n   - **Task**: Check if all",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"Check if all\" which directly corresponds to the `all()` function checking if all characters satisfy a condition. It's partial but genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::make_tuple(value, value > 0, value < 10, value == int(value)); \n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The Python code checks if all characters in a string are alphanumeric. The C++ completion is about checking numeric properties of a value (positive, less than 10, integer check) - this is completely unrelated to character/string alphanumeric checking.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Please specify if you want to confirm if the entire string consists only of alphanumeric characters (letters and numbers) and nothing else, meaning all characters must be either a letter or a digit with no symbols or spaces. If that's the case and the string meets this criteria, the response would be true; otherwise, false.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: checking if all characters in a string are alphanumeric (letters and digits), returning true if all characters meet this criteria and false otherwise. This is a precise and relevant description of the `all(c.isalnum() for c in s)` operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n  return value.isalnum(); \n} \n\nbool is_alnum_only(std::string s) {\n  for (char c : s) {\n    if (!std::isalnum(c)) {\n      return false;\n    }\n  }\n  return true;\n} \n\nbool is_alnum_only_v2(std::string",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion directly implements checking if all characters in a string are alphanumeric, which is exactly what the Python code does with `all(c.isalnum() for c in s)`. It uses `std::isalnum` in a loop over characters, returning false if any non-alphanumeric character is found.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

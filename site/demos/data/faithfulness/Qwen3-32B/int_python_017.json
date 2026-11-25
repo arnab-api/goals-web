@@ -1,0 +1,96 @@
+{
+ "id": "int_python_017",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a power of two\n(2) whether the number is odd\n(3) whether the number reads the same forwards and backwards\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 0 and (n & (n - 1)) == 0\n    b = n % 2 != 0\n    c = str(abs(n)) == str(abs(n))[::-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= abs(n) <= 99\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 10 <= abs(n) <= 99",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "-100 < x < 100 and x != 0",
+   "verdict": "YES",
+   "reasoning": "The code checks if the absolute value of n is between 10 and 99 inclusive (i.e., a two-digit number). The description says \"-100 < x < 100 and x != 0\" which captures a related but different range check. However, it does reference checking bounds around 100 and excluding zero, which partially overlaps with the concept of checking if a number falls within a certain range involving the value 100. The description is coherent but the specific range is wrong (it says -100 to 100 excluding 0, while the code checks 10 \u2264 |n| \u2264 99), though the general idea of a bounded range check near 100 is somewhat relevant.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::to_string(value).length();};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The Python code checks if the absolute value of n is between 10 and 99 (inclusive), which is equivalent to checking if n is a 2-digit number. The C++ completion converts a value to a string and gets its length \u2014 which is a way to count the number of digits. This is a valid alternative approach to checking the number of digits, which is directly relevant to the 2-digit check being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "1. Check if the number of digits is 4.\n2. Check if the number of characters is 2.\n3. Check if the number of letters is 1.\n4. Check if the number of symbols is 1.",
+   "verdict": "YES",
+   "reasoning": "The code checks whether the absolute value of `n` is a 2-digit number (between 10 and 99 inclusive). The description mentions checking if \"the number of characters is 2,\" which aligns with checking for a 2-digit number. The other points (4 digits, 1 letter, 1 symbol) are wrong, but point 2 captures the core idea of a 2-character/digit count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value, auto value2){return value;};\nauto func (auto value, auto value2, auto value3){return value;};\nauto func (auto value, auto value2, auto value3, auto value4){return value;};",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The C++ completion is just a series of generic function stubs that return their first argument, with no reference to absolute value, range checking, two-digit numbers, or any other aspect of what the Python code does.\n\n<verdict>MALFORMED</verdict>",
+    "reasoned_verdict": "MALFORMED"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the number has exactly two digits by converting it to a string and checking its length.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number has exactly two digits\" which is exactly what the code does (checking if abs(n) is between 10 and 99 inclusive). The implementation detail is wrong (it says \"converting to string and checking length\" while the code uses numeric comparison), but the core concept \u2014 checking for a two-digit number \u2014 is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 9 ? 1 : 0;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The code checks if the absolute value of n is a two-digit number (between 10 and 99 inclusive). The C++ completion checks if a value is greater than 9, which captures the lower bound of the two-digit check (>= 10), and returns 1 or 0 (boolean-like). It's missing the upper bound (<=99), but it correctly identifies the key operation of checking if abs(n) is at least 10, which is partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "If a number has exactly two digits (i.e., between 10 and 99 inclusive).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a number has exactly two digits by checking if its absolute value is between 10 and 99 inclusive, which matches the code exactly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value < 10 && value >= 0 ? 1 : 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The Python code checks if the absolute value of n is between 10 and 99 inclusive (i.e., checking if n is a two-digit number). The C++ completion checks if a value is less than 10 and >= 0, which is related to checking digit ranges but gets the condition wrong (it's checking for single-digit numbers, not two-digit). However, it does involve checking numeric ranges with similar boundary values (10), which is partially relevant to the concept of checking digit count ranges.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

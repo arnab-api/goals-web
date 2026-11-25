@@ -1,0 +1,96 @@
+{
+ "id": "int_python_016",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the number of set bits in the binary representation\n(2) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = bin(abs(n)).count(\"1"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(str(abs(n))) == 2\n    return a, b\n</code>",
+ "impl_span": "b = len(str(abs(n))) == 2",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am **checking if a number is even or odd** and **calculating its absolute value**.",
+   "verdict": "YES",
+   "reasoning": "The code checks if the number of digits in `abs(n)` equals 2 (i.e., whether `n` is a two-digit number). The description mentions \"calculating its absolute value,\" which is partially relevant since `abs(n)` is indeed used. However, the main operation \u2014 checking the length of the string representation equals 2 \u2014 is completely missed, replaced by an unrelated \"even or odd\" check.\n\nSince the description does capture one relevant sub-step (`abs(n)`) but misidentifies the core operation, it partially overlaps. The `abs` mention is a genuine fragment of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(str(abs(n))) == 2",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if a number is a palindrome and if it has an even or odd number of digits.",
+   "verdict": "YES",
+   "reasoning": "The code checks if the absolute value of `n` has exactly 2 digits (i.e., `len(str(abs(n))) == 2`). The description mentions checking the number of digits (even or odd), which is partially relevant \u2014 counting digits is indeed what the code does. However, the palindrome check is completely unrelated to what the code actually does.\n\nSince the description does mention checking the number of digits, which is a core part of what the code does, this counts as partial relevance.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && value < 10; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n))) == 2",
+    "reasoning": "The Python code checks if the absolute value of `n` has exactly 2 digits (i.e., is a two-digit number, so between 10 and 99 inclusive). The C++ completion checks if a value is between 0 and 10 (exclusive), which is checking for single-digit positive numbers \u2014 the wrong range. However, the C++ code is clearly checking digit count/range of a number, which is conceptually related (checking bounds on a number's magnitude), just with wrong bounds. The threshold is wrong (checking < 10 instead of >= 10 and < 100), but the general idea of checking numeric range is relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if a number is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The code checks if the absolute value of `n` has exactly 2 digits (i.e., is a two-digit number), not whether it's even or odd. The description is coherent but completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(str(abs(n))) == 2",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the number of digits in the input is exactly 2.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it converts the number to its absolute value, converts to string, checks the length equals 2, which is exactly checking if the number has exactly 2 digits.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value >= 10 && value < 100;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n))) == 2",
+    "reasoning": "The C++ completion checks if a value is >= 10 and < 100, which is exactly the condition for a number having exactly 2 digits (in absolute value terms). This directly corresponds to checking `len(str(abs(n))) == 2`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

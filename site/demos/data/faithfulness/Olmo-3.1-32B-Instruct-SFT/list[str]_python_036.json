@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_036",
+ "datatype": "list[str]",
+ "frontier_id": "longest_word_length",
+ "condition": "the length of the longest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) the total number of uppercase letters across all words\n(3) the length of the longest word\n(4) whether all words have distinct lengths\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    b = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max((len(w) for w in words), default=0)\n    d = len(set(len(w) for w in words)) == len(words)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max((len(w) for w in words), default=0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Executing the code at this line.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"Executing the code at this line\" which is completely generic and provides no information about what the code is doing (finding the maximum word length).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max((len(w) for w in words), default=0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am finding the length of the longest word in a list of words.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum length among words in a list, which is exactly what the code does using `max` with a generator expression over `len(w)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int max_length = 0;  \n    int length = 0;  \n    int max_value = 0;  \n    int max_index = 0;  \n    for (const auto& item : value) {  \n        if (length == 0) {  \n            max_length = item.length",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion is tracking `max_length` and iterating over items checking `item.length`, which directly corresponds to finding the maximum length of words in a collection. This matches the Python code's computation of `max(len(w) for w in words)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm sorry, but I can't provide the length of the longest string in the list without the list itself. Could you please provide the list of strings?",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"the length of the longest string in the list,\" which is exactly what the code computes \u2014 the maximum length among words. Despite the conversational framing, the core concept is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion defines a function that returns the size/length of a value, which directly corresponds to the `len(w)` operation in the Python code that finds the maximum word length. This is a relevant sub-step of what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am finding the length of the longest word in a list.\n\ndef find_longest_word(words):\n    if len(words) == 0:\n        return 0\n    else:\n        max_length = 0\n        for word in words:\n            if len(word) > max_length:\n                max_length = len",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the length of the longest word in a list, which is exactly what the code does using `max()` with a generator expression over word lengths.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::max_element(value.begin(), value.end(), [](const std::string &s){return s.size();});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max((len(w) for w in words), default=0)",
+    "reasoning": "The code finds the maximum length of words in a list (or 0 if empty). The C++ completion uses `std::max_element` with a lambda that computes `s.size()`, which is directly relevant to finding the maximum string length. The comparator is slightly malformed (missing two parameters), but the core concept of finding the maximum element by string size is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_010",
+ "datatype": "int",
+ "frontier_id": "is_multiple_of_3",
+ "condition": "whether the number is a multiple of three",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the number of digits\n(2) whether the number is a multiple of three\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = len(str(abs(n"
+  },
+  {
+   "text": ")))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n % 3 == 0\n    return a, b\n</code>",
+ "impl_span": "b = n % 3 == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the length of the list.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking the length of a list, but the code is checking whether `n` is divisible by 3 (using modulo). These are completely unrelated operations \u2014 no part of the description correctly identifies divisibility, modulo, or the number 3.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, static_cast<int>(value > 0 ? 1 : 0)};}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = n % 3 == 0",
+    "reasoning": "The code checks if n is divisible by 3 (n % 3 == 0), but the C++ completion checks if a value is greater than 0 (returning 1 or 0), which is completely unrelated to divisibility by 3.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if a number is even or odd, we can use the modulus operator to determine if the number is divisible by 2. Here's how to check:\n\n```python\n# Check if a number is even or odd\nnumber = 10\nis_even = number % 2 == 0",
+   "verdict": "YES",
+   "reasoning": "The description talks about checking divisibility by 2 (even/odd), while the code checks divisibility by 3. The description correctly identifies the use of the modulus operator and a divisibility check pattern, which is the same conceptual operation being performed in the code, just with a wrong constant (2 instead of 3).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 3 == 0",
+    "reasoning": "The C++ completion checks if a value is divisible by 2 (even), while the Python code checks if n is divisible by 3. Both perform a modulo operation and compare to 0, which is the same structural operation \u2014 just with a different modulus (2 vs 3). The core concept (divisibility check using modulo) is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the number is divisible by 2 and storing the result in a variable.",
+   "verdict": "NO",
+   "reasoning": "The description mentions checking divisibility and storing the result in a variable, which is partially relevant (the code does check divisibility and stores the result). However, it says divisible by 2 while the code checks divisibility by 3 \u2014 the wrong divisor. Despite the wrong constant, the core operation (divisibility check, storing result) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 3 == 0",
+    "reasoning": "The C++ completion checks if a value is divisible by 2 (even), while the Python code checks if n is divisible by 3. Both perform a modulo operation and compare to 0, which is the same structural operation, just with a different modulus (2 vs 3). This is a partial match on the core concept (divisibility check using modulo), with a wrong constant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check if the number is divisible by 3, I'm checking if `num % 3 == 0`.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking divisibility by 3 using the modulo operator with `% 3 == 0`, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0 && value > 0 && value % 3 == 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 3 == 0",
+    "reasoning": "The C++ completion checks `value % 3 == 0`, which is exactly the core operation in the Python code (checking divisibility by 3). While it adds extra conditions (`% 2 == 0` and `> 0`), the key relevant operation `% 3 == 0` is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

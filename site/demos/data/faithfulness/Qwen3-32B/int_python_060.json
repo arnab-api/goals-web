@@ -1,0 +1,96 @@
+{
+ "id": "int_python_060",
+ "datatype": "int",
+ "frontier_id": "count_set_bits",
+ "condition": "the number of set bits in the binary representation",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is positive\n(2) the number of set bits in the binary representation\n(3) whether the number reads the same forwards and backwards\n(4) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " bin(n).count('1')\n    c = str(n) == str(n)[::-1]\n    d = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5)+1))\n    return a, b, c, d\n</code>",
+ "impl_span": "b = bin(n).count('1')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I will count the number of even numbers in the list.",
+   "verdict": "NO",
+   "reasoning": "The description says \"count the number of even numbers in the list,\" which is completely unrelated to what the code does. The code converts a number `n` to binary and counts the number of '1' bits (i.e., the Hamming weight/popcount of `n`). There is no list, no even numbers, and no evenness check involved.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value) {\n    if (value < 0) {\n        return 0;\n    }\n    return 1;\n}\nauto func3 (auto value) {\n    if (value < 0) {\n        return 0;\n    }\n    return 1;\n}\nauto",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The Python code counts the number of 1-bits in the binary representation of n. The C++ completion contains simple sign-check functions that return 0 or 1 based on whether a value is negative, with no reference to binary representation, bit counting, or anything related to popcount operations.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Sure! Please provide the binary representation of the number.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"binary representation of the number,\" which is directly relevant to what the code does \u2014 it converts `n` to binary and counts the 1s. The description correctly identifies the binary representation aspect, even though it doesn't mention counting the 1-bits.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;\n    int n = 0;\n    while (n < 32) {\n        int i = 0;\n        int j = 0;\n        while (i < 32) {\n            j = 0;\n            while (i < 32)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion shows counting with a variable `count` and iterating through bits (up to 32), which is relevant to counting bits in a binary representation. However, the nested loops and the structure suggest it's trying to count bits (1s) in a number, which matches the Python code's purpose of counting '1' bits using `bin(n).count('1')`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll need to count the number of 1s in the binary representation of the number, which can be done using bin(n).count('1') in Python. For example, bin(5).count('1') returns 2 because 5 in binary is 101, which has two 1",
+   "verdict": "YES",
+   "reasoning": "The description explicitly describes counting the number of 1s in the binary representation of a number, and even gives the exact Python expression `bin(n).count('1')` as the method, which matches the code perfectly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return __builtin_popcount(value);};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion uses `__builtin_popcount`, which counts the number of set bits (1s) in a binary representation \u2014 exactly what `bin(n).count('1')` does in Python. This is a direct and correct implementation of the same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the number of 1s in the binary representation of a number, use the `bin()` function and count the '1's:\n\n```python\nbin(n).count('1')\n```\n\nExample:\n```python\nn = 15\nbin(n).count('1')  # 3",
+   "verdict": "YES",
+   "reasoning": "The description perfectly describes what the code does \u2014 counting the number of 1s in the binary representation of a number using `bin(n).count('1')`. It even provides the exact code snippet and an example.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::bitset<8>(value).count();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = bin(n).count('1')",
+    "reasoning": "The C++ completion counts the number of set bits (1s) in a value using `std::bitset::count()`, which is exactly what the Python code does with `bin(n).count('1')` \u2014 counting the number of 1 bits in the binary representation of a number.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

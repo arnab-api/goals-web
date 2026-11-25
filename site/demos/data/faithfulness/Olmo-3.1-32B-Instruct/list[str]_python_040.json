@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_040",
+ "datatype": "list[str]",
+ "frontier_id": "shortest_word_length",
+ "condition": "the length of the shortest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of capitalized words\n(2) the number of words that end with a consonant\n(3) the length of the shortest word\n(4) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w[:1].isupper())\n    b = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " min((len(w) for w in words if w), default=0)\n    d = sum(w.lower().count(ch) for ch in \"aeiou\" for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = min((len(w) for w in words if w), default=0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm not present at this line of the code.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"I'm not present at this line of the code,\" which is a generic, non-informative statement that doesn't describe any aspect of what the code does (finding the minimum word length).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking the length of each string in the list and finding the shortest one.",
+   "verdict": "YES",
+   "reasoning": "The description accurately captures what the code does: it iterates over words, checks the length of each non-empty word, and finds the minimum (shortest) length. This is a clear and relevant description of the operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int minLen = INT_MAX;  \n    int sumLen = 0;  \n    int minVal = INT_MAX;  \n    for(const auto& s : value){  \n        if(s.empty())  \n            continue;  \n        int len = s.size();  \n        if(len < minLen)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The C++ completion is computing the minimum length of non-empty strings in a collection, which is exactly what the Python code does (`min(len(w) for w in words if w)`). It initializes `minLen = INT_MAX`, iterates over strings, skips empty ones, and tracks the minimum length \u2014 directly corresponding to the Python logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm finding the length of the shortest string in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it finds the minimum length among non-empty words in a list, which is equivalent to finding the length of the shortest string.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int minLen = INT_MAX;  \n    int sumLen = 0;  \n    int len = 0;  \n    for(const auto& s : std::vector<std::string>{value.begin(), value.end()}){  \n        if(len == 0)  \n            len = s.size();",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The C++ completion attempts to find a minimum length (`minLen = INT_MAX`) by iterating over a collection of strings, which directly corresponds to the Python code finding the minimum word length (`min(len(w) for w in words)`). Despite the noise (the unused `sumLen`, the incorrect `len` logic), the core concept of tracking minimum string length across a collection is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Finding the length of the shortest string in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it finds the minimum length among non-empty words in a list, which is exactly \"finding the length of the shortest string in a list.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int minLen = INT_MAX;  \n    for (const auto& s : value) {  \n        if (s.size() < (minLen == INT_MAX ? INT_MAX : s.size()))  \n            minLen = s.size();  \n    }  \n    return minLen == INT_MAX ? 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = min((len(w) for w in words if w), default=0)",
+    "reasoning": "The C++ completion is finding the minimum length among strings in a collection, returning 0 as a default when no valid minimum is found. This directly corresponds to the Python code which computes `min(len(w) for w in words if w)` with `default=0`. The logic of tracking minimum string length and returning 0 as default is clearly present, even if the comparison logic in the C++ is slightly garbled.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

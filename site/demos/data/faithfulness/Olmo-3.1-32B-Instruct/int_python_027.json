@@ -1,0 +1,96 @@
+{
+ "id": "int_python_027",
+ "datatype": "int",
+ "frontier_id": "is_perfect_square",
+ "condition": "whether the number is a perfect square",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a power of two\n(2) whether the number is a perfect square\n(3) whether the number reads the same forwards and backwards\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 0 and (n & (n - 1)) == 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n >= 0 and int(n ** 0.5) ** 2 == n\n    c = str(n) == str(n)[::-1]\n    return a, b, c\n</code>",
+ "impl_span": "b = n >= 0 and int(n ** 0.5) ** 2 == n",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a number is even.",
+   "verdict": "NO",
+   "reasoning": "The code checks if a number is a perfect square (non-negative and its square root squared equals itself), not whether it's even. The description mentions \"checking if a number is even,\" which is completely unrelated to perfect square detection.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }  \nauto is_even = func(1); // but since you asked for just the function body for each, here's how you'd do it:\n\nbool is_even(int x) {\n    return x % 2 == 0;\n}\n\nbool is_odd(int x)",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = n >= 0 and int(n ** 0.5) ** 2 == n",
+    "reasoning": "The Python code checks if n is a perfect square (non-negative and its integer square root squared equals n). The C++ completion is entirely about checking if a number is even or odd, which is completely unrelated to perfect squares.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if a number is a perfect square.  \nI am checking if a number is a perfect cube.  \nI am checking if a number is a perfect square.  \nI am checking if a number is a perfect cube.  \nI am checking if a number is a perfect square root.",
+   "verdict": "YES",
+   "reasoning": "The description alternates between \"perfect square\" and \"perfect cube,\" but the dominant and correct content is checking for a perfect square, which is exactly what the code does (it checks if n >= 0 and the integer square root squared equals n). The repetition here is not a tight loop of \u22645 tokens but rather full sentences alternating, and the core meaning (perfect square check) is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool isPerfectSquare = false;  \n    int sqrtVal = 0;  \n    int intSqrt = static_cast<int>(std::sqrt(value));  \n    bool isSquare = (intSqrt * intSqrt == value);  \n\n    int intRoot = 0;  \n    bool is",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n >= 0 and int(n ** 0.5) ** 2 == n",
+    "reasoning": "The C++ completion is checking whether a value is a perfect square by computing the integer square root and verifying that squaring it gives back the original value \u2014 exactly what the Python code does with `int(n ** 0.5) ** 2 == n`. It also sets up a boolean result, mirroring the structure of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I cannot determine if a number is a perfect square without more context.  \nI cannot determine if a number is even without more context.  \nI cannot determine if a number is a perfect square and if it is even without more context.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"perfect square\" which is exactly what the code is checking (whether n is a perfect square by computing int(n**0.5)**2 == n). Despite the hedging language, the relevant concept is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::sqrt(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n >= 0 and int(n ** 0.5) ** 2 == n",
+    "reasoning": "The code checks if a number is a non-negative perfect square by computing the integer square root and squaring it. The C++ completion mentions `std::sqrt(value)`, which is directly relevant to the square root computation used in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "At this line of code, we are checking if the square root of the number is an integer to determine if the number is a perfect square.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if a number is a perfect square by verifying that the integer square root squared equals the original number, and also checks that n >= 0.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if(value < 0) return false;  \n    int root = static_cast<int>(std::sqrt(value));  \n    return root * root == value && (root & (root - 1)) == 0 && std::sqrt(root) == static_cast<int>(std::sqrt(value));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n >= 0 and int(n ** 0.5) ** 2 == n",
+    "reasoning": "The C++ completion checks if a value is a perfect square (computing `sqrt`, squaring it, and comparing to the original value), which is exactly what the Python code does. The C++ adds extra conditions (power of 2 check, etc.) that aren't in the Python, but the core operation \u2014 checking `root * root == value` after computing `int(sqrt(value))` \u2014 is genuinely relevant and correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_039",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a power of two\n(2) whether the number is even\n(3) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 0 and (n & (n - 1)) == 0\n    b = (n % 2 == 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(digit) for digit in str(n))\n    return a, b, c\n\n# Example usage:\n# print(func(8))  # Output: (True, True, 8)\n# print(func(123))  # Output: (False, True, 6)\n</code>",
+ "impl_span": "c = sum(int(digit) for digit in str(n))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need to see the line of code to tell you what it's doing. Please provide the line or snippet of code you want me to analyze.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is a generic request for more information and contains no relevant content about what the code does (summing digits of a number).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value, value*value, value*value*value); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion computes powers of a value (value, value\u00b2, value\u00b3), which is unrelated to summing the digits of a number. The operation of extracting digits from a number and summing them is not reflected in any part of the completion.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I need the code to be provided to sum up its digits, calculate the sum of its digits, or determine some other property. However, if you're asking about summing the digits of a number, for example, the number 123, I would convert the number to a string, iterate over each character",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions summing the digits of a number, converting the number to a string, and iterating over each character \u2014 all of which are exactly what the code does. Despite the noisy preamble, the substance is directly relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value?int:(sum of digits of value if value is integer, else sum of digits of absolute value of each digit if value is string, else 0),[&]{\nint sum=0;\nif (value) {\n    int n=value;\n    while (n) {\n        sum+=n%",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion describes computing the sum of digits of a value, which is exactly what the Python code does (summing the integer digits of n). The completion even shows the iterative digit-extraction approach (`n%10`, `n/10` pattern implied). Despite being garbled and cut off, the core concept of \"sum of digits\" is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I need to see the line of code to analyze it and provide the sum of its digits if they are added sequentially. For example, for the number 123, the sum would be 1 + 2 + 3 = 6. If you provide the line of code, I can calculate this for",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions \"sum of its digits\" and gives the example of 1+2+3=6 for the number 123, which is exactly what the code computes \u2014 the sum of digits of `n`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0; \n    int digits = 0; \n    int temp = value; \n    while (temp > 0){ \n        sum += temp % 10; \n        digits += sum % 10; \n        temp /= 10; \n    }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion computes the sum of digits by extracting digits via `temp % 10` and accumulating into `sum`, which is exactly what the Python code does (summing the digits of `n`). The extra `digits` variable and `digits += sum % 10` line is noise/incorrect, but the core operation of digit extraction and summation is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I cannot sum the digits of the number if you don't provide the number. However, to find the sum of the digits of a number, you would add each individual digit together. For example, if the number is 123, the sum of its digits would be 1 + 2 + 3",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions \"sum the digits of the number\" and explains the process of adding individual digits together, which is exactly what the code does \u2014 it converts a number to a string, iterates over each character/digit, converts them to integers, and sums them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0; \n    int num = value; \n    while(num != 0){ \n        sum += num % 10; \n        num = num % 10; \n        int result = 0; \n        while(num != 0){ \n            result += num",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(int(digit) for digit in str(n))",
+    "reasoning": "The C++ completion is computing the sum of digits using the classic `% 10` approach (extracting digits via modulo 10 and summing them), which is exactly what the Python code does with `sum(int(digit) for digit in str(n))`. The implementation has a bug (`num = num % 10` instead of `num /= 10`) and gets garbled at the end, but the core idea of digit sum via modulo is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

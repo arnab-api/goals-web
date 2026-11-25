@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_048",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of positive values\n(2) the integer mean of the values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) // len(nums)\n    return a, b\n</code>",
+ "impl_span": "b = sum(nums) // len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll calculate the average of the list, then the length of the list, and return them as a tuple. If the list is empty, it will return (0, 0). Otherwise, it will return (average, length).",
+   "verdict": "YES",
+   "reasoning": "The description mentions calculating the average of the list, which is exactly what the code does (computing the sum divided by the length, i.e., integer average). The extra details about returning a tuple and handling empty lists are wrong, but the core operation of computing the average is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value) { return value; };",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion just defines identity functions that return their input unchanged, with no reference to summing, averaging, dividing, or any operation relevant to computing the mean of a list. It's coherent but completely unrelated to what the Python code does.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the average of the numbers and returning it as an integer.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (sum divided by length) of a list of numbers, which is exactly what the code does with integer division. This is a clear and correct match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value / 2; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The Python code computes the average (sum divided by length) of a list. The C++ completion computes `value / 2`, which is division but by a constant 2 rather than by the length of the list. However, division is a relevant operation here, and computing an average involves division \u2014 the C++ captures the division aspect but misses that it's dividing by the count of elements rather than 2.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am performing integer division of the sum by the integer.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"integer division of the sum\" which is directly relevant \u2014 the code computes `sum(nums) // len(nums)`, which is indeed integer division of the sum. The description is partially correct (it says \"by the integer\" instead of \"by the length/count\"), but the core operation is identified correctly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(value / 2); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The Python code computes the average (mean) of a list by dividing the sum by the length. The C++ completion divides a value by 2, which is a fixed divisor rather than the length of a collection. However, division is the core operation in both cases, and computing an average involves division \u2014 but dividing by 2 is a specific (and wrong) operation that doesn't capture the \"sum divided by count\" nature of the average.\n\nThe C++ completion does involve division, which is part of the operation, but it's dividing by a constant 2 rather than computing sum/length. This is partially relevant (division operation) but misses the key aspect of computing sum and dividing by count.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The integer average of all integers in the list, rounded down to the nearest integer.\n\n```python\nint(sum(lst) // len(lst))\n```",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the integer average (floor division of sum by length) of a list of numbers, which matches exactly what the code does. The description correctly identifies both the operation (sum divided by length) and the rounding behavior (floor/round down).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value / 2; };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The code computes the average (mean) of a list by summing and dividing by the length. The C++ completion shows division, which is partially relevant (division is part of computing an average), but divides by 2 instead of the count. However, the core operation of division to compute a central value is present, even if the divisor is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

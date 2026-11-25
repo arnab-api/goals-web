@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_001",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is zero\n(2) whether any value is even\n(3) the product of all values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = 0 in nums"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(x % 2 == 0 for x in nums)\n    c = 1\n    for x in nums:\n        c *= x\n    return a, b, c\n</code>",
+ "impl_span": "b = any(x % 2 == 0 for x in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the list is empty.",
+   "verdict": "NO",
+   "reasoning": "The code checks if any element in `nums` is even (divisible by 2), not whether the list is empty. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if any number in the list is even, which is exactly what the code does using `any()` with a modulo-2 check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of(value, [](bool b){return !all_of(value, [](bool b){return even_any(value, [](bool b){return !any_of(value, [](bool b){return !all_of(value, [](bool b){return even_any(value, [](bool b",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The completion mentions `any_of` and `even_any` which are relevant to checking if any element is even. However, the completion is dominated by a short repeating cycle of `any_of(value, [](bool b){return !all_of(value, [](bool b){return even_any(value, [](bool b)` that repeats over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if there's a boolean value in the list.",
+   "verdict": "NO",
+   "reasoning": "The code checks if any number in `nums` is even (divisible by 2). The description says it's checking for a boolean value in the list, which is completely unrelated \u2014 the code is checking for even numbers, not for boolean values.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of(value.begin(), value.end(), [](bool b){return b;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion uses `any_of` which corresponds to Python's `any()`, and iterates over a collection checking elements. However, it checks if elements are `bool b` that return `b` (i.e., truthy values) rather than checking for even numbers (x % 2 == 0). The `any_of` operation is genuinely relevant even though the predicate is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if any number in the list is even, which is exactly what the code does using `any()` with a modulo-2 check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of(value, [](int x){return any_of(value, [](int x){return any_of(value, [](int x){return any_of(value, [](int x){return any_of(value, [](int x){return any_of(value, [](int x){return any_of(value",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The completion starts with a relevant pattern \u2014 `any_of` with a lambda checking elements \u2014 which corresponds to the Python `any(... for x in nums)` pattern. However, the completion immediately falls into a heavy repeating loop of `any_of(value, [](int x){return any_of(value, [](int x){return...` that dominates the entire output.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

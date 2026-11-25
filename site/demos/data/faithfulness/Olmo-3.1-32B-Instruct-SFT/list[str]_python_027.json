@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_027",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether all words have distinct lengths\n(2) the number of words that contain a digit\n(3) the length of the longest word\n(4) the number of capitalized words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(len(w) for w in words)) == len(words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(any(c.isdigit() for c in w) for w in words)\n    c = max(len(w) for w in words)\n    d = sum(w[0].isupper() for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the code is running correctly.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"I am checking if the code is running correctly,\" which is completely generic and gives no information about what the code actually does (counting words that contain at least one digit character).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the code is correct at this line of code.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is completely generic \u2014 it just says \"checking if the code is correct at this line\" without identifying any specific operation, property, or quantity relevant to what the code does (counting words containing digits).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (int i = 0; i < value.size(); i++){  \n        if (std::isdigit(value[i])){  \n            count++;  \n        }  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+    "reasoning": "The C++ completion counts characters that are digits in a string, which is directly relevant to the Python code that checks if any character in a word is a digit (`c.isdigit()`). While the C++ counts digits rather than checking if any exist, and it operates on a single string rather than iterating over words, it captures the core operation of digit detection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the number of elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of elements in the list,\" which is partially relevant \u2014 the code is indeed counting (summing) something from a list of words. However, the description misses the key specific operation: it's counting words that contain at least one digit character, not simply counting elements. The description is too generic to indicate the digit-checking aspect, but it does capture the counting/summation over a list.\n\nThis is borderline between NO_INFO and YES. The description captures \"counting elements in a list\" which is genuinely what the outer `sum(... for w in words)` does \u2014 it counts the number of words satisfying a condition. But it doesn't identify what condition is being checked. This feels like NO_INFO since \"counting elements in a list\" is too generic.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (int i = 0; i < value.size(); i++) {  \n        if (std::isdigit(value[i])) {  \n            count++;  \n        }  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+    "reasoning": "The C++ completion checks for digits in a string using `std::isdigit` and counts them, which is directly relevant to the Python code that checks `c.isdigit()` for characters in words. However, the C++ version counts digits in a single string rather than counting words that contain at least one digit, so it captures a key sub-step (digit checking) but misses the outer aggregation logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking how many elements in the list contain the letter 'a' and I am also checking how many elements are in the list.",
+   "verdict": "NO",
+   "reasoning": "The code counts how many words in `words` contain at least one digit character. The description talks about checking how many elements contain the letter 'a' and counting list elements \u2014 it mentions counting elements that match a property (partially relevant structure), but the specific property (letter 'a') is completely wrong (should be digit), and the description doesn't capture the `any()` + `isdigit()` logic meaningfully. However, the general idea of \"counting how many elements satisfy a condition\" is partially correct.\n\nThe description does capture the counting-elements-that-match-a-property structure, even though the specific property is wrong (letter 'a' vs. digit). This is a partial match \u2014 the wrong constant/property but correct operation type.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& item : value) {  \n        if (std::any_of(item.begin(), item.end(), [](const auto& x){  \n            return std::any_of(x.begin(), x.end(), [](const auto& y){  \n                return std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(c.isdigit() for c in w) for w in words)",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion uses `std::any_of` to check elements of items, which is structurally similar to checking if any character in a word satisfies a condition. The use of `any_of` and iterating over a collection of items with a count is genuinely relevant to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

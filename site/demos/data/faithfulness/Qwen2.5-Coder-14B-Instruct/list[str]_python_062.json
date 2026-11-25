@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_062",
+ "datatype": "list[str]",
+ "frontier_id": "total_uppercase_letters",
+ "condition": "the total number of uppercase letters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words shorter than three characters\n(2) the number of words that start with a vowel\n(3) the total number of uppercase letters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) < 3)\n    b = sum(1 for w in words if w and w[0].lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(w.count(c) for w in words for c in \"AEIOU\")\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(w.count(c) for w in words for c in \"AEIOU\")",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The code counts uppercase vowels (AEIOU) across all words, while the description says \"counting the number of uppercase letters.\" Counting uppercase vowels is a subset of counting uppercase letters \u2014 the description correctly identifies that uppercase letters are being counted, though it's slightly too broad (it's specifically vowels, not all uppercase letters). This is still a relevant partial description.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto c : value) { if (isalpha(c)) { count += c; } } return count; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(w.count(c) for w in words for c in \"AEIOU\")",
+    "reasoning": "The Python code counts uppercase vowels (AEIOU) across all words. The C++ completion iterates over characters and counts something about alphabetic characters, but it adds the character value (`count += c`) rather than checking for vowels specifically. However, it does involve iterating over characters and counting something about them, which is partially relevant to the character-counting operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the total number of uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The code counts occurrences of uppercase vowels (A, E, I, O, U) across all words, while the description says it's counting uppercase letters generally. Counting uppercase vowels is a subset of counting uppercase letters, and the description correctly identifies the counting of uppercase characters \u2014 it's just slightly broader than what the code actually does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { if (isupper(ch)) count += ch; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.count(c) for w in words for c in \"AEIOU\")",
+    "reasoning": "The Python code counts the total number of uppercase vowels (A, E, I, O, U) across all words. The C++ completion counts uppercase characters using `isupper(ch)`, which is related to checking for uppercase letters. While the C++ doesn't specifically filter for vowels (A, E, I, O, U), it does correctly identify the \"uppercase\" aspect of the computation and involves counting characters, which is a relevant sub-step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the total number of uppercase characters in a given string.",
+   "verdict": "YES",
+   "reasoning": "The code counts the total occurrences of uppercase vowels (A, E, I, O, U) across all words, not all uppercase characters. However, the description correctly identifies the core operation of counting uppercase characters, which is partially relevant \u2014 it correctly identifies uppercase letters and counting, just over-generalizes from vowels to all uppercase characters.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { count += ch; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.count(c) for w in words for c in \"AEIOU\")",
+    "reasoning": "The Python code counts the total number of vowels (AEIOU) across all words. The C++ completion iterates over characters in a value and accumulates a count, which captures the general structure of counting characters, but it sums the character values (ASCII) rather than checking for vowels specifically. However, the core operation of iterating and counting is present, making it partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the total number of uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The code counts the total occurrences of uppercase vowels (A, E, I, O, U) across all words, not all uppercase letters. The description mentions \"counting uppercase letters\" which is partially relevant \u2014 it correctly identifies counting and uppercase characters \u2014 but misidentifies the set as all uppercase letters rather than just vowels. However, counting uppercase vowels is a subset of counting uppercase letters, so there is genuine conceptual overlap.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto ch : value) { if (std::isupper(ch)) { count += std::count_if(value.begin(), value.end(), [](char c) { return std::isupper(c); }); } } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(w.count(c) for w in words for c in \"AEIOU\")",
+    "reasoning": "The Python code counts occurrences of uppercase vowels (A, E, I, O, U) across all words. The C++ completion counts uppercase characters in a string, which is related (it involves counting uppercase characters) but misses the vowel-specific filtering. However, it does capture the core operation of counting uppercase letters, which is a relevant sub-step of what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

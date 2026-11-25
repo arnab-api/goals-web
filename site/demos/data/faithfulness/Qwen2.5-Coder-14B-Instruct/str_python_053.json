@@ -1,0 +1,96 @@
+{
+ "id": "str_python_053",
+ "datatype": "str",
+ "frontier_id": "first_is_letter",
+ "condition": "whether the first character is a letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the last character\n(2) whether the first character is a letter\n(3) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s[0].isalpha()\n    c = s.isalnum()\n    return a, b, c\n</code>",
+ "impl_span": "b = s[0].isalpha()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking a condition and then performing an operation based on that condition.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is too generic \u2014 it just says \"checking a condition and performing an operation,\" which could describe virtually any line of code. It doesn't mention anything specific like checking if a character is alphabetic, string indexing, or the `isalpha` method.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = s[0].isalpha()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the variable is a boolean and if the first character of a string is a letter.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the first character of a string is a letter, which is exactly what `s[0].isalpha()` does. The part about checking if a variable is a boolean is incorrect/irrelevant, but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) && std::islower(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha()",
+    "reasoning": "The code checks if the first character of string `s` is alphabetic using `isalpha()`. The C++ completion also uses `std::isalpha()`, which is directly relevant to what the code does. The additional `std::islower()` check is an extra condition not in the original, but the core operation (`isalpha`) is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if the variable is an instance of a boolean and then verifying if it is true.",
+   "verdict": "NO",
+   "reasoning": "The code checks if the first character of string `s` is alphabetic using `isalpha()`. The description talks about checking if a variable is a boolean instance, which is completely unrelated to checking if a character is alphabetic. However, there is a tangential connection in that `isalpha()` returns a boolean, but the description is about checking if something *is* a boolean, not about alphabetic character checking.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) ? std::islower(value) : std::isdigit(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha()",
+    "reasoning": "The C++ completion uses `std::isalpha()`, which is directly relevant to what the Python code does \u2014 checking if a character is alphabetic. The completion goes further with additional checks (`islower`, `isdigit`) that aren't in the Python code, but the core operation `isalpha` is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the first character of the string is an alphabetic character.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if the first character of the string `s` (i.e., `s[0]`) is alphabetic using `.isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha()",
+    "reasoning": "The C++ completion implements `std::isalpha` on a value, which is directly relevant to the Python code that calls `.isalpha()` on the first character of a string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_059",
+ "datatype": "list[str]",
+ "frontier_id": "count_ends_consonant",
+ "condition": "the number of words that end with a consonant",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) whether all words have distinct lengths\n(3) the number of words that end with a consonant\n(4) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w))\n    b = len(set(len(w) for w in words)) == len(words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')\n    d = sum(w.count(v) for w in words for v in 'aeiouAEIOU')\n    return a, b, c, d\n\n# Example usage:\nwords",
+ "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "To accurately answer your question, I would need to see the code and understand the context. However, to address your query in a general sense:\n\n1. **Check for Unique Conditions**: I'm evaluating if the code checks for unique conditions, such as whether all elements in a list are unique, or if a certain condition",
+   "verdict": "NO_INFO",
+   "reasoning": "The code counts words whose last character is a consonant (checking if the last letter, lowercased, is in the consonant string). The description is generic and talks about \"checking for unique conditions\" and \"unique elements in a list,\" which is completely unrelated to counting words ending in consonants.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool unique = true;\n    if(value.empty()) return unique;\n    std::set<int> container;\n    for(auto it = value.begin(); it != value.end(); ++it){\n        if(std::is_sorted(value.begin(), value.end())) \n            unique &= std::adjacent_find(value.begin(), value",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+    "reasoning": "The Python code counts words whose last character is a consonant. The C++ completion checks for uniqueness/sorted properties of elements using sets and adjacent_find, which is completely unrelated to checking if a character is a consonant or counting words ending in consonants. There's no mention of last characters, consonants, vowels, or any relevant string property.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To answer this question, you need to provide the line of code you want to check. However, to answer your question based on a general context, I'll explain how to determine if the last character of a given word is a consonant and if it is, whether it's at the end of the word.\n\nTo",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the last character of a word is a consonant, which is exactly what the code does \u2014 it counts words where the last character (`w[-1]`) is a consonant (by checking membership in the consonant string). This is directly relevant to the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto is_consonant = [](char ch){\n        return std::count_if(ch, ch+1, [](char c){\n            return std::count(\"bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ\".end() - 1, [](char c){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+    "reasoning": "The C++ completion is attempting to check if a character is a consonant by checking membership in the string \"bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ\". This is directly relevant to what the Python code does - counting words whose last character is a consonant. The completion correctly identifies the consonant-checking logic, even though the implementation is syntactically garbled.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To answer your question, I need to see the code and understand the context, but I'll address your query based on a general understanding:\n\n1. **Counting Vowels**: If the task is to count vowels in a string, the line of code likely iterates through the string, checking each character to see",
+   "verdict": "YES",
+   "reasoning": "The code counts words ending in consonants (checking if the last character is in the consonant set). The description mentions \"Counting Vowels,\" which is the complementary/opposite concept \u2014 it's about vowel/consonant checking of characters, which is genuinely related to the same domain (vowel vs consonant classification). The description partially identifies the relevant operation (checking characters against a vowel/consonant set), even though it gets the direction wrong (vowels vs consonants).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    int vowels = 0; \n    std::string str = value; \n    for (char c : str) { \n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+    "reasoning": "The Python code counts words ending in consonants (non-vowels). The C++ completion is counting vowels in a string, which is the complementary operation - it's checking for vowels ('a', 'e', 'i', 'o', ...) which is directly related to the vowel/consonant distinction the Python code makes. The C++ code iterates over characters and checks for vowels, which is a key sub-step in determining consonants (consonants = not vowels). This is genuinely relevant to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To answer this, I need to count how many words end with a consonant in a given string. I'll write a function to count how many words in a string end with a consonant. Assuming the task is to count words ending with a consonant from a provided string, here's a brief solution:\n\n```",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: counting how many words end with a consonant. This matches exactly what the code does \u2014 it sums up words where the last character is in the consonant set.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int count = 0; \n    for (auto c : value) \n        if (c != 'a' && c != 'e' && c != 'i' && c != 'o' && c != 'u' && c != 'A' && c != 'E' && c",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[-1].lower() in 'bcdfghjklmnpqrstvwxyz')",
+    "reasoning": "The Python code counts words whose last character is a consonant (not a vowel). The C++ completion checks if characters are not vowels (consonants), which is directly relevant to the core operation. It's checking for non-vowel characters, which is exactly what the Python code does when checking if `w[-1].lower() in 'bcdfghjklmnpqrstvwxyz'`. Though the C++ iterates over all characters rather than just the last one, the consonant-checking logic is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_029",
+ "datatype": "int",
+ "frontier_id": "is_perfect_square",
+ "condition": "whether the number is a perfect square",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the sign of the number\n(2) whether the number is odd\n(3) whether the number is a perfect square\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0) - (n < 0)\n    b = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " int(n ** 0.5) ** 2 == n\n    return a, b, c\n</code>",
+ "impl_span": "c = int(n ** 0.5) ** 2 == n",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is even.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether `n` is a perfect square (by computing the integer square root squared and comparing to `n`), not whether it is even. The description about checking if a number is even is completely unrelated to this operation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = int(n ** 0.5) ** 2 == n",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a number is a perfect square, check if it is a perfect cube, and check if it is a prime number, you can use the following Python code:\n\n```python\nimport math\n\ndef is_perfect_square(n):\n    if n < 0:\n        return False, False, False",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is a perfect square, which is exactly what the code does (it checks if n is a perfect square by comparing the square of the integer square root to n). The additional mentions of perfect cube and prime number are irrelevant noise, but the core concept of \"perfect square\" is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool isPerfectSquare = value >= 0 && std::sqrt(std::sqrt(value)) == int(std::sqrt(std::sqrt(value)));  \n    bool isPerfectCube = value >= 0 && std::sqrt(value) == int(std::sqrt(std::sqrt(value)));  \n    bool isPerfectSquare =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = int(n ** 0.5) ** 2 == n",
+    "reasoning": "The Python code checks if `n` is a perfect square by comparing `int(n**0.5)**2 == n`. The C++ completion explicitly mentions `isPerfectSquare` and uses `std::sqrt` to check for perfect squares, which is directly relevant to the operation being performed. Despite the garbled logic (using sqrt(sqrt(value)) instead of just sqrt(value)) and the duplicate variable declaration, the core concept of checking for a perfect square is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am checking if a number is a perfect square.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if a number is a perfect square,\" which is exactly what the code does \u2014 it computes the integer square root, squares it, and checks if it equals the original number `n`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isqrt(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = int(n ** 0.5) ** 2 == n",
+    "reasoning": "The Python code checks whether a number is a perfect square by computing the integer square root and squaring it back. The C++ completion computes the integer square root (isqrt) of the value, which is directly relevant to this perfect square check \u2014 it captures the core operation even though it doesn't include the squaring-back and comparison step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is a perfect square:\n\n```python\nimport math\n\ndef is_perfect_square(n):\n    if n < 0:\n        return False\n    root = math.isqrt(n)\n    return root * root == n\n```\n\n**Explanation:**\n- `math.isqrt(n)` computes",
+   "verdict": "YES",
+   "reasoning": "The description is about determining if a number is a perfect square, which is exactly what the code does. The code computes `int(n ** 0.5) ** 2 == n` to check if n is a perfect square, and the description explains the same concept using `math.isqrt(n)` and checking `root * root == n`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int root = int(sqrt(value));  \n    return root * root == value;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = int(n ** 0.5) ** 2 == n",
+    "reasoning": "The C++ completion computes the integer square root and checks if `root * root == value`, which is exactly what the Python code does (`int(n ** 0.5) ** 2 == n`). This is a perfect match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

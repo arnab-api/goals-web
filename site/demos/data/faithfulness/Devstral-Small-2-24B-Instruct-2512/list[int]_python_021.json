@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_021",
+ "datatype": "list[int]",
+ "frontier_id": "count_even",
+ "condition": "the number of even values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is zero\n(2) the number of even values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = 0 in nums"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for num in nums if num % 2 == 0)\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the list contains any elements.",
+   "verdict": "NO",
+   "reasoning": "The description mentions checking if a list contains elements, which is loosely related (it involves iterating over a list), but the actual code is counting even numbers in the list, not checking for the presence of elements. The description misses the key operations: modulo check for evenness and counting.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting even numbers in a list, which is exactly what the code does by summing 1 for each number where `num % 2 == 0`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (int i = 0; i < 2; ++count) {if (value % 2 == 0) {break;}}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion checks `value % 2 == 0`, which is directly relevant to the Python code's condition `num % 2 == 0` (checking if a number is even). While the loop structure is garbled (iterating `i < 2` but incrementing `count`, with a break), the core operation of checking divisibility by 2 is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting even numbers in a list, which is exactly what the code does by summing 1 for each number where `num % 2 == 0`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto i = 0; i < 2; ++count) {int sum = 0;for (auto j = 0; j < 2; ++count) {sum = 0;for (auto k = 0; k < 2;",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion attempts to count something (has a `count` variable and loops), but the loop structure is malformed and dominated by a repeating pattern of nested loops with `< 2` bounds and `++count` increments. The content doesn't clearly relate to counting even numbers (no modulo operation, no `% 2 == 0` check). However, there is a `sum` variable and a `count` variable which are partially relevant concepts.\n\nLooking more carefully: the completion has nested loops that repeat with the same structure (`for (auto i = 0; i < 2; ++count)`, `for (auto j = 0; j < 2; ++count)`, `for (auto k = 0; k < 2;`...) - this is a HEAVY_LOOP pattern with a short repeating cycle of nested for-loop structures.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the number of even numbers in the list, we iterate through the list and count how many numbers are even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting even numbers in a list, which is exactly what the code does (summing 1 for each number where num % 2 == 0).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto i = 0; i < value.size(); ++count) {if (value[i] % 2 == 0) {count = 0;break;}}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for num in nums if num % 2 == 0)",
+    "reasoning": "The C++ completion iterates over a collection and checks if elements satisfy `% 2 == 0` (even numbers), which is directly relevant to the Python code that counts even numbers. However, the logic is garbled (resetting count to 0 and breaking on finding an even number, rather than incrementing), but the core operation of checking `value[i] % 2 == 0` is present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_020",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " is_prime(a)\n    return a, b\n\ndef is_prime(num: int) -> bool:\n    if num <= 1:\n        return False\n    for i in range(2, int(num**0.5) + 1):\n        if num % i == 0:\n            return False",
+ "impl_span": "b = is_prime(a)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if a number is prime,\" which is exactly what the code does by calling `is_prime(a)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = is_prime(a)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if the number is prime,\" which is exactly what the code does by calling `is_prime(a)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value <= 1) return false;\n    for (auto i = 2; i <= sqrt(value); ++i){\n        if (is_prime(i)){\n            return true;\n        }\n    }\n    return false;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = is_prime(a)",
+    "reasoning": "The C++ completion implements a primality-related check \u2014 it checks `value <= 1`, iterates up to `sqrt(value)`, and calls `is_prime`. Although the logic inside the loop is slightly off (it returns true if any `i` is prime, rather than checking divisibility), the overall structure clearly relates to primality testing, which is exactly what the Python code does with `is_prime(a)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if a number is prime,\" which is exactly what the code does by calling `is_prime(a)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_prime(value) && is_even(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = is_prime(a)",
+    "reasoning": "The C++ completion references `std::is_prime(value)`, which is directly relevant to the Python code's `is_prime(a)` call. Even though it adds an extra `is_even` check and `std::is_prime` doesn't actually exist in standard C++, the core concept of checking primality is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if the number is prime,\" which is exactly what the code does by calling `is_prime(a)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ bool is_prime = true; if (value <= 1) { is_prime = true; } else { for (bool flag = true; check_prime(value, flag);) { is_prime = flag; } } return is_prime; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = is_prime(a)",
+    "reasoning": "The C++ completion implements a primality check function, which is directly relevant to the Python code that calls `is_prime(a)`. Despite some logical errors (e.g., setting `is_prime = true` when `value <= 1` should arguably be false for 1, and the loop structure is odd), the core concept of checking whether a value is prime is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

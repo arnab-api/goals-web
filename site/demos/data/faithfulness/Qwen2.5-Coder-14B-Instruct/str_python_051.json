@@ -1,0 +1,96 @@
+{
+ "id": "str_python_051",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of whitespace-separated words\n(2) whether the string contains a digit\n(3) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s.split())\n    b = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.isalnum()\n    return a, b, c\n</code>",
+ "impl_span": "c = s.isalnum()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if all characters in the string are digits.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if all characters in the string are digits,\" while the code uses `isalnum()` which checks if all characters are alphanumeric (letters or digits). The description captures the general idea of checking character properties of a string, and \"digits\" is a subset of alphanumeric \u2014 it's partially relevant but not entirely accurate. However, it does identify the core operation of checking character properties of a string, which is genuinely related to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_arithmetic<decltype(value)>::value && std::is_integral<decltype(value)>::value; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The Python code checks if all characters in string `s` are alphanumeric (letters or digits). The C++ completion checks if a value is arithmetic and integral (i.e., a numeric integer type). While \"alphanumeric\" and \"integral/arithmetic\" share some conceptual overlap (both relate to digits/numbers), the C++ completion is checking a type trait about a single value's numeric type rather than checking if characters are letters or digits. However, the \"integral\" and \"arithmetic\" concepts do partially relate to the numeric aspect of alphanumeric checking.\n\nThe C++ completion is about type checking for numeric types, which misses the alphabetic component entirely and is more about compile-time type traits than runtime character checking. This is a different enough concept that it's not genuinely relevant to what `isalnum()` does.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what `s.isalnum()` does \u2014 it checks if all characters in the string are alphanumeric.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto c){ return std::isdigit(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The Python code checks if all characters in string `s` are alphanumeric (letters or digits). The C++ completion checks if all characters are digits using `std::all_of` with `std::isdigit`. This is partially relevant \u2014 it correctly identifies the \"check all characters\" pattern and uses a character classification function, but uses `isdigit` instead of `isalnum`. The core concept of checking all characters with a character classification predicate is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what `s.isalnum()` does \u2014 it checks if all characters in the string are alphanumeric.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_arithmetic_v<decltype(value)> && std::is_integral_v<decltype(value)>; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The Python code checks if a string `s` is alphanumeric (contains only letters and digits). The C++ completion checks if a value is arithmetic and integral (a numeric type check), which relates to the \"numeric\" part of alphanumeric but misses the alphabetic component and operates on types rather than string characters. It captures a partial relevant concept (checking for numeric/digit nature) but misses the full alphanumeric check on a string.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what `s.isalnum()` does \u2014 it checks if all characters in the string are alphanumeric.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), ::isalnum); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s.isalnum()",
+    "reasoning": "The C++ completion implements checking if all characters in a string are alphanumeric using `std::all_of` with `::isalnum`, which is exactly what Python's `str.isalnum()` does. This is a perfect conceptual match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

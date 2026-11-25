@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_031",
+ "datatype": "list[str]",
+ "frontier_id": "count_all_lowercase",
+ "condition": "the number of words written entirely in lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of capitalized words\n(2) the total number of characters across all words\n(3) the number of words written entirely in lowercase letters\n(4) the number of words that contain a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w[:1].isupper())\n    b = sum(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.islower())\n    d = sum(1 for w in words if any(ch.isdigit() for ch in w))\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for w in words if w.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Executing a task.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description \"Executing a task\" is completely generic and provides no specific information about what the code is doing (counting lowercase words).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The Python code counts words that are entirely lowercase. The C++ completion computes the size of a value, which is unrelated to checking if words are lowercase or counting them based on case.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a line of code is part of a function, you would check each character in the string to see if it is lowercase. If all the characters are lowercase, they will be counted as a separate variable.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking characters to see if they are lowercase and counting them, which is relevant to what the code does (counting words where `w.islower()` is true). The description conflates \"characters\" with \"words\" and adds irrelevant context about functions, but the core idea of checking for lowercase and counting is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, we are checking if a number is even by comparing it to the length of a filtered list of numbers.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a number is even and comparing to a length of filtered numbers, which is completely unrelated to what the code does. The code counts words that are entirely lowercase using `islower()`, which is about string case checking, not number parity or evenness.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The code counts words that are all lowercase. The C++ completion computes the size of a value, which is unrelated to checking if words are lowercase or counting them.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of strings that do not contain any digits.",
+   "verdict": "NO",
+   "reasoning": "The code counts words that are entirely lowercase letters using `islower()`. The description says \"strings that do not contain any digits,\" which is a related but different property \u2014 `islower()` requires all characters to be lowercase letters (no digits, no uppercase), while \"no digits\" is a weaker condition. However, both are about filtering strings based on character properties, and \"no digits\" is partially correct (lowercase strings indeed have no digits). This is close enough to be considered partially relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if (std::begin (value), std::end (value), [](const auto& s){ return std::all_of (s.begin (), s.end (), [](const auto& x){ return std::isalpha (x); }); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion counts elements in a collection that satisfy a condition using `count_if`, and checks characters with `all_of`. The Python code counts words that are all lowercase. The C++ uses `isalpha` (checking alphabetic) rather than `islower` (checking lowercase), but the structure is clearly relevant: counting words/strings from a collection based on a character-level property. The core operation (counting strings satisfying a per-character predicate) matches well enough.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

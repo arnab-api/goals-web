@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_017",
+ "datatype": "list[str]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the length of the longest word\n(2) the number of distinct words\n(3) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(words))\n    c = sum(sum(1 for ch in w if ch in 'aeiouAEIOU') for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = len(set(words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am calculating the sum of all elements in a list.",
+   "verdict": "NO",
+   "reasoning": "The description says \"calculating the sum of all elements in a list,\" but the code is counting the number of unique words by converting to a set and taking its length. The operation is about counting distinct elements, not summing \u2014 these are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The Python code counts the number of unique words by converting the list to a set and getting its length. The C++ completion returns the size of a value, which corresponds to the `len()` operation. However, it misses the `set()` part (deduplication), but it does capture the size/length operation which is a relevant sub-step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of unique elements in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting unique elements in a list, which is exactly what `len(set(words))` does \u2014 converting the list to a set removes duplicates, and `len()` counts the remaining unique elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<decltype(value), decltype(value)> set(value);  \n    return set.size();  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an unordered_set from a value and returns its size, which directly corresponds to the Python code that creates a set from `words` and gets its length with `len(set(words))`. The core operation \u2014 counting unique elements by putting them in a set and getting the size \u2014 is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am counting the number of unique elements in a list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of unique elements in a list,\" which is exactly what `len(set(words))` does \u2014 it converts the list to a set to get unique elements, then counts them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::tuple<std::size_t, std::size_t>(std::size(value), std::size(value)); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion computes `std::size(value)` which relates to finding the size/length of something, which is relevant to the Python code that computes `len(set(words))`. However, it returns a tuple of two sizes rather than the size of a set, and doesn't capture the uniqueness/deduplication aspect. Still, the size computation is a relevant partial match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of unique elements in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting unique elements in a list, which is exactly what `len(set(words))` does \u2014 converting to a set removes duplicates, and `len` counts the unique elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<std::string> unique_values;  \n    for (const auto& item : value) {  \n        unique_values.insert(item);  \n    }  \n    return unique_values.size();  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an unordered_set from a collection of items and returns its size, which is exactly what the Python code does \u2014 counting unique words using `set()` and `len()`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_023",
+ "datatype": "list[int]",
+ "frontier_id": "count_even",
+ "condition": "the number of even values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the product of all values\n(2) the number of even values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = __import__('math').prod(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for x in nums if x % 2 == 0)\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll execute the following steps:\n\n1. **Step 1:** Calculate the sum of all numbers from 1 to 100.\n2. **Step 2:** Print the sum.\n3. **Step 3:** Calculate the product of all numbers from 1 to 100.\n4.",
+   "verdict": "NO",
+   "reasoning": "The description talks about summing numbers from 1 to 100 and calculating products, which is completely unrelated to what the code does (counting even numbers in a list using modulo 2 check). The description doesn't mention counting, even numbers, modulo operations, or filtering.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "```python\nprint(sum(x for x in range(1, 100) if x % 2 == 0))\n```",
+   "verdict": "YES",
+   "reasoning": "The description shows code that sums values where `x % 2 == 0` (even numbers), which is directly relevant to what the actual code does \u2014 counting elements where `x % 2 == 0`. The description captures the even-number filtering logic, even though it sums the values rather than counting them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto i = 0; i < 2; ++count) {if (value % 2 == 0) {break;}}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion contains a loop with `value % 2 == 0` check, which is directly relevant to counting even numbers. However, the loop structure is malformed (iterating `i < 2` but incrementing `count` and breaking on even), and it doesn't iterate over a collection. Despite the structural issues, the core operation of checking `% 2 == 0` is present and relevant to counting even numbers.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\nprint(sum(1 for _ in range(2) if sum(1 for _ in range(2) if sum(1 for _ in range(2) if sum(1 for _ in range(2) if sum(1 for _ in range(2) if sum(1 for _",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a short repeating cycle of `sum(1 for _ in range(2) if` that repeats over and over without adding meaningful content beyond the loop itself.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::accumulate(std::count(value, 0), 0);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion uses `std::accumulate` and `std::count`, which relate to counting/summing elements in a collection. The Python code counts even numbers (elements where `x % 2 == 0`) and sums them. The completion captures the counting/accumulating aspect but misses the even-number filter (`% 2 == 0`). Still, the core operations of counting and accumulating are relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts elements in `nums` where `x % 2 == 0`, which is the condition for even numbers.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count=0;for(auto i=0;count+=value.size()-std::count_if(std::views::count(value.begin(),value.end(),0),value.size());++count)if(value.size()-std::count(value.begin(),value.end(),0))return std::count(value.begin(),value.end(),",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion is attempting to count elements in a collection, using `std::count` and `std::count_if` operations on a container. However, it's checking for elements equal to 0 rather than even numbers (x % 2 == 0), and the structure is garbled/syntactically incorrect. The core idea of counting elements matching a condition in a collection is partially present, but the specific condition (even numbers via modulo) is not captured \u2014 it's checking for zeros instead.\n\nThat said, the completion does involve counting elements in a collection with some condition, which is the general structure of what the Python code does. The counting operation is relevant even if the specific predicate is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

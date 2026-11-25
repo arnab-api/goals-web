@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_020",
+ "datatype": "list[str]",
+ "frontier_id": "count_starts_vowel",
+ "condition": "the number of words that start with a vowel",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether all words have distinct lengths\n(2) the total number of uppercase letters across all words\n(3) the number of words that start with a vowel\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(len(w) for w in words)) == len(words)\n    b = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[0].lower() in 'aeiou')\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check each character in the code and count how many are vowels (a, e, i, o, u). Then I'll count how many of those are vowels.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting vowels (a, e, i, o, u), which is directly relevant to what the code does \u2014 it counts words whose first character is a vowel. The description gets the core concept right (vowel checking/counting) even though it incorrectly says \"each character\" instead of \"each word's first character.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return count_if(cbegin(value), cend(value), [](auto c){return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion checks if characters are vowels ('a', 'e', 'i', 'o', 'u') and counts elements matching that condition using `count_if`. The Python code counts words whose first character (lowercased) is a vowel. The C++ is checking for vowels and counting, which is directly relevant to the core operation, though it's checking all characters rather than just the first one.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting vowels, then checking for words starting with vowels, then counting words.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"checking for words starting with vowels\" and \"counting words,\" which is exactly what the code does \u2014 it counts words where the first character (lowercased) is a vowel. The description correctly identifies the core operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::begin(value), [](auto a, auto b, auto c){return (std::count_if(value.begin(), [](auto v) { return v == 'a'; }), std::count_if(value.begin(), [](auto v) { return 'a' == 'A'; }), std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The Python code counts words whose first character (lowercased) is a vowel. The C++ completion uses `std::count_if` and checks for the character 'a' (a vowel), and also references 'A' (uppercase vowel). This is genuinely relevant - it's counting elements that match vowel characters, which aligns with the core operation of the Python code. However, the completion is somewhat garbled and repetitive with nested count_if calls.\n\nThe repetition here involves `std::count_if` appearing multiple times, but the content between repetitions varies (checking 'a', then 'A', then cut off), so it's not a pure HEAVY_LOOP of a 5-token unit. The substance shows counting with vowel character matching.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting how many times a line starts with a specific pattern.",
+   "verdict": "NO",
+   "reasoning": "The code counts words that start with a vowel (checking if the first character is in 'aeiou'). The description mentions \"counting how many times\" something occurs, which is partially relevant (it's doing a count), but \"a line starts with a specific pattern\" is somewhat off \u2014 the code checks words, not lines, and the \"pattern\" is vowels specifically. However, the core idea of counting items that start with a specific character/pattern is genuinely captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (int i = 0; value > 0; i++) {  \n        if (value & 1) {  \n            count++;  \n        }  \n        value >>= 1;  \n    }  \n    return [value]() {  \n        int c",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting set bits (popcount) using bitwise operations, which is completely unrelated to counting words that start with vowels. The code counts 1-bits in an integer, while the Python code counts words whose first character (lowercased) is a vowel.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "This line counts how many words start with a vowel (a, e, i, o, u). \n\n```python\ncount = sum(1 for word in words if word[0].lower() in 'aeiou')\n```\n\nExplanation: It checks if the first character of each word is a vowel. It",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: counting words that start with a vowel by checking if the first character (lowercased) is in 'aeiou'.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    std::string vowels = \"aeiou\";  \n    int vowel_count = 0;  \n    for (int i = 0; i < value.size(); ++i) {  \n        if (std::string(\"aeiou\").find(value[i]) ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting vowels by checking if characters are in the string \"aeiou\", which is directly relevant to the Python code that counts words starting with vowels. The completion correctly identifies the vowel set \"aeiou\" and uses a counting approach, matching the core logic of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

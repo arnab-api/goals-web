@@ -1,0 +1,96 @@
+{
+ "id": "str_python_021",
+ "datatype": "str",
+ "frontier_id": "count_letters",
+ "condition": "the number of alphabetic characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string has letters and all of them are lowercase\n(2) the number of alphabetic characters\n(3) the number of digit characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.islower"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isalpha() for c in s)\n    c = sum(c.isdigit() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(c.isalpha() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if all characters in the string are alphabetic and if the string contains only letters.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if characters are alphabetic, which is directly relevant to the code using `c.isalpha()`. However, the description says \"all characters\" and \"only letters\" (implying an all-or-nothing check), while the code actually counts/sums the alphabetic characters. Despite this imprecision, the core concept of checking alphabetic characters is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_same_v<decltype(value), std::string> && std::all_of(value.begin(), value.end(), ::isalpha) && value.find_first_not_of(\"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") == std::string::npos && value.find_first_not_of(\"0123456789\") == std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The Python code counts the number of alphabetic characters in a string `s`. The C++ completion checks if a string consists entirely of alphabetic characters using `std::all_of` with `::isalpha` and `find_first_not_of` with alphabet characters. While the C++ checks if ALL characters are alphabetic (a boolean check) rather than counting alphabetic characters, it does correctly identify `isalpha` as the core operation being performed on characters of the input string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking the number of characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking the number of characters in the string,\" which is partially relevant \u2014 the code is counting (summing) something about characters in the string `s`. However, it misses the key detail that only alphabetic characters are being counted (via `isalpha()`). Still, counting characters in a string is a relevant sub-concept, even if imprecise.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    bool is_alpha = std::isalpha(value); \n    bool is_digit = std::isdigit(value); \n    bool is_alnum = std::isalnum(value); \n    int num_alpha = std::count_if(value.begin(), value.end(), [](char c) { return std::isalpha(c);",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion explicitly mentions `std::isalpha` and `std::count_if` with a lambda that checks `std::isalpha(c)`, which directly corresponds to counting alphabetic characters in a string \u2014 exactly what the Python code does with `sum(c.isalpha() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of characters in the string,\" which is partially relevant \u2014 the code is indeed counting something in the string. However, it misses the key detail that only alphabetic characters are being counted (via `isalpha()`). Still, counting characters in a string is a genuine sub-step of what the code does, so this qualifies as a partial match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto v){ return std::isalpha(v); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of alphabetic characters in a string/sequence using `std::count_if` with `std::isalpha`, which directly corresponds to `sum(c.isalpha() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the character is an alphabet and counting it.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if each character is alphabetic (using `isalpha()`) and counts the total number of such characters (using `sum()`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (char c : value) { if (isalpha(c)) count += isalpha(value); } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion iterates over characters in a string, checks `isalpha(c)` for each character, and counts them \u2014 which is exactly what the Python code does (summing `c.isalpha()` for each character in `s`). The implementation has a minor bug (using `value` instead of `c` in the increment), but the core logic of counting alphabetic characters is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

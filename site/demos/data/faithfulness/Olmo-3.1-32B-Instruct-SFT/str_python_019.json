@@ -1,0 +1,96 @@
+{
+ "id": "str_python_019",
+ "datatype": "str",
+ "frontier_id": "starts_upper",
+ "condition": "whether the string starts with an uppercase letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) whether the string starts with an uppercase letter\n(3) the number of digit characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s and s[0].isupper()\n    c = sum(ch.isdigit() for ch in s)\n    return a, b, c\n</code>",
+ "impl_span": "b = s and s[0].isupper()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the variable `x` is greater than 5.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if a variable is greater than 5, which is completely unrelated to what the code does (checking if a string is non-empty and starts with an uppercase letter).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = s and s[0].isupper()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the string is empty and if the first character is uppercase.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies both key operations: checking if the string is non-empty (via `s`) and checking if the first character is uppercase (`s[0].isupper()`). The description says \"checking if the string is empty\" but means checking if it's non-empty (a minor imprecision), and the overall logic matches perfectly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? value : value; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = s and s[0].isupper()",
+    "reasoning": "The C++ completion checks if a value is empty, which is partially relevant (the Python code also handles the empty string case with `s and ...`). However, the non-empty branch just returns `value` unchanged with no uppercase check or any other meaningful operation, making it essentially a no-op that doesn't capture the uppercase checking aspect.\n\nThe completion does touch on the empty/non-empty distinction, which is genuinely relevant to the code's logic (short-circuit evaluation on empty string). It's not a loop and has some coherent content.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the code is running.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking if the code is running,\" which is completely unrelated to what the code does (checking if string `s` is non-empty and its first character is uppercase). No relevant operation or property is identified.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = s and s[0].isupper()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the first character of the string is an uppercase letter.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if the string `s` is non-empty and if its first character is an uppercase letter using `isupper()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value && isalpha(value) && isupper(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s and s[0].isupper()",
+    "reasoning": "The Python code checks if the string `s` is non-empty AND its first character is uppercase. The C++ completion checks if a value is truthy, is alphabetic, and is uppercase \u2014 capturing the key ideas of non-emptiness/truthiness and checking for uppercase. The `isalpha` check is an extra condition not in the Python code, but the core concepts of checking existence and uppercase are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

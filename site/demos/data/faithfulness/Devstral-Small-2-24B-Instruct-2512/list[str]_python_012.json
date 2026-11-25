@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_012",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of distinct words\n(2) the number of words longer than five characters\n(3) the number of capitalized words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(words))\n    b = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[0].isupper())\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w[0].isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "```python\n# Count of unique letters in the input\ncount = 0\n\n# Sum of all unique letters\nsum = 0\n\n# Number of lines in the input\nlines = 0\n\n# Number of unique letters\nunique = 0\n\n# Number of lines with unique letters\nunique_letters",
+   "verdict": "NO",
+   "reasoning": "The code counts words that start with an uppercase letter. The description talks about \"unique letters,\" \"lines,\" and other unrelated concepts. However, it does mention \"Count\" and uses a variable named `count`, and there's a vague notion of counting something. But the specific substance \u2014 counting words starting with uppercase \u2014 is not captured. The description is about unique letters and lines, which is completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w[0].isupper())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of words in the given text that start with a capital letter.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words that start with an uppercase letter by checking `w[0].isupper()` for each word and summing the results.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::any_of(value, [](auto s){return std::isupper(s);});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The Python code counts words where the first character is uppercase. The C++ completion checks if any character in a string is uppercase using `std::isupper`, which is related but checks any character rather than just the first one. However, it correctly identifies the core operation: checking for uppercase characters in words, which is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of lines where the variable `count` is incremented.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines where a variable is incremented, which is unrelated to what the code does (counting words that start with an uppercase letter). The description doesn't identify any relevant operation like checking uppercase letters or iterating over words.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](auto count){return std::count_if(value.begin(), value.end(), [](auto count){return count;});});}",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The C++ completion uses `std::count_if` which is relevant to counting elements in a collection based on a condition, which matches the Python code's use of `sum(1 for w in words if ...)`. However, the completion is dominated by a nested repeating pattern where `std::count_if(value.begin(), value.end(), [](auto count){return count;})` repeats in a loop structure, and the inner lambda just returns `count` without any meaningful condition (no check for uppercase). The repetition collapses into a stuck loop with no coherent content beyond the initial fragment.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of lines where the first word is a capitalized letter.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting items where the first character is capitalized/uppercase, which is exactly what the code does (counting words where `w[0].isupper()` is true). The description says \"lines\" and \"first word\" instead of \"words\" and \"first character,\" but the core concept of counting elements with an uppercase first letter is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::ranges::views::iota(0),[](auto s){return std::ranges::count_if(s.begin(),s.end(),[](auto c){return std::ranges::count_if(s.begin(),s.end(),[](auto c){return std::ranges",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The C++ completion attempts to use `std::count_if` to count elements satisfying some condition, which is relevant to the Python code that counts words meeting a condition. However, the completion shows a nested repeating pattern with `std::ranges::count_if(s.begin(),s.end(),[](auto c){return std::ranges::count_if(s.begin(),s.end(),...` that loops back on itself, indicating a stuck loop.\n\nThe repeating unit is roughly `count_if(s.begin(),s.end(),[](auto c){return std::ranges` which repeats, making this a HEAVY_LOOP despite the relevant `count_if` token appearing.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

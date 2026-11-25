@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_007",
+ "datatype": "list[str]",
+ "frontier_id": "total_length",
+ "condition": "the total number of characters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is empty\n(2) the number of capitalized words\n(3) the length of the longest word\n(4) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(len(w) == 0 for w in words)\n    b = sum(1 for w in words if w[:1].isupper())\n    c = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(len(w) for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll analyze the code:\n\n1. First, I'll count the number of characters in the string.\n2. Then, I'll sum up the length of each word in the string.\n3. Next, I'll calculate the total number of words in the string.\n4. Finally, I'll determine the length of",
+   "verdict": "YES",
+   "reasoning": "The description mentions summing up the length of each word, which is exactly what the code does. Steps 1 and 2 are directly relevant to the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value, auto& sum, auto& count) {sum = 0; for (auto i : value) sum += i; count = 0; for (auto i : value) count += i; return std::accumulate(value.begin(), value.end(), 0);};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion shows computing a sum over elements of a collection using `std::accumulate` and also iterating to accumulate values. The Python code computes the total sum of word lengths. The C++ completion's use of `std::accumulate` and summing over a collection is genuinely relevant to the summing operation in the Python code, even though the specifics differ (summing lengths vs. summing elements directly).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the total number of characters, words, and the sum of all word lengths in the text.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"sum of all word lengths\" which is exactly what the code computes \u2014 summing `len(w)` for each word in `words`. The other parts (counting words, characters separately) are noise but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return accumulate( begin(value), end(value), 0, [](int sum, int len, int total, int size) -> int {return accumulate( begin(value), end(value), 0, [](int a, int b, int c, int d) -> int {return accumulate( begin(value), end(value",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion is attempting to compute a sum using `accumulate` over a collection, which is relevant to summing lengths of words. However, the completion is dominated by a repeating pattern of `accumulate(begin(value), end(value), 0, ...)` nested within itself repeatedly, forming a heavy loop structure. Once you collapse the repetition, there's no coherent additional content beyond the stuck loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the total number of characters by:  \n1. Summing all - using `len()` to get the total.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting total number of characters and using `len()` and summing, which is exactly what the code does \u2014 it sums the lengths of all words to get the total character count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(std::begin(value), std::end(value), 0, [](int sum, auto total){ return sum + sizeof(total); });}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::accumulate` to sum up sizes of elements in a collection, which corresponds to summing lengths of words. The use of `sizeof(total)` instead of `total.size()` or `total.length()` is a wrong implementation detail, but the core idea of accumulating/summing sizes of elements in a collection is genuinely relevant to what the Python code does (summing `len(w)` for each word).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the total number of characters in the text by summing the lengths of all strings in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it sums the lengths of all words in the `words` list to get the total character count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::accumulate(std::begin(value), std::end(value), 0, [](int sum, const auto& s){return sum + s.length();});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::accumulate` to sum up the lengths of strings in a collection, which is exactly what the Python code does \u2014 summing `len(w)` for each word `w` in `words`. The implementation matches the concept precisely, using a lambda that adds `s.length()` to a running sum.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

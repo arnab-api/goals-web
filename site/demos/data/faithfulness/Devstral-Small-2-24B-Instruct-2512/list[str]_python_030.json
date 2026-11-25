@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_030",
+ "datatype": "list[str]",
+ "frontier_id": "count_all_lowercase",
+ "condition": "the number of words written entirely in lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the length of the longest word\n(3) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.islower())\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the length of the longest line in the code, the number of lines, and the number of distinct words.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines, line lengths, and distinct words \u2014 none of which match what the code does (counting words that are entirely lowercase). The description is coherent but completely unrelated to the actual operation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }\n\nauto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of lines where the code is doing the following:\n\n1. Converting a string to lowercase and checking if it's all lowercase.\n2. Counting the number of lines where the code is doing the following:\n   a. Converting a string to lowercase and checking if it's all lowercase.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if strings are all lowercase and counting them, which is exactly what the code does (using `islower()` to check if each word is all lowercase, then summing the count). The recursive/looping structure of the description is a bit odd but it's not a heavy loop \u2014 it's just a formatting artifact. The core content is relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::all_of(value, [](auto v){return v.size() > 0;});}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The Python code counts words that are entirely lowercase. The C++ completion checks if all elements have size > 0, which is unrelated to checking lowercase characters. There's no mention of case checking, character properties, or counting lowercase words.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of lines where the variable `count` is incremented.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines where a variable `count` is incremented, which is a meta-description about code structure rather than what the code actually does. The code counts words that are entirely lowercase using `islower()`. While \"counting\" is mentioned, the description is completely wrong about what is being counted (lowercase words vs. lines incrementing a counter).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{},[](int x){return std::all_of(std::vector<int>{},[](int y){return std::any_of(std::vector<int>{},[](int z){return std::none_of(std::vector<int>{},[](int w){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion uses `std::count_if` which is relevant to counting elements that satisfy a condition (matching the `sum(1 for w in words if ...)` pattern). However, the completion quickly devolves into a nested loop of `std::all_of`, `std::any_of`, `std::none_of` with empty vectors, which doesn't capture the lowercase check. The initial `count_if` is relevant, but the rest is a cascading nested structure that repeats similar patterns without meaningful content.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is roughly `std::vector<int>{},[](int ?){return std::???_of(` cycling through all_of/any_of/none_of \u2014 this is a short repeating cycle that dominates the completion after the initial `count_if`. Once collapsed, little coherent content remains beyond the initial count_if call.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I count the number of lines where the variable `count` is incremented for strings that contain only lowercase letters and have a length of 1.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting strings that contain only lowercase letters, which is directly relevant to what the code does (`w.islower()`). The description incorrectly adds the constraint about length of 1 and frames it as \"lines where count is incremented,\" but the core concept of counting words/strings that are entirely lowercase is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{value},[](int n){return std::all_of(std::vector<int>{value},[](int n){return std::count(std::vector<int>{value},[](int n){return std::count_if(std::vector<int>{value},[](",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion attempts to count elements using `count_if` and check properties with `all_of`, which relates to counting words that satisfy a condition (islower). However, the completion becomes a deeply nested, repetitive loop of `std::count_if`, `std::vector`, `std::all_of` patterns that cycle without resolution.\n\nThe key issue is that while the initial fragment mentions `count_if` and `all_of` (which are conceptually relevant to counting words satisfying a lowercase condition), the completion is dominated by a short repeating cycle of `std::count_if(std::vector<int>{value},[](int n){return` that loops without meaningful content beyond the initial setup.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

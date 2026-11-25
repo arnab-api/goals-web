@@ -1,0 +1,96 @@
+{
+ "id": "int_python_059",
+ "datatype": "int",
+ "frontier_id": "absolute_value",
+ "condition": "the absolute value",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number has exactly two digits\n(2) the absolute value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (10 <= abs(n) <= 99"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " abs(n)\n    return a, b\n</code>",
+ "impl_span": "b = abs(n)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a valid integer.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking if the input is a valid integer,\" but the code is computing the absolute value of `n` and storing it in `b`. These are unrelated operations \u2014 taking an absolute value is not a validity check.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = abs(n)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm returning the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions \"absolute value\" which is directly relevant to what the code does (`abs(n)`). However, the phrase \"absolute value of the absolute value of...\" repeats many times in a chain. The key question is whether this is a HEAVY_LOOP.\n\nThe repeating unit is \"absolute value of the\" (roughly 4 tokens), and it repeats continuously. Once collapsed, the remaining content is just \"returning the absolute value\" \u2014 but the loop dominates the description. This fits the HEAVY_LOOP pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return abs(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `abs(value)`, which is exactly what the Python code does with `abs(n)`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm returning the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the absolute value of the",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions \"absolute value\" which is exactly what the code computes (`abs(n)`). However, the description repeats \"the absolute value of the absolute value of...\" in a loop pattern. Let me check if this qualifies as a HEAVY_LOOP.\n\nThe repeating unit is \"the absolute value of\" which is roughly 4-5 tokens, repeating continuously. This is a short cycle dominating the entire description, making it a HEAVY_LOOP.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return abs(value);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `abs(value)`, which directly corresponds to the Python code computing `abs(n)`. This is a clear match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "`abs(x)`",
+   "verdict": "YES",
+   "reasoning": "The description mentions `abs(x)`, which is directly relevant to the code that calls `abs(n)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return abs(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n)",
+    "reasoning": "The C++ completion implements `abs(value)`, which is exactly what the Python code does with `abs(n)`. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_018",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is even\n(2) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(nums) != len(set(nums))\n    return a, b\n</code>",
+ "impl_span": "b = len(nums) != len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm sorry, but I can't assist with that.",
+   "verdict": "MALFORMED",
+   "reasoning": "The description is a refusal message with no content relevant to the code, which checks for duplicates by comparing the length of a list to the length of its set.\n\n<verdict>MALFORMED</verdict>",
+   "reasoned_verdict": "MALFORMED",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(nums) != len(set(nums))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if there are any duplicate values in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if there are any duplicate values in the list,\" which is exactly what the code does \u2014 it compares the length of the list to the length of the set (which removes duplicates) to detect duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool has_duplicates = false;  \n    for (const auto& item : value) {  \n        if (item.second) {  \n            return false;  \n        }  \n    }  \n    return true;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(nums) != len(set(nums))",
+    "reasoning": "The C++ completion is checking for duplicates in a collection, which is exactly what the Python code does (checking if there are duplicate elements by comparing `len(nums)` to `len(set(nums))`). The variable name `has_duplicates` and the iteration over items to check for duplicates are directly relevant, even though the implementation logic has some issues (checking `item.second` in a way that seems inverted).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking for duplicates in the list.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking for duplicates in the list,\" which is exactly what the code does \u2014 it compares the length of the list to the length of the set (which removes duplicates) to detect if any duplicates exist.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::pair<bool,bool> (std::unique(value), std::pair<bool,bool> (std::unique(value), std::pair<bool,bool> (std::unique(value))); }",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of its set. The C++ completion uses `std::unique` which is related to finding/removing duplicates. However, the completion is dominated by a repeating pattern of `std::pair<bool,bool>(std::unique(value), std::pair<bool,bool>(std::unique(value),...` that cycles endlessly.\n\nThis is a HEAVY_LOOP \u2014 the pattern `std::pair<bool,bool> (std::unique(value),` repeats as a short unit, and once collapsed, there's no additional coherent content beyond the initial function signature.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if there are any duplicate values in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if there are any duplicate values in the list,\" which is exactly what the code does \u2014 it compares the length of the list to the length of the set (which removes duplicates) to detect duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){std::set<int> seen; bool duplicate = false; for(auto v : value) { duplicate = std::find_if(value.begin(), value.end(), [](auto v){return std::find_if(v.begin(), v.end(), [](auto v){return std::find_if(v.begin(), v.end(), [](auto v",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(nums) != len(set(nums))",
+    "reasoning": "The C++ completion is checking for duplicates using a `std::set` and a `duplicate` boolean flag, which is directly relevant to the Python code that checks if there are duplicates by comparing `len(nums)` to `len(set(nums))`. However, the completion then devolves into a nested repeating loop of `std::find_if(v.begin(), v.end(), [](auto v){return std::find_if(...)` that repeats indefinitely.\n\nThe initial part (set + duplicate detection) is genuinely relevant, but the completion is dominated by a short repeating cycle of nested `std::find_if` calls. The looping pattern takes over the completion after the initial relevant setup.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

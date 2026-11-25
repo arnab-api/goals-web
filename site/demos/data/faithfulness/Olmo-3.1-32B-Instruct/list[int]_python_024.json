@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_024",
+ "datatype": "list[int]",
+ "frontier_id": "count_even",
+ "condition": "the number of even values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether the values are sorted in non-decreasing order\n(2) the difference between the maximum and minimum values\n(3) the number of even values\n(4) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    b = max(nums) - min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for x in nums if x % 2 == 0)\n    d = any(x % 2 == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I cannot provide an answer without the specific code and context. Please provide the code and clarify what you want to know (e.g., counting elements, checking conditions).",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting elements\" and \"checking conditions,\" which are both relevant to what the code does (counting elements that satisfy a condition). However, this is quite generic and could apply to many different operations.\n\nDespite being generic, the description does mention \"counting elements\" and \"checking conditions\" which are directly relevant sub-steps of the code. The code counts elements (using `sum` with a generator) that satisfy a condition (`x % 2 == 0`). This is borderline between YES and NO_INFO, but since it specifically mentions both counting and condition-checking as relevant operations, I'll lean toward YES.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size() ? value.size() : 0; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion is about returning the size of a value, which relates to counting/size operations but doesn't capture anything specific about counting even numbers (x % 2 == 0) or iterating over a list to sum. The size() operation is generic and unrelated to the modulo check or the specific counting of even elements.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I don't have the data to determine if there are even numbers in the list.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"even numbers in the list,\" which is directly relevant to what the code does \u2014 it counts elements where `x % 2 == 0`, i.e., even numbers. Despite the hedging language, the core concept is identified correctly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int evenCount = 0; int sum = 0; for (const auto& num : value) { if (num % 2 == 0) { evenCount++; sum += num; } } return std::make_pair(evenCount, sum); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion counts even numbers (`evenCount`) using `num % 2 == 0`, which is exactly what the Python code does with `sum(1 for x in nums if x % 2 == 0)`. The completion also computes the sum of even numbers as an extra step, but the core operation of counting even elements is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of times a condition is true in a loop.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of times a condition is true in a loop,\" which accurately captures what the code does \u2014 it counts elements in `nums` that satisfy a condition (being even). This is genuinely relevant, though it doesn't specify the even-number condition.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (const auto& item : value) count += item; return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion counts items in a collection, which is partially relevant \u2014 it's iterating over a collection and accumulating a count. However, it's missing the key condition: checking if elements are even (% 2 == 0). It just sums all items rather than counting even ones. Still, the core structure of iterating and counting is present, which is a relevant sub-step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of even integers in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting even integers in a list, which matches exactly what the code does (summing 1 for each element where x % 2 == 0).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count=0; for(auto x : value) if(x%2==0) ++count; return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 == 0)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting elements in a collection that are divisible by 2 (even numbers). It iterates over elements, checks `x%2==0`, increments a counter, and returns it.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

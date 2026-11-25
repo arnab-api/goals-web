@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_053",
+ "datatype": "list[str]",
+ "frontier_id": "all_unique_lengths",
+ "condition": "whether all words have distinct lengths",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) whether all words have distinct lengths\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(words) == len({len(w) for w in words})\n    return a, b\n</code>",
+ "impl_span": "b = len(words) == len({len(w) for w in words})",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines of code where the first part of the answer is to count how many lines of code are being executed.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether all words have distinct lengths by comparing the total count of words to the count of unique word lengths. The description talks about \"counting lines of code\" which is completely unrelated to what the code does (checking uniqueness of word lengths). The mention of \"count\" is too generic to be relevant.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto& x : {value}){count += 1;}return count;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(words) == len({len(w) for w in words})",
+    "reasoning": "The Python code checks if all words have unique lengths (by comparing the count of words to the count of distinct lengths). The C++ completion is a generic counting function that counts elements in a collection, which doesn't relate to checking uniqueness of word lengths or comparing set size to list size. It's just a trivial counter with no relevance to the specific property being checked.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "All elements in `a` are unique.",
+   "verdict": "YES",
+   "reasoning": "The code checks whether all words have unique lengths (by comparing the count of distinct lengths to the total number of words). The description says \"All elements in `a` are unique,\" which captures the core concept of uniqueness/distinctness being checked, even though it refers to `a` instead of `words` and says \"elements\" instead of \"word lengths.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool flag = true;for (int i = 0; i < value.size(); ++i){flag = true;for (int j = 0; j < value.size(); ++j){flag = value[i] == value[j];}bool allSame = true;for (int k = 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(words) == len({len(w) for w in words})",
+    "reasoning": "The Python code checks if all words have distinct lengths (by comparing the count of words to the count of unique lengths). The C++ completion appears to be checking equality between elements in a collection, which relates to comparing lengths/values for uniqueness or sameness. However, the logic shown seems to be checking if all elements are equal to each other (allSame pattern), which is somewhat related to the concept of checking uniqueness but inverted. It's not a heavy loop and does contain relevant substance about comparing elements of a collection for equality/distinctness.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all elements in the list are equal to the boolean result of whether all elements are unique.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all words have unique lengths (by comparing the count of words to the count of distinct word lengths). The description mentions checking if \"all elements are unique,\" which partially captures the uniqueness aspect of the code. However, it incorrectly frames it as comparing elements to a boolean result rather than comparing word lengths for uniqueness.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool flag = true;for (bool b : {true, false}){flag = all_of({false, value == (flag = !any_of_equal({true, flag = all_of({true, value == (flag = !all_of({true, value == (flag = all_of({true, value",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(words) == len({len(w) for w in words})",
+    "reasoning": "The Python code checks whether all words have distinct lengths (by comparing the count of words to the count of unique lengths). The C++ completion involves `all_of`, `any_of_equal`, and boolean flag operations, but it quickly devolves into a heavily repeating loop pattern: `(flag = all_of({true, value == (flag = ...` repeating recursively with no coherent termination. The looping unit is short and repeats continuously, dominating the completion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "All elements in the list have the same length.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether all words have distinct lengths (by comparing the count of words to the count of unique lengths). The description says \"all elements have the same length,\" which is the opposite condition. However, the description does identify the relevant property being checked: word lengths. But the conclusion drawn is completely wrong \u2014 the code checks for all-different lengths, not all-same lengths.\n\nWait, let me reconsider. The description says \"all elements have the same length\" \u2014 this is actually the OPPOSITE of what the code checks. The code checks if all words have DIFFERENT lengths (unique lengths). These are conceptually opposite conditions. The description correctly identifies that lengths of words are involved, but gets the relationship completely wrong.\n\nSince the description identifies the relevant quantity (lengths of words) even though it gets the relationship wrong, this counts as a partial correct identification per the grading rules (\"naming the quantity alone is enough\").\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool allUnique = true;std::set<size_t> lengths;for(bool unique = true; unique = (lengths.size() == 1); unique = (lengths.size() == 1)){bool allSame = true;for(bool unique = true; unique = (lengths.size() ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(words) == len({len(w) for w in words})",
+    "reasoning": "The Python code checks if all words have unique lengths (i.e., the number of words equals the number of distinct word lengths). The C++ completion mentions creating a `std::set<size_t> lengths` to track lengths and checking `allUnique`, which is directly relevant to checking for unique word lengths. However, the completion then devolves into a repeating loop pattern with `unique = (lengths.size() == 1)` cycling repeatedly.\n\nThe loop unit `unique = (lengths.size() == 1)` repeats multiple times and dominates the completion after the initial relevant setup. This qualifies as a HEAVY_LOOP despite the relevant fragment at the start.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

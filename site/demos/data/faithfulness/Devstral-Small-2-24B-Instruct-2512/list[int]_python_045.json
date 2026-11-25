@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_045",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value appears more than once\n(2) the integer mean of the values\n(3) the sum of all values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums)) != len(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) / len(nums) if nums else 0\n    c = sum(nums)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the list is empty or not.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the list is empty, which is directly relevant \u2014 the code includes a conditional check `if nums else 0` to handle the empty list case. While the description misses the main computation (computing the average/mean), it correctly identifies one genuine sub-step of the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To calculate the average, I first check if the list is empty. If not, I compute the sum of all elements, then calculate the average, and finally return the result.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing an average by checking if the list is empty, summing elements, and dividing \u2014 which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return accumulate(value.begin(), value.end(), 0.0);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements using `accumulate`, which is directly relevant to computing the average (sum/len) in the Python code. It doesn't show the division by length, but capturing the sum computation is a meaningful partial match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the average of the numbers in the list and storing it in the variable `average`.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation being performed: calculating the average (mean) of numbers in a list. The code computes `sum(nums) / len(nums)`, which is exactly the average, and stores it in variable `b` (not `average`, but that's a minor naming discrepancy that doesn't affect the substance).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return accumulate(vector<int>{value}, 0.0, [](auto sum, auto avg, auto total){return sum + avg;}, value, value);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The C++ completion mentions `accumulate` and computing a sum with averaging concepts (`sum`, `avg`, `total`), which relates to the Python code computing a mean (sum divided by length). However, the C++ code is syntactically garbled and the logic is confused, but the core concepts of summing and averaging are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To calculate the average, sum all the numbers and divide by the count.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing an average by summing all numbers and dividing by the count, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return accumulate(begin, end, 0.0) / size_t(sum(value) / value.size());}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The Python code computes the average (mean) of a list of numbers, handling the empty case. The C++ completion mentions `accumulate` (sum of elements) divided by `size_t(...)` involving `value.size()`, which relates to computing a mean/average. Despite the garbled and syntactically incorrect nature, the core operation of summing elements and dividing by size is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

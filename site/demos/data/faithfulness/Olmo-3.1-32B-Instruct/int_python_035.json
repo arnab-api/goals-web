@@ -1,0 +1,96 @@
+{
+ "id": "int_python_035",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(d) for d in str(a))\n    return a, b\n</code>",
+ "impl_span": "b = sum(int(d) for d in str(a))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am extracting and returning the value of a variable after performing an operation to get it (e.g., reading user input and then getting its length), and then I am outputting that value (to get the length), and finally, I am returning the length as the result.",
+   "verdict": "NO",
+   "reasoning": "The code computes the sum of digits of a number `a`. The description talks about \"getting length\" and \"reading user input\" which are unrelated to digit sum computation. However, it does mention \"performing an operation\" on a variable, which is vague. The description is coherent but focused on \"length\" operations rather than digit extraction or summation, making it essentially unrelated to what the code actually does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(int(d) for d in str(a))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Summing the digits of the number to get its digit sum.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the digit sum of a number, which is exactly what the code does by converting each character of the string representation to an integer and summing them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int temp = value;  \n    int digit_sum = 0;  \n    while (temp > 0) {  \n        int sum_digits = 0;  \n        for (int t = temp; t > 0; t /= 10) {",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(a))",
+    "reasoning": "The C++ completion is computing the sum of digits of a number by extracting digits via modulo/division operations (iterating while temp > 0, dividing by 10). This directly corresponds to the Python code which sums the digits of integer `a` by converting to string and summing each digit character. The core operation (digit sum) is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am summing the digits of a number to calculate its digital root.",
+   "verdict": "YES",
+   "reasoning": "The description says \"summing the digits of a number,\" which is exactly what the code does \u2014 it converts each digit of `a` to an integer and sums them. The mention of \"digital root\" is a slight imprecision (this is just one step that could be part of a digital root calculation, not the full digital root), but the core operation of summing digits is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int temp = 0;  \n    for (int digit = 0; digit < 2; ++digit) {  \n        if (digit == 0) {  \n            int s = 0;  \n            int n = value;  \n            while (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(a))",
+    "reasoning": "The C++ completion is computing the sum of digits of a number. It initializes a sum variable, extracts digits from a value, and iterates through them - which directly corresponds to the Python code that sums the integer digits of a number converted to string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Summing the digits of the number.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes summing the digits of a number, which is exactly what the code does by converting each character of the string representation of `a` to an integer and summing them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0, t=0; for(int s=0; value>0; value=(value<0?0:((value<0?0:(value%10))+(value<10?value:((value<0?0:(value%10))+ (value<10 ? value : std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(a))",
+    "reasoning": "The C++ completion is computing the sum of digits of a number (extracting digits via `value % 10` and accumulating into `sum`), which is exactly what the Python code does with `sum(int(d) for d in str(a))`. However, the completion contains a heavily repeating pattern with `(value<0?0:(value%10))+(value<10?value:((value<0?0:(value%10))+...` cycling repeatedly.\n\nLet me check if this is a HEAVY_LOOP. The repeating unit is roughly `(value<0?0:(value%10))+(value<10?value:` which is about 5-6 tokens and repeats multiple times. However, the beginning of the completion is coherent (`int sum=0, t=0; for(int s=0; value>0; value=...`) and shows a digit-sum loop structure before the repetition dominates. The loop structure itself (iterating while value>0, extracting value%10) is meaningful and relevant even if the tail degenerates.\n\nThis is borderline, but the repeating fragment is longer than 5 tokens and the initial structure is coherent enough to convey the digit-sum concept. I'll consider whether the repetition dominates \u2014 it does take over the latter half, but the initial part clearly establishes the digit-sum algorithm.\n\nI'll call this YES since there's meaningful content before the loop takes over, and the core idea (digit sum via %10) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

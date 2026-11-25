@@ -1,0 +1,96 @@
+{
+ "id": "int_python_017",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a power of two\n(2) whether the number is odd\n(3) whether the number reads the same forwards and backwards\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 0 and (n & (n - 1)) == 0\n    b = n % 2 != 0\n    c = str(abs(n)) == str(abs(n))[::-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= abs(n) < 100\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 10 <= abs(n) < 100",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is a palindrome and if the sum of its digits is prime.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking for palindromes and prime digit sums, which are completely unrelated to what the code does (checking if the absolute value of n is between 10 and 100, i.e., a two-digit number check).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the number is a two-digit number with a positive value, and if its last digit is even.",
+   "verdict": "YES",
+   "reasoning": "The code checks if the absolute value of n is between 10 and 99 inclusive (i.e., a two-digit number). The description correctly identifies checking for a two-digit number, though it incorrectly adds conditions about positive value and even last digit that aren't in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 && value <= 9 && value == int(value) && value == int(value >= 0 && value <= 9 && value == int(value) && value == int(value >= 0 && value <= 9 && value == int(value) && value == int(value >= 0 && value",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The completion is checking `value >= 0 && value <= 9` which relates to checking bounds/range of a number, but the Python code checks if `abs(n)` is between 10 and 99 (i.e., a two-digit number). The range check concept is partially relevant, but the specific bounds are wrong (0-9 vs 10-99). However, more importantly, the pattern `value >= 0 && value <= 9 && value == int(value) && value == int(value >= 0 && value <= 9 ...` repeats as a short cycle over and over, making this a HEAVY_LOOP.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if a number is between 0 and 9, and if it is, I am printing the result.",
+   "verdict": "NO",
+   "reasoning": "The code checks if the absolute value of n is between 10 and 99 (inclusive), i.e., a two-digit number. The description says it checks if a number is between 0 and 9, which is a completely different range and condition. While both involve checking a numeric range, the specific range described (0-9) is entirely wrong and contradicts what the code does (10-99).\n\nHowever, the description does mention checking if a number falls within a range, which is conceptually related to what the code does \u2014 it's just the wrong range. Given the lenient grading criteria, naming the operation (range check) counts even if the specific values are wrong.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 && value <= 9 && value == 4; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The code checks if the absolute value of n is between 10 and 99 (i.e., a two-digit number). The C++ completion checks if a value is between 0 and 9 (a one-digit range) and equals 4, which is a different range and adds an equality check. However, it does involve checking bounds on a value using comparisons, which is partially relevant to the range-checking nature of the code, but the specific range (0-9) is completely wrong compared to (10-99), and the `abs()` operation is missing entirely.\n\nThe completion does involve range/bound checking with `>=` and `<=`, which is structurally similar, but the specific values and the absence of `abs()` make it substantially different. Still, the concept of checking if a value falls within a numeric range is present.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if the number has exactly two digits.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number has exactly two digits,\" which is precisely what `10 <= abs(n) < 100` does \u2014 it verifies the absolute value falls in the two-digit range.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value >= 10 && value <= 99;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The C++ completion checks if a value is between 10 and 99 inclusive, which is exactly what the Python code does (checking if abs(n) is in the range [10, 100), i.e., 10 \u2264 abs(n) \u2264 99). The bounds match perfectly (10 and 99/100 are equivalent), and the logic is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

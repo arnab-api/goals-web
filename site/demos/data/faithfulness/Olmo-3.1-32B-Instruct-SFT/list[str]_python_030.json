@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_030",
+ "datatype": "list[str]",
+ "frontier_id": "count_all_lowercase",
+ "condition": "the number of words written entirely in lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the length of the longest word\n(3) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.islower())\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm not currently processing any code.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description claims it is not processing any code, which is completely uninformative about what the code does (counting lowercase words). This is too generic/evasive to indicate any specific aspect of the code.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting how many times a condition is met in a loop.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting how many times a condition is met in a loop, which is exactly what the code does \u2014 it counts words meeting the `islower()` condition using a generator expression with `sum`. However, the description is quite generic and doesn't specify what condition or what is being iterated over.\n\nThis is borderline between YES and NO_INFO. The description captures the core operation (counting occurrences where a condition is true in a loop), which is the specific pattern used here, not just \"doing a computation.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The code counts the number of words that are entirely lowercase. The C++ completion computes the size of a value, which is unrelated to checking if words are lowercase or counting words that satisfy a condition.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of elements in the list,\" which is partially relevant \u2014 the code does count something (words that are all lowercase). However, \"number of elements in the list\" would imply counting all elements, not just the lowercase ones, making it too generic to capture the key filtering aspect. Still, counting elements is a core sub-step of what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of strings in the list that contain only alphabetic characters.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that are entirely lowercase (using `islower()`), while the description says it counts strings containing only alphabetic characters (using something like `isalpha()`). These are related but distinct checks \u2014 `islower()` requires all cased characters to be lowercase (and at least one cased character), while `isalpha()` checks for purely alphabetic content regardless of case. However, both descriptions involve counting strings from a list based on a character-type property, and \"only alphabetic characters\" is a reasonable (if imprecise) paraphrase of a lowercase check in many contexts. The core operation \u2014 counting words matching a character condition \u2014 is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if (std::begin (value), std::end (value), [](const auto& item){ return std::isalpha (item); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w.islower())",
+    "reasoning": "The Python code counts words that are entirely lowercase (`islower()`), while the C++ completion counts characters that are alphabetic (`isalpha`). The C++ is checking individual characters for being alphabetic rather than checking if entire words are lowercase, but both involve iterating over a collection and counting elements that satisfy a character-based condition. This is partially relevant \u2014 it's counting elements from a collection using a predicate \u2014 but the specific property checked (alphabetic vs. lowercase) and the unit of iteration (characters vs. words) are both wrong.\n\nHowever, the overall structure of counting items in a collection that satisfy some condition is genuinely relevant to what the code does, even if the specific predicate is different.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

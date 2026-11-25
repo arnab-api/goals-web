@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_004",
+ "datatype": "list[str]",
+ "frontier_id": "total_length",
+ "condition": "the total number of characters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) the number of words written entirely in lowercase letters\n(3) the total number of characters across all words\n(4) the number of capitalized words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    b = sum(1 for w in words if w.islower"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(len(w) for w in words)\n    d = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of characters in the input string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of characters in the input string,\" which is exactly what the code does \u2014 it sums the lengths of all words, effectively counting total characters across all words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion defines a function that returns the size of a value, which directly corresponds to computing `len(w)` for words. This is a relevant sub-step of the Python code, which sums the lengths of words.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To count the total number of characters in the list, including spaces, and to compute the sum of the lengths of all strings in the list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions computing the sum of the lengths of all strings in the list, which is exactly what the code does. The mention of \"including spaces\" is a minor inaccuracy (spaces between words aren't counted, only characters within each word), but the core operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size() + value.count() + value.sum() + value.length(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion is attempting to compute the size/length of elements (using `.size()` and `.length()`), which is relevant to summing the lengths of words. While it includes spurious methods like `.count()` and `.sum()`, the core idea of measuring element length is present and relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To count the total number of characters in the list, I'll sum the lengths of all elements.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes summing the lengths of all words/elements in a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0, [](int sum, auto v){ return sum + static_cast<int>(std::accumulate(value.begin(), value.end(), 0, [](int s, auto w){ return s + static_cast<int>(std::accumulate(value.begin(),",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion shows `std::accumulate` being used to sum lengths of elements in a collection, which is directly relevant to what the Python code does (summing lengths of words). It uses nested accumulate calls and references to string/word lengths, which aligns with the concept of summing word lengths. However, it does repeat the inner accumulate pattern multiple times and gets cut off.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is `std::accumulate(value.begin(), value.end(), 0, [](int s, auto w){ return s + static_cast<int>(` which is roughly 5+ tokens and repeats 3 times. This is borderline, but the unit is fairly long (more than 5 words/tokens) and there is coherent content about summing lengths of words in a collection. I'll treat this as a truncated/noisy completion rather than a pure heavy loop, since the meaningful content (accumulating sum of lengths) is present and the loop unit is complex enough.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the total number of characters in the input, including spaces and punctuation, simply sum the lengths of all strings in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes summing the lengths of all strings in a list to get a total character count, which matches exactly what the code does. The mention of spaces and punctuation is a minor extra detail but doesn't detract from the core correctness.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0, [](size_t total, auto& v){ return total + v.size(); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::accumulate` to sum up the sizes (`.size()`) of elements in a collection, which is exactly what the Python code does \u2014 summing the lengths (`len(w)`) of words in a list. This is a direct and accurate match in substance, just using a different implementation style.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

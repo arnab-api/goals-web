@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_018",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is even\n(2) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(nums)) < len(nums)\n    return a, b\n</code>",
+ "impl_span": "b = len(set(nums)) < len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check if there's a duplicate before checking if there's a duplicate in the input list, then check if any element has been seen before using a set. Then, I'll check if any element has been seen before using a dictionary.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for duplicates using a set, which is exactly what the code does (comparing the length of a set to the length of the original list to detect duplicates). The mention of a dictionary is irrelevant noise, but the core concept of using a set to check for duplicates is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    static bool a = false;  \n    static bool b = false;  \n    a = false;  \n    b = false;  \n    if (value) {  \n        a = true;  \n    }  \n    if (a) {  \n        b = false;  \n        for (auto i =",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(set(nums)) < len(nums)",
+    "reasoning": "The Python code checks for duplicates in a list by comparing the length of the set (unique elements) to the length of the original list. The C++ completion involves checking some boolean condition on a value, but doesn't capture anything about duplicates, set operations, or length comparisons. It's a generic boolean flag pattern with no relevance to the actual operation being performed.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if there are any duplicates by comparing the length of the list with the length of a set made from the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does \u2014 it checks for duplicates by comparing the length of a set (which removes duplicates) with the length of the original list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<int> seen;  \n    for (int i = 0; i < value.size(); ++i) {  \n        if (seen.find(value[i]) != std::cend(std::adjacent_find(std::begin(value), std::end(value)));  \n        if (std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums)) < len(nums)",
+    "reasoning": "The C++ completion creates an unordered_set and iterates through elements checking for membership - this is clearly implementing a duplicate detection algorithm, which is exactly what the Python code does (checking if there are duplicates by comparing set length to list length). Despite being syntactically malformed/incomplete, the core concept of using a set to detect duplicates is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if any duplicates exist by using a set to track elements and then checking for membership.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking for duplicates using a set. The code compares the length of a set of `nums` to the length of `nums` itself, which is indeed a way to detect duplicates via set membership tracking. The description captures the essential idea accurately.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool seen = false;  \n    for (auto it = value | views::transform([](auto a) { return std::ranges::any_of(a, [](auto b) { return std::ranges::any_of(b, [](auto c) { return std::ranges::any_of(c, [](auto",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(set(nums)) < len(nums)",
+    "reasoning": "The Python code checks if there are duplicate elements in `nums` by comparing the length of the set (unique elements) to the length of the list. The C++ completion uses `seen` boolean and iterates through values, which suggests checking for duplicates. The `any_of` pattern could relate to checking if any element has been seen before, which is relevant to duplicate detection. However, the completion becomes deeply nested and repetitive with `any_of` calls, but it's not a simple short loop \u2014 it's more of a garbled/cut-off attempt.\n\nThe key relevant elements: `bool seen = false` and iterating through values to check for some property \u2014 this loosely relates to duplicate detection. The completion is noisy and cut off, but contains the `seen` variable which is a classic duplicate-checking pattern.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "This line checks if any duplicate exists in the list by comparing the length of the list with the length of a set made from the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks for duplicates by comparing the length of a set (which removes duplicates) with the length of the original list. This is a precise and correct description of the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::array<bool, 1>{}.size() != std::array<bool, 1>{}.size();  \n}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = len(set(nums)) < len(nums)",
+    "reasoning": "The C++ completion compares sizes of two identical arrays (both `std::array<bool, 1>{}`) which will always be equal, so the comparison is trivially false and meaningless. However, the core idea of comparing two sizes/lengths (like `len(set(nums)) < len(nums)`) is vaguely present \u2014 comparing `.size()` to `.size()`. But the comparison is between two identical objects rather than between a deduplicated collection and the original, so it doesn't capture the duplicate-detection logic. The completion is coherent but doesn't meaningfully reflect what the code does (checking for duplicates by comparing set size to list size).\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  }
+ ]
+}

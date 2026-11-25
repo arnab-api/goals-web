@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_009",
+ "datatype": "list[str]",
+ "frontier_id": "count_long",
+ "condition": "the number of words longer than five characters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the number of words longer than five characters\n(3) whether all words have distinct lengths\n(4) the length of the longest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if len(w) > 5)\n    c = len(set(len(w) for w in words)) == len(words)\n    d = max(len(w) for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I will count the number of lines in the code and return the total.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines of code, which is completely unrelated to what the code does (counting words with length greater than 5). The description doesn't identify any relevant operation like counting words, checking word length, or filtering by a threshold.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value, auto& count, auto& sum) {\n    if (value > 0) {\n        count = 0;\n        for (auto i = 0; i < value; i++) {\n            if (i % 2 == 0) {\n                count",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The Python code counts words with length greater than 5. The C++ completion is a generic function stub that checks `value > 0` and iterates with a modulo-2 check \u2014 none of these operations relate to counting string lengths or filtering by length > 5. The completion appears to be a generic template with no specific relevance to word length counting.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll count the number of words with length greater than 3, check if any word has length greater than 3, and count how many words have length greater than 3.",
+   "verdict": "YES",
+   "reasoning": "The description is about counting words based on their length, which is exactly what the code does. The threshold mentioned (greater than 3) is wrong (the code uses > 5), but the core operation \u2014 counting words with length greater than some threshold \u2014 is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::visit([](auto... args){return (std::size_t{0}, std::size_t{0}, std::size_t{0}, std::size_t{0}, std::size_t{0}, std::size_t{0}, std::size_t{0}, std::size",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion shows `std::size_t{0}` repeated many times in a comma-expression pattern, which looks like it's trying to count something (size-related), but the repetition of `std::size_t{0}` is a degenerate loop with no coherent content about counting words longer than 5 characters. The completion is dominated by a short repeating pattern (`std::size_t{0},`) that collapses into nothing meaningful once the loop is recognized.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many elements in the list are greater than the second element.",
+   "verdict": "NO",
+   "reasoning": "The code counts words with length greater than 5, which is a counting/filtering operation on a list. The description mentions counting elements greater than some value, which partially matches the counting/comparison structure, but it incorrectly identifies what's being compared (it says \"greater than the second element\" rather than \"words with length greater than 5\"). However, the core operation of counting elements that meet a condition is present.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::begin(value), [](int x) { return x > 0; }, std::distance(value.begin(), std::find_if(value.begin(), value.end(), [n = 0](int x) { return std::count_if(value.begin(), value.end(), [](int x) {",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion uses `std::count_if` which is relevant to counting elements that satisfy a condition, similar to the Python code counting words with length > 5. However, it also mixes in `std::find_if` and `std::distance` in a confused way, and the lambda checks `x > 0` rather than a length condition. The core operation of counting elements satisfying a predicate is present, even if the specific predicate and structure are garbled.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I count the length of each word in the list and compare it to 5.  \nI return the count of words with length greater than or equal to 5.  \n\n```python\nlen([word for word in words if len(word) > 5])\n```\n\nI count the number of words in the list",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies counting words based on length comparison to 5, which is exactly what the code does. The threshold is slightly off (says \">= 5\" but code uses \"> 5\"), but the core operation \u2014 counting words whose length exceeds 5 \u2014 is correctly described.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() > 3 ? 1 : 0;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion checks if a value's size exceeds a threshold (3, though the gold uses 5) and returns 1 or 0, which maps directly to counting words whose length exceeds some threshold \u2014 the same core operation as the Python code. The threshold is wrong (3 vs 5) but the structure (size comparison returning 1 or 0 for counting) is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}
