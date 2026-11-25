@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_005",
+ "datatype": "list[int]",
+ "frontier_id": "total_sum",
+ "condition": "the sum of all values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the integer mean of the values\n(2) whether any value is zero\n(3) the sum of all values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(nums) // len(nums)\n    b = 0 in nums"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums)\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true (e.g., if a variable is set, or if a value exists).",
+   "verdict": "NO_INFO",
+   "reasoning": "The description talks about checking a condition or if a value exists, but the code is computing the sum of a list `nums` and assigning it to `c`. The description doesn't mention summing, aggregation, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? 1 : 0; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(nums)",
+    "reasoning": "The C++ completion defines a function that converts a value to 1 or 0 (a boolean-like indicator), which is unrelated to summing a list of numbers. There's no summation, accumulation, or aggregation concept present.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Summing up the values in a list after first calculating the total.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"summing up the values in a list\" and \"calculating the total,\" which is directly relevant to what the code does \u2014 computing the sum of `nums`. The description is coherent and accurately captures the core operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int total = 0;  \n    for(int i = 0; i < value.size(); ++i){  \n        total += value[i];  \n    }  \n    return std::pair<int, int>(value[0] + value[2], total);",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums)",
+    "reasoning": "The C++ completion computes a sum of elements in a collection (using `total += value[i]` in a loop), which is directly relevant to the Python code `c = sum(nums)`. The loop accumulates a total, matching the `sum` operation on a list. The extra `std::pair` return with `value[0] + value[2]` is irrelevant noise, but the core sum computation is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm summing up the values in a list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"summing up the values in a list,\" which directly matches what the code does: `sum(nums)` computes the sum of values in the list `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    for(int i = 0; i < 10; ++i)  \n        sum += i;  \n    return sum;  \n}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = sum(nums)",
+    "reasoning": "The C++ completion computes a sum using a loop, which is directly relevant to what the Python code does (computing the sum of `nums`). However, the C++ version sums integers 0-9 rather than elements of an input collection, which is a wrong specific but the core operation (summation) is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Summing all elements in a list by iterating through them and accumulating their total.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the sum of all elements in a list, which is exactly what `sum(nums)` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0; for(int i=0, s=0; i<value.size(); ++i) for(int j=0, t=0; j<value.size(); ++j) t+=value[j], sum+=value[j]; return sum; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums)",
+    "reasoning": "The C++ completion computes a sum of elements in a collection (though with a nested loop that double-counts). The core operation \u2014 summing elements of a collection \u2014 is directly relevant to what the Python code does (`sum(nums)`).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

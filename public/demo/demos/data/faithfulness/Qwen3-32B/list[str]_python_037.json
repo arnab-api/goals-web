@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_037",
+ "datatype": "list[str]",
+ "frontier_id": "longest_word_length",
+ "condition": "the length of the longest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is empty\n(2) the length of the longest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(len(w) == 0 for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(len(w) for w in words) if words else 0\n    return a, b\n</code>",
+ "impl_span": "b = max(len(w) for w in words) if words else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm determining the length of the list and the maximum value in the list.",
+   "verdict": "YES",
+   "reasoning": "The code computes the maximum word length (longest word) in a list of words. The description mentions \"maximum value\" and \"length of the list\" \u2014 while \"length of the list\" is wrong (it's the length of each word, not the list), \"maximum value\" partially captures the `max()` operation. However, the description conflates two different things and misidentifies what's being maximized, but it does touch on relevant concepts (max and length).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::visit([](auto a, auto b){return std::tuple{std::ranges::max_element({a, b})};}, std::tuple{std::ranges::max_element({value, 0}), 0});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words) if words else 0",
+    "reasoning": "The Python code finds the maximum length of words in a list (or 0 if empty). The C++ completion uses `std::ranges::max_element` and compares with 0, which is relevant - it's finding a maximum and handling the empty case with 0. However, it doesn't clearly capture the \"length of words\" aspect, focusing more on comparing values. Still, the core operation of finding a maximum with a fallback of 0 is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll find the length of the longest word, then the length of the longest word overall.\n\nThe code:\n```python\nwords = [len(word) for word in sorted([len(word) for word in words], key=max)]\n```\n\nThe code first finds the length of the longest word using `max`, then",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding \"the length of the longest word\" which is exactly what the code does \u2014 it computes `max(len(w) for w in words)`, the maximum word length. The description correctly identifies both the operation (finding max length) and the relevant concept (longest word).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int max = 0;  \n    for (int i = 0; i < value.size(); i++) {  \n        if (value[i].size() > max) {  \n            max = value[i].size();  \n        }  \n    }  \n    return max;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion implements finding the maximum length among elements of a collection, iterating through items and tracking the maximum size. This directly corresponds to the Python code which finds the maximum word length using `max(len(w) for w in words)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of characters in the string and then finding the length of the string using a loop.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting characters and finding the length of a string, which is partially relevant \u2014 the code does compute lengths of words. However, it misses the key operation of finding the **maximum** length across all words, and mentions \"a loop\" which is vague but not entirely wrong (there is a generator expression). The description is somewhat relevant but imprecise.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int max = 0;\n    for (int i = 0; i < value; i++) {\n        int len = 0;\n        for (int j = 0; j < 100; j++) {\n            len = 0;\n            for (int k = 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion shows finding a maximum value with a variable `max` initialized to 0, and computing lengths (`len`) in a nested loop structure. This is relevant to the Python code which finds the maximum length of words in a list. The core operation (finding maximum length) is captured, even if the implementation details differ.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'll find the length of the longest word in the list by checking each word's length and keeping track of the maximum.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum word length in a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return *std::ranges::max_element(std::views::transform(value,[](auto i){return std::accumulate(std::views::transform(value,[](auto i){return 0;},[](auto i){return 0;},[](auto i){return 0;},[](auto i){return 0",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion attempts to use `std::ranges::max_element` with a transform view, which is conceptually related to finding the maximum of some property computed over a collection (similar to `max(len(w) for w in words)`). However, the completion quickly devolves into a heavily repeating loop of `,[](auto i){return 0;}` with no coherent content remaining after the initial fragment.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

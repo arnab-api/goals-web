@@ -1,0 +1,96 @@
+{
+ "id": "int_python_024",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) the sign of the number\n(3) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = (n > 0) - (n < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n > 1 and all(n % i for i in range(2, int(n**0.5) + 1))\n    return a, b, c\n</code>",
+ "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n**0.5) + 1))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number is prime,\" which is exactly what the code does \u2014 it checks if `n > 1` and has no divisors from 2 up to its square root.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value < 0 ? false : value > 0 ? true : false; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n**0.5) + 1))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description \"I'm checking if the number is prime\" is directly relevant to what the code does \u2014 it implements a primality check by verifying n > 1 and that no integer from 2 to \u221an divides n evenly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ if (value < 2) return false; if (value == 1) return true; auto is_prime = true; if (value > 1) { if (value == 2) is_prime = true; else if (value > 1) { if (value % 2 == 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The C++ completion is checking if a value is prime \u2014 it checks `value < 2`, handles edge cases, sets `is_prime = true`, and begins checking divisibility with `value % 2 == 0`. This is directly relevant to the Python code which checks primality by testing divisibility. Despite some logical inconsistencies (like `value < 2` returning false but then `value == 1` returning true), the core concept of primality testing is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if a number is prime,\" which is exactly what the code does \u2014 it checks if n is greater than 1 and has no divisors from 2 to \u221an.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value < 2) {\n        return false;\n    }\n    for (auto i = 2; i * i <= value; ++i) {\n        if (value % i == 0) {\n            if (value > 1) {\n                for (auto j = 2;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The C++ completion implements a primality check: it returns false for values less than 2, then iterates from 2 up to sqrt(value) checking if value is divisible by any i. This directly matches the Python code which checks `n > 1` and that no `i` in range(2, sqrt(n)+1) divides n evenly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number is prime,\" which is exactly what the code does \u2014 it checks if `n > 1` and has no divisors from 2 to \u221an.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ if (value < 2) return value > 1; if (value == 1) return true; if (value < 0) return false; for (auto i = 2; i <= 1; return true; if (value < 2) return true; for (auto i =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n**0.5) + 1))",
+    "reasoning": "The completion is checking primality-related conditions: it checks `value < 2`, `value > 1`, and starts a loop from `i = 2`, which are all relevant to the primality check in the Python code. However, the loop condition `i <= 1` is wrong and the code becomes garbled/repetitive toward the end, but the core primality-checking logic (boundary checks and loop structure) is recognizable and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

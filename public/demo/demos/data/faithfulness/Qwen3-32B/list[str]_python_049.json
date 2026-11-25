@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_049",
+ "datatype": "list[str]",
+ "frontier_id": "any_empty",
+ "condition": "whether any word is empty",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) whether any word is empty\n(3) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(len(w) == 0 for w in words)\n    c = sum(1 for ch in ''.join(words) if ch.lower() in \"aeiou\")\n    return a, b, c\n</code>",
+ "impl_span": "b = any(len(w) == 0 for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I will check if there are any characters in the string that are digits. If there are, I will return True, otherwise False.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking for digit characters in a string, but the code is checking whether any word in a list has length zero (i.e., checking for empty strings/words). These are completely unrelated operations \u2014 digit detection vs. empty word detection.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::any_of(std::views::all, [](auto v) { return v; });}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion uses `std::ranges::any_of`, which is the C++ equivalent of Python's `any()` function. This is directly relevant to the code, which uses `any()` to check if any word has length 0. The completion captures the core operation (any_of) even though it's missing the specific length check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if there's at least one even number in the list.  \nI'm checking if there's at least one odd number in the list.  \nI'm checking if there's at least one empty string in the list.",
+   "verdict": "YES",
+   "reasoning": "The description contains multiple candidates, and one of them (\"checking if there's at least one empty string in the list\") is exactly what the code does \u2014 it uses `any()` to check if any word has length 0, i.e., is an empty string.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(values.begin(), values.end(), [](int v){ return v < 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` to check if any element satisfies a condition, which directly mirrors the Python `any(...)` pattern. The specific condition (checking `v < 0`) is wrong (the code checks for empty strings), but the core operation of checking whether any element satisfies some predicate is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if there is at least one even number in the list and returning `True` if found, otherwise `False`.  \nThen, I am checking if the list contains `True` if there is an odd number, otherwise `False`.  \nThen, returning `True` if there is a `True`",
+   "verdict": "NO",
+   "reasoning": "The code checks if any word in `words` has length 0 (i.e., is an empty string). The description talks about checking for even/odd numbers, which is completely unrelated to checking word lengths or empty strings.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::is_integral<decltype(value)>{};};",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The Python code checks if any word in a list has zero length (i.e., is an empty string). The C++ completion checks if a value is an integral type, which is completely unrelated to checking for empty strings or zero-length words.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I will check if any of the elements in the list is an empty string. \n\n```python\nany(isinstance(x, bool) and x == \"\" for x in lst if not x) if any(isinstance(x, bool) and x == \"\" for x in lst) else True\n```\n\nThis checks if there's",
+   "verdict": "YES",
+   "reasoning": "The description starts with a relevant statement: \"check if any of the elements in the list is an empty string\" \u2014 which is exactly what the code does (checking if any word has length 0, i.e., is an empty string). The subsequent code snippet is garbled and unrelated, but the initial statement captures the core operation correctly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value == \"\" || value == \" \"? true : false;};\nreturn value == \"\" ? true : false;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(len(w) == 0 for w in words)",
+    "reasoning": "The C++ completion checks whether a value equals an empty string `\"\"`, which is directly relevant to checking if any word has length 0 (empty string). The check `value == \"\"` corresponds to `len(w) == 0`. The additional check for `\" \"` is a wrong detail, but the core operation of checking for empty strings is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

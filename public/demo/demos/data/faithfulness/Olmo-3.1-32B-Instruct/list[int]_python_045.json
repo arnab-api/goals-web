@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_045",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value appears more than once\n(2) the integer mean of the values\n(3) the sum of all values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums)) != len(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) / len(nums) if nums else 0\n    c = sum(nums)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a variable exists to determine if there are any duplicate items in a list.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking for duplicate items in a list, which is completely unrelated to what the code does (computing the average/mean of a list of numbers). The code calculates a mean value with a guard for empty lists, not anything about duplicates.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](bool& flag){ flag = std::any_of(std::begin(value), std::end(value), [](bool){ return *std::begin(value); }); }); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The Python code computes the average (mean) of a list of numbers. The C++ completion uses `std::any_of` to check if any element satisfies some condition, which is about checking boolean properties of elements, not computing a sum or average. The C++ code doesn't reference summation, division, or mean calculation. However, it does iterate over the collection, which is a partial sub-step. But the core operation (sum/average) is completely absent, and the completion is also somewhat looping with nested `std::any_of` calls.\n\nThe completion is not a heavy loop (the repetition isn't a short cycle dominating the output), but the content is about checking boolean conditions rather than computing averages. The iteration over the collection is too generic to count as relevant.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (sum divided by length) of a list of numbers, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    double sum = 0.0;  \n    int count = 0;  \n    for(int i = 0; i < value.size(); ++i){  \n        sum += value[i];  \n        count += 1;  \n    }  \n    double average = value.size() > 0 ?",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements and divides by count (with a check for empty collection), which is exactly computing the average/mean of a list \u2014 matching the Python code that computes `sum(nums) / len(nums)` with a guard for empty list.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (sum divided by length) of a list of numbers, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    double sum = 0.0;  \n    int count = 0;  \n    sum = std::accumulate(std::begin(data), std::end(data), 0.0);  \n    return sum / count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes a sum of elements and divides by a count, which directly corresponds to computing an average (mean) of a collection. This matches the Python code which computes `sum(nums) / len(nums)` \u2014 the average of a list. The completion correctly identifies both the summation and division operations, even if it doesn't handle the empty case.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Calculating the average by summing all numbers and dividing by the count.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (mean) of a list of numbers by summing all elements and dividing by the count, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(std::begin(value), std::end(value), 0LL, [](int sum, int v){ return static_cast<int>(std::accumulate(std::begin(value), std::end(value), 0, [](int a, int b){ return a + b; }) / value.size()); })",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) / len(nums) if nums else 0",
+    "reasoning": "The Python code computes the average (sum divided by length) of a list, or 0 if empty. The C++ completion uses `std::accumulate` to compute a sum and divides by `value.size()`, which corresponds to computing the average (sum/length). Despite being garbled and nested incorrectly, the core operations of summing elements and dividing by size are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

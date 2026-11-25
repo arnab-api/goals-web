@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_052",
+ "datatype": "list[str]",
+ "frontier_id": "all_unique_lengths",
+ "condition": "whether all words have distinct lengths",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of capitalized words\n(2) whether all words have distinct lengths\n(3) the number of distinct words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w[:1].isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(map(len, words))) == len(words)\n    c = len(set(words))\n    return a, b, c\n</code>",
+ "impl_span": "b = len(set(map(len, words))) == len(words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the current element is the first element in the list.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if the current element is the first element in a list, which is completely unrelated to what the code does. The code checks whether all words have unique lengths (by comparing the number of distinct lengths to the number of words).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(set(map(len, words))) == len(words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all elements in the list are unique by comparing the length of the set of the list to the length of the list itself.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all words have unique lengths by mapping `len` over words, converting to a set, and comparing lengths. The description says \"checking if all elements in the list are unique by comparing the length of the set of the list to the length of the list itself.\" This captures the core mechanism (set length == list length) correctly, though it misses the intermediate `map(len, ...)` step \u2014 it's checking uniqueness of word lengths, not the words themselves. Still, the fundamental operation described is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::unordered_set<char> unique_chars;\n    bool all_unique = true;\n    for (auto c : value) {\n        unique_chars.insert(c);\n        if (unique_chars.size() != std::set<char>(value.begin(), value.end()).size()) {\n            all_unique = false;\n            break;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(map(len, words))) == len(words)",
+    "reasoning": "The Python code checks whether all words have unique lengths (i.e., no two words share the same length). The C++ completion is checking for unique characters within a single string value, which is a different concept (character uniqueness vs. word length uniqueness). However, the core idea of using a set to check for uniqueness is present, though applied to characters rather than lengths of words.\n\nThe completion is about checking uniqueness using a set, which is conceptually related but applied to the wrong domain (characters instead of word lengths). The substance is partially relevant \u2014 it's checking uniqueness via a set \u2014 but the specific property being checked (character uniqueness vs. length uniqueness across words) is different enough to question relevance. Still, the set-based uniqueness check is a genuine sub-concept.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all elements in the list are unique by comparing the length of the set of the list to the length of the list itself.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all words have unique lengths by mapping `len` over words, creating a set of those lengths, and comparing the set's length to the number of words. The description says it's checking if all elements are unique by comparing the length of a set to the length of the list \u2014 this captures the core logic correctly, even though it misses the intermediate `map(len, ...)` step (it's checking uniqueness of lengths, not the words themselves).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::all_of(std::begin(value), std::end(value), [](auto&& v){return std::is_sorted(std::begin(v), std::end(v)) == std::set<std::unique_ptr<bool>>(std::begin(v), std::end(v)).size() == std::set<std::unique",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(map(len, words))) == len(words)",
+    "reasoning": "The Python code checks whether all words have unique lengths (by comparing the number of distinct lengths to the number of words). The C++ completion talks about `std::set` and `.size()` which is somewhat relevant (using a set to check uniqueness), but it's primarily about `std::is_sorted` and sorting, which is unrelated. However, the use of `std::set` and comparing `.size()` does partially capture the uniqueness-checking via set concept. The completion is not a heavy loop and contains some relevant fragment (set + size comparison for uniqueness).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the set of lengths of the set of all characters in the list have a length equal to the length of the set of all characters in the list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking lengths of a set derived from the list, and comparing that to the length of the list. The code checks if all words have unique lengths (by comparing the number of distinct lengths to the number of words). The description is garbled and confused (talking about \"characters\" instead of \"words\", and \"set of all characters\" instead of \"set of lengths\"), but it does capture the core idea of comparing a set of lengths to the total count \u2014 the relevant operation is partially present despite the noise.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){std::unordered_set<bool> s; for (auto i = std::all_of(std::begin(value), std::end(value), [value] (auto v) { return std::all_of(std::begin(value), std::end(value), [value] (auto v) { return std::all_of(std",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(set(map(len, words))) == len(words)",
+    "reasoning": "The Python code checks if all words have unique lengths (by comparing the size of a set of word lengths to the number of words). The C++ completion uses `std::unordered_set` and `std::all_of` with nested lambdas, which suggests checking some property across all elements - but the nested `std::all_of` structure checking pairwise properties is somewhat relevant (could be checking uniqueness), though it's getting into a loop with the nested `std::all_of` repetition. However, the use of `unordered_set` is genuinely relevant to the set-based uniqueness check, and the iteration over elements is relevant, even if the `all_of` nesting is getting repetitive.\n\nThe completion does contain a short repeating cycle: `std::all_of(std::begin(value), std::end(value), [value] (auto v) { return std::all_of(std::begin(value), std::end(value), [value] (auto v) { return std::all_of(std` \u2014 this is a clear HEAVY_LOOP pattern with the same ~10-token unit repeating.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

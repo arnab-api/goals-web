@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_042",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of odd values\n(2) the difference between the maximum and minimum values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 != 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - min(nums)\n    return a, b\n</code>",
+ "impl_span": "b = max(nums) - min(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines in the code.",
+   "verdict": "NO",
+   "reasoning": "The description says it's counting the number of lines in the code, which is completely unrelated to what the code does (computing the range of a list by subtracting the minimum from the maximum).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return {value, 0}; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion defines a function returning a pair with the value and 0, which has no relevance to computing the range (max - min) of a list of numbers. There's no mention of max, min, difference, or any range-related operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To find the difference between the maximum and minimum values in the list, subtract the min from the max.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the range (max minus min) of a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int min = *max_element(value.begin(), value.end()) - *min_element(value.begin(), value.end());return make_pair(min, value.size() > 0 ? min : 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion computes `max_element - min_element`, which is exactly the range (max - min) operation that the Python code performs. Despite the variable naming confusion (calling it `min` when it's actually the range), the core operation is correct and directly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "`max(min_val, max_val) - min(max_val - min_val, max_val - min_val)`",
+   "verdict": "YES",
+   "reasoning": "The description mentions `max`, `min`, and subtraction operations, which are genuinely relevant to the code computing the range (max - min). However, the specific expression described is garbled/wrong in its details (e.g., `max(min_val, max_val)` instead of `max(nums)`). Still, the core operations of finding max, min, and subtracting them are present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.max()-value.min();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The C++ completion computes `max() - min()` of a value, which directly corresponds to the Python code computing `max(nums) - min(nums)`. This is essentially the same operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To find the difference between the maximum and minimum values in the list, subtract the max from the min.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation: finding the difference between the maximum and minimum values in the list. It mentions both max and min, and the subtraction operation, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return *max_element(*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{*max_element(vector<int>{",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = max(nums) - min(nums)",
+    "reasoning": "The completion starts with `max_element` which is relevant (the code uses `max`), but it immediately collapses into a deeply nested repeating loop of `*max_element(vector<int>{` with no `min_element` or subtraction ever appearing. The pattern repeats more than 10 times with no coherent content beyond the loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

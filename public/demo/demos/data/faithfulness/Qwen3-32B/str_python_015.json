@@ -1,0 +1,96 @@
+{
+ "id": "str_python_015",
+ "datatype": "str",
+ "frontier_id": "has_digit",
+ "condition": "whether the string contains a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of lowercase letters\n(2) whether the string contains a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.islower"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(c.isdigit() for c in s)\n    return a, b\n</code>",
+ "impl_span": "b = any(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check if the number is even or odd and then return the result.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a number is even or odd, which is completely unrelated to what the code does (checking if any character in a string is a digit). The code is about string character inspection, not arithmetic parity.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, std::is_integral_v<decltype(value)>};}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks if any character in string `s` is a digit. The C++ completion checks if a value is an integral type using `std::is_integral_v`, which is related to checking for integer/digit properties. While the C++ uses a type-level check rather than a character-level check, the core concept of \"is this thing a digit/integer\" is genuinely relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll check if there's a number in the code and then check if it's even or odd.  \n\nHas the number been processed? Is it even?  \n\n```python\n# Line 1: Check if there is a number\n# Line 2: Check if the number is even\ncode = \"1",
+   "verdict": "NO",
+   "reasoning": "The description mentions \"check if there's a number\" which is relevant \u2014 the code uses `c.isdigit()` to check if any character in `s` is a digit (i.e., a number). The second part about \"even or odd\" is irrelevant to the code, but the first part correctly identifies the core operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if the variable contains a value and whether that value is of a specific type, then I am checking if that type is a boolean indicating presence, followed by checking if it contains a boolean indicating if a certain condition is met.",
+   "verdict": "NO_INFO",
+   "reasoning": "The code checks whether any character in string `s` is a digit, storing the boolean result in `b`. The description mentions checking if something \"contains a value\" and whether \"a certain condition is met,\" which is vaguely relevant to the `any()` check, but it's extremely generic and doesn't identify digits, characters, strings, or the `any()` operation specifically. The description is coherent but too generic to indicate any specific aspect of what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_pair(!!value, value > 0);  \n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks whether any character in string `s` is a digit. The C++ completion is about checking if a value is truthy/non-zero (`!!value` and `value > 0`), which is unrelated to digit detection or string character iteration. There's no mention of characters, digits, or string traversal.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "True if any character in the string is a digit, else False:",
+   "verdict": "YES",
+   "reasoning": "The description perfectly captures what the code does \u2014 it checks if any character in the string is a digit, returning True or False.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::isdigit(value);};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion defines a lambda that checks if a character is a digit using `std::isdigit`, which is exactly the core operation in the Python code (`c.isdigit()`). This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

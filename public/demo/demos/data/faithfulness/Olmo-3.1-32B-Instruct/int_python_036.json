@@ -1,0 +1,96 @@
+{
+ "id": "int_python_036",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a perfect square\n(2) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n >= 0 and int(n**0.5)**2 == n"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(d) for d in str(abs(n)))\n    return a, b\n</code>",
+ "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a variable is true to determine if a condition is met (e.g., if the number is prime), then I'm confirming if it's exactly 1 (meaning the condition is true), and finally, I'm printing whether it's true or false.",
+   "verdict": "NO",
+   "reasoning": "The code computes the sum of digits of the absolute value of n. The description talks about checking primality and printing boolean results, which is completely unrelated to digit sum computation. There's no mention of summing digits, converting to string, or taking absolute value.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 && value == (int)(value); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+    "reasoning": "The Python code computes the sum of digits of the absolute value of n. The C++ completion checks if a value is non-negative and is an integer (i.e., equals its integer cast), which is completely unrelated to digit sum computation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Calculating the sum of the digits of a number.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the sum of digits of a number, which is exactly what the code does (iterating over each digit character of the absolute value of n and summing the integer values).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int temp = value;  \n    int digit_sum = 0;  \n    // Calculate digit sum  \n    while (temp > 0){  \n        digit_sum += temp % 10;  \n        temp = temp / 10;  \n        while (temp >",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+    "reasoning": "The C++ completion is computing a digit sum by extracting digits using modulo 10 and integer division, which is exactly what the Python code does (summing the digits of the absolute value of n). The completion clearly shows the digit sum calculation loop, which directly corresponds to the Python code's operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Calculating the sum of digits of a number.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the sum of digits of a number, which is exactly what the code does (iterating over digits of the absolute value of n and summing them).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int num = 0;  \n    for (auto d : std::to_string(value)){  \n        num = 0;  \n        for (auto c : std::to_string(value)){  \n            num = std::stoi(std::to_string(d));",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+    "reasoning": "The C++ completion is computing the sum of digits of a number by iterating over `std::to_string(value)` and converting each character to an integer with `std::stoi`. This directly corresponds to the Python code which sums the integer value of each digit in the string representation of `abs(n)`. The nested loop is spurious/noisy, but the core operation (digit sum via string conversion) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Summing the digits of a number.",
+   "verdict": "YES",
+   "reasoning": "The description \"Summing the digits of a number\" directly describes what the code does: it converts the absolute value of n to a string, iterates over each character (digit), converts them back to integers, and sums them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0; int t=value; int s=0; while(t>0){ int u=0; int x=value; int sum_digits=0; while(x>0){ u+=x%10; } s=sum_digits; } return s; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+    "reasoning": "The C++ completion attempts to compute the sum of digits of a value. It uses modulo 10 operations (`x%10`) to extract digits and accumulates them into a sum variable, which corresponds to what the Python code does (summing the digits of `abs(n)`). Despite being buggy (infinite loop, confused variable names), the core concept of digit-sum via modulo 10 is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

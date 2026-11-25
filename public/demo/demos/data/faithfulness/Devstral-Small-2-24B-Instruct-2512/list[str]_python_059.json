@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_059",
+ "datatype": "list[str]",
+ "frontier_id": "count_ends_consonant",
+ "condition": "the number of words that end with a consonant",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) whether all words have distinct lengths\n(3) the number of words that end with a consonant\n(4) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w))\n    b = len(set(len(w) for w in words)) == len(words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[-1].lower() not in {'a', 'e', 'i', 'o', 'u'})\n    d = sum(w.lower().count(v) for w in words for v in {'a', 'e', 'i', 'o', 'u",
+ "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in {'a', 'e', 'i', 'o', 'u'})",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the number of unique elements in the list is equal to the length of the list.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking unique elements vs. list length (essentially checking for duplicates), which is completely unrelated to what the code does. The code counts words whose last character is not a vowel.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in {'a', 'e', 'i', 'o', 'u'})",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a character is a vowel, we first define what counts as a vowel. Then, we check if the character is in the set of vowels. Next, we count the number of vowels in the string. Finally, we check if the string has any consonants, and if so, we count the number of",
+   "verdict": "YES",
+   "reasoning": "The code counts words whose last character is a consonant (not a vowel). The description talks about checking if characters are vowels and counting vowels/consonants, which is partially relevant \u2014 it mentions vowels, consonants, and counting, which are all conceptually present in the code. However, it misses the key aspect that it's checking the *last* character of each *word*, not counting vowels in a string generally. Still, the core concepts (vowel set, consonant check, counting) are genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in {'a', 'e', 'i', 'o', 'u'})",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To count vowels in a string, check if a character is a consonant, and count how many vowels are in the string.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that end with a consonant (not a vowel), checking the last character of each word. The description mentions checking if a character is a consonant, which is directly relevant to what the code does. However, the description also says \"count how many vowels are in the string,\" which contradicts the code's actual purpose (counting words ending in consonants, not counting vowels). Despite the confusion, the mention of consonants is a relevant partial match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in {'a', 'e', 'i', 'o', 'u'})",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of vowels in the code.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that end in a consonant (i.e., whose last character is NOT a vowel). The description says \"counting the number of vowels,\" which is partially related (vowels are involved in the check) but gets the direction wrong \u2014 it's counting consonant-ending words, not vowels. However, vowels are a genuine sub-component of what the code checks.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count=0;for(char c:count_vowels(value));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in {'a', 'e', 'i', 'o', 'u'})",
+    "reasoning": "The code counts words ending in consonants (not vowels). The C++ completion mentions counting vowels (`count_vowels`) and has a `count` variable, which is partially relevant - it's dealing with vowels and counting. However, the logic is inverted (counting vowels vs. checking for non-vowels at end of words), and the structure is garbled. Still, \"count_vowels\" is genuinely relevant to the underlying operation of checking vowel/consonant membership.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

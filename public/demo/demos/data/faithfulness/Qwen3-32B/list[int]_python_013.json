@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_013",
+ "datatype": "list[int]",
+ "frontier_id": "max_val",
+ "condition": "the largest value",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of even values\n(2) the sum of all values\n(3) the largest value\n(4) the minimum value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 == 0)\n    b = sum(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums)\n    d = min(nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am finding the maximum value, then the sum, then the minimum value, and finally the difference between the maximum and the sum, then the sum again, then the maximum, then the minimum, and finally the difference between the maximum and the sum, then the sum again, then the minimum, and then the difference",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts by correctly identifying \"finding the maximum value\" which is exactly what `max(nums)` does. However, the description then devolves into a repetitive loop of \"sum, minimum, maximum, difference\" cycling over and over. The initial fragment is relevant, but the rest is a heavy repeating loop pattern.\n\nThe key question is whether this qualifies as HEAVY_LOOP. The repeating unit is roughly \"maximum, sum, minimum, difference\" cycling repeatedly. However, the description does begin with a coherent correct statement before entering the loop. The looping portion dominates the description, but there is a genuine correct fragment at the start.\n\nLooking more carefully: the description is dominated by a short repeating cycle (\"maximum... sum... minimum... difference... sum again... maximum... minimum... difference...\") that repeats. Once collapsed, the core correct content is \"finding the maximum value\" which matches the code. But the HEAVY_LOOP rule says it takes precedence even if the looped fragment contains relevant tokens.\n\nThe repeating unit here is about 4-5 concepts cycling: \"sum, minimum, maximum, difference\" - this fits the HEAVY_LOOP pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "- **Max**: Find the maximum value.\n- **Min**: Find the maximum value.\n- **Max**: Find the minimum value.\n- **Reduce**: Find the maximum value.\n- **Reduce**: Find the minimum value.\n- **Reduce**: Find the maximum value.\n- **Reduce**: Find the minimum value.\n\n**",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the maximum value multiple times, which is directly relevant to the code `c = max(nums)`. Despite the repetitive and contradictory bullet points (mixing max/min), the core operation of finding the maximum value is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto max = value;  \n    auto min = value;  \n    auto sum = value;  \n    auto prod = value;  \n    for (auto it = value.begin(); value.end(); value.begin(); value.end(); *max_element(value.begin(), value.end()); *min_element(value.begin(), value.end",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums)",
+    "reasoning": "The C++ completion explicitly computes `*max_element(value.begin(), value.end())`, which directly corresponds to finding the maximum of a collection \u2014 exactly what `max(nums)` does in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am finding the maximum value in the list.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 finding the maximum value in the list using `max(nums)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value ? *max_element(values.begin(), values.end()) : *min_element(values.begin(), values.end());}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums)",
+    "reasoning": "The C++ completion uses `max_element` on a collection, which directly corresponds to finding the maximum value (`max(nums)`) in the Python code. The ternary condition and `min_element` branch are irrelevant noise, but the core operation of finding the maximum element is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The maximum value in the list.\n\nThe largest value in the list.\n\nThe maximum value in the list.\n\nThe largest value in the list.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is finding the maximum value in a list, which is exactly what `max(nums)` does. However, the description itself is a repeating loop of two alternating phrases (\"The maximum value in the list\" and \"The largest value in the list\"), cycling back and forth. The repeating unit is roughly 6-7 words, which is slightly above the \"five words/tokens or fewer\" threshold, and the two phrases are semantically equivalent variations rather than a strict single-unit loop.\n\nGiven that the loop alternates between two slightly different phrasings but both are relevant and coherent, and the loop unit is borderline in length, I'll consider this as a YES with a note about the repetition \u2014 the substance is clearly relevant and not degenerate in meaning.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return *max_element(values.begin(), values.end());}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums)",
+    "reasoning": "The C++ completion implements finding the maximum element of a collection, which is exactly what the Python code does with `max(nums)`. Both are computing the maximum value from a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

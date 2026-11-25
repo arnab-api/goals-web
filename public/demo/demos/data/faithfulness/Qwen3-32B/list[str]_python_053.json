@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_053",
+ "datatype": "list[str]",
+ "frontier_id": "all_unique_lengths",
+ "condition": "whether all words have distinct lengths",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) whether all words have distinct lengths\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(len(w) for w in words)) == len(words)\n    return a, b\n</code>",
+ "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check if the second character in the string is 'b' and return True or False accordingly.",
+   "verdict": "NO",
+   "reasoning": "The code checks if all words have unique lengths (by comparing the number of distinct lengths to the number of words), but the description talks about checking if the second character in a string is 'b'. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::all_of(value.begin(), value.end(), [](auto x) { return x; });};",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks whether all words have distinct lengths (by comparing the size of the set of lengths to the number of words). The C++ completion uses `std::ranges::all_of` to check that all elements satisfy some condition, which is a related concept (checking a property across all elements), but the specific condition `return x` (truthy check) and the operation performed don't correspond to checking uniqueness of lengths. However, the `all_of` pattern is somewhat relevant to checking a universal property. The completion is coherent but doesn't capture the key operation of checking distinctness/uniqueness of word lengths.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "len(set(len(x) for x in [len(y) for y in __import__('itertools').chain(len(z) for z in __import__('collections').abc and len(set(len(a) for a in [len(b) for b in __import__('itertools').chain(len(c) for c in [",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with something relevant \u2014 `len(set(len(x) for x in ...))` which directly mirrors the structure of the code (`len(set(len(w) for w in words))`). However, the description quickly devolves into a deeply nested, repeating loop pattern with `len(set(len(... for ... in [len(... for ... in __import__('itertools').chain(len(... for ...` cycling over and over. This is a HEAVY_LOOP dominated by a short repeating cycle of tokens, even though the initial fragment is relevant.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::set<int>().size() == std::set<int>(value.begin(), value.end()).size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks if all words have unique lengths by comparing the size of a set of word lengths to the total number of words. The C++ completion checks if the size of an empty set equals the size of a set constructed from some values \u2014 this captures the core idea of using a set and comparing sizes to check for uniqueness, even though the implementation details differ (comparing set size to original collection size vs. comparing to empty set size).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll need to check if all elements in the list are unique and return a boolean value indicating whether or not.\n\nunique = len(set(lst)) == len(lst)",
+   "verdict": "YES",
+   "reasoning": "The description talks about checking if all elements are unique by comparing the length of a set to the length of the original list. The code does exactly this pattern (`len(set(...)) == len(words)`), though applied to word lengths rather than the words themselves. The core mechanism described matches the code's approach.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::is_integral<decltype(value)>::value;  \n};",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks whether all words have unique lengths (by comparing the number of distinct lengths to the total number of words). The C++ completion checks if a value is an integral type, which is completely unrelated to checking uniqueness of word lengths or any string/collection operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "All(len(set(len(i) == len(set(map(lambda x: len(x) == len(set(map(len, [True for x in set([len(x) in set([len(x) for x in ... ]))), all([len(x) in set([len(x) for x in ... ])])).\n\nall",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description appears to be a heavily looped/garbled fragment cycling around `len(set(len(...))` patterns. However, it does contain relevant fragments - it mentions `len`, `set`, checking lengths of words, which are core operations in the code. But the description is dominated by a short repeating cycle of `len(set(len(...)` that loops over and over with little coherent meaning remaining after collapsing the repetition.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size() == std::ranges::all_of(value, [n = true] (auto x) { return x; }).empty(); };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks whether all words have distinct lengths (the number of unique word lengths equals the number of words). The C++ completion mentions `.size()` and iterating over `value` with `all_of`, which touches on checking some property of sizes/elements, but the logic described (comparing size to whether `all_of` returns empty) is incoherent and doesn't capture the \"all distinct lengths\" concept. However, it does reference `.size()` which is relevant to the word length checking aspect.\n\nThe completion is not a heavy loop and not malformed. It contains a partial relevant fragment (`.size()` comparison) but the overall logic is garbled and doesn't clearly relate to checking distinctness of lengths. Still, `.size()` being compared is a relevant sub-step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

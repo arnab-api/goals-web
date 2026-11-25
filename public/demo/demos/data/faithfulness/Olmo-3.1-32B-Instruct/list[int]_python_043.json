@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_043",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) whether any value is even\n(3) the difference between the maximum and minimum values\n(4) whether any value is zero\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums)\n    b = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - min(nums)\n    d = any(x == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max(nums) - min(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true (e.g., summing values, checking for nulls, etc.).",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is too generic \u2014 it mentions \"summing values\" or \"checking for nulls\" but the code is computing the range (max minus min) of a list. None of the specific operations mentioned match what the code actually does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? 1 : 0; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = max(nums) - min(nums)",
+    "reasoning": "The C++ completion describes a simple ternary/boolean check (returning 1 or 0 based on whether a value is truthy), which has nothing to do with computing the range (max - min) of a list of numbers.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I don't have the context of your data to determine the max, min, and range.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"max, min, and range\" which are directly relevant to what the code computes \u2014 the range of a list (max minus min). Despite being wrapped in a generic disclaimer, it correctly identifies the key operations.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto max_val = *std::max_element(std::begin(value), std::end(value));\n    auto min_val = *std::min_element(std::begin(value), std::end(value));\n    auto range = max_val - min_val;\n    auto has_positive = std::numeric_limits<decltype(max_val -",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) - min(nums)",
+    "reasoning": "The C++ completion computes `max_element - min_element` (the range), which is exactly what the Python code does with `max(nums) - min(nums)`. This is a direct and complete match of the operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Calculating the difference between the maximum and minimum values in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the range (max minus min) of a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto min_max = std::make_pair(*std::max_element(std::begin(data), std::end(data), [](int a, int b){ return std::pair<int,int>(std::distance(std::begin(data), std::max_element(std::begin(data), std::end(data), [](int a",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) - min(nums)",
+    "reasoning": "The C++ completion is attempting to find max and min elements using `std::max_element` and references `std::make_pair`, which relates to finding the range (max - min) of a collection. Despite being garbled and cut off, it clearly involves finding maximum/minimum elements from a data collection, which is directly relevant to the Python code computing `max(nums) - min(nums)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I need more context to determine the max and min values and compute the range.",
+   "verdict": "YES",
+   "reasoning": "The description mentions computing max and min values and the range, which is exactly what the code does (max(nums) - min(nums) computes the range of the list). Despite the hedging language, the substance is directly relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto max = *max_element(std::max_element(value.begin(), value.end()) - *std::max_element(value.begin(), value.end()) - *std::max_element(value.begin(), value.end()) + *std::max_element(value.begin(), value.end()) - *std::max_element(value.begin(), value",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = max(nums) - min(nums)",
+    "reasoning": "The completion is attempting to compute max and min elements of a collection, which is directly relevant to the Python code computing `max(nums) - min(nums)`. However, it only shows `max_element` calls and doesn't clearly show `min_element`, and the expression is garbled/looping with repeated `max_element` calls. The repeated `std::max_element` calls form a heavy loop pattern that dominates the completion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_008",
+ "datatype": "list[str]",
+ "frontier_id": "count_long",
+ "condition": "the number of words longer than five characters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the length of the shortest word\n(2) the total number of characters across all words\n(3) the number of words shorter than three characters\n(4) the number of words longer than five characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = min(len(w) for w in words)\n    b = sum(len(w) for w in words)\n    c = sum(1 for w in words if len(w) < 3"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if len(w) > 5)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for w in words if len(w) > 5)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need more context to answer that part. Please provide the specific code or details.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is a generic request for more context and contains no information relevant to what the code does (counting words with length greater than 5).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(data), std::end(data), [](int x){ return x > 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion uses `std::count_if` to count elements satisfying a condition, which mirrors the Python code's use of `sum(1 for w in words if ...)` to count words satisfying a condition. The specific condition (`x > 0` vs `len(w) > 5`) is wrong, but the core operation of counting elements that meet a threshold condition is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting how many numbers in a list are greater than 10.",
+   "verdict": "NO",
+   "reasoning": "The description mentions counting elements in a list that exceed a threshold, which is structurally what the code does (counting words with length > 5). However, the description talks about numbers greater than 10, while the code counts words with length greater than 5 \u2014 the concept of counting elements exceeding a threshold is correct, but the specific domain (numbers vs. word lengths) is wrong.\n\nGiven the lenient grading criteria, the core operation (counting items exceeding a threshold) is genuinely relevant, even if the specifics differ.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count4=0; int count5=0; int sum5=0; int count6=0; for(int i=0;i<100;i++){ if(i<4)count6=0; if(i<5)count6=0; } // but let's compute as per requirements",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The Python code counts words with length greater than 5. The C++ completion mentions counting (count4, count5, count6) and has some threshold comparisons (i<4, i<5), which are in the neighborhood of the length-5 threshold, but the logic is garbled and doesn't clearly relate to counting words by length. However, there are multiple count variables and a loop structure that loosely relates to counting/summing, and the threshold values (4, 5, 6) are adjacent to the key value of 5 in the Python code.\n\nThe completion is not a heavy loop and contains some intelligible content. The presence of count variables and threshold comparisons near 5 shows partial relevance to counting items based on a length condition, even if imprecise.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many times a condition is true.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting how many times a condition is true,\" which accurately captures the essence of the code \u2014 it's using a generator expression with `sum` to count words satisfying a condition (`len(w) > 5`). This is a correct, if generic, characterization of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    int sum = 0;  \n    int anotherSum = 0;  \n    int yetAnotherSum = 0;  \n    for (int i = 0; i < value.size(); ++i) {  \n        if (value[3] >",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion shows iterating over a collection (`value`) and checking some condition with `>` comparison. It has a count variable and a loop structure. While the specific condition `value[3] >` is wrong (checking index 3 rather than string length > 5), the overall structure of counting elements in a collection that meet a `>` threshold condition is genuinely relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting how many elements meet a certain condition (e.g., greater than a value).",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting elements that meet a condition involving \"greater than a value,\" which directly matches the code that counts words where `len(w) > 5`. This is a correct and relevant description of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& x : value) {  \n        if (x > 0) ++count;  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The C++ completion counts elements in a collection that satisfy some condition (x > 0), which is structurally similar to the Python code that counts words satisfying a condition (len(w) > 5). The core operation \u2014 counting items in a collection that pass a threshold check \u2014 is correctly identified, even though the specific condition (x > 0 vs len(w) > 5) is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

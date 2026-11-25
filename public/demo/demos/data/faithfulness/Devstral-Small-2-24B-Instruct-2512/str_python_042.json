@@ -1,0 +1,96 @@
+{
+ "id": "str_python_042",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.isalpha() and s.islower()\n    return a, b\n</code>",
+ "impl_span": "b = s.isalpha() and s.islower()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the first character of the input is a letter.",
+   "verdict": "NO",
+   "reasoning": "The code checks if the entire string `s` consists of alphabetic characters AND is all lowercase. The description mentions checking if a character is a letter, which is partially relevant (the `isalpha()` part), but incorrectly says \"first character\" and misses the lowercase check entirely. However, the letter-checking concept is genuinely related to `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if all characters in the string are alphabetic and if the string has at least one character.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters are alphabetic, which is directly relevant to `s.isalpha()`. The description also mentions checking for at least one character, which is partially relevant since `isalpha()` returns False for empty strings. However, it misses the `islower()` check. Still, it correctly identifies a key part of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return !value.empty() && std::all_of(value.begin(), value.end(), [](bool has_letters, bool has_lower, bool has_upper){return !has_letters && std::all_of(value.begin(), value.end(), [](bool has_letters, bool has_lower, bool has_upper){",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion is checking if a string is non-empty and using `std::all_of` to check characters, which relates to checking alphabetic/lowercase properties. However, the lambda parameters `(bool has_letters, bool has_lower, bool has_upper)` are syntactically wrong for `std::all_of`, and the completion falls into a repeating loop where the `std::all_of` with the same lambda repeats itself.\n\nThe pattern `!value.empty() && std::all_of(value.begin(), value.end(), [](bool has_letters, bool has_lower, bool has_upper){return !has_letters && std::all_of(value.begin(), value.end(), [](bool has_letters, bool has_lower, bool has_upper){` shows a clear repeating cycle of roughly the same `std::all_of` construct, making this a HEAVY_LOOP.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all characters in the string are alphanumeric and if the string is not empty.",
+   "verdict": "NO",
+   "reasoning": "The code checks if the string contains only alphabetic characters (`isalpha()`) and if all characters are lowercase (`islower()`). The description mentions checking if all characters are alphanumeric (partially relevant \u2014 it's about character classification) but says \"not empty\" instead of \"lowercase,\" missing the key lowercase check. However, `isalpha()` is related to alphanumeric classification, so there's a partial relevant concept.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The completion is dominated by a short repeating cycle of `(value && (value = ` that repeats over and over. Once collapsed, there is no coherent content left beyond the loop structure itself.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "All characters in a string are lowercase letters if the string contains only lowercase letters and letters.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters are lowercase letters and that the string contains only letters \u2014 this directly corresponds to `s.isalpha()` (only letters) and `s.islower()` (all lowercase), which is exactly what the code checks.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return !value.empty() && all_of(value.begin(), value.end(), [](auto str){return !str.empty() && isalpha(str.empty() || all_of(str.begin(), str.end(), [](auto s){return islower(str.empty() || all_of(value.begin(), value.end(), [](auto s){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion checks `isalpha` and `islower` on the string value, which directly corresponds to the Python code's `s.isalpha() and s.islower()`. Despite being syntactically garbled and looping at the end, the core relevant operations (checking alphabetic characters and lowercase) are clearly present in the non-looped portion.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

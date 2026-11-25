@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_001",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is zero\n(2) whether any value is even\n(3) the product of all values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = 0 in nums"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(n % 2 == 0 for n in nums)\n    c = 1\n    for n in nums:\n        c *= n\n    return a, b, c\n</code>",
+ "impl_span": "b = any(n % 2 == 0 for n in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check the condition and return `True` if the loop completes fully, otherwise it checks the second condition and returns `False` if it reaches the third line, otherwise it checks the fourth condition and returns `True` if the fifth line is reached, otherwise it checks the sixth condition and returns `False` if",
+   "verdict": "NO_INFO",
+   "reasoning": "The description talks about checking conditions and returning True/False, which is vaguely related to the `any()` check in the code. However, it describes a multi-step sequential loop with multiple conditions (4th, 5th, 6th conditions), which doesn't match the simple even-number check being performed. The description is coherent but describes something completely different - a multi-branch sequential check rather than checking if any number is even.\n\nWait, let me reconsider. The code checks if any number in `nums` is even (`n % 2 == 0`). The description mentions checking conditions and returning True/False, which is at least partially relevant to what `any()` does. But the description seems to be describing a completely different algorithm with multiple sequential conditions, not an \"any element is even\" check.\n\nThe description is coherent but the substance describes a multi-condition sequential algorithm that is unrelated to checking for even numbers with `any()`.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value) {\n    return value;\n};\nauto func (auto value) {\n    return value;\n};",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(n % 2 == 0 for n in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if there is any even number in the list and if there is any even number, I'm checking if there is any number divisible by 2 in the list and then checking if there is any number divisible by 2 in the list.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code checks if any number in the list is even (divisible by 2). While it repeats itself, it's not a tight short-token loop \u2014 it's a longer sentence that restates the same correct concept. The core meaning is accurate and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return value % 2 == 0;\n}\n\nauto func (auto value){\n    return value % 2 == 0;\n}\n\nauto func (auto value){\n    return value % 2 == 0;\n}",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = any(n % 2 == 0 for n in nums)",
+    "reasoning": "The C++ completion shows `value % 2 == 0`, which is exactly the even-number check performed in the Python code. However, the completion is dominated by a short repeating cycle of the same function definition repeated over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if there is at least one even number in the list.  \nI'm checking if all numbers are positive (if any are even, I'm checking if any are odd).  \nI'm checking if any number is divisible by 3.",
+   "verdict": "YES",
+   "reasoning": "The first sentence of the description (\"checking if there is at least one even number in the list\") is exactly what the code does \u2014 it uses `any()` with `n % 2 == 0` to check for even numbers. The subsequent sentences are wrong, but the first part is a clear, correct description of the code's purpose.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0;};\nauto func2 (auto value){return value % 3 == 0;};\nauto func3 (auto value){return value % 5 == 0;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(n % 2 == 0 for n in nums)",
+    "reasoning": "The C++ completion defines a lambda checking `value % 2 == 0`, which is exactly the even-number check in the Python code. The additional functions checking `% 3` and `% 5` are irrelevant extras, but the core operation (`% 2 == 0`) is correctly captured and is not a repeating loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if there's any even number in the list. \n\nA number is even if `number % 2 == 0` for any `number` in the list.\n\nI'm checking if there's any even number in the list. \n\nA number is even if `number % 2 == 0",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: checking if any number in the list is even using the modulo 2 == 0 condition. It correctly identifies both the `any()` operation and the even number check via `% 2 == 0`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return value % 2 == 0;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(n % 2 == 0 for n in nums)",
+    "reasoning": "The C++ completion implements a function that checks if a value is even (value % 2 == 0), which is exactly the core operation in the Python code that checks if any number in nums is even.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

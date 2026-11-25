@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_019",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether the values are sorted in non-decreasing order\n(2) the largest value\n(3) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    b = max(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(nums) != len(set(nums))\n    return a, b, c\n</code>",
+ "impl_span": "c = len(nums) != len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if you've provided a code snippet to analyze. If so, I'll determine if the input is present and, if it is, return whether it's empty or not, and also check for its length to see if it's a single value or a list. If the input is an array or list",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking length and whether the input is a list/array, which partially relates to the code (which uses `len()`). However, the description focuses on checking if input is empty or a single value, missing the core operation: comparing `len(nums)` to `len(set(nums))` to detect duplicates. The mention of \"length\" is relevant but the description is mostly about something unrelated (checking if input is present/empty).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? nullptr : &value.front(); }  \nif (value.empty()) return nullptr;  \nbool result = false;  \nif (!value.empty()) {  \n    result = value.size() > 0 ? value.back() : nullptr;  \n    if (value.empty()) result = false;",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates in a list by comparing the length of the list to the length of a set (which removes duplicates). The C++ completion is about checking if a container is empty and accessing front/back elements, which is completely unrelated to duplicate detection or set/length comparison.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking for duplicate values in a list to see if there are any.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks for duplicate values in a list by comparing the length of the list to the length of the set (which removes duplicates), returning True if duplicates exist.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::vector<int> seen; for(auto it = value.begin(); it != value.end(); ++it) if(std::find(value.begin(), value.end(), *std::prev(std::unique(value.begin(), value.end(), [](const std::vector<int>& v){ return v.size() == v.size() && (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of its set. The C++ completion uses `std::unique` and `std::find` to detect duplicates in a vector, which is a related approach to finding duplicate elements. Despite being garbled and cut off, the core idea of checking for duplicate values in a collection is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates in a list\" is exactly what the code does \u2014 it compares the length of the list to the length of the set (which removes duplicates) to detect if any duplicates exist.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(value), std::end(value), false); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates in a list by comparing the length of the list to the length of its set. The C++ completion counts occurrences of `false` in a collection, which is unrelated to duplicate detection. There's no relevant operation here \u2014 counting `false` values doesn't correspond to checking for duplicate elements.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if there are any duplicate values in a list by comparing the length of the list to the length of a set made from the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: comparing the length of the list to the length of a set made from the list to check for duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::unordered_set<decltype(value), class std::equal_range <decltype(&value)> > duplicate_checker;  \nfor (auto it = std::begin(std::adjacent_find(std::begin(value), std::end(value), [](const auto& arr){ return std::ranges::contains_duplicates(arr); }));  \nreturn",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The C++ completion is attempting to check for duplicates using an `unordered_set` called `duplicate_checker` and mentions `contains_duplicates` - both directly relevant to what the Python code does (checking if there are duplicate elements by comparing `len(nums)` to `len(set(nums))`). Despite being syntactically garbled and incomplete, the core concept of duplicate detection using a set-like structure is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

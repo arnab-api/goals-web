@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_019",
+ "datatype": "list[str]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) the number of distinct words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(words))\n    return a, b\n</code>",
+ "impl_span": "b = len(set(words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting unique elements, which is exactly what `len(set(words))` does \u2014 converting to a set removes duplicates, and `len` counts the remaining unique elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(set(words))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting unique elements in a set.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting unique elements in a set,\" which directly matches what the code does: it creates a set from `words` (to get unique elements) and then uses `len()` to count them.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set{value.begin(), value.end()}.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates a `std::set` from a range (using begin/end iterators) and returns its size, which is exactly what the Python code does \u2014 it converts a collection to a set and gets its length to count unique elements.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the number of unique elements in a set.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is counting unique elements \u2014 it creates a set from `words` (to get unique elements) and takes its length. This is exactly what \"calculating the number of unique elements in a set\" describes.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set<std::string>(std::begin(value), std::end(value)).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates a `std::set<std::string>` from the input (removing duplicates) and returns its `.size()`, which is exactly what the Python code does: converting `words` to a set and getting its length to count unique words.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting unique elements, which is exactly what `len(set(words))` does \u2014 converting to a set removes duplicates, and `len` counts the remaining unique elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::set{value.begin(), value.end()}.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates a set from a collection (using begin/end iterators) and returns its size, which is exactly what the Python code does \u2014 converting words to a set to get the count of unique elements. This is a direct match to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "str_python_039",
+ "datatype": "str",
+ "frontier_id": "count_lowercase",
+ "condition": "the number of lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the last character\n(2) the number of alphabetic characters\n(3) the number of lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[-1]\n    b = sum(1 for c in s if c.isalpha"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for d in s if d.isalpha() and d.islower())\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for d in s if d.isalpha() and d.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Counting the number of times a specific condition is met.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"counting the number of times a specific condition is met,\" which is generic but does capture the core operation (counting/summing occurrences that satisfy a condition). However, it doesn't identify any specific aspect of what condition is being checked (lowercase alphabetic characters).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count=0; for(auto x: value){ if(x>='a'&&x<='z') ++count; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for d in s if d.isalpha() and d.islower())",
+    "reasoning": "The C++ completion counts lowercase alphabetic characters in a string by checking if each character is between 'a' and 'z', which is exactly what the Python code does (counting characters that are both alphabetic and lowercase). This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of lowercase letters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts lowercase alphabetic characters in string `s` by checking both `isalpha()` and `islower()` conditions.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int lower = 0; int upper = 0; int mixed = 0; for (const auto& c : value) { if (std::islower(c)) ++mixed; if (std::isupper(c)) ++mixed; if (c == ' ') ++mixed; // Wait, need to",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for d in s if d.isalpha() and d.islower())",
+    "reasoning": "The C++ completion counts lowercase characters (`std::islower`) and uppercase characters (`std::isupper`) separately, which is directly relevant to the Python code that counts lowercase alphabetic characters. The completion explicitly tracks a `lower` count and uses `std::islower`, which matches the core operation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting how many times a condition is true for each element in a list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting how many times a condition is true for each element in a list, which is relevant to the code that counts elements (characters) in a string that satisfy a condition (being alphabetic and lowercase). This is a correct high-level description of what the code does, even if it omits the specific conditions (isalpha and islower).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& v : value) {  \n        if (std::isalpha(v)) {  \n            int c = 0;  \n            for (const auto& v2 : value) {  \n                if (std::count_if(value.begin(), value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for d in s if d.isalpha() and d.islower())",
+    "reasoning": "The C++ completion checks `std::isalpha(v)` which is directly relevant to the Python code's `d.isalpha()` check. It also counts characters in the string, which aligns with the Python code's `sum(1 for d in s if ...)`. While it doesn't explicitly check for lowercase (`d.islower()`), it captures the core structure of iterating and counting alphabetic characters.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of characters in a string that are alphabetic and lowercase.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts characters in string `s` that are both alphabetic (`isalpha()`) and lowercase (`islower()`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count=0; for(char c: value) if(islower(c)) ++count; return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for d in s if d.isalpha() and d.islower())",
+    "reasoning": "The C++ completion counts lowercase characters in a string using `islower()`, which is exactly what the Python code does (counting characters that are both alphabetic and lowercase). The C++ version omits the `isalpha()` check but the core operation of counting lowercase characters is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

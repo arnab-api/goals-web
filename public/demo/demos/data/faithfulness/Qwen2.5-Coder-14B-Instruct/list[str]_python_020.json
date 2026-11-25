@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_020",
+ "datatype": "list[str]",
+ "frontier_id": "count_starts_vowel",
+ "condition": "the number of words that start with a vowel",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether all words have distinct lengths\n(2) the total number of uppercase letters across all words\n(3) the number of words that start with a vowel\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(len(w) for w in words)) == len(words)\n    b = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[0].lower() in 'aeiou')\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that start with a vowel (checking the first character of each word), while the description says it's counting the number of vowels in the string. The description correctly identifies vowel-counting as the operation, but misidentifies what's being counted (vowels in general vs. words starting with a vowel). However, the core concept of checking for vowels ('aeiou') is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the first character of the string is a vowel.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if the first character of words is a vowel. The code does exactly this for each word in a list and counts them, but the fundamental per-word check described matches the code's logic.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){auto vowels = \"aeiou\";auto count = 0;auto is_vowel = [](auto c){auto vowels = \"aeiou\";auto count = 0;for(auto c : vowels){if(c == 'a' || c == 'e' || c == 'i' || c == 'o",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion is clearly about counting vowels - it defines a `vowels` string \"aeiou\", a `count` variable, and an `is_vowel` lambda that checks if a character matches vowel characters. This directly corresponds to the Python code which counts words whose first character (lowercased) is a vowel. The completion captures the core operation (vowel checking/counting) even though it starts to loop/nest with repeated `vowels` and `count` declarations.\n\nThe repetition is present but the content before the loop starts is coherent and relevant. The loop isn't a tight 5-token cycle \u2014 it's more of a structural repetition of a larger block. The substance (vowel checking, counting) is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of vowels in a given string.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that start with a vowel (checking the first character of each word), not the total number of vowels in a string. However, the description correctly identifies the core concept of vowel-checking, which is a relevant sub-operation in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return [count = 0, sum = 0, product = 0] (auto x) mutable -> int {\n    for (auto i = 0, j = 0, k = 0; i < value.size() || j < value.size() || k < value.size(); ++k)",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The Python code counts words that start with a vowel. The C++ completion mentions counting and iterating over a collection (value.size()), which has some relevance to counting elements. However, it doesn't mention vowels, first characters, or any string-beginning check \u2014 it just shows generic iteration with count/sum/product variables that don't relate to vowel checking specifically.\n\nThe completion is not a heavy loop, but it's quite generic \u2014 it shows iteration and counting but doesn't surface anything specific about vowels or first-character checking. The presence of \"count\" is somewhat relevant but too generic to confirm knowledge of what's being counted.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the current character is a vowel.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a character is a vowel, which is directly relevant to what the code does \u2014 it counts words whose first character (lowercased) is a vowel. The description captures the core vowel-checking operation, even though it misses the \"first character of each word\" and \"counting\" aspects.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](const auto& c) { return \"aeiouAEIOU\".count(std::begin(value), std::end(value), [](const auto& c) { return std::count_if(std::begin(value), std::end(value), [](",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w[0].lower() in 'aeiou')",
+    "reasoning": "The completion starts relevantly \u2014 it uses `std::count_if` over a range and checks against \"aeiouAEIOU\", which directly corresponds to counting words that start with a vowel. However, the completion then devolves into a repeating loop of `std::count_if(std::begin(value), std::end(value), [](` with the lambda never closing properly.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is roughly `std::count_if(std::begin(value), std::end(value), [](const auto& c) { return` which is more than 5 tokens but repeats in a cycle. However, before the loop starts, there is genuinely relevant content: `std::count_if` over a range with a check against \"aeiouAEIOU\". The loop dominates the latter portion but the beginning has coherent relevant content.\n\nThis is a borderline case. The initial fragment is clearly relevant (count_if + aeiouAEIOU), but then it loops. I'll consider whether the loop \"dominates\" \u2014 it does take up most of the completion, but the relevant content appears first and is substantive enough.\n\nGiven the instruction that HEAVY_LOOP applies when \"once you collapse the repetition, little or no coherent content is left\" \u2014 collapsing the repetition leaves the meaningful first part with `count_if` and \"aeiouAEIOU\", which is genuinely relevant. So this should be YES.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_052",
+ "datatype": "list[str]",
+ "frontier_id": "all_unique_lengths",
+ "condition": "whether all words have distinct lengths",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of capitalized words\n(2) whether all words have distinct lengths\n(3) the number of distinct words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w[:1].isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(len(w) for w in words)) == len(words)\n    c = len(set(words))\n    return a, b, c\n</code>",
+ "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I will check if the code is valid and if all the words are unique. Then I will check if the words are in order. Finally, I will check if the words are unique.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all words have unique lengths (by comparing the number of distinct lengths to the number of words). The description mentions checking if \"all the words are unique,\" which partially captures the uniqueness concept, though it confuses word uniqueness with length uniqueness. The description is coherent and touches on a relevant sub-concept (uniqueness checking), even if imprecisely applied.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::visit([](auto a, auto b, auto c) {return std::tuple{a, b, c};}, std::views::all | std::ranges::views::transform([](auto x) {return x;}) | std::ranges::views::transform([](auto x)",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks whether all words have distinct lengths (i.e., the number of unique word lengths equals the number of words). The C++ completion involves `std::visit`, `std::tuple`, and range transforms, but doesn't touch word lengths, set/uniqueness checking, or any comparison of counts. The C++ code appears to be generic transformation/visitor boilerplate with no relevance to checking uniqueness of word lengths.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I check if all elements have unique lengths: `len(set(len(x) for x in input)) == len({len(x) for x in input})`.  \nAll elements have unique lengths if all lengths are different: `len({len(x) for x in input}) == len(set(len(x) for x in",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if all elements have unique lengths by comparing the size of a set of lengths. The specific comparison in the description is slightly different (comparing two equivalent set expressions rather than comparing to `len(words)`), but the fundamental concept of checking uniqueness of word lengths is correctly captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::set<int> lengths;  \n    for (size_t i = 0; i < value.size(); ++i) {  \n        if (i != value.size().begin() [i].size() != value.end() [i].size() != value.begin() [i].size() !=",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The C++ completion starts with a clearly relevant approach: creating a `std::set<int> lengths` and iterating over `value` to collect sizes/lengths. This directly mirrors the Python code's use of `set(len(w) for w in words)`. The later part becomes garbled/syntactically invalid, but the initial substance (set of lengths, iterating over words) is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all elements in the list are unique.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all word lengths are unique (i.e., no two words have the same length) by comparing the number of distinct lengths to the total number of words. The description says \"checking if all elements in the list are unique,\" which captures the core idea of uniqueness checking, even though it's slightly imprecise about what property is being checked (lengths of words vs. the words themselves).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::is_sorted(std::begin(value), std::end(value), [](auto a, auto b){ return std::all_of(b, std::begin(b), std::end(b), [](auto x, auto y){ return std::count(b.begin(), b.end(), true) == 1;",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks whether all words have unique lengths (i.e., no two words share the same length). The C++ completion mentions `std::count` and checking `== 1`, and touches on uniqueness concepts, but it's primarily about `std::is_sorted` which is completely unrelated to checking unique lengths. However, the `std::count(...) == 1` fragment is somewhat relevant to checking uniqueness. The completion is garbled and syntactically broken, but contains a small relevant fragment about counting occurrences equaling 1.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Check if all lengths of elements in the list are unique.",
+   "verdict": "YES",
+   "reasoning": "The code computes the lengths of all words, puts them in a set (removing duplicates), and checks if the count of unique lengths equals the total number of words \u2014 which is exactly checking if all word lengths are unique/distinct. The description accurately captures this.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::adjacent_find(std::begin(std::map<bool, bool>(std::set<int>::key_comp()).insert(std::set<int>::size() == std::set<int>([&](int a, int b){ return std::set<int>::value_type(std::adjacent_find",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks if all words have unique lengths (by comparing the size of a set of lengths to the number of words). The C++ completion involves `std::set<int>` and size comparisons, which is somewhat relevant (using a set to track unique values), but it's dominated by a repeating pattern of `std::adjacent_find` and `std::set<int>` constructs that loop back on themselves. The completion is heavily looping with `std::adjacent_find` appearing multiple times in a recursive/circular pattern, and once collapsed, little coherent content remains.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

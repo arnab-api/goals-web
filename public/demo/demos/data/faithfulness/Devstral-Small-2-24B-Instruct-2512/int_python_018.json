@@ -1,0 +1,96 @@
+{
+ "id": "int_python_018",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) whether the number is negative\n(3) the sum of the digits\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = n < 0\n    c = sum(int(d) for d in str(abs(n"
+  },
+  {
+   "text": ")))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 9 < abs(n) < 100\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 9 < abs(n) < 100",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the digits in the number.",
+   "verdict": "YES",
+   "reasoning": "The code checks whether the absolute value of n is between 9 and 100 (exclusive), which is equivalent to checking if n is a 2-digit number. The description says \"counting the digits in the number,\" which is conceptually related \u2014 checking for a 2-digit number is essentially verifying the digit count is 2. This is a reasonable partial match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum = 0;int count = 0;int sign = 1;int temp = value;while (value > 0){sum += value % 10;value /= 10;}return sum;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = 9 < abs(n) < 100",
+    "reasoning": "The Python code checks if the absolute value of `n` is a two-digit number (between 9 and 100 exclusive, i.e., has exactly 2 digits). The C++ completion computes the digit sum of a number, which is a completely different operation \u2014 it doesn't check bounds or count digits, it sums them. While it does process digits individually (using `% 10` and `/ 10`), digit summing is unrelated to checking if a number is two digits long.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "The code checks if the number of digits in the variable `num` is exactly 2, and if the sum of the digits is 2, and if the variable `count` is 2, and if the variable `flag` is 2, and if the variable `flag` is 2, and",
+   "verdict": "YES",
+   "reasoning": "The code checks if `abs(n)` is between 9 and 100 (exclusive), which is equivalent to checking if `abs(n)` is a 2-digit number. The description mentions checking if the number of digits is exactly 2, which is genuinely relevant to what the code does (a 2-digit number check). However, the description then devolves into repeated nonsense about sums, counts, and flags all equaling 2, which is unrelated. The first part about \"number of digits exactly 2\" is a correct conceptual match, and the description is not a pure short loop (the repeating unit is longer and varies slightly).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = 9 < abs(n) < 100",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "`len(str(2 == (len([True, False]) == 2)))`\n`len(str(2 == (len([True, False]) == 2)))`\n`len(str(2 == (len([True, False]) == 2)))`\n`len(str(2 == (len([True",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a short repeating cycle (`len(str(2 == (len([True, False]) == 2)))`) that repeats over and over. The fragment itself is about checking list length equality, which is unrelated to checking if `abs(n)` is between 9 and 100 (a two-digit number check). This is a heavy loop regardless.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() > 1 && value.size() < 2 && value.size() == 2;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = 9 < abs(n) < 100",
+    "reasoning": "The C++ completion checks size constraints with `> 1` and `< 2` (and `== 2`), which is somewhat analogous to checking bounds on a value, but the specific logic is contradictory (nothing can be both `> 1` and `< 2` and `== 2` simultaneously). More importantly, the Python code checks if `abs(n)` is between 9 and 100 (a two-digit number check), while the C++ checks `.size()` with inconsistent bounds. However, checking that size is between bounds does capture the spirit of a range check, even if the constants are wrong. The use of `size()` suggests checking string/container length rather than absolute value of a number, which is a different domain. Still, the range-checking structure is partially relevant.\n\nThe completion is not a heavy loop, and it does contain a range/bounds check concept, though the specific values are contradictory and the domain (size vs abs value) differs. It's borderline, but the core idea of checking a value falls within a range is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The number of digits in the number is 2.",
+   "verdict": "YES",
+   "reasoning": "The code checks whether `abs(n)` is between 9 and 100 (exclusive), which is equivalent to checking if the absolute value of `n` is a 2-digit number (10-99). The description says \"the number of digits in the number is 2,\" which correctly captures the semantic meaning of this range check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 10 && value < 100; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 9 < abs(n) < 100",
+    "reasoning": "The C++ completion checks if a value is >= 10 and < 100, which corresponds to checking if a number is a two-digit number. The Python code checks if 9 < abs(n) < 100, which is equivalent to checking if the absolute value is a two-digit number (>= 10 and < 100). This is essentially the same check, just missing the `abs()` wrapper.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

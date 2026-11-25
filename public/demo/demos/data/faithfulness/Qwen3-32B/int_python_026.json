@@ -1,0 +1,96 @@
+{
+ "id": "int_python_026",
+ "datatype": "int",
+ "frontier_id": "is_perfect_square",
+ "condition": "whether the number is a perfect square",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is even\n(2) whether the number is a perfect square\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n % 2 == 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (int(n**0.5) ** 2 == n)\n    return a, b\n</code>",
+ "impl_span": "b = (int(n**0.5) ** 2 == n)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I will check if the number is even, then calculate its square root.",
+   "verdict": "YES",
+   "reasoning": "The description mentions calculating a square root, which is relevant since the code computes `n**0.5` (the square root of n). However, the description incorrectly says it checks if the number is even, when the code actually checks if n is a perfect square. Despite the wrong specific (even vs. perfect square), the square root mention is a genuine partial match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value){return value;};",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = (int(n**0.5) ** 2 == n)",
+    "reasoning": "The C++ completion just defines two identity functions that return their input unchanged, with no reference to square roots, perfect squares, or any squaring/comparison operation relevant to the Python code.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I check if the number is a perfect square and then check if its square root is an integer.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if a number is a perfect square by computing the integer square root and verifying that squaring it gives back the original number.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::sqrt(value * value);};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (int(n**0.5) ** 2 == n)",
+    "reasoning": "The Python code checks if a number `n` is a perfect square by comparing `int(n**0.5)**2` to `n`. The C++ completion involves `std::sqrt` and squaring a value, which are related operations (square root and squaring), but the completion computes `sqrt(value * value)` which is essentially the identity function and doesn't capture the perfect square check. However, the presence of `sqrt` and squaring operations are genuinely relevant ingredients to what the code is doing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I will check if the number is a perfect square and then check if the square root is an integer.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if a number is a perfect square by computing the integer square root and verifying that squaring it gives back the original number.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value * value; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (int(n**0.5) ** 2 == n)",
+    "reasoning": "The Python code checks if a number is a perfect square by computing the square root, squaring it, and comparing to the original. The C++ completion implements a squaring operation (`value * value`), which is directly relevant to the perfect square check \u2014 squaring is a core sub-step of the computation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is a perfect square: `number ** 0.5 == int(number ** 0.5 ** 0.5)`.  \nTo determine if a number is a perfect square: `number ** 0.5 == int(number ** 0.5)`.  \nTo determine if",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking whether a number is a perfect square, and mentions the relevant operation of taking the square root and comparing with an integer conversion. The specific formula described is slightly different from the code (the code uses `int(n**0.5)**2 == n` rather than `number**0.5 == int(number**0.5)`), but the core concept is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(std::sqrt(value)) * std::sqrt(value) == std::sqrt(static_cast<int>(std::sqrt(value) * std::sqrt(value)) == static_cast<int>(std::sqrt(value * std::sqrt(value)) == static_cast<int>(std::sqrt(value) * std::sqrt",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (int(n**0.5) ** 2 == n)",
+    "reasoning": "The C++ completion is checking whether a value is a perfect square by computing `sqrt(value)`, casting to int, and comparing \u2014 which is exactly what the Python code does (`int(n**0.5) ** 2 == n`). The core operation (square root, integer cast, equality check) is clearly present. However, the completion becomes garbled and repetitive toward the end with nested calls, though it doesn't collapse into a simple short repeating loop \u2014 there's genuine relevant content at the start.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

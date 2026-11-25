@@ -1,0 +1,96 @@
+{
+ "id": "int_python_035",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(digit) for digit in str(a))\n    return b\n</code>",
+ "impl_span": "b = sum(int(digit) for digit in str(a))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Sure! Please provide the number, and I will calculate the sum of its digits.\n\nFor example, if the number is 123, the sum of its digits is 6 (1 + 2 + 3).\n\nLet's calculate the sum of digits for the number:\n\n1. 123 \u2192",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions calculating the sum of digits of a number, which is exactly what the code does (summing the individual digits of `a`). The example even shows the correct operation (1+2+3=6).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    while (value != 0) {  \n        sum += value % 10;  \n        value /= 10;  \n    }  \n    return sum;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The C++ completion computes the sum of digits of a number using the classic modulo/division approach (extracting digits via `% 10` and `/ 10`), which is exactly what the Python code does by converting to string and summing the integer digits. Both compute the digit sum of a number.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To get the sum of the digits of a number, we can:\n\n1. Convert the number to a string.\n2. Sum the digits by adding the digits together.\n\nHere's the code to do that:\n\n```python\ndef sum_of_digits(n):\n    return sum(int(digit) for digit in str(n))",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the sum of digits of a number by converting to string and summing the digits \u2014 which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    while (value != 0) {  \n        sum += value % 10;  \n        value /= 10;  \n    }  \n    return sum;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The C++ completion computes the sum of digits of a number using the classic modulo/division approach (extracting digits via `% 10` and `/ 10`), which is exactly what the Python code does (summing the integer digits of `a`). This is a perfect match in substance, just a different implementation strategy.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I will calculate the sum of the digits of the given number.\n\ndigit_sum = sum(int(digit) for digit in str(number_sum))",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the sum of digits of a number, which is exactly what the code does. The description even includes a nearly identical code snippet showing the same operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return accumulate(to_string(accumulate(begin(value), end(value), 0, [](int sum, int digit){return sum + digit;}), 0, [](int sum, int digit){return sum + digit;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The C++ completion is computing the sum of digits by using `accumulate` over the string representation of a number, converting digits to integers and summing them. This directly corresponds to the Python code which sums the integer values of each digit in the string representation of `a`. Despite being garbled/nested oddly, the core operation (accumulate/sum over digits of a number's string representation) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "def sum_digits(n):\n    return sum(int(d) for d in str(n))\n\ndef sum_of_digits(n):\n    return sum(map(lambda x: sum(map(int, str(x))), map(sum, (map(sum, map(lambda d: sum(map(int, str(d))), map(lambda x: sum(map(int, str",
+   "verdict": "YES",
+   "reasoning": "The description starts with a relevant function definition that exactly matches what the code does \u2014 summing the digits of a number by converting to string and summing integer values of each character. However, it then devolves into a deeply nested, repetitive `sum(map(int, str(...)))` pattern that loops on itself. The key question is whether this is a HEAVY_LOOP.\n\nThe repeating unit is roughly `sum(map(int, str(` which cycles over and over, making the latter portion a stuck loop. However, the first function definition `sum_digits` is coherent and directly relevant before the loop begins.\n\nSince the description begins with genuinely relevant content (a correct implementation of digit summing) before collapsing into a loop, and the initial coherent portion is substantial enough to stand on its own, this qualifies as YES rather than HEAVY_LOOP \u2014 the loop doesn't dominate the entire description.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    while (value != 0) {  \n        sum += abs(value % 10);  \n    }  \n    return sum;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(a))",
+    "reasoning": "The C++ completion computes the sum of digits of a number by repeatedly extracting the last digit using `value % 10` and adding it to `sum`. This is directly relevant to what the Python code does \u2014 summing the individual digits of a number. The implementation approach differs (iterative with modulo vs. string conversion) but the underlying operation is identical.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

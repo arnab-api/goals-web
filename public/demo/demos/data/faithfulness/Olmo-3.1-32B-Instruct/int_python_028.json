@@ -1,0 +1,96 @@
+{
+ "id": "int_python_028",
+ "datatype": "int",
+ "frontier_id": "is_perfect_square",
+ "condition": "whether the number is a perfect square",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is negative\n(2) whether the number is even\n(3) whether the number is odd\n(4) whether the number is a perfect square\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n < 0\n    b = (n % 2 == 0)\n    c = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " False\n    if n >= 0:\n        root = int(n ** 0.5)\n        d = (root * root == n)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is a perfect square.",
+   "verdict": "NO",
+   "reasoning": "The code simply assigns `False` to a variable `d` \u2014 it's not checking for a perfect square or doing any computation. However, the description mentions \"checking if a number is a perfect square,\" which could be relevant context for what this variable initialization is part of (e.g., initializing a default result before a check). But the single line of code shown does nothing related to perfect squares.\n\nThat said, the description is coherent and specific, but the code shown is just a boolean assignment with no connection to perfect square checking.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::sqrt(std::abs(value)); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "d = False",
+    "reasoning": "The Python code sets a variable `d` to `False` \u2014 it's a simple boolean assignment with no computation. The C++ completion describes computing the square root of the absolute value of some input, which is completely unrelated to assigning `False` to a variable.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if a number is a perfect square:  \nTake its square root, round it, and compare it to the integer square root of its absolute value.  \nA number n is a perfect square if int(sqrt(n)) ** 2 == n (for positive n).",
+   "verdict": "NO",
+   "reasoning": "The code is simply `d = False` \u2014 it assigns a boolean value with no computation. The description talks about checking perfect squares using square roots, which is a specific algorithm completely unrelated to a simple boolean assignment.\n\nHowever, I should consider whether this single token `d = False` might be part of a larger context where `d` is being set as a default before a perfect square check. But taken at face value, the code does nothing related to perfect square checking.\n\nThe description is coherent and specific, but it describes perfect square checking while the code is just assigning `False` to a variable. These are completely unrelated.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int root = static_cast<int>(std::sqrt(value));  \n    bool is_square = (root * root == value) || (value >= 0 && root * root == static_cast<int>(std::sqrt(value)) && (root * root == value || value == 0 || (root * root",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = False",
+    "reasoning": "The Python code simply assigns `d = False` \u2014 it's just a boolean assignment with no computation. The C++ completion describes checking whether a value is a perfect square (computing sqrt, checking root*root == value). This is a specific computation completely unrelated to a simple boolean assignment `d = False`.\n\nHowever, I need to consider context: the description says this is read at a single token while the model is writing a line of Python code that \"checks some property of its input.\" The gold Python code shown is `d = False`, but this might be one line in a larger context where checking for perfect squares is relevant.\n\nLooking at the C++ completion itself: it's computing a square root check, which is a coherent and specific operation. It's not a heavy loop or malformed. The question is whether it's relevant to what the code does.\n\nGiven that the gold code is literally just `d = False` (setting a variable to False), and the C++ is doing perfect square detection, these seem unrelated. But the assignment `d = False` could be initializing a flag in a context where perfect squares are being checked.\n\nSince I can only judge based on what's shown, and `d = False` is just a boolean assignment with no property checking, the C++ completion about perfect squares is not relevant to this specific line.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am checking if the square root of the number is an integer.",
+   "verdict": "NO",
+   "reasoning": "The code is simply assigning `False` to a variable `d`, but the description mentions checking if the square root of a number is an integer. This is a common sub-step in primality testing or perfect square detection, and the variable `d` being set to `False` could be an initialization step in such a check. However, the single line `d = False` is just an assignment with no computation related to square roots.\n\nThat said, the description does reference a plausible context (checking square root integrality), which could be relevant to the broader algorithm, but this specific line is just initializing a boolean. The description is coherent and specific but doesn't match what this line actually does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto is_square = [](int n){  \n        int root = static_cast<int>(std::sqrt(n));  \n        return root * root == n && n >= 0;  \n    };  \n    auto is_perfect_square = [&](){  \n        int root = static_cast<int>(std::sqrt",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = False",
+    "reasoning": "The Python code simply sets `d = False` \u2014 it's just a boolean assignment with no computation. The C++ completion describes checking whether a number is a perfect square (computing square root and verifying root*root == n). This is a specific algorithmic concept completely unrelated to a simple boolean assignment `d = False`.\n\nHowever, I need to consider whether this is part of a larger context where `d` might relate to something about perfect squares. But taken at face value, the gold code is just `d = False` \u2014 a trivial assignment \u2014 and the C++ completion is about perfect square checking, which is unrelated.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is a perfect square (integer square root):\n\n1. Take the square root of the number.\n2. Round it to the nearest integer.\n3. Square the rounded integer.\n4. Check if the squared value equals the original number.\n\nExample in Python:\n```python\nimport math\ndef is",
+   "verdict": "NO",
+   "reasoning": "The code shown is simply `d = False` \u2014 a variable assignment with no computation. The description talks about checking if a number is a perfect square, which is completely unrelated to this single assignment statement. However, looking at this more carefully, the description might be describing the broader context of what the code is doing (perhaps `d` is being initialized as part of a perfect square check). But based solely on what's shown, `d = False` has no relation to perfect square detection.\n\nWait \u2014 the instruction says this is \"one line of Python CODE that checks some property of its input.\" The line `d = False` by itself doesn't check anything. The description about perfect squares is coherent and specific but unrelated to what this particular line does (simple boolean assignment).\n\nThe description is coherent and specific (perfect square detection), but the code line shown is just `d = False`, which is completely unrelated to that concept.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if(value < 0) return false;  \n    int root = static_cast<int>(std::sqrt(value));  \n    return root * root == value;  \n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = False",
+    "reasoning": "The Python code simply sets `d = False`, which is a trivial assignment with no computation. The C++ completion describes checking whether a value is a perfect square (computing sqrt and checking if root*root equals value). This is a specific algorithm completely unrelated to the simple boolean assignment `d = False`.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  }
+ ]
+}

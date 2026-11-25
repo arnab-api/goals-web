@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_015",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of uppercase letters across all words\n(2) the number of capitalized words\n(3) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].isupper() and w[1:].islower())\n    c = sum(len(w) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am counting the number of elements in a list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of elements in a list,\" which is partially relevant \u2014 the code is indeed counting words (elements) from a list that meet certain criteria (capitalized words). The description captures the counting aspect but misses the filtering condition (title-case check). However, counting elements from a list is genuinely what's happening here.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "At this line of the code, I am checking if the variable `count` is greater than zero.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if a variable `count` is greater than zero, which is unrelated to what the code actually does \u2014 counting words that start with an uppercase letter followed by all lowercase letters (i.e., title-case/capitalized words). The description mentions no relevant operations like checking capitalization, iterating over words, or summing.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (int i = 0; i < value.size(); i++){ if (value[i] > 0) count++; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The Python code counts words where the first letter is uppercase and the rest are lowercase (title case words). The C++ completion counts elements that are greater than 0, which is a counting operation but not related to checking capitalization patterns. However, it does implement a counting loop over a collection, which is a structural similarity but not conceptually relevant to the specific property being checked (title case).\n\nThe C++ code is counting something (elements > 0), which is vaguely related to the overall \"sum/count\" operation, but the specific property being checked (uppercase first letter, lowercase rest) is completely absent. The `value[i] > 0` check has no relevance to character case checking.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am counting the number of words in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of words in the list,\" which is partially relevant \u2014 the code does count words (using `sum` with a generator). However, it misses the key filtering condition: only words that are in title case (first letter uppercase, rest lowercase) are counted. Still, counting words is a genuine sub-step of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The C++ completion only returns the size of a value, which is completely unrelated to checking if words start with uppercase and have lowercase remainder. There's no mention of character case checking, counting words with specific properties, or any relevant operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting how many strings in a list start with a capital letter.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting how many strings in a list start with a capital letter,\" which is partially correct \u2014 the code does count words starting with a capital letter. The description misses the additional constraint that the rest of the word must be lowercase (`w[1:].islower()`), but it correctly identifies the core operation (counting) and the key property (starts with capital letter).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value == nullptr ? 0 : std::count_if (std::begin (value), std::end (value), [](const auto& word){ return std::isalpha (word[0]) && std::all_of (value, std::end (value), [](const auto& word){ return std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper() and w[1:].islower())",
+    "reasoning": "The C++ completion attempts to count words from a collection using `std::count_if` with a lambda that checks properties of each word. It checks `std::isalpha(word[0])` (checking the first character) and uses `std::all_of` to check remaining characters \u2014 this is structurally similar to checking if the first character is uppercase and the rest are lowercase. The approach of iterating over words and checking character properties of each word is genuinely relevant to the Python code, even though the specific checks differ (isalpha vs isupper/islower).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

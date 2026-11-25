@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_029",
+ "datatype": "list[str]",
+ "frontier_id": "count_all_lowercase",
+ "condition": "the number of words written entirely in lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is a palindrome\n(2) the number of words shorter than three characters\n(3) the number of words longer than five characters\n(4) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(w == w[::-1] for w in words)\n    b = sum(1 for w in words if len(w) < 3)\n    c = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.islower())\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for w in words if w.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines where the code has:\n1. A non-empty string\n2. A non-empty list\n3. A non-empty dict\n4. A non-empty set\n5. A non-empty tuple\n6. A non-empty frozenset\n7. A non-empty deque",
+   "verdict": "NO",
+   "reasoning": "The code counts words that are all lowercase using `islower()`. The description talks about counting non-empty containers (strings, lists, dicts, sets, etc.), which is completely unrelated to checking if words are lowercase.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value, [](auto v){ return v % 2 == 0 && v % 3 == 0 && v % 4 == 0; }); }\n\nauto func (auto value){ return std::count_if(value, [](auto v){ return v % 2 ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The Python code counts words that are all lowercase. The C++ completion uses `std::count_if` which is relevant (counting elements that satisfy a condition), but the condition checks divisibility by 2, 3, and 4, which is completely unrelated to checking if words are lowercase. However, the core operation of counting elements satisfying a predicate is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of lowercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of lowercase letters in the string,\" while the code is counting the number of words (in a list `words`) that are entirely lowercase (using `islower()`). The description gets the general idea of counting lowercase-related items correct, but confuses \"letters\" with \"words\" and individual character lowercase vs. whole-word lowercase. However, the core concept of counting lowercase elements is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of lines where the variable `count` is incremented.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines where a variable `count` is incremented, which is unrelated to what the code does (counting words that are all lowercase). However, there is a partial conceptual overlap in that both involve counting something, but the specific thing being counted (lowercase words vs. lines with count increments) is completely different and unrelated.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](auto count){return count;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion uses `std::count_if` to count elements satisfying some condition, which is conceptually related to counting words that meet a criterion (islower). However, the lambda just returns `count` (the element itself) without any meaningful predicate, and there's no reference to lowercase checking. The core operation of counting elements is present, but the specific property being checked is absent.\n\nThe completion is not a heavy loop, and it does capture the counting operation over a collection, which is genuinely relevant to what the Python code does (counting words satisfying a condition).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of strings in the list that consist solely of lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words in the list where all characters are lowercase (using `islower()`), storing the count in `d`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::views::transform(std::views::filter(std::views::count_if(std::views::transform(std::views::filter(std::views::count_if(std::views::transform(std::views::filter(std::views::count_if(std::views::transform(std::views::filter(std",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The completion starts with a relevant concept \u2014 `std::count_if` applied to a filtered/transformed view of some collection \u2014 which maps to counting words that satisfy a condition (like `islower()`). However, the completion quickly devolves into a heavily repeating loop of `std::views::count_if(std::views::transform(std::views::filter(` cycling over and over with no coherent termination.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

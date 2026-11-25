@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_027",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether all words have distinct lengths\n(2) the number of words that contain a digit\n(3) the length of the longest word\n(4) the number of capitalized words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(len(w) for w in words)) == len(words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(any(ch.isdigit() for ch in w) for w in words)\n    c = max((len(w) for w in words), default=0)\n    d = sum(w[0].isupper() and w.isalpha() for w in words)\n    return a, b, c, d\n</",
+ "impl_span": "b = sum(any(ch.isdigit() for ch in w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if all elements in a list meet a certain condition (e.g., all are unique for uniqueness, all pass a test for another property).",
+   "verdict": "NO",
+   "reasoning": "The code counts words that contain at least one digit character, using `sum` and `any`. The description talks about checking if \"all elements\" meet a condition (like uniqueness), which is a different operation \u2014 the code uses `any` per word and `sum` across words, not an `all` check. However, the description does mention checking elements against a condition/property, which partially relates to the per-word `any(ch.isdigit() ...)` check. But the overall framing (\"all elements\", \"uniqueness\") is quite off from what the code actually does (counting words with digits).\n\nThe description is coherent but describes something quite different \u2014 an \"all\" check for uniqueness \u2014 rather than counting words containing digits. The only overlap is the vague notion of \"checking a property,\" which is too generic.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(value), std::end(value), true) == 1 && std::count_if(std::begin(value), std::end(value), [](const auto& v){ return v; }) == 1 ? std::pair<bool, bool>(true, false) : std::pair<bool",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(ch.isdigit() for ch in w) for w in words)",
+    "reasoning": "The Python code counts how many words contain at least one digit character. The C++ completion uses `std::count` and `std::count_if` over a collection, which is partially relevant (counting elements), but the logic described (checking if count equals 1, returning pairs of bools) doesn't match the operation of counting words with digits. However, the use of `count_if` with a boolean predicate over a collection does share some conceptual overlap with the `any(ch.isdigit() ...)` pattern applied across words.\n\nThe completion is checking for count == 1 which is unrelated to the actual operation (summing words that contain any digit), and the pair return type is completely foreign to the code's purpose. The counting operation is present but the substance is quite different from what the code does.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if each string in a list contains a digit to count how many do.",
+   "verdict": "YES",
+   "reasoning": "The description accurately captures what the code does: it checks each word in a list for the presence of a digit character and counts how many words contain at least one digit.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int digitCount = 0;  \n    bool hasDigit = false;  \n    for(const auto& s : std::regex_token_iterator(std::istreambuf_iterator<const char*>(), std::istreambuf_iterator<const char*>(),  \n        [](const std::string& str){ return std::count_if(str",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(ch.isdigit() for ch in w) for w in words)",
+    "reasoning": "The C++ completion mentions `digitCount`, `hasDigit`, and `std::count_if` applied to strings, which are directly relevant to checking whether words contain digits. The code iterates over something and checks for digit presence, matching the core operation of the Python code (checking if any character in each word is a digit and counting how many words have digits).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting how many times a condition is true in a loop.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting how many times a condition is true in a loop, which is exactly what the code does \u2014 it sums up boolean values (True/False) from checking whether any character in each word is a digit. This is a correct high-level description of the operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count=0; for(const auto& x : value){ if(x){ ++count; } else { count=0; } } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(ch.isdigit() for ch in w) for w in words)",
+    "reasoning": "The Python code counts the number of words (in a list `words`) that contain at least one digit character. The C++ completion counts elements that are truthy in a collection, which is partially relevant \u2014 it's counting items that satisfy a boolean condition (the `if(x)` part), similar to how the Python code counts words where `any(ch.isdigit() ...)` is true. However, the C++ resets count to 0 in the else branch, which is more like a streak counter than a total count. Despite this wrong detail, the core idea of counting truthy elements is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting how many elements in a list meet a certain condition (e.g., being a number).",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting elements in a list that meet a condition related to being a number, which aligns with the code counting words that contain at least one digit character. The description is partially correct and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count=0; for(const auto& item : value){ if(std::any_of(value.begin(), value.end(), [](const auto& x){ return std::any_of(x.begin(), x.end(), [](char c){ return std::isdigit(c); }); })); // count strings with digits int num_digits=0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(any(ch.isdigit() for ch in w) for w in words)",
+    "reasoning": "The C++ completion is checking for strings containing digits using `std::isdigit` and `std::any_of`, which directly corresponds to the Python code's use of `any(ch.isdigit() for ch in w)`. It also counts matching items (`count`, `num_digits`), which aligns with the outer `sum()`. The logic is clearly relevant despite being garbled and partially incorrect in implementation details.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "str_python_021",
+ "datatype": "str",
+ "frontier_id": "count_letters",
+ "condition": "the number of alphabetic characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string has letters and all of them are lowercase\n(2) the number of alphabetic characters\n(3) the number of digit characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.islower"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isalpha() for c in s)\n    c = sum(c.isdigit() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(c.isalpha() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a variable is a string and all its characters are uppercase.",
+   "verdict": "NO",
+   "reasoning": "The code counts the number of alphabetic characters in string `s` using `isalpha()`. The description mentions checking characters of a string, which is partially relevant, but it incorrectly describes the operation as checking if all characters are uppercase (which would use `isupper()`), and there's no summing/counting happening in the description. However, the description does mention checking characters of a string, which is a relevant sub-concept.\n\nThe description mentions \"all its characters\" being checked, which relates to iterating over characters, and mentions a string variable \u2014 these are relevant sub-parts. The specific property being checked (`isalpha` vs `isupper`) is wrong, but the general idea of checking character properties in a string is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "At this line of the code, I am checking if the variable is a string data type.",
+   "verdict": "NO",
+   "reasoning": "The code is counting the number of alphabetic characters in string `s` using `isalpha()`, not checking if a variable is a string data type. The description mentions string-related concepts but describes a completely different operation (type checking vs. counting alphabetic characters).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) ? std::isdigit(value) ? std::count(value) : std::isalpha(value) : std::isdigit(value) : std::count(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion mentions `std::isalpha` and `std::count`, which are directly relevant to the Python code that counts alphabetic characters using `isalpha()` and `sum()`. However, the completion also contains `std::isdigit` which is irrelevant, and the overall structure is garbled/malformed with invalid ternary operator chaining. Despite the noise, the core relevant operations (`isalpha` and counting) are present and not in a simple repeating loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am counting the number of occurrences of each character in a string.",
+   "verdict": "NO",
+   "reasoning": "The description mentions counting characters in a string, which is partially relevant \u2014 the code is indeed counting something about characters in a string (specifically alphabetic characters). However, the description says \"counting occurrences of each character\" which implies a frequency count (like a dictionary), while the code counts the total number of alphabetic characters. Despite this imprecision, the core idea of counting characters in a string is genuinely related.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::pair<int,int>(std::count_if(value.begin(), value.end(), [](char c){ return std::pair<int,int>(std::count_if(value.begin(), value.end(), [](char c){ return std::pair<int,int>(std::count_if(value.begin(), value.end(), [](char c){ return",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The completion starts with a relevant operation: `std::count_if` over a string/container checking each character `c`, which corresponds to counting alphabetic characters. However, it then degenerates into a heavy repeating loop of the same `std::pair<int,int>(std::count_if(value.begin(), value.end(), [](char c){ return` pattern cycling over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of alphabetic characters and the number of digits in the string.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting alphabetic characters in the string, which is exactly what the code does (using `isalpha()`). The mention of counting digits is an extra detail not present in this specific line, but the core operation of counting alphabetic characters is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if (std::begin (value), std::end (value), ::isalpha); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements `std::count_if` with `::isalpha` over a range, which is exactly what the Python code does: counting the number of alphabetic characters in the string `s`. This is a direct and accurate match to the code's functionality.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

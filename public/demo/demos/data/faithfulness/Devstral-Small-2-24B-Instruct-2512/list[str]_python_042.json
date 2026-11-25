@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_042",
+ "datatype": "list[str]",
+ "frontier_id": "shortest_word_length",
+ "condition": "the length of the shortest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the length of the shortest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " min(len(w) for w in words) if words else 0\n    return a, b\n</code>",
+ "impl_span": "b = min(len(w) for w in words) if words else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of non-negative integers in the list.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting non-negative integers in a list, but the code is finding the minimum word length among strings in a collection. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto& v : {value}){count += 1;}return count;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = min(len(w) for w in words) if words else 0",
+    "reasoning": "The Python code finds the minimum length among words in a list. The C++ completion counts elements in a collection, which is somewhat related to measuring lengths/counts, but it's computing a count of items (always 1 since it iterates over a single-element initializer list), not finding a minimum length. The completion doesn't capture the key operations: `len()`, `min()`, or iterating over words.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To find the shortest string in a list, I'll first initialize a variable to track the length of the shortest string and then iterate through the list to update it.",
+   "verdict": "YES",
+   "reasoning": "The description talks about finding the shortest string in a list and tracking the length of the shortest string, which is exactly what the code does \u2014 it computes the minimum length among all words in the list. The description correctly identifies the core operation (finding the shortest/minimum length).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int len=1e9;for(auto&s:{\"\",\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\",\"i\",\"j\",\"k\",\"l\",\"m\",\"n\",\"o\",\"p\",\"q\",\"r\",\"s\",\"t\",\"u\",\"v\",\"w\",\"x\",\"y\",\"",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion initializes `len=1e9` (a large value, consistent with finding a minimum) and iterates over a collection of strings, which relates to finding the minimum length over a collection of words. The iteration structure and the minimum-finding pattern (initializing to a large value) are relevant to the Python code's `min(len(w) for w in words)` operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To find the shortest length, iterate over the list and track the minimum.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the minimum length among words in a list, which is exactly what the code does \u2014 computing the minimum of `len(w) for w in words`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? 1 : 2; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = min(len(w) for w in words) if words else 0",
+    "reasoning": "The Python code finds the minimum word length across all words (or 0 if empty). The C++ completion checks if a value is empty and returns different values based on that, which touches on the \"empty\" check but misses the core operation of finding the minimum length. However, the `.empty()` check is somewhat relevant to the words-empty check, but the overall logic (returning 1 or 2) doesn't capture the minimum length computation at all.\n\nThe C++ completion does reference `.empty()` which relates to the `if words else 0` guard, but it completely misses the `min(len(w) for w in words)` part \u2014 the core operation. It's coherent but only captures a peripheral guard condition, not the main computation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To find the minimum length of a string in a list, I first initialize a variable `min_len` with the length of the shortest string in the list. Then, I iterate through the list to find the minimum length by comparing the lengths of all strings. If the list is empty, I return the length of the",
+   "verdict": "YES",
+   "reasoning": "The description is about finding the minimum length of a string in a list, which is exactly what the code does (`min(len(w) for w in words)`). It also mentions handling the empty list case, which corresponds to the `if words else 0` part of the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.empty() ? min_element(value.begin(), value.end())->size() : 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = min(len(w) for w in words) if words else 0",
+    "reasoning": "The Python code finds the minimum word length across all words in a list (or 0 if empty). The C++ completion attempts to find a minimum element size, checking for empty, which is conceptually related \u2014 it's trying to find a minimum length/size of elements. However, the logic is inverted (checking if `value` itself is empty rather than if the collection is empty, and using `min_element` on the collection to get size). Despite the inverted empty check and garbled logic, the core concepts of minimum, size/length, and empty check are all present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

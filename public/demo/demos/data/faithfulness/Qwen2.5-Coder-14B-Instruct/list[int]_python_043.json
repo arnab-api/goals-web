@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_043",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) whether any value is even\n(3) the difference between the maximum and minimum values\n(4) whether any value is zero\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums)\n    b = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - a\n    d = any(x == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max(nums) - a",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking a condition.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"I am checking a condition,\" which is too generic to indicate any specific aspect of what the code does (computing the difference between the max of `nums` and `a`). No relevant operation, quantity, or property is identified.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; };",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the maximum value in the list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions calculating the maximum value in the list, which is directly relevant since the code calls `max(nums)` to find the maximum value. This is a correct identification of a key sub-step in the computation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Calculating the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is the difference between the maximum value and some variable `a`. The description says it's calculating the difference between the maximum and minimum values \u2014 this is plausibly correct if `a` represents the minimum value, and the core operation (difference involving the maximum) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value + 10; };",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The code computes the difference between the maximum of a list and some value `a`. The C++ completion describes adding 10 to a value, which is unrelated to finding a maximum or computing a difference. There's no relevant operation or concept shared between the two.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Calculating the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is the maximum value minus some variable `a`. The description says \"difference between the maximum and minimum values,\" which is relevant \u2014 it correctly identifies that the code is computing a difference involving the maximum of the list. The variable `a` could plausibly be the minimum, making this a reasonable (if potentially imprecise) description of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *std::max_element(std::max_element(value) - std::min_element(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The code computes the difference between the maximum and minimum of a collection (max - min), which is the range. The C++ completion attempts to compute `max_element - min_element`, which is directly relevant to finding the range/difference between max and minimum values, even though the syntax is garbled and incorrect.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

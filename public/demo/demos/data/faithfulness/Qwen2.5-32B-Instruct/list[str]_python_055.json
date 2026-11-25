@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_055",
+ "datatype": "list[str]",
+ "frontier_id": "all_unique_lengths",
+ "condition": "whether all words have distinct lengths",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that end with a consonant\n(2) whether all words have distinct lengths\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(len(w) for w in words)) == len(words)\n    return a, b\n</code>",
+ "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need to see the code to analyze it. However, to answer your question in the requested format:\n\n1. Identify the line of code.\n2. Check if it's part of a script or program.\n3. Determine if the task is to evaluate functionality or count specific elements.\n4. For functionality: Check if",
+   "verdict": "NO_INFO",
+   "reasoning": "The code checks whether all words have distinct (unique) lengths \u2014 it creates a set of word lengths and checks if the count of unique lengths equals the total number of words.\n\nThe description is generic scaffolding (\"I need to see the code to analyze it\") and doesn't surface any relevant content about word lengths, sets, or uniqueness checking. It's coherent but completely uninformative about what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool result = true;\n    int sum = 0;\n    for(int i = 0; i < value.size(); i++){\n        sum += std::is_prime(value[i]);\n    }\n    result &= sum > 1;\n    return result;\n}\n\nbool std::is_prime(int n) {",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks whether all words have distinct lengths (the number of unique lengths equals the number of words). The C++ completion checks whether the sum of prime-valued elements exceeds 1, which is about primality testing \u2014 completely unrelated to checking uniqueness of word lengths.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if the line of code ensures unique lengths for each character in the string, we need to check two conditions:\n1. Whether all characters in the string have unique lengths.\n2. Whether all characters in the string have different lengths.\n\nFor the first condition, we can use a set to track the lengths of the",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for unique lengths using a set, which is directly relevant to what the code does (it checks if all words have unique/different lengths by comparing the size of a set of lengths to the number of words). The description incorrectly says \"characters\" instead of \"words,\" but the core concept of checking unique lengths via a set is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::set<int> lengths;\n    bool uniqueLengths = true;\n    for(size_t i = 0; i < value.size() - 1; i++){\n        uniqueLengths &= std::all_of(value.begin(), value.end(), \n            [](const std::vector<int>& vec){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The C++ completion creates a set of lengths and checks for unique lengths, which is exactly what the Python code does (checking if all word lengths are unique by comparing the size of a set of lengths to the number of words). The core concept of using a `std::set<int> lengths` and a `uniqueLengths` boolean variable directly mirrors the Python logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To answer your question, I need to check the code for two things:\n1. Whether it checks for unique elements in a list.\n2. Whether it verifies if all elements in the list are unique.\n\nFor the first point, I'll use a set to check for unique elements:\n- Convert the list into a set",
+   "verdict": "YES",
+   "reasoning": "The code checks whether all words have unique lengths (by comparing the number of distinct lengths to the number of words). The description mentions checking for unique elements using a set, which is genuinely relevant \u2014 the code does use a set to check for uniqueness of word lengths. The description correctly identifies the core operation (checking uniqueness via a set), even if it doesn't precisely capture that it's the *lengths* of words being checked.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_pair(std::all_of(value.begin(), value.end(), [](const auto& vec){ return std::is_same<bool,decltype(vec)>::type(std::find(vec.begin(), vec.end(), false) == vec.end()); }), \n                          std::any_of(value.begin(), value.end(), [](",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The Python code checks whether all words have unique lengths (by comparing the size of a set of lengths to the number of words). The C++ completion involves `std::all_of` and checking for uniqueness/absence of `false` values, which touches on the concept of \"all elements satisfying a condition,\" but it's checking for boolean values in nested vectors rather than checking uniqueness of word lengths. There's a partial conceptual overlap with \"all\" checking, but the specific operation (unique lengths via set comparison) is not captured. However, the completion is not a heavy loop and does contain some intelligible content about checking properties of a collection.\n\nThe C++ code does iterate over elements and checks a property across all of them, which is loosely related to the \"all unique\" check, but the specific mechanism (set size == count for uniqueness) is not present. This is borderline NO_INFO/NO territory since the all_of usage is generic and doesn't capture the uniqueness-of-lengths concept.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if the line of code you're asking about ensures that all elements in a collection are unique, we can check if the length of the set of unique elements is equal to the length of a list that holds boolean values indicating if there are any duplicate elements. However, to answer your question about whether this line checks",
+   "verdict": "YES",
+   "reasoning": "The description says the code checks if all elements in a collection are unique by comparing the length of a set to the length of a list. The actual code checks if all word lengths are unique (distinct) by comparing `len(set(len(w) for w in words))` to `len(words)`. The description captures the core idea of uniqueness checking via set-length comparison, even though it slightly mischaracterizes what's being compared (word lengths vs. elements themselves).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<decltype((int)(len(set(map(len, [len(set(map(len, map(len, [len(set(map(len, map(len, [len(set(map(len, map(len, [len(set(map(len, map(len, [len(set(map(len, map(len, [len(set(map",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(set(len(w) for w in words)) == len(words)",
+    "reasoning": "The C++ completion shows `set(map(len, ...))` patterns which are directly relevant to the Python code's core operation of mapping `len` over words and putting results in a `set`. However, this quickly devolves into a deeply nested repeating loop of `len(set(map(len, map(len, [len(set(map(len, map(len, ...` that cycles endlessly.\n\nThe repeating unit is roughly `len(set(map(len, map(len, [` which repeats over and over, making this a HEAVY_LOOP despite containing relevant tokens.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

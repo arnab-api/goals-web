@@ -1,0 +1,96 @@
+{
+ "id": "int_python_064",
+ "datatype": "int",
+ "frontier_id": "count_set_bits",
+ "condition": "the number of set bits in the binary representation",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) whether the number is even\n(3) the number of set bits in the binary representation\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n)\n    b = (n % 2 == 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " bin(n).count('1')\n    d = (10 <= abs(n) < 100)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = bin(n).count('1')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the number of bits set to 1 in the binary representation of the number is even.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting bits set to 1 in the binary representation of a number, which is exactly what `bin(n).count('1')` does. The additional claim about checking if the count is even may refer to a subsequent step not shown, but the core operation described is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = bin(n).count('1')",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of 1s in the binary representation of the number.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting the number of 1s in the binary representation of n, which is exactly what `bin(n).count('1')` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = bin(n).count('1')",
+    "reasoning": "The C++ completion implements `__builtin_popcount`, which counts the number of set bits (1s) in a binary representation of a value. This is exactly what the Python code does: `bin(n).count('1')` counts the number of 1-bits in `n`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the number of 1s in the binary representation of the number.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting the number of 1s in the binary representation of n, which is exactly what `bin(n).count('1')` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(__builtin_popcount(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = bin(n).count('1')",
+    "reasoning": "The C++ completion uses `__builtin_popcount`, which counts the number of set bits (1s) in a binary representation \u2014 exactly what `bin(n).count('1')` does in Python. The double application of `__builtin_popcount` is a wrong detail, but the core operation (counting 1-bits) is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of 1s in the binary representation of the number.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does: counting the number of 1s in the binary representation of n.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return __builtin_popcount(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = bin(n).count('1')",
+    "reasoning": "The C++ completion implements `__builtin_popcount`, which counts the number of set bits (1s) in a binary representation of a value. This is exactly what the Python code does: `bin(n).count('1')` counts the number of 1-bits in `n`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

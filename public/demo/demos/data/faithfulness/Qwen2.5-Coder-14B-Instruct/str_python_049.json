@@ -1,0 +1,96 @@
+{
+ "id": "str_python_049",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of lowercase letters\n(2) the number of uppercase letters\n(3) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.islower())\n    b = sum(1 for c in s if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.isalnum() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "c = all(c.isalnum() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if all characters in the string are digits.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all characters in the string are alphanumeric (letters or digits), while the description says it checks if all characters are digits. This is partially correct \u2014 it correctly identifies the \"all characters\" check and the string-level operation, just wrong about the specific property (digits vs alphanumeric). Since the description names a relevant sub-property (digits are a subset of alphanumeric), this counts as a partial hit.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_arithmetic<decltype(value)>::value && std::is_integral<decltype(value)>::value; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The Python code checks if all characters in a string are alphanumeric (letters or digits). The C++ completion checks if a value is arithmetic and integral (i.e., an integer type), which relates to checking numeric/type properties but misses the \"alpha\" (letter) part and operates on types rather than characters. However, it does capture the concept of checking for numeric/digit properties, which is a partial but relevant sub-component of alphanumeric checking.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description perfectly captures what the code does \u2014 it checks if all characters in the string `s` are alphanumeric using `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_arithmetic_v<decltype(value)> && std::is_integral_v<decltype(value)>; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The Python code checks if all characters in a string are alphanumeric (letters or digits). The C++ completion checks if a value is arithmetic and integral (i.e., a numeric type), which relates to checking for numeric/integer properties but misses the alphabetic component and operates on types rather than characters. There is some partial relevance in the \"integral\" check (relating to digits/numbers), but the overall concept is about type traits rather than character classification, and it completely misses the alphanumeric character-checking nature of the code.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all characters in the string are digits.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all characters in the string are alphanumeric (letters or digits), while the description says it checks if all characters are digits. This is partially correct \u2014 it correctly identifies the \"all characters\" and \"checking\" aspect, and digits are a subset of alphanumeric characters. The description captures the general structure (checking all characters for a character-class property) even though it names the wrong specific property.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_arithmetic_v<decltype(value)> && std::all_of(value.begin(), value.end(), [](auto v){ return std::is_same_v<decltype(v), bool>; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The Python code checks if all characters in a string are alphanumeric. The C++ completion checks if all elements satisfy some condition using `std::all_of`, which is relevant to the \"all\" aspect of the code. However, it checks for `bool` type rather than alphanumeric characters, and uses `std::is_arithmetic_v` which is unrelated. Despite the wrong specifics, the `std::all_of` with iteration over elements captures the core \"all\" operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if all characters in the string `s` are alphanumeric using `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](char c){ return std::isalnum(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking if all characters in a string are alphanumeric using `std::all_of` with `std::isalnum`. This is a direct and accurate translation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

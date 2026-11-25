@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_001",
+ "datatype": "list[str]",
+ "frontier_id": "has_palindrome",
+ "condition": "whether any word is a palindrome",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) whether any word is a palindrome\n(3) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(w == w[::-1] for w in words)\n    c = sum(len(w) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = any(w == w[::-1] for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. Check if any element is a string: `any(isinstance(x, str) for x in data)`  \n2. Check if any element is a number: `any(isinstance(x, int) for x in data)`  \n3. Check if any element is a boolean: `any(isinstance(x, bool) for",
+   "verdict": "NO",
+   "reasoning": "The code checks if any word in `words` is a palindrome (by comparing it to its reverse). The description talks about checking types of elements (str, int, bool) using `isinstance`, which is completely unrelated to palindrome checking. The description doesn't mention reversal, palindromes, or string comparison.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {std::ranges::any_of(value,[](auto x){return x;},[](auto x){return x;},[](auto x){return x;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The Python code checks if any word in `words` is a palindrome (equal to its reverse). The C++ completion uses `std::ranges::any_of`, which is directly relevant to the `any()` operation in the Python code. However, the lambda functions inside don't capture the palindrome check (reversing and comparing), and the completion has some structural issues. Still, `any_of` is a genuinely relevant operation that corresponds to the `any()` call.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if any palindrome exists in the list, then checking if any element is a string that is a palindrome, and finally checking if any element is a number that is a palindrome.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if any palindrome exists in a list of words, which is exactly what the code does (`w == w[::-1]` is the palindrome check). The additional details about \"string\" and \"number\" palindromes are slightly redundant but not wrong \u2014 they're just elaborating on the same core concept.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::any_of(std::begin(value), std::end(value), [](const auto& s){return std::string t; std::copy_if(cbegin(s), cend(s), back_inserter(t), [](const auto& a){return a == a;}); return any_of(cbegin(s), c",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` over a collection of strings, which directly corresponds to the `any(...)` in the Python code. It's iterating over elements and checking some property of each string `s`. While the inner logic is garbled/incomplete (the palindrome check isn't clearly visible), the outer structure of checking if any element satisfies a condition is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\nhas_upper = any(char.isupper() for char in s if char in (False, True)(all(not isinstance(char, bool) for char in (any(isinstance(char, bool) for char in (s, [any(c in s for c in (False, True)(any(isinstance(char, bool",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a repeating/looping pattern involving `isinstance(char, bool)`, `any(`, and similar fragments cycling over and over. The actual code checks whether any word in `words` is a palindrome (`w == w[::-1]`), but the description talks about uppercase characters and boolean checks, which is completely unrelated. Moreover, the description is heavily looped/malformed.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](const auto& v) { return std::any_of(v.begin(), v.end(), [](const auto& v2) { return v2; }), \n               [value](const auto& v) { return std::any_of(v.begin(), v",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The C++ completion uses `std::any_of` on a collection, which directly corresponds to the `any()` call in the Python code. It iterates over elements of a collection, which matches iterating over `words`. However, it doesn't capture the palindrome check (`w == w[::-1]`), instead having a nested `any_of` that doesn't reflect the reversal logic. Still, the core operation of checking if any element satisfies a condition is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if any element is a palindrome; I am checking if any element is a palindrome by comparing each element to its reverse.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if any element is a palindrome by comparing each element to its reverse, which is exactly what the code does using `w == w[::-1]` (comparing a word to its reversed version) with `any()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of(values.begin(), values.end(), [](auto s){return any_of(s.begin(), s.end(), [](auto s){return s == reverse(s);});};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The code checks if any word in a list is a palindrome (equal to its reverse). The C++ completion uses `any_of` and checks if a string `s` equals `reverse(s)`, which is directly relevant to checking for palindromes. Despite the nested structure being slightly off and syntactic issues, the core idea of using `any_of` and comparing a string to its reverse is captured correctly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

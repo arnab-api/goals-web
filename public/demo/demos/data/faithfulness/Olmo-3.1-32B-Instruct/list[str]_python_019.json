@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_019",
+ "datatype": "list[str]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) the number of distinct words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(words))\n    return a, b\n</code>",
+ "impl_span": "b = len(set(words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Counting the number of times a specific event occurs and storing that count.",
+   "verdict": "YES",
+   "reasoning": "The code counts the number of unique words (by converting to a set and taking its length). The description mentions \"counting... and storing that count,\" which partially matches \u2014 it's counting something and storing it. However, \"a specific event occurs\" suggests frequency counting of a single event, not counting unique elements, making it somewhat off but not completely unrelated.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (auto v : value) {  \n        ++count;  \n    }  \n    int uniqueCount = 0;  \n    for (auto v : value) {  \n        ++uniqueCount;  \n    }  \n    return uniqueCount;  \n}  \n\nint",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The Python code counts the number of unique words (using a set). The C++ completion attempts to count unique elements but actually just counts all elements twice with the same loop \u2014 it doesn't implement set/unique logic. However, it does mention \"uniqueCount\" and attempts to return a count related to uniqueness, which is at least partially relevant to the concept of counting unique items.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting unique elements, which is exactly what `len(set(words))` does \u2014 converting to a set removes duplicates, and `len` counts the remaining unique elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<decltype(value), std::hash<decltype(value)>> unique_values;  \n    for (const auto& v : value) {  \n        unique_values.insert(v);  \n    }  \n    return std::make_pair(unique_values.size(), unique_values);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an unordered_set, inserts elements from the input, and returns the size of unique values \u2014 which directly corresponds to counting unique elements (words) using a set, exactly what the Python code does with `len(set(words))`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting unique elements and returning the count.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts the number of unique elements by converting `words` to a set (removing duplicates) and then getting the length (count) of that set.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int uniqueCount = 0;  \n    std::unordered_set<decltype(value)> uniqueSet;  \n    uniqueSet.insert(value);  \n    return std::make_pair((int)uniqueSet.size(), (int)uniqueSet.size());  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion is about counting unique elements using an unordered_set, which directly corresponds to what the Python code does: `len(set(words))` counts the number of unique words. The completion uses `unordered_set` and `.size()`, which maps to Python's `set()` and `len()`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting unique elements in a collection.",
+   "verdict": "YES",
+   "reasoning": "The description \"Counting unique elements in a collection\" is directly relevant to the code, which converts `words` to a set (removing duplicates) and then counts the length, effectively counting unique elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<decltype(value), std::hash<decltype(value)>> unique_values;  \n    for (const auto& v : value_list)  \n        ++unique_count;  \n    return unique_count;  \n}  \n\n// But to count unique values, we need to know if the input is a container of values",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion is clearly about counting unique values using an unordered_set, which directly corresponds to what the Python code does: `len(set(words))` counts the number of unique words. The completion shows inserting elements into an unordered_set and counting unique values, which is the core operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

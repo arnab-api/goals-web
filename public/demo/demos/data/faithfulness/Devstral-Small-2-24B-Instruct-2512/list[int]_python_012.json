@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_012",
+ "datatype": "list[int]",
+ "frontier_id": "max_val",
+ "condition": "the largest value",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is even\n(2) the number of negative values\n(3) the largest value\n(4) the number of distinct values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = any(x % 2 == 0 for x in nums)\n    b = sum(1 for x in nums if x < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) if nums else None\n    d = len(set(nums))\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max(nums) if nums else None",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the occurrences of each number in the list.",
+   "verdict": "NO",
+   "reasoning": "The description says it's counting occurrences of each number, but the code is finding the maximum value in a list. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums) if nums else None",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To find the maximum value in a list, count the occurrences of each element, and determine the sum of the list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"find the maximum value in a list,\" which is directly relevant to what the code does (`max(nums)`). The other parts (counting occurrences, sum) are irrelevant, but partial coverage counts.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int max_val = *max_element(value.begin(), value.end());int min_val = *min_element(value.begin(), value.end());int sum_val = accumulate(value.begin(), value.end(), 0);int count_val = value.size();return make_tuple(max_val, min_val, sum_val, count_val);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) if nums else None",
+    "reasoning": "The C++ completion computes `max_element` over a collection, which directly corresponds to the `max(nums)` operation in the Python code. While it also computes additional statistics (min, sum, count) that aren't in the Python code, finding the maximum value is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To find the maximum value in the list, I first check if the list is empty. If it's not, I initialize `max_val` with the first element, then iterate through the list to find the maximum value. Next, I compute the sum of the list using `max()` and `sum()`. Then,",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the maximum value in a list and checking if the list is empty, which are both directly relevant to what the code does (`max(nums) if nums else None`). The description correctly identifies the core operation (finding max) and the empty list check, even though it also includes some irrelevant/confused details about sum computation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums) if nums else None",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To find the maximum value in a list, I would use the built-in `max()` function or iterate through the list to determine the largest element. Here's how I would do it:\n\n```python\nnumbers = [1, 2, 3, 4, 5]\nmax_value = max(numbers",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions finding the maximum value in a list using the built-in `max()` function, which is exactly what the code does. It even shows a code example using `max()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return *std::max_element(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) if nums else None",
+    "reasoning": "The C++ completion implements finding the maximum element of a collection using `std::max_element`, which is directly relevant to what the Python code does (`max(nums)`). The implementation correctly identifies the core operation of finding the maximum value.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

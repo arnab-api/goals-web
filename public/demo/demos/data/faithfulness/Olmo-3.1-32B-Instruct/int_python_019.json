@@ -1,0 +1,96 @@
+{
+ "id": "int_python_019",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a power of two\n(2) whether the number is a perfect square\n(3) whether the number reads the same forwards and backwards\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 0 and (n & (n - 1)) == 0\n    b = n >= 0 and int(n**0.5)**2 == n\n    c = str(abs(n)) == str(abs(n))[::-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= abs(n) <= 99\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 10 <= abs(n) <= 99",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a value is within a specific range or format to determine a property (like length or type) related to it.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a value is within a specific range, which is exactly what the code does (checking if abs(n) is between 10 and 99 inclusive). It also mentions \"length,\" which loosely relates to checking for 2-digit numbers. The description is relevant despite being vague.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if a number is between 10 and 99 (inclusive) and if it has exactly two digits.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code checks if a number is between 10 and 99 inclusive, and also mentions the two-digit property which is equivalent to that range check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::to_string(value).size() == 2 && std::to_string(value % 10).size() == 1 && std::to_string(value).substr(3,1) == \"0\" + std::to_string((value % 100) / 10 - ((value % 100",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The Python code checks if `abs(n)` is a two-digit number (between 10 and 99 inclusive). The C++ completion checks if the string representation of `value` has size 2 (i.e., is a two-digit number), which is directly relevant to checking for two-digit numbers. The rest of the completion gets garbled/cut off, but the core idea of checking `to_string(value).size() == 2` correctly captures the essence of checking for a two-digit number.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I cannot determine if a number is between 1 and 10 without more context about the code.",
+   "verdict": "NO",
+   "reasoning": "The description mentions checking if a number is between 1 and 10, which is partially related (the code checks if abs(n) is between 10 and 99, i.e., a two-digit number). However, the description frames it as \"I cannot determine\" and gives wrong bounds (1-10 vs 10-99), and the overall statement is more of a refusal than a meaningful description. The core idea of checking a numeric range is present but very weakly and incorrectly stated.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 && value <= 9 && value == (int)value && value == (int)(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The Python code checks if the absolute value of n is between 10 and 99 (i.e., checking if it's a two-digit number). The C++ completion checks if a value is between 0 and 9, which is a range check but on the wrong range (single digits instead of two digits). However, the core operation \u2014 checking membership in a numeric range \u2014 is present, even if the bounds are wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if the number of digits in the integer is exactly two.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number of digits in the integer is exactly two,\" which is precisely what the code does \u2014 it checks whether the absolute value of `n` is between 10 and 99 inclusive, which is equivalent to checking that `n` has exactly two digits.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 10 && value <= 99; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) <= 99",
+    "reasoning": "The C++ completion checks if a value is between 10 and 99 inclusive, which is exactly what the Python code does (checking if abs(n) is between 10 and 99). The bounds match perfectly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

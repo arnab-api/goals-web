@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_049",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) the integer mean of the values\n(3) the difference between the maximum and minimum values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) // len(nums) if nums else 0\n    c = max(nums) - a if nums else 0\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am determining the minimum value in a list.",
+   "verdict": "NO",
+   "reasoning": "The description says \"determining the minimum value in a list,\" but the code is computing the average (sum divided by length) of a list. These are completely unrelated operations \u2014 minimum value has nothing to do with sum or division by length.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int minVal = value[0];  \n    int maxVal = value[0];  \n    int sum = 0;  \n    for(auto& v : value){  \n        sum = 0;  \n        for(auto it = value.begin(); it != value.end(); ++it){  \n            min",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The Python code computes the average (mean) of a list `nums` using `sum(nums) // len(nums)`. The C++ completion attempts to find min/max values and compute a sum over a collection, which partially overlaps (it does compute a sum over the collection), but the overall logic is oriented toward min/max finding rather than computing an average/mean. However, the sum computation is genuinely relevant as a sub-step of computing the average.\n\nThe completion is not a heavy loop (it's a coherent but incomplete function), and it does contain the relevant `sum` operation over the collection, which is a genuine sub-step of computing the mean.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Calculating the sum of the array elements.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"calculating the sum of the array elements,\" which is a genuine sub-step of the code (the code does compute `sum(nums)` as part of calculating the average). This is partially correct and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int count = 0;  \n    int avg = 0;  \n    int n = value.size();  \n    int total = 0;  \n    for(int i = 0; i < n; ++i){  \n        total += value[i];",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements in a collection and tracks the size (n = value.size()), which are exactly the two ingredients needed to compute the average (sum // len(nums)). This directly corresponds to what the Python code does: computing the average of a list.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of a list of numbers,\" which is exactly what the code does \u2014 it computes the integer average (sum divided by length) of `nums`, with a guard for an empty list.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    int avg = 0;  \n    int n = 0;  \n    int total = 0;  \n    n = std::accumulate(std::begin(value), std::end(value), 0);  \n    if (value.size() == 0) return",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes a sum using `std::accumulate` and checks if the size is 0, which directly corresponds to the Python code that computes `sum(nums)` and checks `if nums`. It also has an `avg` variable declared, hinting at the average computation. This is clearly relevant to computing the average of a list with an empty-list guard.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Calculating the integer average of the numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the integer average (mean) of a list of numbers, which is exactly what the code does by summing all elements and doing integer division by the count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0, cnt=0; int avg=0; for(int i=0; i<value.size(); ++i){ int intVal=0; int total=0; for(int j=0; j<value.size(); ++j){ total+=value[j]; } cnt=total/value.size",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements in a collection and divides by the size, which is exactly computing an average/mean \u2014 matching the Python code that computes `sum(nums) // len(nums)`. The core operation (sum divided by length) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

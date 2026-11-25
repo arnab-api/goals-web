@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_038",
+ "datatype": "list[str]",
+ "frontier_id": "longest_word_length",
+ "condition": "the length of the longest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) the total number of vowels across all words\n(3) the number of capitalized words\n(4) the length of the longest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    b = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    c = sum(1 for w in words if w[:1].isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max((len(w) for w in words), default=0)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = max((len(w) for w in words), default=0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the current line of code is a comment.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if a line of code is a comment, which is completely unrelated to what the code does (finding the maximum word length from a collection of words). No relevant sub-operation is identified.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion defines a function that returns the size of a value, which is directly relevant to computing the length of words (using `.size()` as the equivalent of `len()`). The Python code finds the maximum length among words, and the C++ captures the core sub-step of measuring the size/length of each element.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am finding the length of the longest word in a list of words.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it finds the maximum length among all words in the list, which is equivalent to finding the length of the longest word.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::max_element(value.begin(), value.end(), [](const std::string& s){return s.size();});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion is finding the maximum element using `std::max_element` with a comparator based on string size (`s.size()`), which is directly relevant to finding the maximum word length in a collection of words. This matches the core operation of the Python code (finding the maximum length among words).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am finding the length of the longest word in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum length among words in a list, which is exactly what the code does using `max` with a generator expression over `len(w)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion defines a function that returns the size/length of a value, which is directly relevant to the Python code that computes the maximum length (`len(w)`) of words. The `.size()` operation corresponds to `len(w)` in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm not able to see the entire code, but I can help you find the length of the longest word in the code. Here's how you can do it:\n\n1. Initialize a variable `max_length` to 0.\n2. Loop through each word in the code.\n3. For each word, check",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the length of the longest word, which is exactly what the code does \u2014 it computes the maximum length among all words using a generator expression. The description correctly identifies the key operation (finding the longest word's length) even though it describes a loop-based approach rather than the `max()` with generator.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::max_element(value.begin(), value.end(), [](auto a, auto b){ return a.size(); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion uses `std::max_element` on a collection and references `.size()` in the comparator, which is directly relevant to finding the maximum length among elements. This corresponds to the Python code finding the maximum word length using `len(w)`. The implementation is slightly off (the lambda should compare sizes of both elements), but the core idea of finding the maximum element based on size is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

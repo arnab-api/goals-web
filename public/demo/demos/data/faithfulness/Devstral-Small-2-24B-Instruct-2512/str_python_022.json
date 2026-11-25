@@ -1,0 +1,96 @@
+{
+ "id": "str_python_022",
+ "datatype": "str",
+ "frontier_id": "count_letters",
+ "condition": "the number of alphabetic characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether every character is a letter or a digit\n(2) the number of alphabetic characters\n(3) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.isalnum"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isalpha() for c in s)\n    c = s.islower() and any(c.isalpha() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(c.isalpha() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is valid.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if the input is valid,\" which is too generic to indicate any specific aspect of what the code does (counting alphabetic characters in a string). It doesn't mention counting, alphabetic characters, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, true, false};}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion returns a tuple/struct with a value and boolean flags, which has no relevance to counting alphabetic characters in a string. There's no iteration, no character checking, and no summation visible in the completion.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To count the number of alphabetic characters in the string, I am using the `isalpha()` method to check each character and the `len()` function to count the number of alphabetic characters.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies counting alphabetic characters in a string using `isalpha()`, which is exactly what the code does. The mention of `len()` instead of `sum()` is a wrong implementation detail, but the core concept (counting alphabetic characters using `isalpha()`) is accurately described.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : value){if (isalpha(value)){count++;}else{break;}}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion counts alphabetic characters in a string using `isalpha()`, which is exactly what the Python code does with `c.isalpha()`. The logic is slightly wrong (using `value` instead of `c` in the `isalpha` call, and breaking on non-alpha instead of continuing), but the core operation \u2014 counting alphabetic characters \u2014 is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of characters in the variable `count` and storing the result in `char_count`.",
+   "verdict": "YES",
+   "reasoning": "The description talks about counting characters, which is relevant since the code counts alphabetic characters in a string. However, it mentions wrong variable names (`count`, `char_count`) and doesn't specifically identify that only alphabetic characters are being counted. Still, \"counting characters\" is a partial match to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](int count){return std::all_of(value.begin(), value.end(), [](int count){return std::none_of(value.begin(), value.end(), [](int count){return std::accumulate(value.begin(), value.end(), 0, [](",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion mentions `std::count_if` with a lambda, which is relevant to counting elements that satisfy a condition (similar to `sum(c.isalpha() for c in s)`). However, the completion then devolves into nested `std::all_of`, `std::none_of`, and `std::accumulate` calls that repeat a similar pattern, suggesting a looping structure. The initial `std::count_if` is genuinely relevant, but the rest is a cascade of nested similar constructs that keeps going.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is roughly `value.begin(), value.end(), [](int count){return std::X_of(` which cycles through different algorithm names but maintains the same structural pattern. It's not a tight 5-token loop with the exact same tokens \u2014 it varies between `count_if`, `all_of`, `none_of`, `accumulate`. This is more of a structural repetition than a strict token-level loop. The initial `count_if` content is relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of alphabetic characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts alphabetic characters in string `s` using `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](char c){return std::isalpha(value.size() - std::count_if(value.begin(), value.end(), [](char c){return std::isalpha(value.size() - std::count_if(value.begin(), value.end(), [](char c){",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The completion starts with a relevant operation: `std::count_if` with `std::isalpha` to count alphabetic characters in a string, which directly matches what the Python code does (`sum(c.isalpha() for c in s)`). However, it then devolves into a nested repeating loop of the same pattern.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is roughly `value.size() - std::count_if(value.begin(), value.end(), [](char c){return std::isalpha(` which is longer than ~5 tokens, but it does repeat in a nested/recursive pattern dominating the completion. However, the initial fragment before the loop begins is coherent and relevant (`std::count_if` with `std::isalpha`).\n\nGiven the HEAVY_LOOP definition \u2014 \"a unit of roughly five words/tokens or fewer that repeats over and over\" \u2014 this repeating unit is actually quite long (more than 5 tokens). The completion starts coherently with the right idea, then gets stuck in a longer recursive pattern. Since the looping unit is substantially longer than 5 tokens, and the initial content is clearly relevant, I'll classify this as YES rather than HEAVY_LOOP.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_049",
+ "datatype": "int",
+ "frontier_id": "last_digit",
+ "condition": "the last decimal digit",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a power of two\n(2) the last decimal digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 0 and (n & (n - 1)) == 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n % 10\n    return a, b\n</code>",
+ "impl_span": "b = n % 10",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "To determine if a number is even or odd:  \n`number % 10` \u2014 finds the remainder when divided by 10.  \n`number % 1` \u2014 finds if the number is even or odd.  \n\nBut since `number % 10` is not a valid way to find if",
+   "verdict": "YES",
+   "reasoning": "The code extracts the last digit of `n` by computing `n % 10`. The description mentions `number % 10` and describes it as finding the remainder when divided by 10, which is exactly what the code does. The description is partially relevant despite the confused framing about even/odd checking.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2;};\nauto func2 (auto value){return value;};\nauto func3 (auto value){return value;};\nauto func4 (auto value){return value;};\nauto func5 (auto value){return value;};\nauto func6 (auto value){return value;};\nauto func7 (auto value){return",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 10",
+    "reasoning": "The completion shows a modulo operation (`value % 2`) which is relevant to the Python code's use of `%` operator. However, the completion then degenerates into a repeating loop of `auto funcN (auto value){return value;}` stubs that carry no additional meaning. The key question is whether the initial relevant content (modulo operation) is enough to count as YES despite the loop.\n\nThe loop unit here is roughly `auto funcN (auto value){return value;};` repeating, which is more than 5 tokens but is clearly a stuck pattern. However, the first function `func` does contain `value % 2` which captures the modulo operation (even if the modulus is 2 instead of 10). The loop starts after the first meaningful entry.\n\nSince the first function contains a genuinely relevant operation (modulo/remainder), and the loop is appended after rather than replacing all content, I'll consider this a borderline case. The initial content is relevant (modulo operation), but the rest is a degenerate loop.\n\nGiven the instruction that HEAVY_LOOP takes precedence when the completion is \"dominated\" by a short repeating cycle \u2014 the repeating part does dominate in length, but the first function has the relevant `% 2` operation. The repeating unit is the `auto funcN` pattern. I'll consider this HEAVY_LOOP since the meaningful content is minimal and the loop dominates.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "The line `x % 10` gives the last digit of the number, and `x // 10` gives the remainder when divided by 10.\n\nThe last digit of 1234 is 4.\n\nThe remainder when 1234 is divided by 10 is",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that `% 10` gives the last digit of a number, which is exactly what the code `b = n % 10` is computing. The description also mentions `// 10` (though that's not in this line), but the core operation of extracting the last digit via modulo 10 is accurately described.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value%10;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 10",
+    "reasoning": "The C++ completion computes `value % 10`, which is exactly what the Python code does (`n % 10`). This is a direct match to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll look at the number, then find the remainder when divided by 10 for the last digit, then divide by 10 and take modulo 10 again for the next digit.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the remainder when divided by 10 for the last digit, which is exactly what `n % 10` computes. This is directly relevant to the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 10;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 10",
+    "reasoning": "The C++ completion computes `value % 10`, which is exactly what the Python code does (`n % 10`). This is a direct match to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The last digit of the number.",
+   "verdict": "YES",
+   "reasoning": "The description \"The last digit of the number\" is directly relevant to what the code does \u2014 `n % 10` computes exactly the last digit of `n`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 10; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n % 10",
+    "reasoning": "The C++ completion computes `value % 10`, which is exactly what the Python code does (`n % 10`). This is a direct match to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

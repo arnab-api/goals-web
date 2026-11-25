@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_039",
+ "datatype": "list[str]",
+ "frontier_id": "longest_word_length",
+ "condition": "the length of the longest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) the length of the longest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(len(w) for w in words)\n    return a, b\n</code>",
+ "impl_span": "b = max(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll analyze the code in two passes:\n\n1. First, I'll find the length of the longest word in the list.\n2. Then, I'll find the sum of the lengths of all words in the list.\n\nI'll process the code in two passes:\n\n```python\n# Pass 1: Find the",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the length of the longest word in the list, which is exactly what `max(len(w) for w in words)` computes. The second point about sum of lengths is incorrect, but the first part is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::accumulate(std::begin(value), std::end(value), 0, [i=0](int a, int b) mutable {return {std::max(0, a), std::max(0, b)}};};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words)",
+    "reasoning": "The Python code finds the maximum word length across all words. The C++ completion uses `std::accumulate` with `std::max`, which is a plausible (if garbled) way to compute a maximum over a collection. The use of `std::max` and iterating over a collection with `std::accumulate` is genuinely relevant to finding a maximum value, even though the implementation is syntactically incorrect and garbled.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll find the longest length of the list, then find the max value in that list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the \"longest length\" and \"max value,\" which is partially relevant \u2014 the code is computing the maximum word length using `max(len(w) for w in words)`. The description captures both the `len` and `max` operations, even if it confusingly conflates them or describes them imprecisely.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return *max_element( begin( vector<int>{0, 0}, [ ](int a, int b){return max( a, b); }, max( *max_element( begin( vector<int>{0, 0}, [ ](int a, int b){return a < b ? b :",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words)",
+    "reasoning": "The C++ completion involves `max_element` and finding a maximum value, which is directly relevant to what the Python code does (finding the maximum length of words). Despite the garbled syntax and repetition, the core concept of finding a maximum is present.\n\nHowever, I need to check if this is a HEAVY_LOOP. The pattern `max_element( begin( vector<int>{0, 0}, [ ](int a, int b){return max( a, b)` appears to repeat, but it's not a simple short cycle - it's a longer fragment and the repetition is partial. The content is coherent enough to convey the `max_element` concept.\n\nThe completion surfaces the concept of finding a maximum element, which is the core operation in the Python code. Even though the implementation is garbled and syntactically incorrect, the relevant operation (finding maximum) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll find the length of the longest word and the total length of all words.\n\n```python\nwords = [len(max([len(str(len(s)), s := 0, max_len := 0, *[max_len := len(max([len(s := 0, max_len := 0, max_len :=",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"find the length of the longest word\" which is exactly what `max(len(w) for w in words)` computes. The second part about \"total length of all words\" is wrong, but the first part is clearly relevant and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::accumulate( std::begin(value), std::max_element(value, [](int a, int b){return std::make_pair(*b, *max_element(value, 0, [](int x){return std::accumulate(value.begin(), value.end(), 0, [](int a, int b){return",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words)",
+    "reasoning": "The Python code finds the maximum word length from a collection of words. The C++ completion references `std::max_element` and `std::accumulate` over a collection, which is partially relevant \u2014 `max_element` directly corresponds to finding the maximum. However, the completion doesn't clearly reference string lengths or word lengths specifically. Still, `std::max_element` is genuinely relevant to finding a maximum value, and the code is iterating over a collection to find a max. The completion is garbled and loops somewhat, but it's not a pure heavy loop \u2014 there's coherent content about max_element and accumulate.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'll find the longest length of the words, using `max(len(word) for word in words, key=len)`.\n\n```python\nmax(len(word) for word in words)\n```\n\n```python\nmax(len(word) for word in words, key=len)\n```\n\n```python\nmax(len(word) for",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies finding the maximum length of words in a list, using `max(len(word) for word in words)`, which matches the code exactly. The slight variation with `key=len` is a minor inaccuracy but the core operation is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return 0;};for (int i = 0; i < 0; i = 0);",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words)",
+    "reasoning": "The C++ completion shows a trivial stub that always returns 0 and a loop that never executes (bounds are all 0). There's no mention of finding maximum length, iterating over words, or any relevant operation related to the Python code's purpose.\n\n<verdict>MALFORMED</verdict>",
+    "reasoned_verdict": "MALFORMED"
+   }
+  }
+ ]
+}

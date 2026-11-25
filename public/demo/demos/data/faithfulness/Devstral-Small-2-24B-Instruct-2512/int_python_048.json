@@ -1,0 +1,96 @@
+{
+ "id": "int_python_048",
+ "datatype": "int",
+ "frontier_id": "last_digit",
+ "condition": "the last decimal digit",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a perfect square\n(2) the last decimal digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n >= 0 and int(n**0.5)**2 == n"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " abs(n) % 10\n    return a, b\n</code>",
+ "impl_span": "b = abs(n) % 10",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the value is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The code computes the last digit of the absolute value of n (using modulo 10), not a check for even/odd (which would use modulo 2). The description mentions a modulo operation conceptually but applies it to a completely different purpose (even/odd checking uses `% 2`, not `% 10`).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, value % 2 == 0 ? \"even\" : \"odd\"};}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = abs(n) % 10",
+    "reasoning": "The Python code extracts the last digit of a number using modulo 10 (`abs(n) % 10`). The C++ completion uses modulo 2 to check even/odd, which involves a modulo operation but applies it differently (mod 2 vs mod 10, and checking parity rather than extracting a digit). The modulo operation is relevant, but the specific use case (even/odd check) is unrelated to extracting the last digit.\n\nHowever, the modulo operator itself is a shared relevant ingredient \u2014 the code does use `%` and the completion also uses `%`. This is a partial overlap on the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "The last digit of `x` is `x % 10`.",
+   "verdict": "YES",
+   "reasoning": "The description mentions computing the last digit using `% 10`, which is exactly what the code does (`abs(n) % 10` gets the last digit of n). The description correctly identifies the core operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value%10;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n) % 10",
+    "reasoning": "The C++ completion computes `value % 10`, which is exactly the modulo 10 operation performed in the Python code. This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The last digit of `x % 10` gives the remainder when `x` is divided by 10, which is the digit you're after.",
+   "verdict": "YES",
+   "reasoning": "The description talks about taking `x % 10` to get the last digit/remainder when divided by 10, which is exactly what the code does (with `abs(n) % 10`). The description correctly identifies the modulo-10 operation and its purpose of extracting the last digit.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value%10;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n) % 10",
+    "reasoning": "The C++ completion implements a modulo 10 operation on a value, which directly corresponds to the `% 10` operation in the Python code. While it misses the `abs()` part, it correctly identifies the core operation of taking the remainder when divided by 10.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The last digit of the number.",
+   "verdict": "YES",
+   "reasoning": "The description \"The last digit of the number\" is directly relevant to what the code does \u2014 `abs(n) % 10` computes the last digit of the absolute value of `n`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 10;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = abs(n) % 10",
+    "reasoning": "The C++ completion implements a modulo 10 operation on a value, which directly corresponds to the `% 10` operation in the Python code. While it doesn't include the `abs()` part, it correctly identifies the core operation of taking the last digit via modulo 10.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_057",
+ "datatype": "list[str]",
+ "frontier_id": "count_ends_consonant",
+ "condition": "the number of words that end with a consonant",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) whether any word is a palindrome\n(3) the number of words that end with a consonant\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = any(w == w[::-1] for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true (e.g., counting how many times a condition is met or if something exists).",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting how many times a condition is met,\" which is relevant since the code counts words meeting a condition (ending in a non-vowel). However, it's quite generic and doesn't specify anything about vowels, word endings, or the specific nature of the check.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(value.begin(), value.end(), true) == value.size(); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The Python code counts words whose last character is not a vowel (consonant-ending words). The C++ completion counts elements equal to `true` and checks if that count equals the total size \u2014 this is checking if all elements are true, which is unrelated to checking vowels or last characters of words.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting how many words in a string end with a consonant (ignoring case and considering only alphabetic characters).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts words that end with a consonant (i.e., last character not in vowels \"aeiou\"), with case-insensitive comparison. The mention of \"ignoring case\" matches `.lower()` and \"end with a consonant\" matches `w[-1].lower() not in \"aeiou\"`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(const auto& s : value){  \n        if(std::isalpha(s[0])){  \n            int len = s.size();  \n            int c = 0;  \n            for(const auto& word : value){  \n                if(std::isalpha(word",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The C++ completion iterates over a collection of strings and checks alphabetic properties of characters. It counts something related to words/strings in a collection. However, it checks `s[0]` (the first character) rather than the last character, and doesn't check for vowels specifically. Still, it captures the core structure: iterating over words and counting based on a character property, which is partially relevant to the Python code that counts words based on their last character being a consonant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting how many times a condition is true in a loop.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting how many times a condition is true in a loop, which is exactly what the code does \u2014 it uses a generator expression to count words satisfying a condition (last character not being a vowel). The description is generic but does capture the core operation (counting/summing boolean conditions in an iteration).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& item : value) {  \n        if (std::isalpha(item)) {  \n            ++count;  \n        }  \n    }  \n    return count;  \n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The Python code counts words whose last character is not a vowel (i.e., ends with a consonant). The C++ completion counts alphabetic characters in a collection, which involves iterating over items and counting \u2014 but it checks `std::isalpha` on each item rather than checking the last character against vowels. The iteration and counting structure is partially relevant, but the actual condition being checked (alphabetic vs. ending consonant) is wrong. However, counting items that meet a character-based condition is at least partially in the right domain (character classification).\n\nThe completion is coherent and shows counting with a condition on characters, but the specific condition (isalpha vs. not a vowel at end of word) is completely different. The structure of iterating and counting is generic enough that it doesn't specifically identify what the code does.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting how many words in a list end with a consonant.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words where the last character is not a vowel (i.e., ends with a consonant), which is exactly what the code computes.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(const auto& str : value)  \n        if(std::count_if(std::begin(str), std::end(str),  \n                        [](const std::string& s){  \n                            return std::find_if(s.rbegin(), s.rbegin() +  \n                                std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[-1].lower() not in \"aeiou\")",
+    "reasoning": "The C++ completion iterates over a collection of strings and uses `find_if` with reverse iterators (`rbegin()`) to check the last character of each string. This is directly relevant to the Python code which checks `w[-1]` (the last character) of each word. The completion also maintains a count, matching the `sum(1 for ...)` pattern.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

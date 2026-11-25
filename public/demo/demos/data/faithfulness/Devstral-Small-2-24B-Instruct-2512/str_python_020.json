@@ -1,0 +1,96 @@
+{
+ "id": "str_python_020",
+ "datatype": "str",
+ "frontier_id": "count_letters",
+ "condition": "the number of alphabetic characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a space\n(2) the number of alphabetic characters\n(3) whether the string starts with an uppercase letter\n(4) the length of the string\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = ' ' in s"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isalpha() for c in s)\n    c = s[0].isupper() if s else False\n    d = len(s)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = sum(c.isalpha() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is valid.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if the input is valid,\" which is too generic to indicate any specific aspect of what the code does (counting alphabetic characters in a string). It doesn't mention counting, alphabetic characters, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return {value, value, value}; }",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion is a generic function returning a tuple/array of three copies of a value, with no relevance to counting alphabetic characters in a string. It doesn't mention character checking, string iteration, or any alphabetic property.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts the number of alphabetic characters (letters) in the string `s` by using `isalpha()` on each character and summing the results.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : value){if (isalpha(value)){count += 1;}}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements a function that counts alphabetic characters in a string using `isalpha()`, iterating over each character. This directly corresponds to the Python code which sums up `c.isalpha()` for each character in `s`. The logic is essentially the same, just with a minor bug (using `value` instead of `c` in the `isalpha` call).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of characters in the variable `count` and storing the result in the variable `char_count`.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting characters, which is relevant to what the code does (counting alphabetic characters in string `s`). However, it mentions wrong variable names (`count`, `char_count`) instead of `b` and `s`. Despite the wrong variable names, the core concept of counting characters is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : value) {count += isalpha(value) ? 1 : 0;}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion iterates over characters in a string and counts alphabetic characters using `isalpha()`, which is exactly what the Python code does with `sum(c.isalpha() for c in s)`. The minor bug (passing `value` instead of `c` to `isalpha`) doesn't affect the conceptual relevance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of alphabetic characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts alphabetic characters in string `s` using `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value.begin(), value.end(), [](char c){return std::isalpha(value.size());});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion uses `std::count_if` with `std::isalpha` to count alphabetic characters in a string, which is exactly what the Python code does with `sum(c.isalpha() for c in s)`. Despite the bug (using `value.size()` instead of `c` inside the lambda), the core operation \u2014 counting alphabetic characters \u2014 is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

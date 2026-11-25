@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_043",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) whether any value is even\n(3) the difference between the maximum and minimum values\n(4) whether any value is zero\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums)\n    b = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - a\n    d = any(x == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max(nums) - a",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am calculating the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is the difference between the maximum value and some variable `a`. The description says \"difference between the maximum and minimum values,\" which correctly identifies the subtraction from the maximum, though it incorrectly identifies `a` as the minimum (it may or may not be). The key operation \u2014 finding the max and computing a difference \u2014 is correctly captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm calculating the difference between the maximum and minimum values in the dataset.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is the difference between the maximum value and some variable `a`. The description says it's computing the difference between the maximum and minimum values \u2014 this is partially correct (it correctly identifies the max operation and the subtraction/difference), though it incorrectly identifies `a` as the minimum. Still, the core operation (max and difference) is captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges::max(std::ranges",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The completion shows `std::ranges::max` repeated in a heavy loop pattern. While `max` is relevant to the code (which uses `max(nums)`), the completion is dominated by a short repeating cycle of `std::ranges::max(` with no other coherent content.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm calculating the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is the difference between the maximum value and some variable `a`. The description says it's calculating the difference between the maximum and minimum values, which is partially correct \u2014 it correctly identifies that `max(nums)` is involved and that a difference is being computed. The description's claim that `a` is the minimum is an assumption that may or may not be true, but the core operation (difference involving max) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value1, auto value2){return value2 - value1;};\nauto func (auto value1, auto value2){return value2 - value1;};\nauto func (){return value2 - value1;};\n\nauto func (){return value1;};\nauto func (){return value2 -",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The C++ completion shows a function computing `value2 - value1`, which is a subtraction operation. The Python code computes `max(nums) - a`, which is also a subtraction. While the specifics differ (no mention of `max`), the core operation of subtraction between two values is correctly identified.\n\nHowever, I need to check if this is a HEAVY_LOOP. The pattern `auto func (auto value1, auto value2){return value2 - value1;}` repeats multiple times, and the loop unit is roughly 5-6 tokens. But the variations (different signatures, different bodies) suggest it's not a pure tight loop \u2014 there are variations in the function signatures. Still, it's borderline. The core content (subtraction) is repeated but with variations, and the subtraction operation is genuinely relevant.\n\nThe repetition is present but not a pure tight loop with identical units \u2014 there are variations. The relevant content (subtraction of two values) is identifiable.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I subtract the maximum value from the minimum value in the data.",
+   "verdict": "YES",
+   "reasoning": "The description mentions subtracting values related to max/min, which is partially relevant \u2014 the code does compute `max(nums) - a`. However, the description says \"maximum minus minimum\" while the code subtracts `a` (not necessarily the minimum). Still, the operation of subtracting from the maximum is correctly identified, and `a` could plausibly be the minimum in context.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::ranges::max(std::ranges::max(value) - std::ranges::max(*std::ranges::max_element(value) - std::ranges::max(*std::ranges::max_element(value) - std::ranges::max(value)));}",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The completion contains a repeating pattern of `std::ranges::max(*std::ranges::max_element(value) - std::ranges::max(...)` that cycles over and over. While it does contain the relevant concept of finding the maximum value, the completion is dominated by a short repeating cycle that makes it a stuck loop rather than a coherent expression of the idea.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

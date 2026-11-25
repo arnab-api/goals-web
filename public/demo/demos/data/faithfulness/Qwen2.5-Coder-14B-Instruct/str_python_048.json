@@ -1,0 +1,96 @@
+{
+ "id": "str_python_048",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of uppercase letters\n(2) whether the string contains a space\n(3) whether the string contains a digit\n(4) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isupper())\n    b = ' ' in s\n    c = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.isalnum() for c in s)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = all(c.isalnum() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 checking if all characters in the string are alphanumeric using `all()` with `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_same_v<decltype(value), bool> && std::is_same_v<decltype(value), int> && std::is_same_v<decltype(value), char> && std::is_same_v<decltype(value), std::string>; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion is checking types (bool, int, char, string) using `std::is_same_v`, which is unrelated to checking if characters in a string are alphanumeric. The code is about iterating over characters and checking `isalnum()`, while the completion is about type comparisons that don't relate to alphanumeric checking at all. Additionally, the logic `is_same_v<decltype(value), bool> && is_same_v<decltype(value), int>` is always false (a value can't be both bool and int simultaneously), suggesting this is nonsensical type-checking code.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 checking if all characters in the string are alphanumeric using `all()` with `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto c){ return std::isdigit(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` to check if all characters in a string satisfy a condition, which mirrors the Python code's use of `all()` over characters. The Python code checks `isalnum()` (alphanumeric) while the C++ checks `isdigit()`, but the structural approach and the idea of checking all characters is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 checking if all characters in the string are alphanumeric using `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto item){ return std::isalnum(item); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking that all characters in a string are alphanumeric using `std::all_of` with `std::isalnum`, which directly mirrors Python's `all(c.isalnum() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the string are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 checking if all characters in the string are alphanumeric using `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), ::isalnum); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking that all characters in a string are alphanumeric using `std::all_of` with `::isalnum`, which directly corresponds to `all(c.isalnum() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

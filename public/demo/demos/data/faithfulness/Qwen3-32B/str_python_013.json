@@ -1,0 +1,96 @@
+{
+ "id": "str_python_013",
+ "datatype": "str",
+ "frontier_id": "has_digit",
+ "condition": "whether the string contains a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string is a palindrome\n(2) whether the string contains a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = (s == s[::-1"
+  },
+  {
+   "text": "])\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(c.isdigit() for c in s)\n    return a, b\n</code>",
+ "impl_span": "b = any(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check if the next line of code is executed.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"I'll check if the next line of code is executed,\" which is generic scaffolding with no relevant content about what the code actually does (checking if any character in a string is a digit).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value) {return value;};\nauto func3 (auto value) {return value;};\nauto func4 (auto value) {return value;};\nauto func5 (auto value) {return value;};\nauto func6 (auto value) {return value;};\nauto func7 (auto value",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion is a series of identity function stubs that simply return their input unchanged. This has no relevance to checking whether any character in a string is a digit. The content is essentially a repeating pattern of `auto funcN (auto value){return value;}` with no meaningful variation.\n\nHowever, I need to check if this is a HEAVY_LOOP. The repeating unit is `auto funcN (auto value){return value;};` which is roughly 7-8 tokens, and it repeats with only a counter increment. This is dominated by a short repeating cycle, and collapsing it leaves no coherent content relevant to the code.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I check if the input contains a digit, then check if it contains a letter.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the input contains a digit, which is exactly what the code does with `any(c.isdigit() for c in s)`. The second part about checking for a letter is not present in this single line, but the first part is directly relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool hasDigit = false;  \n    bool hasLetter = false;  \n\n    if (value.find_first_of(\"0123456789\") != std::string::npos) {  \n        hasDigit = true;  \n    }  \n\n    if (value.find_first_of(\"0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion checks whether a string contains any digit characters using `find_first_of(\"0123456789\")`, which is directly relevant to what the Python code does (`any(c.isdigit() for c in s)`). The completion correctly identifies the core operation of checking for the presence of digits in a string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll need to check if the line has any. I'll then check if the line has any.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"checking if the line has any\" which is vague but partially relevant to the `any()` operation in the code. However, it doesn't mention digits or character checking, and it loops/repeats the same phrase twice without adding substance. The content is too generic to confirm specific understanding of what's being checked.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return (bool)(value);};",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The line contains a digit.",
+   "verdict": "YES",
+   "reasoning": "The description \"The line contains a digit\" is directly relevant to what the code does \u2014 it checks whether any character in `s` is a digit using `isdigit()`, which is exactly testing whether the string contains a digit.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value, [](char c){ return std::isdigit(c); });}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion implements `std::any_of` over a string checking `std::isdigit` on each character, which is exactly what the Python code does (`any(c.isdigit() for c in s)`). Despite minor syntactic errors (misplaced parenthesis), the substance is clearly correct and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

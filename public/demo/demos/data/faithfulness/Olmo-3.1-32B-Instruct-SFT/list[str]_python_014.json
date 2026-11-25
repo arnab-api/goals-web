@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_014",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words shorter than three characters\n(2) the number of capitalized words\n(3) whether all words have distinct lengths\n(4) the number of words that contain a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) < 3"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w == w.capitalize())\n    c = len({len(w) for w in words}) == len(words)\n    d = sum(1 for w in words if any(ch.isdigit() for ch in w))\n    return a, b, c, d\n</code>",
+ "impl_span": "b = sum(1 for w in words if w == w.capitalize())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am checking if a number is even.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if a number is even, but the code is counting words that equal their capitalized form (i.e., words that start with a capital letter). These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for w in words if w == w.capitalize())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the code is running.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"I am checking if the code is running,\" which is completely generic and tells us nothing about what the code actually does (counting words that equal their capitalized form). It contains no relevant operation, quantity, or property of the input.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](const auto& item){ return std::isupper(item); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w == w.capitalize())",
+    "reasoning": "The Python code counts words that equal their capitalized form (i.e., words where the first letter is uppercase and the rest are lowercase). The C++ completion counts items where `std::isupper` is true, which checks for uppercase characters. While the C++ checks if individual characters are uppercase (rather than checking if a word equals its capitalized form), it's partially relevant \u2014 it's operating on a collection and checking for uppercase/capitalization properties, which is a genuine sub-component of what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am checking if the variable is a string.",
+   "verdict": "NO",
+   "reasoning": "The code is counting words that equal their capitalized form (i.e., words that start with an uppercase letter). The description says it's checking if a variable is a string, which is completely unrelated to what the code actually does \u2014 there's no type-checking happening here.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; };",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for w in words if w == w.capitalize())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of words that start with a capital letter in the given text.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of words that start with a capital letter,\" which is essentially what the code does \u2014 it counts words where `w == w.capitalize()`, meaning the word matches its capitalized form (first letter uppercase, rest lowercase). This is a correct and relevant description of the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if (std::begin (value), std::end (value), [](const auto& s){return std::isupper (s[0]);});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w == w.capitalize())",
+    "reasoning": "The C++ completion counts elements in a collection where the first character is uppercase (`std::isupper(s[0])`), which is directly relevant to the Python code that counts words equal to their capitalized form (i.e., words starting with an uppercase letter). This captures the core operation of checking capitalization of words in a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

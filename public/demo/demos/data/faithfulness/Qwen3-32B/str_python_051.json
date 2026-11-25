@@ -1,0 +1,96 @@
+{
+ "id": "str_python_051",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of whitespace-separated words\n(2) whether the string contains a digit\n(3) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s.split())\n    b = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.isalnum() or c.isspace() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "c = all(c.isalnum() or c.isspace() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. Check if all characters are alphabetic: `all(c.isalpha() for c in s)`.\n2. Check if all characters are uppercase: `all(c.isalpha() for c in s)`.\n3. Check if all characters are lowercase: `all(c.isalpha() for c in s)`.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters meet some condition using `all(c.isalpha() for c in s)`, which is structurally very similar to the actual code. The code uses `all(...)` over characters in `s` checking character properties, which aligns with the described pattern. However, the specific check (isalnum or isspace) differs from what's described (isalpha), but the core structure and concept of checking all characters with `all()` is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return isalpha(value) ? isalnum(value) : true;};\nauto func (auto value){return isalpha(value) ? isalnum(value) : true;};\nauto func (auto value){return isalpha(value) ? isalnum(value) : true;};\nauto func (auto value){return isalpha(value) ? is",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() or c.isspace() for c in s)",
+    "reasoning": "The completion checks character properties using `isalpha` and `isalnum`, which is related to the Python code's use of `isalnum()`. However, the logic is somewhat different (the Python code checks `isalnum() or isspace()`, while the C++ checks `isalpha ? isalnum : true`), and the completion is dominated by a short repeating cycle of the same lambda function repeated verbatim three times with a fourth partial repetition.\n\nThe repeating unit is roughly \"auto func (auto value){return isalpha(value) ? isalnum(value) : true;};\" which repeats 3+ times with no additional content \u2014 this is a HEAVY_LOOP pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll check each character in the string using the `isalnum()` method to see if it is either a letter or a digit.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking each character using `isalnum()` to see if it is a letter or digit, which is directly relevant to what the code does. The code checks if all characters are alphanumeric or spaces, and while the description omits the `isspace()` part, it correctly identifies the core operation of checking characters with `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::all_of(value.begin(), value.end(), [](char c){ return std::isalnum(c) != 0; });  \n};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() or c.isspace() for c in s)",
+    "reasoning": "The C++ completion implements `std::all_of` checking `std::isalnum` on each character, which directly corresponds to the Python code checking `c.isalnum()` for all characters in the string. The C++ version is missing the `c.isspace()` part, but it correctly captures the core operation of checking all characters for alphanumeric property.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "1. `all(isinstance(c, bool) for c in (all(ord(ch) == (ch.isalpha(), ch.islower(), ch.isdigit())): Checks if `ch` is alphabetic, checks if `ch` is all characters are lowercase, checks if all characters are alphanumeric.\n\n2. `all([all",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if characters are alphanumeric (`isalnum`) and alphabetic (`isalpha`), which are partially relevant to what the code does. The code checks if all characters in `s` are either alphanumeric or whitespace. The description touches on character classification (alphanumeric, alphabetic) but is quite garbled and doesn't mention the `isspace()` part. However, it does surface some relevant concepts about checking character properties across all characters.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return [value](auto x) { return [value](){ return static_cast<bool>(x = std::isalpha(*value) ? std::islower(*value) ? std::isupper(*value) ? std::isdigit(*value) ? std::isprint(*value) ? std::isc",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() or c.isspace() for c in s)",
+    "reasoning": "The Python code checks if all characters in a string are either alphanumeric or whitespace. The C++ completion references character classification functions like `std::isalpha`, `std::islower`, `std::isupper`, `std::isdigit`, `std::isprint` \u2014 these are character classification functions relevant to checking character properties. While the specific combination differs (the code checks `isalnum` or `isspace`, not exactly those functions), the completion is clearly about character classification on a string/sequence, which is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I check if all characters in the string are alphanumeric using the `isalnum()` method. This method returns `True` if all characters in the string are alphanumeric (i.e., each character is either a letter or a digit) and `False` if any character is not alphanumeric (i.e., if all characters are",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code checks if all characters are alphanumeric using `isalnum()`, which is a core part of what the code does. It misses the `or c.isspace()` part (allowing spaces), but correctly captures the main operation and purpose.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::all_of(value.begin(), value.end(), [](char c) { return std::isalnum(c); });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() or c.isspace() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` to check that all characters are alphanumeric (`std::isalnum`), which directly corresponds to the Python code's use of `all()` with `c.isalnum()`. The C++ version is missing the `c.isspace()` part, but it correctly captures the core operation of checking all characters for alphanumeric property.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

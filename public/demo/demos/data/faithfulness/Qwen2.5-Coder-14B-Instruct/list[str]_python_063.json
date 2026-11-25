@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_063",
+ "datatype": "list[str]",
+ "frontier_id": "total_uppercase_letters",
+ "condition": "the total number of uppercase letters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is empty\n(2) the total number of uppercase letters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(len(w) == 0 for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(w.count(c) for w in words for c in w if c.isupper())\n    return a, b\n</code>",
+ "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true,\" which is too generic to indicate any specific aspect of the code. The code is actually summing counts of uppercase characters across words, not checking a condition.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of uppercase letters in the string,\" which is exactly what the code does \u2014 it iterates over words and characters, checking `c.isupper()` and summing the counts of uppercase characters.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](auto c){ return std::isupper(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+    "reasoning": "The C++ completion implements counting uppercase characters in a string using `std::count_if` with `std::isupper`, which is directly relevant to what the Python code does \u2014 it counts uppercase characters across all words. The C++ version captures the core operation (counting uppercase letters) even though it doesn't show the outer summation over words.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of characters in the string.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"counting the number of characters in the string,\" which is partially relevant \u2014 the code does count characters (specifically uppercase letters across words). The description captures the counting aspect but misses the uppercase-specific filtering. Still, counting characters is a genuine sub-step of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](const auto& v){ return std::accumulate(std::begin(v), std::end(v), 0, [](int sum, const auto& w){ return sum + std::count_if(std::begin(w), std::end(w),",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+    "reasoning": "The C++ completion shows `std::count_if` over a range with `std::accumulate` summing counts, which mirrors the Python code's pattern of iterating over words and counting characters. The structure of nested iteration and counting is genuinely relevant, even though the exact condition (checking for uppercase) is cut off before being stated.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the total number of uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the total number of uppercase letters in the string,\" which is exactly what the code does \u2014 it iterates over all words and characters, checks if each character is uppercase, and sums the counts.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto c : value) { if (std::isupper(c)) count += std::count_if(value.begin(), value.end(), [](char c) { return std::count_if(value.begin(), value.end(), [](char c) { return std::count_if(value.begin(), value",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(w.count(c) for w in words for c in w if c.isupper())",
+    "reasoning": "The C++ completion is counting uppercase characters using `std::isupper(c)` and `std::count_if`, which is genuinely relevant to the Python code that counts uppercase characters (`c.isupper()`). However, the completion becomes a nested repeating loop of `std::count_if(value.begin(), value.end(), [](char c) { return std::count_if(value.begin(), value.end()...` which dominates the tail of the completion.\n\nThe key question is whether this qualifies as HEAVY_LOOP. The repeating unit is `std::count_if(value.begin(), value.end(), [](char c) { return` which is roughly 8-9 tokens repeating. This is slightly longer than \"five words/tokens or fewer\" but is clearly a stuck loop. However, before the loop starts, there is coherent relevant content (checking `isupper`, counting). The loop portion does dominate the end, but the beginning has genuine substance.\n\nGiven the relevant content at the start (isupper check, count variable, loop over characters) before the degenerate nesting begins, and that the repeating unit is somewhat longer than the threshold, I'll lean toward YES since meaningful content precedes the loop degradation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

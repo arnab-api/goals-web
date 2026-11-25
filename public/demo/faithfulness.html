@@ -85,6 +85,8 @@
     </div>
 
     <div class="sb-tasks">
+      <div class="sb-label">Model</div>
+      <select id="model-sel" aria-label="model" style="width:100%;margin:0 0 10px;padding:4px 6px;font:inherit;font-size:12px;border:1px solid var(--border, #ddd);border-radius:6px;background:transparent;color:inherit"></select>
       <div class="sb-label">Spec</div>
       <div class="sb-search-wrap">
         <svg class="sb-search-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -149,7 +151,7 @@
   const $ = id => document.getElementById(id);
   const esc = s => (s == null ? "" : String(s)).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const tint = p => `color-mix(in srgb, var(--pv-${p}) 30%, #fff)`;
-  let list = [], meta = null, cur = -1, doc = null;
+  let list = [], meta = null, cur = -1, doc = null, base = "demos/data/faithfulness/", models = [];
   let mode = new URLSearchParams(location.search).get("view") === "causality" ? "causal" : "faith";
 
   function hover(p, on) {
@@ -239,7 +241,7 @@
     document.querySelectorAll("#task-list li[data-id]").forEach(li => li.classList.toggle("selected", li.dataset.id === e.id));
     const sel = document.querySelector("#task-list li.selected"); if (sel) sel.scrollIntoView({block: "nearest"});
     $("pidx").textContent = `${cur + 1} / ${list.length}`;
-    fetch(`demos/data/faithfulness/${e.id}.json`).then(r => r.json()).then(d => {
+    fetch(`${base}${e.id}.json`).then(r => r.json()).then(d => {
       doc = d; render(d); history.replaceState(null, "", "#" + e.id); $("content").scrollTop = 0;
     });
   }
@@ -257,19 +259,33 @@
     $("task-count").textContent = q ? `${vis} / ${list.length} specs` : `${list.length} specs`;
   }
 
-  fetch("demos/data/faithfulness/index.json").then(r => r.json()).then(d => {
-    meta = d.meta;
+  function runText() {                                              // one line describing the run behind the page
+    const rep = meta.strategy === "replace";
+    const how = rep ? `replace α ${meta.alpha} (each goal head's output is replaced at its own layer)`
+                    : `${esc(meta.strategy)} α ${meta.alpha}, steering layers ${esc(meta.layers)}`;
+    return `${esc(meta.model)}, the ${meta.heads} goal heads, ${how}, 64-token read-outs, all ${list.length} specs`;
+  }
+  function source() {                                               // which paper result the page shows
+    return meta.strategy === "replace"
+      ? "the paper's across-model comparison (App. F, Table 3: each LM at its best α)"
+      : "the paper's main GoalScope run";
+  }
+
+  function load(dir) {
+    base = "demos/data/faithfulness/" + (dir ? dir + "/" : "");
+    fetch(base + "index.json").then(r => r.json()).then(d => {
+    meta = d.meta; cur = -1; doc = null; $("task-list").innerHTML = "";
     list = d.examples.slice().sort((a, b) => DT.indexOf(a.datatype) - DT.indexOf(b.datatype) || a.id.localeCompare(b.id));
     function chrome() {                                             // legend, note, sidebar counts for the current view
       const C = mode === "causal", bp = C ? meta.causal_by_pivot : meta.by_pivot;
       $("legend").innerHTML = PIVOTS.map(p =>
         `<span><span class="fx-sw" style="background:var(--pv-${p})"></span><code>${p}</code> ${(100 * bp[p]).toFixed(1)}%</span>`).join("");
-      const run = `${esc(meta.model)}, the ${meta.heads} goal heads, ${esc(meta.strategy)} α ${meta.alpha}, steering layers ${esc(meta.layers)}, 64-token read-outs, all ${list.length} specs`;
+      const run = runText();
       $("note").innerHTML = C
-        ? `Causality read-outs from the paper's main GoalScope run (${run}): the same encoding is injected into an information-less C++ stub ` +
+        ? `Causality read-outs from ${source()} (${run}): the same encoding is injected into an information-less C++ stub ` +
           `(<code>${esc(meta.causal_stub)}</code>, in grey), and the judge (${esc(meta.judge)}) checks whether the C++ the model writes implements the ` +
           `frontier sub-task. The judge's reasoning was collected afterwards: the same judge and rubric, asked to explain before giving its verdict. The percentages next to the pivots are the acceptance rates over all specs (the causality bars of the paper's GoalScope figure).`
-        : `Read-outs from the paper's main GoalScope run: ${run}. ` +
+        : `Read-outs from ${source()}: ${run}. ` +
           `The percentages next to the pivots are the judge's acceptance rates over all specs (the faithfulness bars of the paper's GoalScope figure). ` +
           `Verdicts are from an LLM judge (${esc(meta.judge)}) comparing each read-out with the frontier line the model wrote. ` +
           `The judge's reasoning was collected afterwards: the same judge and rubric, asked to explain before giving its verdict.`;
@@ -294,17 +310,41 @@
       $("task-list").appendChild(li);
     });
     chrome(); updateFilter();
-    document.querySelectorAll(".fx-tab").forEach(b => b.addEventListener("click", () => {
-      if (b.dataset.mode === mode) return;
-      mode = b.dataset.mode; chrome(); if (doc) render(doc);
-      const u = new URL(location.href); if (mode === "causal") u.searchParams.set("view", "causality"); else u.searchParams.delete("view");
-      history.replaceState(null, "", u.pathname + u.search + location.hash);
-    }));
-    $("task-filter").addEventListener("input", updateFilter);
-    $("prev").addEventListener("click", () => select(cur - 1));
-    $("next").addEventListener("click", () => select(cur + 1));
+    window._fxChrome = chrome;
     const want = list.findIndex(e => e.id === location.hash.slice(1));
     select(want >= 0 ? want : 0);
+    });
+  }
+
+  document.querySelectorAll(".fx-tab").forEach(b => b.addEventListener("click", () => {
+    if (b.dataset.mode === mode) return;
+    mode = b.dataset.mode; if (window._fxChrome) window._fxChrome(); if (doc) render(doc);
+    const u = new URL(location.href); if (mode === "causal") u.searchParams.set("view", "causality"); else u.searchParams.delete("view");
+    history.replaceState(null, "", u.pathname + u.search + location.hash);
+  }));
+  $("task-filter").addEventListener("input", updateFilter);
+  $("prev").addEventListener("click", () => select(cur - 1));
+  $("next").addEventListener("click", () => select(cur + 1));
+
+  // model menu (models.json, written by goalscope_eval_write_site_data.py --all); the first entry is the default
+  const wantModel = new URLSearchParams(location.search).get("model");
+  fetch("demos/data/faithfulness/models.json").then(r => r.ok ? r.json() : []).catch(() => []).then(ms => {
+    models = ms; const sel = $("model-sel");
+    if (!ms.length) { sel.style.display = "none"; sel.previousElementSibling.style.display = "none"; load(""); return; }
+    ms.forEach(m => {
+      const o = document.createElement("option"); o.value = m.dir;
+      o.textContent = `${m.model}  (F ${(100 * m.faithfulness).toFixed(1)}% · C ${(100 * m.causality).toFixed(1)}%)`;
+      sel.appendChild(o);
+    });
+    const pick = ms.find(m => m.model === wantModel || m.dir === wantModel) || ms[0];
+    sel.value = pick.dir; load(pick.dir);
+    sel.addEventListener("change", () => {
+      const m = ms.find(x => x.dir === sel.value);
+      const u = new URL(location.href);
+      if (m && m.dir) u.searchParams.set("model", m.model); else u.searchParams.delete("model");
+      history.replaceState(null, "", u.pathname + u.search);
+      load(sel.value);
+    });
   });
 })();
 </script>

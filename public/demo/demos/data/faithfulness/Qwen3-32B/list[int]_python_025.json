@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_025",
+ "datatype": "list[int]",
+ "frontier_id": "count_odd",
+ "condition": "the number of odd values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of positive values\n(2) whether the values are sorted in non-decreasing order\n(3) the number of odd values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x > 0)\n    b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for x in nums if x % 2 != 0)\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for x in nums if x % 2 != 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll count the number of vowels in the string.",
+   "verdict": "NO",
+   "reasoning": "The description says \"count the number of vowels in a string,\" but the code is counting odd numbers in a list (`x % 2 != 0`). These are completely unrelated operations \u2014 one deals with string characters/vowels, the other with numeric parity.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::is_integral_v<decltype(value)>::value ? std::count_if(std::begin(value), std::end(value), [](auto x) { return x; }) : 0;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion uses `std::count_if` over a collection with a lambda, which is conceptually similar to counting elements that satisfy a condition. However, the lambda `[](auto x) { return x; }` doesn't check for oddness (x % 2 != 0), and the `std::is_integral_v` check is irrelevant noise. Still, the core operation of counting elements from a collection that satisfy some predicate is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll count the number of odd numbers, then the number of even numbers, then the number of numbers divisible by 3.\n\n```python\n# Count odd numbers\nodd_count = sum(1 for num in numbers if num % 2 == 1)\n\n# Count even numbers\neven_count = sum(1",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting odd numbers, which is exactly what the code does (counting elements where `x % 2 != 0`). The additional parts about even numbers and divisibility by 3 are extra/wrong, but the core relevant operation (counting odd numbers) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 ? 0 : 1; };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The Python code counts odd numbers in a list (x % 2 != 0). The C++ completion checks `value % 2` which is the same modulo-2 operation to detect odd/even numbers. However, the logic is inverted (returns 0 for odd, 1 for even), but the core operation (modulo 2 check) is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many times a number appears in the list.",
+   "verdict": "NO",
+   "reasoning": "The description mentions counting occurrences of something in a list, which is partially relevant (counting elements), but it says \"how many times a number appears\" which implies counting frequency/occurrences of a specific value. The code is actually counting how many odd numbers exist in the list (elements where x % 2 != 0). The core operation (counting elements meeting a condition) is partially captured, but the specific property being checked (oddness) is missed, and \"how many times a number appears\" suggests frequency counting of a specific value rather than filtering by a property.\n\nThis is borderline, but the description does capture the counting aspect over a list, which is a relevant sub-step. However, \"how many times a number appears\" is more about frequency/occurrence of a specific value, which is a different operation than counting elements satisfying a modulo condition.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto x){ return x % 2 == 1; }); };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion uses `std::count_if` to count elements where `x % 2 == 1` (odd numbers), which is essentially the same operation as the Python code counting elements where `x % 2 != 0` (also odd numbers). This is a direct match in substance, just with a slightly different but equivalent condition expression.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "At this line: `x % 2 == 1` checks if the number is odd. The count increases by 1 if the number is odd.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is counting odd numbers in a list. The specific detail about `x % 2 == 1` is essentially equivalent to `x % 2 != 0` for positive integers (and the concept is the same), and the description accurately captures that a count is being incremented for each odd number found.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion computes `value % 2`, which is directly relevant to checking whether a number is odd (the core operation in the Python code that counts odd numbers). This matches the key sub-operation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

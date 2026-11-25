@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_039",
+ "datatype": "list[str]",
+ "frontier_id": "longest_word_length",
+ "condition": "the length of the longest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) the length of the longest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(len(w) for w in words)\n    return a, b\n</code>",
+ "impl_span": "b = max(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm calculating the length of a list.",
+   "verdict": "NO_INFO",
+   "reasoning": "The code computes the maximum word length from a collection of words. The description mentions \"calculating the length of a list,\" which is partially relevant (length calculation is involved) but misses the key operation of finding the maximum and applies it to the wrong thing (a list rather than individual words). However, \"calculating the length\" is a genuine sub-step in what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value * 2; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words)",
+    "reasoning": "The C++ completion describes a function that doubles a value, which has no relevance to finding the maximum word length. The completion is coherent but completely unrelated to the operation being performed.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the length of the longest word in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum length among words in a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::max_element(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::max_element` to find the maximum element in a collection, which is conceptually related to finding the maximum value (max word length) in the Python code. However, the Python code finds the maximum of word lengths (not the maximum element directly), and the C++ uses `max_element` on the collection itself rather than on a transformed version. Still, the core operation of finding a maximum is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am calculating the length of the longest word in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum length among words in a list, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::max_element(value.begin(), value.end(), [](const auto& a, const auto& b){ return a.size() < b.size(); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::max_element` with a comparator based on `.size()`, which is directly relevant to finding the maximum length word. The Python code finds the maximum word length using `max(len(w) for w in words)`, and the C++ completion captures the same core operation \u2014 finding the element with the greatest size/length from a collection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am calculating the length of the longest word in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it computes the maximum length among all words in the list, which is exactly \"the length of the longest word.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::max_element(std::begin(value), std::end(value), [](const auto& a, const auto& b){ return a.size(); }).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = max(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::max_element` to find the maximum element in a collection, and applies `.size()` to get the size, which directly corresponds to finding the maximum length (`len(w)`) among words. This is genuinely relevant to the Python code which finds the maximum word length.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

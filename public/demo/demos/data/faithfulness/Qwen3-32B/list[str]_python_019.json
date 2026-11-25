@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_019",
+ "datatype": "list[str]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) the number of distinct words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(words))\n    return a, b\n</code>",
+ "impl_span": "b = len(set(words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "- Line 1: `len(set(text))` counts the number of unique characters in the text.\n- Line 2: `len(text)` counts the number of unique words in the text.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting unique elements using `len(set(...))`, which is exactly what the code does. While the description says \"unique characters\" and \"unique words\" in a confused way, and uses `text` instead of `words`, it correctly identifies the core operation of counting unique elements with `len(set(...))`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::unordered_set<int>(value.begin(), value.end()).size();};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an unordered_set from a collection (value.begin(), value.end()) and returns its size, which is exactly what the Python code does: converting `words` to a set and getting its length to count unique elements. This is directly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "- **Unique words count**: `len(set(words))`  \n- **Unique words**: `len(set(words))`  \n\nIf the list contains `['apple', 'banana']`, then the count is `2`.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code counts unique words using `len(set(words))`, which is exactly what the code does. It even provides a correct example.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::set<std::string> s;  \n    return std::set<std::string>(std::unordered_set<std::string>(std::vector<std::string>(std::set<std::string>(std::begin(value), std::end(value)), static_cast<std::size_t>(0)), static_cast",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates a `std::set<std::string>` from the input `value`, which directly corresponds to the Python code's `set(words)` operation \u2014 converting a collection of words into a set to find unique elements. Despite the garbled/truncated ending and incorrect nested constructors, the core operation of creating a set from a string collection is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To provide a brief answer, I'll need to clarify the context:\n\n1. **Unique elements in the list**: I'll count how many unique elements there are in the list.\n2. **Unique elements in the set**: I'll count how many unique elements are in the set by converting it to a set and using",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting unique elements in a list by converting to a set, which is exactly what the code does: `len(set(words))` converts `words` to a set (removing duplicates) and counts the unique elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::unordered_set<int>(std::views::counted(value.begin(), value.end()));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates an `unordered_set` from a collection (using `value.begin()` to `value.end()`), which is directly relevant to the Python code that creates a `set` from `words` to count unique elements. The core operation of converting a collection to a set to find unique elements is captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine the number of unique elements in the list, we can use a set, which automatically removes duplicates, and then count the length of that set.\n\n```python\nlen(set(lst))\n```\n\nThis returns the count of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the number of unique elements using a set and taking its length, which is exactly what the code does with `len(set(words))`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    std::unordered_set<std::string> s;  \n    for (auto i = 0; i < std::unordered_set<std::string>(std::vector<std::string>(std::unordered_set<std::string>(std::vector<std::string>(std::vector<std::string>(std::unordered",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The completion starts with a relevant operation \u2014 creating an `unordered_set<std::string>` and iterating, which directly corresponds to computing the number of unique elements (words) using a set. However, the completion then devolves into a heavily nested, repeating pattern of `std::unordered_set<std::string>(std::vector<std::string>(std::unordered_set...` that loops without end.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is roughly `std::unordered_set<std::string>(std::vector<std::string>(` which is a short cycle repeating over and over. After collapsing the loop, the coherent content is: create an unordered_set, loop over it \u2014 which is relevant. But the loop dominates the completion significantly.\n\nThe initial part (creating an unordered_set of strings and iterating) is genuinely relevant to counting unique words. The loop portion is dominated by a short repeating token cycle. This is a borderline case, but the repeating unit is indeed short (~5 tokens) and dominates the tail of the completion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

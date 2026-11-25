@@ -1,0 +1,96 @@
+{
+ "id": "int_python_021",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is odd\n(2) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " True\n    if n < 2:\n        b = False\n    else:\n        for i in range(2, int(n**0.5) + 1):\n            if n % i == 0:\n                b = False\n                break\n    return a, b\n</code>",
+ "impl_span": "b = True",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need to determine if a number is prime and also check if it's even or odd. Let me first check if the number is prime, then check if it's even.\n\nTo check if a number is prime:\n1. A prime number is a natural number greater than 1 that has exactly two distinct divisors",
+   "verdict": "NO_INFO",
+   "reasoning": "The code simply assigns `True` to variable `b`. The description talks about checking primality and even/odd properties, which are completely unrelated to this single assignment statement.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value == 2) return true;\n    if (value < 2) return false;\n    for (int i = 2; i <= value; i++) {\n        if (value == 2) return true;\n        if (value % 2 == 0) return false;",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = True",
+    "reasoning": "The code simply sets `b = True` \u2014 it's just a boolean assignment with no computation. The C++ completion describes a primality check (checking if a value equals 2, checking divisibility by 2, etc.), which is completely unrelated to a simple boolean assignment.\n\nHowever, I need to consider whether the C++ output is a HEAVY_LOOP. Looking at it, it's not a repeating loop \u2014 it's a coherent (if irrelevant) primality testing function. It's coherent but about something completely unrelated to `b = True`.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I need to determine if a number is prime. Let me analyze the code to check for primality.\n\nTo determine if a number is prime, I need to check two things:\n1. Whether it's greater than 1\n2. Whether it has any divisors other than 1 and itself\n\nFirst, I",
+   "verdict": "NO",
+   "reasoning": "The code simply assigns `True` to variable `b`, but the description talks about checking primality of a number. However, this single line `b = True` could be part of a primality check where `b` is initialized to `True` before checking divisors. The description mentions checking if a number is prime, which is plausible context for initializing a boolean flag.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value < 2) return false;\n    if (value == 2) return true;\n    if (value % 2 == 0) return false;\n    for (int i = 2; i <= value; ++i) {\n        if (value == 2) return true",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = True",
+    "reasoning": "The Python code simply sets `b = True`, which is a trivial assignment with no computational logic. The C++ completion implements a primality check (checking if a value is prime by testing divisibility). This is completely unrelated to the Python code's simple boolean assignment `b = True`.\n\nHowever, I need to consider what the broader context might be \u2014 the description says this is read from a hidden state while the model is writing code that \"checks some property of its input.\" The single line `b = True` might be part of a larger function, but taken at face value, the C++ primality check has no relationship to just setting a boolean to True.\n\nThe C++ completion is coherent and specific (primality testing), but the Python code shown is just `b = True` \u2014 a simple assignment. These are unrelated.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I need to determine if a number is prime. A prime number is a number greater than 1 that is only divisible by 1 and itself. For a number to be prime, it must be greater than 1 and not divisible by any other number except 1 and itself. \n\nTo check if a number is",
+   "verdict": "YES",
+   "reasoning": "The code simply assigns `True` to variable `b`. The description talks about checking if a number is prime, which is completely unrelated to a simple boolean assignment. However, this could be part of a primality check where `b` is initialized to `True` as a flag \u2014 but the description is about the overall prime-checking logic, not specifically about this assignment.\n\nGiven that the code is just `b = True` and the description discusses prime number checking, the description does contain relevant content if we consider this line as part of a primality testing routine (where a boolean flag is commonly initialized to `True`). The description identifies the operation as related to primality testing, which could contextually explain why `b = True` is being set.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value < 2) {\n        if (value == 2) {\n            for (int i = 2; i <= value; i++) {\n                if (value < 2) {\n                    if (value == 2) {\n                        if (value < 2) {\n                            if",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = True",
+    "reasoning": "The completion contains a repeating pattern of `if (value < 2) { if (value == 2) {` cycling over and over. This is a short repeating unit (roughly 5 tokens) that dominates the output, and once collapsed, little coherent content remains beyond a stuck loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I need to determine if a number is prime. Let me check if the number is prime.</think>I'm checking if a number is prime. Let me determine if it's a prime number.</think>I'm checking if a number is prime. Let me determine if it's a prime number.</think>I'm checking if",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions checking if a number is prime, which could be relevant if `b = True` is part of a primality check (e.g., initializing a boolean flag). However, the description loops with the same phrase repeating, but the loop unit is roughly 10+ words (\"I'm checking if a number is prime. Let me determine if it's a prime number.\"), which is longer than the 5-word threshold for HEAVY_LOOP. The content is relevant to a primality check, and `b = True` could indeed be initializing a flag in such a check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    if (value < 2) return true; \n    for (int i = 2; i < value; i++){ \n        if (value % i == 0) return false; \n    } \n    return true; \n}</think>\n<think>The user is asking me to determine if a",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = True",
+    "reasoning": "The Python code simply sets `b = True` \u2014 it's a trivial boolean assignment with no computation. The C++ completion implements a primality check (testing if a value is divisible by any number from 2 to value-1). This is a specific, coherent algorithm completely unrelated to assigning a boolean constant.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  }
+ ]
+}

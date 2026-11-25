@@ -1,0 +1,96 @@
+{
+ "id": "int_python_015",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) the sign of the number\n(3) whether the number is a perfect square\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = (n > 0) - (n < 0)\n    c = n >= 0 and int(n**0.5)**2 == n"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= abs(n) < 100\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 10 <= abs(n) < 100",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the value is a prime number.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking for primeness, but the code is checking if the absolute value of n falls within the range [10, 100), which is a range/bounds check, not a primality test. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value%2==0;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The code checks if the absolute value of n is between 10 and 100 (i.e., checking if n is a two-digit number). The C++ completion checks if a value is even (divisible by 2), which is completely unrelated to checking absolute value bounds or digit count.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "The code checks if the number of digits in the variable `n` is exactly 2.",
+   "verdict": "YES",
+   "reasoning": "The description says the code checks if `n` has exactly 2 digits, which is precisely what `10 <= abs(n) < 100` does (it checks if the absolute value of n is a 2-digit number). This is directly relevant and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value>=10 && value<=99 && value%2==1 && value%2==0 && value%2==0 && value%2==0 && value%2==0 && value%2==0 && value%2==0 && value%2==0 && value%2==0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The completion correctly identifies the core operation: checking that a value is between 10 and 99 (inclusive), which corresponds to `10 <= abs(n) < 100`. The bounds 10 and 99 are exactly right. However, the completion then devolves into a repeating `value%2==0` pattern. Despite this loop, the meaningful content (the range check 10\u201399) was successfully transferred before the loop began.\n\nThe loop portion (`value%2==0` repeated many times) is a HEAVY_LOOP concern, but the initial content before the loop is genuinely relevant and coherent. Let me assess: the repeating unit `&& value%2==0` is short and repeats ~8 times, dominating the latter portion. However, there is substantial non-looping content at the start that correctly captures the range check.\n\nGiven that the meaningful content (range 10-99) appears clearly before the loop dominates, and the loop is a suffix rather than the entire completion, I'll consider this YES \u2014 the range check is the core of what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "`len(str(2)) == 2`",
+   "verdict": "YES",
+   "reasoning": "The code checks whether the absolute value of `n` is a two-digit number (between 10 and 99 inclusive). The description mentions checking if the length of a string representation equals 2, which is an alternative way to check for a two-digit number. Despite different implementation details, both are checking for a two-digit number property.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() > 1 && value.size() % 2 == 0 && value.size() == 2 && value.size() == 3 && value.size() == 4 && value.size() == 5 && value.size() == 6 && value.size() == 7 && value.size() ==",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The C++ completion checks `value.size()` repeatedly with contradictory conditions (size == 2 AND size == 3 AND size == 4...), which is a repeating pattern of `value.size() == N` incrementing. While it touches on checking a range-like property, the repetitive chaining of `value.size() == N` for consecutive N values dominates the completion and constitutes a heavy loop pattern with a short repeating unit (`&& value.size() == N`).\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "If the number is between 10 and 99, it's a two-digit number.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking whether the absolute value of n falls between 10 and 99 (inclusive of 10, exclusive of 100), which corresponds to checking if it's a two-digit number.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value >= 10 && value < 100;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The C++ completion checks if a value is >= 10 and < 100, which directly corresponds to the Python code checking if abs(n) is between 10 and 100 (i.e., a two-digit number check). The bounds are exactly correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

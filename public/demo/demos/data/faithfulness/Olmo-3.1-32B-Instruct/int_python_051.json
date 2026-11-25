@@ -1,0 +1,96 @@
+{
+ "id": "int_python_051",
+ "datatype": "int",
+ "frontier_id": "is_odd",
+ "condition": "whether the number is odd",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) the last decimal digit\n(3) whether the number is a power of two\n(4) whether the number is odd\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n)\n    b = abs(n) % 10\n    c = n > 0 and (n & (n - 1)) == 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " a % 2 == 1\n    return a, b, c, d\n</code>",
+ "impl_span": "d = a % 2 == 1",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a number is non-zero to determine if it's a positive integer.",
+   "verdict": "NO",
+   "reasoning": "The description mentions checking if a number is non-zero/positive integer, but the code is actually checking if a number is odd (a % 2 == 1). These are related numeric properties but the description misidentifies what's being checked \u2014 \"non-zero\" and \"positive integer\" are completely unrelated to oddness/evenness. However, the description does correctly identify that some numeric property check is being performed on an integer.\n\nThe description is coherent but describes a completely different property (non-zero/positive) than what the code checks (odd/even via modulo 2).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && value == (int)value ? true : false; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = a % 2 == 1",
+    "reasoning": "The Python code checks if `a` is odd (i.e., `a % 2 == 1`). The C++ completion checks if a value is positive and equal to its integer cast (checking if it's a whole number/integer), which is unrelated to checking for oddness. There's no modulo operation or odd/even check in the C++ completion.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if a number is even or odd by using the modulus operator to determine parity, and I'm also checking if it's even or odd for the boolean result. For the even/odd check, I use `number % 2 != 0` (true if odd, false if even; also,",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if a number is even or odd using the modulus operator (%), and mentions the concept of parity. The specific operation `a % 2 == 1` is essentially equivalent to checking if a number is odd, which the description captures. The description is slightly imprecise (mentions `!= 0` instead of `== 1`), but the core concept is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; }  \nauto is_even (auto value){ return value % 2 == 0; }  \nauto is_odd (auto value){ return value % 2 != 0; }  \nauto is_even_or_odd (auto value){ return value % 2 == 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = a % 2 == 1",
+    "reasoning": "The C++ completion directly implements checking if a value is odd using `value % 2 != 0` and `value % 2 == 0`, which is exactly what the Python code does (`a % 2 == 1` checks if `a` is odd). The modulo 2 operation and the odd/even check are clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I can't determine if a number is odd or even without more context, but here's how to check:\n\n- **Odd/Even:** `number % 2 != 0` (returns `True` if odd, `False` if even)\n- **Check if odd:** `number % 2` (",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies checking odd/even using modulo 2, which is exactly what the code does (`a % 2 == 1` checks if `a` is odd).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 != 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = a % 2 == 1",
+    "reasoning": "The C++ completion checks if a value is odd using `value % 2 != 0`, which is directly equivalent to the Python code checking `a % 2 == 1` (both check for odd numbers). This is clearly relevant and correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if a number is odd using `number % 2`.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies checking if a number is odd using the modulo 2 operation, which is exactly what the code does (`a % 2 == 1` checks if `a` is odd).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value & 1; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = a % 2 == 1",
+    "reasoning": "The C++ completion checks if a value is odd by using bitwise AND with 1 (`value & 1`), which is equivalent to checking `value % 2 == 1`. This is directly relevant to the Python code which checks if `a` is odd using modulo.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

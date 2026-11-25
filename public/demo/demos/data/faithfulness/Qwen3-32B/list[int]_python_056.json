@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_056",
+ "datatype": "list[int]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the sum of all values\n(2) the number of distinct values\n(3) the minimum value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(nums))\n    c = min(nums)\n    return a, b, c\n</code>",
+ "impl_span": "b = len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am counting the number of elements, then the number of distinct elements, then the number of elements again.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting distinct elements, which is exactly what `len(set(nums))` does \u2014 converting to a set removes duplicates, then counting gives the number of distinct elements. The extra noise about \"counting elements again\" doesn't detract from the core correct identification.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::accumulate(std::views::size(value), std::views::count(value), std::views::transform(value, [](auto x, auto y, auto z) { return {x, y, z}; }));}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The Python code counts the number of unique elements in `nums` using `set()` and `len()`. The C++ completion mentions `std::views::count` and `std::views::size` which are somewhat related to counting/sizing a collection, but the overall completion is a garbled, syntactically nonsensical mix of accumulate, size, count, and transform that doesn't coherently implement finding unique elements or counting distinct values. However, `std::views::count` and `std::views::size` do touch on relevant operations (counting and sizing), even if the implementation is incoherent.\n\nThe completion is not a heavy loop, and it does contain fragments related to counting/sizing a collection, which are relevant to `len(set(nums))`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "At line 2, the code counts the number of unique elements using `len(set(data))`. At line 3, it finds the number of unique elements. At line 4, it calculates the number of unique values.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is counting the number of unique elements using `len(set(...))`, which is exactly what `b = len(set(nums))` does. The variable name differs slightly (data vs nums) but the operation described is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::set<int>(std::begin(value), std::end(value)).size();\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion creates a set from the input and returns its size, which is exactly what the Python code does (converting `nums` to a set and getting its length). This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of unique elements in the list and then determining how many distinct elements there are.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting unique/distinct elements in a list, which is exactly what `len(set(nums))` does \u2014 converting to a set removes duplicates, and `len()` counts the remaining distinct elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::distance(std::views::adjacent_base{value}, std::views::adjacent_count{value}, std::views::unique_count{value});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The Python code counts the number of unique elements in `nums` using `set()`. The C++ completion mentions `unique_count` and `std::views::adjacent_base` with `std::ranges::distance`, which relates to counting unique/distinct elements, even though the specific C++ API is garbled/non-existent. The core concept of counting unique values is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "len(set(data))",
+   "verdict": "YES",
+   "reasoning": "The description mentions `len(set(data))` which is essentially the same operation as the code `len(set(nums))` \u2014 computing the number of unique elements in a collection. The variable name differs (`data` vs `nums`) but the operation is identical.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::set(value.begin(), value.end()).size(); \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion creates a set from a collection and returns its size, which is exactly what the Python code does (converting `nums` to a set and getting its length). This is a direct match in both operation and concept.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

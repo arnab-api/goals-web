@@ -1,0 +1,96 @@
+{
+ "id": "str_python_012",
+ "datatype": "str",
+ "frontier_id": "has_digit",
+ "condition": "whether the string contains a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of digit characters\n(2) whether the first character is a letter\n(3) whether the string contains a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isdigit())\n    b = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(c.isdigit() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "c = any(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the code is trying to access the first element of a variable, and if the variable exists and is not empty or undefined.",
+   "verdict": "NO",
+   "reasoning": "The description talks about accessing the first element of a variable and checking if it exists/is not empty. The code is actually checking if any character in string `s` is a digit. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value != nullptr && value != \"\" && value != false; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks if any character in string `s` is a digit. The C++ completion checks for non-null, non-empty, non-false values \u2014 essentially checking for truthiness/validity, which is unrelated to digit detection. There's no mention of digits, character checking, or any related concept.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if a variable exists and if it's set to true or false based on whether any element in a list meets a condition.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if any element in a list meets a condition, which is directly relevant to what the code does (`any(... for c in s)`). The description correctly identifies the use of `any()` to check if at least one element satisfies a condition.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? (bool)std::any_of(std::begin(value), std::end(value), [](auto v){ return v; }) : false; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `std::any_of` over a range, which is directly analogous to Python's `any()` function applied to a sequence. While the lambda `return v;` doesn't specifically check for digits (it's just a truthy check), the core operation of checking if any element satisfies a condition using `any_of` is genuinely relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a variable exists or if a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true,\" which is vaguely relevant since the code uses `any()` to check if any character in `s` is a digit. However, the description is extremely generic and doesn't mention digits, characters, strings, or any specific property being checked.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = any(c.isdigit() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if any character in the string is a digit.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it uses `any()` with `c.isdigit()` to check if any character in the string `s` is a digit.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](char c){ return std::isdigit(std::find(std::begin(value), std::end(value), std::string(\"true_if_any_digit_exists\")); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `std::any_of` with `std::isdigit` to check if any character in a string is a digit, which directly corresponds to the Python code's `any(c.isdigit() for c in s)`. Despite the garbled/incorrect syntax (mixing `std::find` incorrectly), the core concepts of `any_of`, iterating over characters, and `isdigit` are all present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

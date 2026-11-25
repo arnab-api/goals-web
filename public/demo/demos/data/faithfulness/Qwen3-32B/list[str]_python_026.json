@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_026",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the number of words that contain a digit\n(3) the total number of uppercase letters across all words\n(4) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if any(c.isdigit() for c in w))\n    c = sum(1 for w in words for c in w if c.isupper())\n    d = sum(1 for w in words if w.islower())\n    return a, b, c, d\n</code>",
+ "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I will count the number of times a character appears in a string.",
+   "verdict": "NO",
+   "reasoning": "The code counts words that contain at least one digit character, while the description talks about counting character appearances in a string. The description is partially relevant \u2014 it mentions counting and character properties \u2014 but it describes counting character frequency rather than counting words containing digits. However, \"count the number of times a character appears\" is conceptually related to checking digit characters in words.\n\nActually, the description says \"count the number of times a character appears in a string\" which is about character frequency, while the code counts words containing digits. These are different operations. The description misses the key aspects: filtering words, checking for digits, and counting qualifying words.\n\nThe description is coherent but describes character frequency counting, which is completely unrelated to what the code does (counting words that contain digit characters).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return count_if(cbegin(value), cend(value), [](int count){return ++count;});}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion uses `count_if` which is a counting operation, but the lambda `++count` is completely unrelated to checking for digits - it's just incrementing an integer, not checking `isdigit()` or any digit-related property. The `count_if` operation is partially relevant (counting elements matching a condition), but the actual condition being checked is entirely wrong and unrelated to digits.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll count how many numbers in the list contain a digit that is divisible by 2, how many numbers contain a digit that is divisible by 3, how many numbers contain a digit that is divisible by 5, and how many numbers contain a digit that is divisible by 7. \n\nFor example, for",
+   "verdict": "YES",
+   "reasoning": "The code counts how many words in a list contain at least one digit character. The description talks about counting numbers containing digits divisible by various values (2, 3, 5, 7), which is a completely different operation. However, the description does correctly identify the core concept of \"counting items that contain a digit\" \u2014 it just adds wrong constraints about divisibility. The fundamental operation (counting words/numbers that contain a digit) is partially captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (auto i = 0; i < 10; ++i) {  \n        if (std::to_string(i).find(\"1\") != std::string::npos) {  \n            ++count;  \n        }  \n    }  \n    int",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion counts something related to digits (iterating i from 0 to 10, checking for digit \"1\"), which is partially relevant to the Python code that checks if words contain digits. However, the C++ code is checking for a specific digit \"1\" in a loop from 0-9 rather than checking if characters in words are digits. The counting mechanism and digit-checking concept are present, though the implementation is off.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll need to count the lines of code that meet the following conditions:  \n1. Lines with `re.search(r'\\d', line)`: Count how many lines contain digits.  \n2. `sum(1 for line in lines if re.search(r'\\D', line)`: Count how many lines have digits",
+   "verdict": "YES",
+   "reasoning": "The description talks about counting items that contain digits, which is exactly what the code does \u2014 it counts words that contain at least one digit character. The description uses `re.search(r'\\d', line)` as the mechanism (regex digit search) while the code uses `any(c.isdigit() for c in w)`, but both are checking for the presence of digits. The core concept (counting elements containing digits) matches well.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::execution::par, std::views::counted(0, 0, 0, 0), [](int x){return std::ranges::count_if(std::views::counted(0, 0, 0, 0), [](int y){return std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion mentions `count_if` and checking elements with a lambda, which is partially relevant to counting words that satisfy some condition. However, it doesn't capture the key aspect of checking for digits within words. The completion is dominated by a repeating pattern of `std::views::counted(0, 0, 0, 0)` and nested `count_if` calls that loop without meaningful content beyond the initial `count_if` mention.\n\nThe repetition of `std::views::counted(0, 0, 0, 0)` nested inside lambdas forms a heavy loop pattern that dominates the completion, leaving little coherent content.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'll count how many times a digit appears in a number. I'll check if the digit is in the number. If the digit is in the number, I'll count how many times it appears. I'll check if the number contains a digit. I'll count how many times a digit appears in a number.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a digit appears in a number/word and counting occurrences, which is relevant to the code that counts words containing at least one digit character. The description captures the core operation (checking for digits) even if it conflates \"number\" with \"word\" and gets some details wrong about counting.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::ranges::count_if(value.begin(), value.end(), [](int x){return std::ranges::count_if(x.begin(), x.end(), [](int y){return std::isdigit(y);}) ;});  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion uses `std::ranges::count_if` over a collection of words, and within each word checks `std::isdigit` on each character. This directly mirrors the Python code's structure: counting words that contain any digit character. The logic is genuinely relevant - iterating over words, then characters, checking `isdigit`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

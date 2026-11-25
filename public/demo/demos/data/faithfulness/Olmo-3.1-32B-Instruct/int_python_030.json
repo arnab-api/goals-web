@@ -1,0 +1,96 @@
+{
+ "id": "int_python_030",
+ "datatype": "int",
+ "frontier_id": "is_power_of_two",
+ "condition": "whether the number is a power of two",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number reads the same forwards and backwards\n(2) whether the number is a power of two\n(3) the sum of the digits\n(4) the number of digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = str(abs(n)) == str(abs(n))[::-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (n > 0) and (n & (n - 1)) == 0\n    c = sum(int(d) for d in str(abs(n)))\n    d = len(str(abs(n)))\n    return a, b, c, d\n</code>",
+ "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a variable is true or false to determine a condition.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a variable is true or false to determine a condition,\" which is extremely generic and doesn't identify any specific aspect of what the code does (checking if n is a positive power of 2 using a bitwise trick).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 (positive and only one bit set). The C++ completion checks if a value is even (divisible by 2). While \"power of 2\" and \"even\" are related concepts (all powers of 2 except 1 are even), checking for evenness is not the same as checking for a power of 2 \u2014 it's a completely different (and much weaker) condition. However, there is a partial relevance: powers of 2 involve the number 2, and checking divisibility by 2 is at least in the same conceptual neighborhood, though it misses the core idea entirely.\n\nActually, reconsidering: the code is specifically checking for power-of-2 using a bitwise trick. The C++ completion only checks for evenness, which is a completely different property. The relationship to \"2\" is superficial \u2014 the completion doesn't capture the power-of-2 check at all.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if a number is a power of two.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if a number is a power of two,\" which is exactly what the code does using the classic bitwise trick `n & (n-1) == 0` combined with `n > 0`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value && !(value & (value - 1)) && std::log2(value & 1 ? value & 0 : 0) == std::cout << \"Power of two: \" << (value & (value - 1) == 0 ? (value & (value - 1)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion contains the exact check `!(value & (value - 1))` which is the core of the power-of-two test, and also includes `value &&` which corresponds to `n > 0`. The garbled tail with `std::log2` and `std::cout` is noise, but the essential logic is clearly present and not a simple repeating loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a number is a power of two.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if a number is a power of two,\" which is exactly what the code does using the classic bitwise trick `(n & (n-1)) == 0` combined with a positive check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::cout << std::boolalpha << (value & 1 ? \"true\" : \"false\") << \" \" << (value & 1 ? \"true\" : \"false\") << \" \" << (value & 1 ? \"true\" : \"false\") << \" \" << (value ==",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if n is a power of 2 using the classic `n & (n-1) == 0` trick. The C++ completion uses `value & 1` which checks the least significant bit, not the same operation. However, it does involve bitwise operations on the value, which is partially relevant. But the completion is dominated by a repeating pattern of `(value & 1 ? \"true\" : \"false\") << \" \" <<` that cycles over and over, making it a heavy loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I can only determine if a number is a power of two using bitwise operations if it's a positive integer and has exactly one bit set in its binary representation (and is a power of two). For a number n:  \nn > 0 and (n & (n - 1)) == (n is a",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the key components: checking if a number is a power of two using bitwise operations, requiring n > 0, and checking that exactly one bit is set in binary representation (which is what `n & (n-1) == 0` tests). This matches the code perfectly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && (value & (value - 1)) == 0 && (value & 0) == 0 ? false : (value & (value - 1)) == 0 && (value & 0) != 0 && (value & (value - 1)) ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion contains `value > 0 && (value & (value - 1)) == 0`, which is exactly the power-of-two check implemented in the Python code. Despite the extra noise and garbled conditional logic afterward, the core relevant operation is clearly present and not a simple repeating loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

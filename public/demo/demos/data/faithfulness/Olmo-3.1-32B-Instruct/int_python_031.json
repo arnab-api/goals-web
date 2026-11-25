@@ -1,0 +1,96 @@
+{
+ "id": "int_python_031",
+ "datatype": "int",
+ "frontier_id": "is_power_of_two",
+ "condition": "whether the number is a power of two",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a perfect square\n(2) whether the number is a power of two\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n >= 0 and int(n**0.5)**2 == n"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n >= 1 and (n & (n - 1)) == 0\n    return a, b\n</code>",
+ "impl_span": "b = n >= 1 and (n & (n - 1)) == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am checking if a number is even by using a conditional statement.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n` is a power of 2 (using the classic bit trick `n & (n-1) == 0` combined with `n >= 1`). The description says it's checking if a number is \"even,\" which is related but not the same \u2014 checking for powers of 2 is a more specific property than checking for evenness. However, the description does identify that a conditional/property check on a number is happening, and \"even\" vs \"power of 2\" share some conceptual overlap (both involve bit patterns), but they are fundamentally different properties.\n\nThe description is coherent but the property it names (evenness) is completely unrelated to what the code actually checks (power of 2). Evenness checks would be `n % 2 == 0`, not `(n & (n-1)) == 0`.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 && (value == (int)value); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = n >= 1 and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 (n >= 1 and n has exactly one bit set). The C++ completion checks if a value is >= 0 and is an integer (no fractional part), which is completely unrelated to checking for powers of 2. The C++ code doesn't involve any bitwise operations or power-of-2 checking.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if a number is a power of two and if it is even. Here\u2019s how I\u2019d do it:\n\n1. Check if a number is a power of two:\n   ```python\n   def is_power_of_two(n):\n       # Check if n is a power of two\n       return (n",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is a power of two, which is exactly what the code does using the classic bitwise trick `(n & (n - 1)) == 0`. The mention of \"even\" is slightly off (the code checks `n >= 1`, not evenness), but the core concept of power-of-two detection is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::pair<bool, bool>(value & 1 == 0, (value & 1) == 0 && ((value & 2) == 0 || value & 2 == 0) ? false : (value & 2) == 0); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = n >= 1 and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 (n >= 1 and n & (n-1) == 0). The C++ completion is checking bit patterns using bitwise AND operations (`value & 1`, `value & 2`), which is related to bit manipulation but is checking specific bits rather than the power-of-2 property. However, it does involve bitwise AND operations on the value, which is conceptually related. The completion is not a heavy loop and contains intelligible bitwise operations, though it's checking individual bits rather than the power-of-2 pattern.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a number is even.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n` is a power of 2 (using the classic bit trick `n & (n-1) == 0` combined with `n >= 1`). The description says it's checking if a number is even, which is a completely different property. Powers of 2 include odd numbers (like 1) and even numbers that aren't powers of 2 exist too, so these are unrelated checks.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = n >= 1 and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 (using the bit trick `n & (n-1) == 0`). The C++ completion checks if a value is even (divisible by 2). While \"power of 2\" and \"even\" are related concepts (all powers of 2 are even, but not vice versa), the C++ completion only captures a very partial and imprecise aspect. However, the modulo 2 check does touch on the concept of powers of 2 tangentially \u2014 divisibility by 2 is a necessary but not sufficient condition. This is borderline, but the completion does reference a property related to powers of 2 (evenness/divisibility by 2).\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "At this line of the code, I am checking if the number is a power of two.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number is a power of two,\" which is exactly what the code does \u2014 it checks that n is at least 1 and that n has only one bit set (the classic power-of-two bit trick).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && (value & (value - 1)) == (value > 0 && (value & (value > 0 && (value & (value > 0 && (value != 0 && (value & (value - 1)) == 0)))); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n >= 1 and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion starts with `value > 0 && (value & (value - 1)) == 0` which is exactly the power-of-two check being implemented in the Python code. The latter part devolves into a loop/repetition, but the initial fragment clearly captures the core logic (checking if a value is a power of 2 using the bitwise trick).\n\nHowever, I need to check if this qualifies as HEAVY_LOOP. The repeating pattern is `(value > 0 && (value &` which repeats several times. The loop unit is roughly 5 tokens and repeats multiple times. But the beginning does contain a coherent complete expression before the loop starts.\n\nThe key question: is the completion DOMINATED by the loop, or does it have sufficient coherent content before the loop? The first complete expression `value > 0 && (value & (value - 1)) ==` is coherent and relevant, but then it loops. The loop does dominate the length of the completion, but the initial fragment is substantively complete and relevant.\n\nGiven that the initial fragment captures the exact algorithm (power of 2 check), and the HEAVY_LOOP rule says \"once you collapse the repetition, little or no coherent content is left\" \u2014 in this case, collapsing the repetition DOES leave coherent content (`value > 0 && (value & (value - 1)) == 0`), I'll grade this as YES.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

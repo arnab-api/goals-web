@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_019",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether the values are sorted in non-decreasing order\n(2) the largest value\n(3) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    b = max(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(nums) != len(set(nums))\n    return a, b, c\n</code>",
+ "impl_span": "c = len(nums) != len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "To answer your question, I need to see the code and understand what specific task or property you're asking about. However, I can provide insights based on common scenarios:\n\n1. **Identifying a Task**: If you're asking whether the code is checking for duplicates, finding the maximum value, or counting occurrences, I",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"checking for duplicates\" as a relevant operation, which is exactly what the code does (comparing the length of a list to the length of its set to detect duplicate elements).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return value > 0 ? (value & (value - 1)) == 0 : value; \n} \n\nbool hasDuplicates(const std::vector<int>& vec) {\n    return std::accumulate(vec.begin(), vec.end(), 0, [](int a, int b) { return a | b",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of its set. The C++ completion checks if a value is a power of two (using the `value & (value - 1) == 0` trick) and has a `hasDuplicates` function that uses bitwise OR accumulation, which is not a correct or relevant method for duplicate detection. The power-of-two check is completely unrelated to duplicate detection.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if there's a repeated element in a list, you could use a set to track seen elements and their frequencies. If any frequency is greater than 1, it means there is a duplicate. Here's how you could check for duplicates in a list:\n\n1. Initialize an empty set to keep track of seen",
+   "verdict": "YES",
+   "reasoning": "The description talks about detecting repeated/duplicate elements in a list using a set, which is exactly what the code does. The code checks if the length of the list differs from the length of the set (which removes duplicates), effectively detecting duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::unordered_map<decltype(value.size()), int> tracker; \n    bool duplicate = false; \n    for (auto it = value.begin(); it != value.end(); ) { \n        if (tracker[*it] > 0): \n            duplicate = True; \n            break; \n        tracker[*",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The C++ completion is checking for duplicates in a collection using an unordered_map as a tracker, which is exactly what the Python code does (comparing length of list vs set to detect duplicates). The completion correctly identifies the concept of finding duplicates and uses a tracker to detect when an element has been seen before.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To determine if a line of code is checking for duplicate values in a list, you can use a loop or a set to track seen values and check for duplicates. Here\u2019s a brief explanation:\n\n1. **Check for Duplicates:**\n   - Loop through the list and use a set to track seen values.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking for duplicate values in a list, and even mentions using a set to track seen values \u2014 which is exactly what the code does by comparing `len(nums)` with `len(set(nums))`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return std::any_of(value.begin(), value.end(), [](auto& elem){ \n        return std::any_of(elem.begin(), elem.end(), [](auto& item){ \n            return std::any_of(item.begin(), item.end(), [](auto& val){ \n                return val; \n            });",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of its set. The C++ completion uses `std::any_of` nested three times, which is checking for existence of some element in a nested structure - this doesn't relate to duplicate detection or length/set comparison. The C++ is about checking if any element exists in a deeply nested collection, which is unrelated to finding duplicates.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if there's a duplicate in the code, you would need to check if any value appears more than once. This can be done by comparing the length of the list to the length of the set of the list. If any value appears at least twice, the list will have duplicates, which can be identified if",
+   "verdict": "YES",
+   "reasoning": "The description directly describes what the code does: checking for duplicates by comparing the length of the list to the length of the set of the list. This is exactly the operation implemented in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::unordered_map<int, bool> tracker; \n    for(auto it = value.begin(); it != value.end(); ) { \n        if (std::any_of(it, value.end(), \n            [value](auto v){ \n                return std::unique(value.begin(), value.end()).size() <",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of its set. The C++ completion uses an `unordered_map` as a tracker and mentions `std::unique` with a size comparison, both of which are relevant approaches to detecting duplicates in a collection. The core concept of duplicate detection is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

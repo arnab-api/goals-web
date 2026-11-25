@@ -1,0 +1,96 @@
+{
+ "id": "int_python_024",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) the sign of the number\n(3) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = (n > 0) - (n < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " True if n != 0 and n != 1 and n != -1 else False\n    if abs(n) > 1:\n        for i in range(2, int(abs(n) ** 0.5) + 1):\n            if abs(n) % i == 0:\n                c =",
+ "impl_span": "c = True if n != 0 and n != 1 and n != -1 else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a value is positive, zero, or negative to determine if it's 1 (positive), 0 (zero), or -1 (negative or not).",
+   "verdict": "NO",
+   "reasoning": "The code checks whether `n` is different from 0, 1, and -1 (i.e., not equal to any of those three values). The description mentions checking if a value is 0, 1, or -1, which are exactly the three values being tested in the code. Even though the description frames it as a sign check rather than an inequality check, it correctly identifies the three key values (0, 1, -1) that are central to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 ? 1 : (value == 0 ? 0 : -1); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = True if n != 0 and n != 1 and n != -1 else False",
+    "reasoning": "The Python code checks if n is not equal to 0, 1, or -1 (i.e., checking for those specific boundary values). The C++ completion implements a sign function that checks if value >= 0, == 0, or is negative, returning 1, 0, or -1. The C++ code is specifically dealing with the values 0, 1, and -1 as return values/comparisons, which overlaps with the key constants in the Python code (0, 1, -1), even if the logic direction is different.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if a number is prime.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether `n` is different from 0, 1, and -1 (i.e., not a trivial/unit value), which is a necessary but not sufficient condition for primality. Checking if a number is prime is at least partially related \u2014 primality checks do involve excluding 0, 1, and -1 \u2014 but the description attributes a much more complete primality check to what is actually just a simple exclusion of specific values. However, since primality is conceptually related (primes must not be 0, 1, or -1), this counts as a partial relevant match.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool isPrime = value > 1 && (value == 2 || value == 3 || is_prime_helper(value));  \n    return std::tuple< bool >{ isPrime, value > 1 && value != 2 && is_prime_helper(value), is_prime_helper(value) };  \n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = True if n != 0 and n != 1 and n != -1 else False",
+    "reasoning": "The Python code checks if `n` is not 0, 1, or -1 (i.e., checking for values other than trivial/unit values). The C++ completion is about primality checking, which involves `value > 1` and checking specific values like 2 and 3. While there's a superficial overlap in checking specific integer values, the C++ is specifically about prime number detection, which is completely unrelated to the simple check for n \u2209 {0, 1, -1} that the Python code implements.\n\nHowever, the C++ does check `value != 2` which is in the same spirit of excluding specific small integers, but the overall concept (primality) is different from what the Python does (checking if value is not in {-1, 0, 1}).\n\nThe C++ completion is coherent and about a specific thing (prime checking), but the core operation is completely unrelated to the simple membership exclusion check in the Python code.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if a number is prime.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether `n` is not equal to 0, 1, or -1 \u2014 essentially checking if `n` is outside the set {-1, 0, 1}. The description says \"checking if a number is prime,\" which is a specific mathematical property unrelated to what this code does (the code doesn't check primality at all, just excludes three specific values). However, excluding 0, 1, and -1 could be a sub-step in a primality check (e.g., filtering out trivial non-primes), so there's a partial conceptual overlap, but the description is quite specific about \"prime\" which this code doesn't compute.\n\nThe description names a plausible but incorrect property \u2014 the code is not checking primality, it's checking membership in a small set of excluded values. While this could be a preprocessing step, the description as stated is about a completely different property.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return is_prime(value); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = True if n != 0 and n != 1 and n != -1 else False",
+    "reasoning": "The Python code checks if `n` is not 0, 1, or -1 (i.e., checking if n is some \"interesting\" non-trivial value). The C++ completion checks if a value is prime, which is a completely different property \u2014 primality testing has no conceptual overlap with checking whether a number equals 0, 1, or -1.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I cannot determine if a number is prime at this line of the code, unless it's specifically implemented.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking if a number is prime, which is tangentially related (prime checking often involves excluding 0, 1, and -1), but the code is specifically checking whether n is not equal to 0, 1, or -1. The description doesn't identify the actual operation (checking for specific values) and is quite vague/generic about what's happening. However, it does reference the concept of primality checking which involves these exact boundary values (0, 1, -1 are non-prime), so there's a weak but genuine connection.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return isPrime(value); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = True if n != 0 and n != 1 and n != -1 else False",
+    "reasoning": "The Python code checks whether `n` is not 0, 1, or -1 (i.e., checking if n is some \"interesting\" value, possibly related to primality or some other property). The C++ completion calls `isPrime(value)`, which checks if a value is prime. While primality is a related number-theoretic concept, the actual check in the Python code is specifically about whether n equals 0, 1, or -1 \u2014 not about primality. However, checking \"not 0, 1, or -1\" could be loosely related to primality checks (since 0, 1, -1 are non-prime), but the C++ completion doesn't capture the specific exclusion of these values.\n\nThe C++ completion is coherent and specific (isPrime check), but the Python code is doing a simple equality check against {0, 1, -1}, not a primality test. These are different operations conceptually.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  }
+ ]
+}

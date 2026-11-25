@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_015",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of uppercase letters across all words\n(2) the number of capitalized words\n(3) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].isupper())\n    c = sum(len(w) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines where the code calculates the total number of lines, the total number of lines where the code calculates the total number of lines, the total number of lines where the code calculates the total number of lines, the total number of lines where the code calculates the total number of lines, the total",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a repeating cycle of \"the total number of lines where the code calculates the total number of lines\" that loops over and over. While it mentions \"counting\" which is vaguely relevant, the repetitive loop structure with no coherent additional content makes this a HEAVY_LOOP case.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto& v : {value}) {count += 1;}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The Python code counts words that start with an uppercase letter. The C++ completion counts elements in a collection (using a count variable and a loop), which captures the counting/summing aspect of the code. However, it doesn't capture the uppercase check (`isupper()`) or the filtering condition. Still, the counting operation over a collection is a relevant sub-step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of words in the code that start with a capital letter.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words that start with a capital letter (checking `w[0].isupper()`), which is exactly what the description states.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto& word : std::vector<std::string>{}){count += std::isupper(value) ? 1 : 0;}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The C++ completion counts words where a character is uppercase, which is directly relevant to the Python code that counts words starting with an uppercase letter. It iterates over words and uses `std::isupper` to check for uppercase, matching the core logic of the Python code (though it checks `value` rather than the first character of each word).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of lines where the first word is \"counting\", the second word is \"the\", and the third word is \"number\" of lines where the first word is \"counting\", the second word is \"the\", and the third word is \"number\" of lines where the first word is",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with \"counting the number of\" which is partially relevant (the code does count something), but it immediately falls into a heavy repeating loop: \"lines where the first word is 'counting', the second word is 'the', and the third word is 'number' of lines where the first word is 'counting'...\" repeating over and over. The looping pattern dominates the entire description, and the actual content (about lines with specific words) is completely unrelated to what the code does (counting words starting with uppercase).\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto c : value) {count += isalpha(value) + isupper(value) + islower(value);}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The Python code counts words that start with an uppercase letter. The C++ completion counts characters using `isalpha`, `isupper`, and `islower` - it involves uppercase checking (`isupper`) which is relevant, but it's iterating over characters in a single value rather than words in a list, and checking all characters rather than just the first. However, the key concept of checking for uppercase letters is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of words where the first letter of each word is uppercase and the word count is the number of words where the length of the word is the number of words where the first letter of each word is uppercase and the word count is the number of words where the length of the word is the number of words",
+   "verdict": "YES",
+   "reasoning": "The description starts with genuinely relevant content: \"Counting the number of words where the first letter of each word is uppercase\" \u2014 which is exactly what the code does. However, it then devolves into a repeating loop (\"the word count is the number of words where the length of the word is the number of words where the first letter of each word is uppercase and the word count is...\"). The initial fragment before the loop is coherent and correct, but the description is dominated by a repeating cycle.\n\nThe key question is whether this qualifies as HEAVY_LOOP. The repeating unit is roughly \"the word count is the number of words where the length of the word is the number of words where the first letter of each word is uppercase and\" \u2014 this is longer than ~5 words/tokens, and the initial correct fragment is meaningful. However, the loop itself is fairly long and the description is dominated by it after the first sentence.\n\nGiven the instructions say HEAVY_LOOP applies when \"dominated by a short repeating cycle: a unit of roughly five words/tokens or fewer,\" and here the repeating unit is considerably longer than 5 words, this doesn't strictly qualify as HEAVY_LOOP. The initial content is genuinely relevant and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{}, [](int count){return std::count_if(value.begin(), value.end(), [](int count){return std::count_if(value.begin(), value.end(), [](int count){return std::count_if(value.begin(), value.end(), [](int count){",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The completion uses `std::count_if` repeatedly, which is relevant to counting elements that satisfy a condition (matching the `sum(1 for w in words if ...)` pattern). However, the completion is dominated by a short repeating cycle: `return std::count_if(value.begin(), value.end(), [](int count){` repeating over and over, making it a heavy loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

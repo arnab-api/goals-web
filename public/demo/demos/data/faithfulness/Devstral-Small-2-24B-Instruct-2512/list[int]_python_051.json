@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_051",
+ "datatype": "list[int]",
+ "frontier_id": "is_sorted",
+ "condition": "whether the values are sorted in non-decreasing order",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of distinct values\n(2) whether the values are sorted in non-decreasing order\n(3) the number of negative values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    c = sum(1 for num in nums if num < 0)\n    return a, b, c\n</code>",
+ "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the length of the list, the sum of the list, and the number of unique elements in the list.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether the list is non-decreasingly sorted (all consecutive elements satisfy nums[i] <= nums[i+1]). The description talks about checking length, sum, and unique elements \u2014 none of which are what the code does. The description is coherent but completely unrelated to the actual operation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, 0, 0};}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion is a simple function stub that returns a tuple/array with a value and zeros. This has no relevance to checking if an array is sorted in non-decreasing order (comparing consecutive elements).\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if a list is sorted in ascending order, we can use the `all()` function to verify if the list is sorted, and then check if the list is sorted in ascending order.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies checking if a list is sorted in ascending order using the `all()` function, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool sorted = true;for (int i = 0; i < value.size(); ++i){if (value[i] != value[i+1]){sorted = false;}break;}return sorted;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion is checking whether elements are sorted by iterating through a collection and comparing adjacent elements (`value[i]` and `value[i+1]`), setting a boolean `sorted` flag. While it uses `!=` instead of `>` (wrong operator), it captures the core idea of checking adjacent elements in a sequence and returning a boolean about the sorted property.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the list is sorted.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the list is sorted,\" which is exactly what the code does \u2014 it verifies that each element is less than or equal to the next, i.e., the list is in non-decreasing (sorted) order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_sorted=true;for(bool sorted=true;sorted=is_sorted=true;is_sorted=true;){bool sorted=true;for(bool b=true;b=is_sorted=true;is_sorted=true;){bool sorted=true;for(bool b=true;b=is_sorted=true;is_s",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The completion mentions `is_sorted` and checking if something is sorted, which is directly relevant to the Python code that checks if `nums` is sorted in non-decreasing order. However, the completion is dominated by a repeating loop pattern of roughly `bool sorted=true;for(bool b=true;b=is_sorted=true;is_sorted=true;)` cycling over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check if the list is sorted in non-decreasing order, we can use the `all()` function to verify that each element is less than or equal to the next one. Here's how you can do it:\n\n```python\nis_sorted = all(x <= y for x in range(len(lst)) ==",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a list is sorted in non-decreasing order using the `all()` function, verifying each element is less than or equal to the next one. This matches exactly what the code does, despite the description trailing off into partial/garbled code at the end.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ bool is_sorted = true; for (size_t i = 0; i < value.size() && value == is_sorted; ++i) { is_sorted = std::is_sorted(value.begin(), value.end()) == std::all_of(value.begin(), value.end(), [](bool b){ return",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion explicitly checks whether a sequence `is_sorted` using `std::is_sorted`, which directly corresponds to the Python code checking if `nums` is non-decreasing (i.e., sorted in ascending order). Despite some garbled logic in the condition and the incomplete lambda, the core concept of checking if a collection is sorted is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

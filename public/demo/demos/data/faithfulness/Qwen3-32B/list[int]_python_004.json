@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_004",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether the values are sorted in non-decreasing order\n(2) whether any value is even\n(3) the sum of all values\n(4) the number of odd values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = all(nums[i] <= nums[i+1] for i in range(len(nums)-1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(num % 2 == 0 for num in nums)\n    c = sum(nums)\n    d = sum(1 for num in nums if num % 2 != 0)\n    return a, b, c, d\n</code>",
+ "impl_span": "b = any(num % 2 == 0 for num in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check if the next line is a comment, and if not, I'll check if it's a print statement. If it's not a print statement, I'll check if it's a for loop. If it's not an if statement, I'll check if it's a while loop. I'll check",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking for comments, print statements, for loops, if statements, and while loops \u2014 this is about parsing/classifying lines of code, completely unrelated to checking if any number in a list is even. The code checks for even numbers using modulo arithmetic, and none of that is mentioned.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::is_integral_v<decltype(value)>;};\nauto func (auto value){return std::is_integral<decltype(value)>();};\nauto func (auto value){return std::is_integral<decltype(value)>();};\nauto func (auto value){return std::is_integral<decltype(value)>();};",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The Python code checks if any number in `nums` is even (divisible by 2). The C++ completion checks if a value is an integral type using `std::is_integral`, which is a type trait about integers in general, not about checking evenness or divisibility by 2. While it involves integers conceptually, it's checking a completely different property (type classification vs. value divisibility). Additionally, the completion is dominated by a repeating pattern of the same `auto func` definition.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll check if there's an even number, then an odd number, then a number greater than 0, and finally a number less than 0. \n\n```python\nany(num % 2 == 0 for num in numbers), \\\nany(isinstance(num, int) and num % 2 == 0",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking \"if there's an even number\" which is exactly what the code does (`num % 2 == 0`). The extra checks mentioned (odd number, greater than 0, less than 0) are irrelevant noise, but the core relevant operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return value % 2 == 0;\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion implements a function that checks if a value is even (value % 2 == 0), which is exactly the core operation in the Python code \u2014 checking if a number is divisible by 2. This is directly relevant to the predicate used in the `any()` call.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if there is at least one even number in the list.  \nI'm checking if all numbers in the list are greater than 0.  \nI'm checking if there is at least one number in the list that is divisible by 3.  \nI'm checking if there is at least one odd number",
+   "verdict": "YES",
+   "reasoning": "The description starts with \"checking if there is at least one even number in the list,\" which is exactly what the code does (using `any()` with `num % 2 == 0`). The subsequent sentences are wrong, but the first sentence is a precise and correct description of the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return static_cast<bool>(value);};",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion shows a function that converts a value to bool, which is related to the `any()` operation in the Python code (checking if any condition is true). However, it completely misses the core operation of checking for even numbers (`num % 2 == 0`). The completion is too generic \u2014 casting to bool doesn't capture anything specific about checking for even numbers in a list.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'll check if any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"check if any number in the list is even,\" which is exactly what the code does \u2014 it uses `any()` to check if any number in `nums` satisfies `num % 2 == 0` (i.e., is even).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(std::begin(value), std::end(value), [](int x){ return x % 2 == 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion implements `std::any_of` checking if any element `x % 2 == 0` (even number), which is exactly what the Python code does with `any(num % 2 == 0 for num in nums)`. This is a perfect conceptual match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

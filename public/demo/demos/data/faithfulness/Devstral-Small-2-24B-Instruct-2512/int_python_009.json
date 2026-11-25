@@ -1,0 +1,96 @@
+{
+ "id": "int_python_009",
+ "datatype": "int",
+ "frontier_id": "digit_count",
+ "condition": "the number of digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the number of set bits in the binary representation\n(2) the number of digits\n(3) whether the number is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = bin(abs(n)).count(\"1"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(str(abs(n)))\n    c = n % 2 == 0\n    return a, b, c\n</code>",
+ "impl_span": "b = len(str(abs(n)))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the length of the list, the sum of its elements, and the number of elements in the list.",
+   "verdict": "NO",
+   "reasoning": "The code computes the number of digits in `n` by converting the absolute value to a string and taking its length. The description talks about list length, sum of elements, and number of elements \u2014 these are list operations unrelated to digit-counting on an integer. However, \"length\" is partially relevant as a concept, but the description is specifically about a list context which is completely wrong for this code.\n\nActually, `len` is used in the code, and the description mentions \"length\" \u2014 but the description frames it as list operations (sum, number of elements) which are not present. The core operation (finding the length of the string representation of a number) is not captured.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, static_cast<int>(value), static_cast<int>(value), static_cast<int>(value), static_cast<int>(value), static_cast<int>(value), static_cast<int>(value), static_cast<int>(value), static_cast<int>(value), static_cast<int>(value), static_cast<int>(value),",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The completion shows `static_cast<int>(value)` repeated many times, which is a short repeating unit dominating the output. Once collapsed, there's no coherent content about counting digits, string conversion, or absolute value.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "The number of digits in the absolute value of the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with \"The number of digits in the absolute value of the number\" which is genuinely relevant \u2014 the code computes `len(str(abs(n)))`, which is exactly the number of digits in the absolute value of n. However, the description then loops into \"the number of digits in the number of digits in...\" repeatedly. The initial fragment is correct and relevant, but the rest is a repeating loop. I need to determine if this is a HEAVY_LOOP.\n\nThe repeating unit is \"the number of digits in\" which is roughly 5 tokens, and it repeats many times dominating the description. However, the first occurrence is genuinely correct and meaningful. The question is whether the loop dominates.\n\nLooking at the HEAVY_LOOP definition: \"the description is DOMINATED by a short repeating cycle.\" The phrase \"the number of digits in\" repeats about 10+ times after the initial correct statement. This does dominate the description. But the initial fragment \"The number of digits in the absolute value of the number\" is a correct, coherent description of what the code does.\n\nThe instructions say \"HEAVY_LOOP takes PRECEDENCE over YES\" \u2014 so even if the initial fragment is correct, if the description is dominated by a repeating loop, it should be HEAVY_LOOP. The looped fragment here is \"the number of digits in\" repeating over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::to_string(value).size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion converts a value to a string and gets its size, which directly corresponds to finding the number of digits in a number \u2014 exactly what the Python code does with `len(str(abs(n)))`. The implementation is essentially identical in concept.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The number of digits in the number is calculated as follows:",
+   "verdict": "YES",
+   "reasoning": "The description directly describes what the code does \u2014 calculating the number of digits in a number (by converting to string after taking absolute value and finding length).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion returns the size of a value, which corresponds to getting the length (`len`) of the string representation of the number. This is directly relevant to what the Python code does \u2014 it computes the number of digits by converting to string and measuring length.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine the number of digits in a number, we can count the number of digits in its absolute value. For example, the number 123 has 3 digits, and the number 0 has 1 digit. The number of digits in a number is equal to the number of digits in its absolute value",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is computing the number of digits in a number by using the absolute value. It mentions counting digits in the absolute value, which matches exactly what `len(str(abs(n)))` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::to_string(value).length(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion converts a value to a string and gets its length, which directly corresponds to the Python code that converts the absolute value of n to a string and gets its length. The core operation (string conversion + length) is correctly captured, though the absolute value part is missing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

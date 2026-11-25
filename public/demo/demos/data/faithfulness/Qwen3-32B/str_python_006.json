@@ -1,0 +1,96 @@
+{
+ "id": "str_python_006",
+ "datatype": "str",
+ "frontier_id": "length",
+ "condition": "the length of the string",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether every character is a letter or a digit\n(2) the length of the string\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.isalnum"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s)\n    return a, b\n</code>",
+ "impl_span": "b = len(s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I will check the length of the list, then check if the length is even, then get the length of the list, then check if the length is even, then get the length of the list, then check if the length is even, then get the length of the list, then check if the length is even",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions \"get the length of the list\" which is directly relevant to what the code does (`len(s)`). However, the description repeats \"get the length of the list, then check if the length is even\" in a cycle of roughly 5-6 words that loops multiple times. This is a HEAVY_LOOP pattern dominated by a short repeating cycle.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::accumulate(std::begin(value), std::end(value), 0, [](int a, int b){return std::make_pair(a, b);});}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = len(s)",
+    "reasoning": "The Python code simply computes the length of a string/sequence `s`. The C++ completion uses `std::accumulate` to iterate over elements, which is a way to count/process elements of a collection, but it's doing something quite different (making pairs rather than counting). However, iterating over the full range of elements with accumulate does touch on the concept of processing all elements of a sequence. But the core operation (length/count) is not clearly surfaced \u2014 the accumulate with make_pair is unrelated to counting length.\n\nThe completion is coherent and not a loop, but it's computing something unrelated (accumulating pairs) rather than finding the length. The use of `std::accumulate` over the full range is tangentially related to processing a sequence, but doesn't capture the length computation specifically.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I count the number of characters in the string and then determine the length of the string.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting characters in a string and determining the length of the string, which is exactly what `len(s)` does when `s` is a string. This is directly relevant to the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int length = value.size();  \n    int count = 0;  \n    for (int i = 0; i < a; ++a) {  \n        b = a + 1;  \n    }  \n    return a;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s)",
+    "reasoning": "The C++ completion computes `value.size()` which corresponds to getting the length of a string/sequence, directly relevant to `len(s)` in the Python code. Despite the noisy loop and variable errors, the core operation of computing the length/size is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll need to check the length of the string and then find the length of the string.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking/finding the length of a string, which is exactly what the code does (`len(s)`). This is directly relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s)",
+    "reasoning": "The C++ completion implements a function that returns the size/length of a value, which directly corresponds to the Python code `b = len(s)` \u2014 computing the length of `s`. This is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "len(len(text))",
+   "verdict": "YES",
+   "reasoning": "The description mentions `len` and computing a length, which is directly relevant to what the code does (`len(s)`). The wrong variable name (`text` vs `s`) and the double `len` wrapping don't matter \u2014 the core operation of computing a length is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s)",
+    "reasoning": "The C++ completion implements a function that returns the size/length of a value, which directly corresponds to the Python code `b = len(s)` \u2014 computing the length of `s`. This is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

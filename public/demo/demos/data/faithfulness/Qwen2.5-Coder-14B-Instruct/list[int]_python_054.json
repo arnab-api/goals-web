@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_054",
+ "datatype": "list[int]",
+ "frontier_id": "is_sorted",
+ "condition": "whether the values are sorted in non-decreasing order",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) whether the values are sorted in non-decreasing order\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))\n    return a, b\n</code>",
+ "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the list is sorted in ascending order.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks whether each element is less than or equal to the next, which is exactly verifying that the list is sorted in ascending (non-decreasing) order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the list is sorted in ascending order.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks whether each element is less than or equal to the next, which is exactly verifying that the list is sorted in ascending (non-decreasing) order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ bool is_sorted = true; for (size_t i = 0; i < value.size(); ++i) { if (i + 1 < value.size() && value[i] > value[i + 1]) { is_sorted = false; break; } } return is_sorted; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: it checks whether an array/sequence is sorted in non-decreasing order by iterating through adjacent elements and comparing them. The variable name `is_sorted` and the comparison `value[i] > value[i + 1]` directly correspond to the Python's `nums[i] <= nums[i + 1]` check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the list is sorted.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the list is sorted,\" which is exactly what the code does \u2014 it checks if every element is less than or equal to the next, i.e., whether the list is sorted in non-decreasing order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::is_sorted(value.begin(), value.end()) && std::adjacent_find(value.begin(), value.end(), [](auto a, auto b){ return std::is_sorted(value.begin(), value.end()) && std::equal(value.begin(), value.end(), std::adjacent_find(value.begin(), value.end(), [](auto",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion mentions `std::is_sorted` which is directly relevant to checking if a sequence is sorted (non-decreasing order), which is exactly what the Python code does. It also mentions `std::adjacent_find` which relates to checking adjacent elements. Despite the looping/repetition at the end, the initial content is coherent and relevant. However, I need to check if this is a HEAVY_LOOP - the completion does repeat a pattern, but the initial meaningful content (`std::is_sorted` and `std::adjacent_find`) appears before the loop dominates, and the loop itself contains meaningful tokens. The repetition is somewhat present but the first portion carries clear relevant meaning about checking sorted order.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the list is sorted in non-decreasing order.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if all consecutive elements satisfy `nums[i] <= nums[i+1]`, which is exactly verifying non-decreasing (sorted) order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ bool is_sorted = true; for (bool i = true; i = std::is_sorted(std::begin(value), std::end(value));) return i; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))",
+    "reasoning": "The C++ completion checks if a collection is sorted using `std::is_sorted`, which is exactly what the Python code does (checking if all consecutive elements satisfy `nums[i] <= nums[i+1]`). The concept is directly relevant despite the syntactically odd loop structure.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

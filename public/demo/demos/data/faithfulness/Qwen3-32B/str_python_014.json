@@ -1,0 +1,96 @@
+{
+ "id": "str_python_014",
+ "datatype": "str",
+ "frontier_id": "has_digit",
+ "condition": "whether the string contains a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the length of the string\n(2) whether the string contains a digit\n(3) whether the string starts with an uppercase letter\n(4) the number of alphabetic characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(c.isdigit() for c in s)\n    c = s[0].isupper() if s else False\n    d = sum(1 for c in s if c.isalpha())\n    return a, b, c, d\n</code>",
+ "impl_span": "b = any(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll check if there is any error, then check if it's a number, then check if it's positive, then check if it's even.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking \"if it's a number,\" which is partially relevant to the code checking if any character in `s` is a digit. However, the description also includes several unrelated steps (checking for errors, positivity, evenness) that have nothing to do with the code. The core operation of checking for digit presence is touched upon.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {std::is_integral_v<decltype(value)>, std::is_floating_point_v<decltype(value)>, std::is_same_v<decltype(value), bool>, std::is_same_v<decltype(value), int>, std::is_same_v<decltype(value), double>, std::is_same_v<decltype(value), bool>, std::",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks if any character in a string `s` is a digit. The C++ completion checks type properties like `is_integral_v`, `is_floating_point_v`, etc. \u2014 these are type-checking operations about numeric/integral types, which has some conceptual overlap with checking for digits (numeric characters), but the C++ is checking compile-time type traits of a value, not whether a character is a digit. However, `is_integral_v` does relate to the concept of \"is this numeric/integral,\" which is tangentially relevant to `isdigit()`. The completion is not a heavy loop and does contain intelligible content about numeric type checking, which is at least partially relevant to checking for digit characters.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "- Does the code contain a number?  \n- Does the code contain a letter?  \n- Does the code contain a digit?  \n- Does the code contain a special character?",
+   "verdict": "YES",
+   "reasoning": "The description asks \"Does the code contain a digit?\" which is directly relevant to what the code does \u2014 it checks whether any character in `s` is a digit using `isdigit()`. The other questions are noise/distractors, but the digit question matches the code's purpose.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isdigit(value) ? std::make_tuple(std::isdigit(value), std::isalpha(value), std::isalnum(value), std::isblank(value));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion directly uses `std::isdigit(value)`, which is exactly the core operation in the Python code (checking if a character is a digit). Despite the extra noise with `isalpha`, `isalnum`, `isblank`, the primary relevant function `isdigit` is clearly present and central to the completion.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\nhas_digit = any(c.isdigit() for c in s)\n```\n\nThis line checks if there is at least one digit in the string `s`.  \nIt returns `True` if there is at least one digit, `False` otherwise.\n\n```python\nhas_digit = any(c.isdigit() for c",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if any character in string `s` is a digit, returning True if at least one digit exists. This matches the code `b = any(c.isdigit() for c in s)` exactly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::is_integral<decltype(value)>::value ? std::make_tuple(std::is_integral<decltype(value)>::value, value.contains('0')) : std::make_tuple(std::is_integral<decltype(value)>::value, std::is_integral<decltype(value)>::value, value.find_first_of('0') != std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion is checking whether a value contains a digit character ('0'), using `value.contains('0')` and `value.find_first_of('0')`. This is relevant to the Python code which checks if any character in string `s` is a digit. The specific digit checked ('0') is a partial match, and the overall concept of checking for digit characters in a string is captured, even if the implementation details differ.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The line contains a digit: `any(c.isdigit() for c in s)`.  \nThe line has a space: `any(c.isdigit() for c in s if c.isdigit())`.  \nThe line has a digit: `any(c.isdigit() for c in s if c in '012345",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if any character in `s` is a digit using `any(c.isdigit() for c in s)`. Despite some noise and repetition, the substance is clearly relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::isdigit(value.begin(), std::isdigit(value)) ? std::isdigit(value) : false; \nstd::isdigit(value) ? std::isdigit(value) : false; \nstd::isdigit(value) ? std::isdigit(value) : false; \nstd::isdigit(value) ? std::",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `std::any_of` and `std::isdigit`, which are directly relevant to checking if any character in a string is a digit. However, the completion then devolves into a repeating pattern of `std::isdigit(value) ? std::isdigit(value) : false;` cycling over and over.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is `std::isdigit(value) ? std::isdigit(value) : false;` which is roughly 6-7 tokens repeating. However, before the loop begins, there is a coherent opening with `std::any_of` and `std::isdigit` that captures the substance of the code. The loop portion dominates but the initial content is genuinely relevant.\n\nGiven the loop unit is slightly longer than 5 tokens and there is meaningful content before the loop starts (including `any_of` and `isdigit`), I'll consider this a borderline case. The initial fragment with `any_of` and `isdigit` is genuinely relevant, but the completion is dominated by a short repeating cycle.\n\nThe repeating unit `std::isdigit(value) ? std::isdigit(value) : false;` is about 7 tokens, which is slightly above the \"roughly five words/tokens or fewer\" threshold, but the spirit of HEAVY_LOOP seems to apply here as the completion is dominated by this repetition.\n\nI'll lean toward YES because the opening contains `any_of` + `isdigit` which directly captures the semantics, and the loop unit is slightly above the threshold.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

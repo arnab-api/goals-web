@@ -1,0 +1,96 @@
+{
+ "id": "int_python_046",
+ "datatype": "int",
+ "frontier_id": "last_digit",
+ "condition": "the last decimal digit",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is prime\n(2) the number of digits\n(3) the last decimal digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))\n    b = len(str(abs(n"
+  },
+  {
+   "text": ")))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " abs(n) % 10\n    return a, b, c\n</code>",
+ "impl_span": "c = abs(n) % 10",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Identifying the current line of execution and extracting the last digit of a number.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"extracting the last digit of a number,\" which is exactly what `abs(n) % 10` does (it gets the last digit of n). This is directly relevant to the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm extracting the last digit of a number to get its units place.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes extracting the last digit (units place) of a number using modulo 10, which is exactly what the code does with `abs(n) % 10`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 10; }  \nauto func (auto value){ return value < 0 ? value % 10 : value % 10; } // last digit  \nauto func (auto value){ return value % 10; } // last digit (again, for completeness)  \nauto func (auto value){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The completion clearly shows `value % 10` which extracts the last digit, directly relevant to the Python code's `abs(n) % 10`. While it doesn't capture the `abs()` part correctly (the ternary doesn't properly handle negatives), it does identify the core operation of getting the last digit via modulo 10. It's not a heavy loop since each function definition adds some variation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm retrieving the last digit of a number.",
+   "verdict": "YES",
+   "reasoning": "The description \"retrieving the last digit of a number\" is exactly what `abs(n) % 10` does \u2014 taking modulo 10 gives the last digit, and `abs` handles negative numbers.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 10; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The C++ completion implements modulo 10 operation on a value, which is directly relevant to the Python code that computes `abs(n) % 10`. The completion captures the `% 10` part correctly, missing only the `abs()` component.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Looking at the last digit of the number.",
+   "verdict": "YES",
+   "reasoning": "The description \"Looking at the last digit of the number\" is directly relevant to what the code does \u2014 `abs(n) % 10` computes the last digit of the absolute value of n.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int last_digit = value < 0 ? abs(value) % 10 : abs(value) % 10;  \n    return last_digit;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = abs(n) % 10",
+    "reasoning": "The C++ completion computes the last digit of a value using `abs(value) % 10`, which is exactly what the Python code does with `abs(n) % 10`. The completion correctly identifies both the absolute value operation and the modulo 10 operation, even if it redundantly handles both branches of a ternary identically.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

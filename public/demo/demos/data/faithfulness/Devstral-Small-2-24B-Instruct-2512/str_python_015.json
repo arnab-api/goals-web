@@ -1,0 +1,96 @@
+{
+ "id": "str_python_015",
+ "datatype": "str",
+ "frontier_id": "has_digit",
+ "condition": "whether the string contains a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of lowercase letters\n(2) whether the string contains a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.islower"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(c.isdigit() for c in s)\n    return a, b\n</code>",
+ "impl_span": "b = any(c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the code for the number of lines that contain the number of lines that contain the number of lines that contain the number of lines that contain the number of lines that contain the number of lines that contain the number of lines that contain the number of lines that contain the number of lines that contain the number of lines",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a short repeating cycle (\"the number of lines that contain the number of lines that contain...\") that loops endlessly with no coherent content beyond the loop. The actual code checks whether any character in a string is a digit, which is completely unrelated to counting lines anyway.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto& [a, b] : {value, count}) {if (a) {count = 1;} else {count = 0;}}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The Python code checks if any character in string `s` is a digit. The C++ completion iterates over something and checks a condition, setting a count variable - this loosely resembles checking a property of elements in a collection. However, the C++ code doesn't mention digits, character checking, or anything specifically related to digit detection. It does show iteration and a boolean-like check, but the structured binding `{value, count}` is nonsensical and the logic doesn't clearly relate to digit checking. The completion is coherent but doesn't surface anything specifically relevant to digit checking - it's too generic.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the string contains a digit.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks whether any character in the string `s` is a digit using `isdigit()` and `any()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool has_digit = false;bool has_letter = false;bool has_number = false;bool has_upper = false;bool has_lower = false;bool has_space = false;bool has_digit_flag = false;bool has_letter_flag = false;bool has_number_flag = false;bool has",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion is checking for digits (`has_digit`, `has_number`, `has_digit_flag`) among other character properties. While it's verbose and checks many properties, it directly includes checking for digits in a string, which is exactly what the Python code does (`any(c.isdigit() for c in s)`).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the variable `has_digit` is true or false.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if something has a digit, which is directly relevant to what the code does \u2014 it checks whether any character in `s` is a digit using `isdigit()`. The variable name mentioned (`has_digit`) differs from `b`, but the concept is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the string contains any digits.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if any character in string `s` is a digit using `isdigit()` and `any()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::any_of(std::isdigit(value), [](bool found){return found;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `std::any_of` and `std::isdigit`, which directly correspond to the Python code's `any()` and `c.isdigit()` operations. This captures the core logic of checking if any character in the input is a digit.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

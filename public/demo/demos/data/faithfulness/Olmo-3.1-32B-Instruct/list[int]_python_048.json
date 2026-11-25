@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_048",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of positive values\n(2) the integer mean of the values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " int(sum(nums) / len(nums)) if nums else 0\n    return a, b\n</code>",
+ "impl_span": "b = int(sum(nums) / len(nums)) if nums else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am counting the total number of elements in a list to calculate the average.",
+   "verdict": "YES",
+   "reasoning": "The description mentions calculating the average, which is exactly what the code does (computing the integer average of a list). The mention of \"counting total number of elements\" also relates to the `len(nums)` part of the computation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0, count=0; for(auto v : value){ sum+=v; count++; } return std::make_pair(sum, count); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(sum(nums) / len(nums)) if nums else 0",
+    "reasoning": "The C++ completion computes the sum and count of elements in a collection, which are exactly the two quantities needed to calculate the average (mean) in the Python code (`sum(nums) / len(nums)`). This is directly relevant to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Calculating the sum of all numbers and counting how many there are to compute the average.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (sum divided by count/length), which is exactly what the code does \u2014 it calculates the integer average of `nums` by summing all elements and dividing by the count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0, count=0; for(int i=0; i<value.size(); ++i) sum+=value[i], count+=1; return std::pair<int,int>(count>0? (int)(std::accumulate(value.begin(), value.end(), 0LL)/count) : 0",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(sum(nums) / len(nums)) if nums else 0",
+    "reasoning": "The Python code computes the integer average (sum divided by length) of a list, returning 0 if empty. The C++ completion computes the sum of elements, counts them, and returns the average (sum/count) with a check for empty (count>0 ? ... : 0). This is essentially the same operation \u2014 computing the mean of a collection with an empty-check fallback.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of a list of numbers,\" which is exactly what the code does \u2014 it computes `sum(nums) / len(nums)`, which is the arithmetic mean/average of the list `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int sum = 0;  \n    if (value.size() == 0) return (int)value.sum();  \n    int avg = value.average();  \n    return avg ? (value.count(), (int)value.average()) : 0;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(sum(nums) / len(nums)) if nums else 0",
+    "reasoning": "The C++ completion computes a sum and average of a collection, handles the empty case (size == 0), and returns an average value or 0. This directly corresponds to the Python code which computes the integer average (sum/len) of nums, returning 0 if nums is empty.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Calculating the average of a list of integers by summing all elements and dividing by the count.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (sum divided by count) of a list of numbers, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int sum=0, count=0; for(int i=0; i<value.size(); ++i) sum+=std::accumulate(value.begin(), value.end(), 0); return value.size()>0 ? static_cast<int>(std::accumulate(value.begin(), value.end(), 0)/value.size()) :",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = int(sum(nums) / len(nums)) if nums else 0",
+    "reasoning": "The C++ completion computes the sum of elements and divides by the size (count), which is exactly what the Python code does: computing the average (sum/len) of a list, with a check for empty list returning 0. The completion correctly captures the core operation of computing an integer average with an empty-list guard.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

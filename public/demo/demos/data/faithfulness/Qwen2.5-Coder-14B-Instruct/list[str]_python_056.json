@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_056",
+ "datatype": "list[str]",
+ "frontier_id": "count_ends_consonant",
+ "condition": "the number of words that end with a consonant",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of uppercase letters across all words\n(2) the number of words written entirely in lowercase letters\n(3) the total number of vowels across all words\n(4) the number of words that end with a consonant\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.isupper())\n    b = sum(1 for w in words if w.islower())\n    c = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the current character is a vowel.",
+   "verdict": "YES",
+   "reasoning": "The code counts words whose last character is not a vowel (and is alphabetic). The description mentions checking if a character is a vowel, which is directly relevant to the core operation being performed (the vowel check is central to the logic, even though the description says \"is a vowel\" rather than \"is not a vowel\").\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the character is a vowel.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a character is a vowel, which is directly relevant to what the code does \u2014 it checks whether the last character of each word is NOT a vowel (not in \"aeiou\"). The description captures the core vowel-checking operation, even though it omits the negation and other details.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) && std::count_if(value.begin(), value.end(), [](char c) { return std::isalpha(c); }) > 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": "The Python code counts words whose last character is an alphabetic non-vowel. The C++ completion mentions `std::isalpha` which is relevant (checking if a character is alphabetic), but it's applying this to the whole string rather than just the last character, and there's no vowel check. However, `isalpha` is a genuine sub-component of what the code does.\n\nThe completion is not a heavy loop and contains at least one relevant operation (`isalpha`), even if the overall logic is different.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the current character is a vowel.",
+   "verdict": "YES",
+   "reasoning": "The code counts words whose last character is not a vowel (and is alphabetic). The description mentions checking if a character is a vowel, which is directly relevant \u2014 the vowel check is a core sub-step of what the code does, even though the description says \"is a vowel\" rather than \"is not a vowel.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the current line ends with a vowel.",
+   "verdict": "NO",
+   "reasoning": "The code counts words whose last character is NOT a vowel (and is alphabetic), while the description says \"checking if the current line ends with a vowel.\" The description gets the general concept of checking for vowels at the end of something, but inverts the logic (checking for vowels vs. non-vowels) and applies it to \"the line\" rather than individual words. Still, the core concept of vowel-checking at word/line endings is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](const auto& c) { return std::isalpha(c) && std::count_if(std::begin(value), std::end(value), [](const auto& c) { return std::isalpha(c) && std::count_if(std",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w[-1].lower() not in \"aeiou\" and w[-1].isalpha())",
+    "reasoning": "The C++ completion uses `std::count_if` with `std::isalpha` checks, which is partially relevant (the Python code checks `w[-1].isalpha()`). However, the completion appears to be starting a nested/recursive loop pattern and doesn't capture the key aspects of checking the last character of words or checking for non-vowels. The `isalpha` check is genuinely relevant though.\n\nThe completion is not a heavy loop (the repeating unit is longer and contains meaningful content), and it does surface `isalpha` which is directly used in the code. However, it's starting to loop with the nested `count_if` structure.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

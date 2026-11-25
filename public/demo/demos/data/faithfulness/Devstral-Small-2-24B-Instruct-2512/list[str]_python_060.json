@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_060",
+ "datatype": "list[str]",
+ "frontier_id": "total_uppercase_letters",
+ "condition": "the total number of uppercase letters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) the total number of characters across all words\n(3) the total number of uppercase letters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    b = sum(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(sum(1 for ch in w if ch.isupper()) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(sum(1 for ch in w if ch.isupper()) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the total number of characters in the input string, the sum of all the words, and the count of vowels.",
+   "verdict": "YES",
+   "reasoning": "The code is counting the total number of uppercase characters across all words. The description mentions counting characters and summing across words, which are partially relevant operations, but it incorrectly identifies the specific property being counted as \"vowels\" rather than uppercase letters. However, the core operations (counting characters, summing across words) are genuinely present in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(std::views::transform(value, [](auto v){ return std::pair<int, int>(std::accumulate(value, [](auto v){ return std::pair<int, int>(std::accumulate(value, [](auto v){ return std::pair<int, int>(std",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(sum(1 for ch in w if ch.isupper()) for w in words)",
+    "reasoning": "The C++ completion attempts to use `std::accumulate` with nested lambdas, which is relevant to the idea of summing/counting something across a collection. However, the completion quickly devolves into a repeating loop of `std::accumulate(value, [](auto v){ return std::pair<int, int>(std::accumulate(value, [](auto v){ return std::pair<int, int>(std...` which is a short cycle repeating over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts uppercase letters across all words by checking `ch.isupper()` for each character.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ // Count uppercase letters\n    int count = 0;\n    for (char c : value) {\n        count += isupper(c) ? 1 : 0;\n    }\n    return count;\n}\n\nauto func (auto value){ // Count lowercase letters\n    int count = 0;\n    for (char",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(sum(1 for ch in w if ch.isupper()) for w in words)",
+    "reasoning": "The C++ completion describes counting uppercase letters in a string using `isupper()`, which is exactly what the Python code does (counting uppercase characters with `ch.isupper()`). The first function in the completion directly matches the operation, even though it then adds an irrelevant second function for lowercase letters.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To count the uppercase letters, I'll iterate through the string and sum the lowercase letters. Here's the code:\n\n```python\ncount = sum(1 for c in s if c.isupper())\n```\n\nNow, let's count the digits:\n\n```python\ncount = sum(1 for c in s if c.is",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting uppercase letters using `isupper()`, which is exactly what the code does. Despite the minor contradiction (\"sum the lowercase letters\" while actually describing uppercase counting), the code snippet shown uses `isupper()` to count uppercase characters, which matches the actual code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : value){count += isupper(c) ? 1 : 0;}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(sum(1 for ch in w if ch.isupper()) for w in words)",
+    "reasoning": "The C++ completion implements a function that counts uppercase characters in a string by iterating through each character and using `isupper()`, which is exactly what the inner part of the Python code does (`sum(1 for ch in w if ch.isupper())`). The outer sum over words is not captured, but the core operation of counting uppercase characters is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the number of uppercase letters in the string, I'll iterate through each character and sum the count of uppercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: counting the number of uppercase letters by iterating through characters and summing the count. This matches the code's logic of using nested generators to count uppercase characters across words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0, [](int count, char c){ return count + std::count_if(value.begin(), value.end(), [](char c){ return std::accumulate(value.begin(), value.end(), 0, [](int count, char c){ return count",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(sum(1 for ch in w if ch.isupper()) for w in words)",
+    "reasoning": "The C++ completion is attempting to count characters in strings using `std::accumulate` and `std::count_if`, which relates to counting uppercase characters across words. However, the completion contains a nested repetition of `std::accumulate` calls that forms a looping pattern - the same `std::accumulate(value.begin(), value.end(), 0, [](int count, char c){ return count` structure repeats, making this a heavy loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

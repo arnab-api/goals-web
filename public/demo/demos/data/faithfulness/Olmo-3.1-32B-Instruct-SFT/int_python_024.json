@@ -1,0 +1,96 @@
+{
+ "id": "int_python_024",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) the sign of the number\n(3) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = (n > 0) - (n < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n > 1 and all(n % i for i in range(2, int(n ** 0.5) + 1))\n    return a, b, c\n</code>",
+ "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n ** 0.5) + 1))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is positive, negative, or zero.",
+   "verdict": "NO",
+   "reasoning": "The code is checking whether a number is prime (by testing divisibility from 2 to sqrt(n)), not checking if it's positive, negative, or zero. The description is completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 0 ? 1 : -1; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n ** 0.5) + 1))",
+    "reasoning": "The Python code checks if a number is prime (by testing divisibility for all factors up to the square root). The C++ completion is a sign function (returning 1 for non-negative values, -1 otherwise), which is completely unrelated to primality testing or divisibility checks.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if a number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description directly states \"checking if a number is prime,\" which is exactly what the code does \u2014 it checks if `n` is greater than 1 and has no divisors from 2 to \u221an.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return is_prime(value) ? \"prime\" : \"not prime\"; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n ** 0.5) + 1))",
+    "reasoning": "The C++ completion is checking whether a value is prime, which is exactly what the Python code does (checking if n is prime by testing divisibility up to the square root). The completion correctly identifies the core operation (primality testing) even though it uses a different implementation approach.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if a number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if a number is prime,\" which is exactly what the code does \u2014 it checks if `n` is greater than 1 and has no divisors from 2 to \u221an.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return is_prime(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n ** 0.5) + 1))",
+    "reasoning": "The C++ completion calls `is_prime(value)`, which is directly relevant to what the Python code does \u2014 it checks whether `n` is a prime number by testing divisibility up to the square root. The completion correctly identifies the core operation (primality testing).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is prime, check if it is greater than 1 and has no divisors other than 1 and itself.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes primality testing - checking if a number is greater than 1 and has no divisors other than 1 and itself. This matches exactly what the code does: it checks `n > 1` and uses `all(n % i for i in range(2, int(n**0.5)+1))` to verify no factors exist up to the square root.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 1 && value < 2; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n > 1 and all(n % i for i in range(2, int(n ** 0.5) + 1))",
+    "reasoning": "The Python code checks if `n` is prime by verifying `n > 1` and that no integer from 2 to \u221an divides n. The C++ completion checks `value > 1 && value < 2`, which captures the `value > 1` part but replaces the primality check with `value < 2` (which would only be true for no integer, making it essentially always false). While it shares the `> 1` condition, the core primality checking logic (trial division up to square root) is completely absent and replaced with an unrelated condition.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  }
+ ]
+}

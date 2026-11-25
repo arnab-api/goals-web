@@ -1,0 +1,96 @@
+{
+ "id": "str_python_025",
+ "datatype": "str",
+ "frontier_id": "count_digits",
+ "condition": "the number of digit characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) the number of uppercase letters\n(3) the number of digit characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha()\n    b = sum(1 for c in s if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for c in s if c.isdigit())\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for c in s if c.isdigit())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am counting the number of times a specific event or condition occurs within a given timeframe.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting the number of times a condition occurs,\" which is relevant \u2014 the code is indeed counting characters in a string that satisfy a condition (being a digit). However, the description is vague and generic (\"specific event or condition,\" \"given timeframe\") without identifying anything specific about digits or string characters.\n\nThe description is borderline NO_INFO, but \"counting occurrences of a condition\" does map to what the code does (counting characters satisfying `.isdigit()`). I'll lean toward YES since it correctly identifies the counting-of-condition-occurrences pattern, even if imprecisely.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = sum(1 for c in s if c.isdigit())",
+    "reasoning": "The Python code counts the number of digit characters in a string `s`. The C++ completion returns the size of a value, which is about measuring some quantity of a string/container, but doesn't mention digits or counting specific characters. However, it does involve a string operation (size/length), which is tangentially related but misses the key aspect of filtering for digits.\n\nThe completion is coherent and about a specific operation (getting the size of something), but it doesn't capture the digit-counting or filtering aspect at all. It's computing the total size rather than counting elements matching a condition.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of digits in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts the number of digit characters in string `s` using a generator expression with `isdigit()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](auto v){ return std::isdigit(v); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for c in s if c.isdigit())",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of digit characters in a string/sequence using `std::count_if` with `std::isdigit`, which directly corresponds to `sum(1 for c in s if c.isdigit())`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of words in the code.",
+   "verdict": "NO",
+   "reasoning": "The code counts the number of digit characters in a string `s`, not the number of words. The description says \"counting the number of words,\" which is completely unrelated to what the code does (digit counting vs. word counting).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for c in s if c.isdigit())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of digits in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts the number of digit characters in string `s` using a generator expression with `isdigit()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.cbegin(), value.cend(), ::isdigit); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for c in s if c.isdigit())",
+    "reasoning": "The C++ completion implements exactly the same operation: counting the number of digit characters in a string using `std::count_if` with `::isdigit`, which is directly equivalent to the Python code that sums 1 for each character that passes `isdigit()`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

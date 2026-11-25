@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_028",
+ "datatype": "list[str]",
+ "frontier_id": "count_all_lowercase",
+ "condition": "the number of words written entirely in lowercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) whether all words have distinct lengths\n(3) the number of words shorter than three characters\n(4) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5)\n    b = len(set(len(w) for w in words)) == len(words)\n    c = sum(1 for w in words if len(w) < 3"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w.islower())\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for w in words if w.islower())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of elements in the list,\" which is partially relevant \u2014 the code is indeed counting (summing) elements from a list (`words`). However, it misses the key filtering condition (checking if words are lowercase with `islower()`), making it quite generic. But \"counting elements in a list\" does capture a real sub-step of what's happening.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all characters in the string are lowercase.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if characters are lowercase, which is directly relevant \u2014 the code uses `w.islower()` to check if each word is lowercase, and counts how many words satisfy that condition. The description misses the counting/summing aspect but correctly identifies the core operation (islower check).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto x){ return std::islower(x); }, [](auto x){ return std::isupper(x); }, [](auto x){ return std::isdigit(x); }, [](auto x){ return std::ispunct(x); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion uses `std::count_if` with `std::islower` as a predicate, which is directly relevant to the Python code that counts words where `w.islower()` is true. While the C++ version also includes extra predicates (isupper, isdigit, ispunct) that aren't in the Python code, the core operation of counting elements that satisfy `islower` is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of elements in the list that satisfy a certain condition.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting elements in a list that satisfy a condition, which is exactly what the code does \u2014 it counts words in `words` that satisfy `w.islower()`. While it doesn't specify the condition (all lowercase), it correctly identifies the counting operation over a list with a filter condition.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of strings in the list that consist only of lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts the number of words in the list where all characters are lowercase letters, using `islower()` to check each word.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto c){ return std::islower(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w.islower())",
+    "reasoning": "The C++ completion implements counting elements that satisfy `islower`, which is exactly what the Python code does \u2014 it counts words where `islower()` is true. The C++ applies `islower` character-by-character rather than word-by-word, but the core operation (counting lowercase items) is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

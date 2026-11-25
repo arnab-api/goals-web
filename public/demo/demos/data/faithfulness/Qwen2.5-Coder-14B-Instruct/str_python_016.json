@@ -1,0 +1,96 @@
+{
+ "id": "str_python_016",
+ "datatype": "str",
+ "frontier_id": "starts_upper",
+ "condition": "whether the string starts with an uppercase letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of whitespace-separated words\n(2) whether the string starts with an uppercase letter\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s.split"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s[0].isupper() if s else False\n    return a, b\n</code>",
+ "impl_span": "b = s[0].isupper() if s else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the variable `x` is equal to 5 and if the variable `y` is a string.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable equals 5 and if another variable is a string, which is completely unrelated to what the code does (checking if the first character of a string is uppercase).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = s[0].isupper() if s else False",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the first character of the string is an uppercase letter and if the string ends with a digit.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the first character of the string is an uppercase letter, which is exactly what `s[0].isupper()` does. The second part about checking if the string ends with a digit is incorrect/not present in the code, but the first part is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) && std::isspace(value); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if s else False",
+    "reasoning": "The Python code checks if the first character of a string is uppercase. The C++ completion checks if a value is alphabetic AND a space, which is a contradictory and unrelated check. It doesn't involve checking for uppercase characters, and the combination `isalpha && isspace` is always false and unrelated to the actual operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if the first character of the string is an uppercase letter and if the second character is a digit.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies checking if the first character of the string is an uppercase letter, which is exactly what `s[0].isupper()` does. The second part about checking if the second character is a digit is incorrect/not present in the code, but the first part is genuinely relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isalpha(value) ? \"Starts with a letter\" : \"Does not start with a letter\"; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if s else False",
+    "reasoning": "The Python code checks if the first character of a string is uppercase. The C++ completion checks if a value is alphabetic (isalpha), which is related but not the same \u2014 it checks for any letter rather than specifically uppercase. However, it does identify the concept of checking the starting character's letter property, which is partially relevant to the code's intent of checking character type at the start of a string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the first character of the string is an uppercase letter.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if the first character of string `s` is uppercase using `isupper()`, with a fallback to `False` for empty strings.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isupper(value[0]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isupper() if s else False",
+    "reasoning": "The C++ completion checks if the first character of a string is uppercase using `std::isupper(value[0])`, which is exactly what the Python code does with `s[0].isupper()`. This is a direct match to the core operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

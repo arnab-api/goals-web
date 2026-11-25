@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_003",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) the number of odd values\n(3) whether the values are sorted in non-decreasing order\n(4) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums)\n    b = sum(1 for x in nums if x % 2 != 0)\n    c = all(nums[i] <= nums[i+1] for i in range(len(nums)-1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(x % 2 == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = any(x % 2 == 0 for x in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the given code meets the specified requirements.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is too generic \u2014 it just says \"checking if the given code meets the specified requirements\" without identifying any specific operation, property, or ingredient relevant to what the code does (checking for even numbers, using `any`, modulo operation, etc.).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Checking if any element in the list satisfies the given condition.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if any element in the list satisfies the given condition,\" which directly matches the use of `any()` over a list (`nums`). It correctly identifies the `any` operation and the list-based check, even if it doesn't specify the exact condition (divisibility by 2).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the variable `has_even` is `True` or `False`.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for a boolean True/False condition related to `has_even`, which corresponds to checking for even numbers in the list. The code uses `any(x % 2 == 0 for x in nums)` to check if any number is even, which is exactly what \"has_even\" semantically represents.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of({value > 0, value < 0, value == 0, value != 0});}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion uses `any_of` which is related to the `any()` function in the Python code, but the conditions it checks (value > 0, value < 0, value == 0, value != 0) are completely unrelated to checking for even numbers (x % 2 == 0). However, the use of `any_of` does capture the `any()` aspect of the code, which is a relevant sub-step. The conditions listed are trivially always true and don't relate to the even-number check.\n\nThe completion captures the `any` operation but misses the core property being checked (evenness/divisibility by 2). Since the question asks if ANYTHING genuinely relevant is surfaced, the `any_of` construct is a partial match to the Python `any()` call.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it uses `any()` to check if there exists at least one even number (x % 2 == 0) in the list `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return any_of(value.begin(), value.end(), [](bool hasEven){return count_if(value.begin(), value.end(), [](bool hasEven){return any_of(value.begin(), value.end(), [](bool hasEven){return !hasEven;});});});}",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The completion mentions `any_of` and checking for even numbers (using `hasEven` as a variable name), which is relevant to the Python code that checks if any element in `nums` is even. However, the completion is dominated by a heavily nested repeating loop of `any_of(value.begin(), value.end(), [](bool hasEven){return ...` cycling recursively.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

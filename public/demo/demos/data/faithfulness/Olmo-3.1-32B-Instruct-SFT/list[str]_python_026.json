@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_026",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the number of words that contain a digit\n(3) the total number of uppercase letters across all words\n(4) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if any(c.isdigit() for c in w))\n    c = sum(1 for w in words for _ in w if _.isupper())\n    d = sum(1 for w in words if w.islower())\n    return a, b, c, d\n</code>",
+ "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am counting the number of times a specific event occurs in a given list of numbers.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting the number of times a specific event occurs,\" which is partially relevant \u2014 the code does count (sum) occurrences of words that contain at least one digit. However, the description says \"a given list of numbers\" when the code operates on a list of words checking for digit characters, which is a meaningful mismatch but the core counting operation is captured.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting how many times a condition is met in a loop.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting how many times a condition is met in a loop,\" which is genuinely relevant \u2014 the code is summing (counting) words that meet a condition (containing a digit) by iterating over a collection. This correctly captures the core operation even if it lacks specifics about digits or words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; int sum = 0; for (int i = 0; i < value.size(); i++){ if (value[i] > 0) sum += 1; } return sum; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion counts elements that are greater than 0, which is about summing/counting elements based on a condition. While it captures the general pattern of counting items meeting a condition, it misses the key aspects: checking for digit characters within strings/words. However, it does capture the counting pattern with a sum variable and a conditional check.\n\nThe completion shows a counting operation over a collection with a conditional, which partially matches the structure, but the specific condition (checking for digits in words) is completely absent - it's checking `value[i] > 0` on what appears to be a numeric collection rather than checking for digit characters in strings.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many times a condition is true.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting how many times a condition is true,\" which is exactly what the code does \u2014 it counts words that satisfy a condition (containing a digit). This is a correct high-level description of the operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the number of elements in the list is equal to the number of elements whose length is greater than 5.",
+   "verdict": "NO",
+   "reasoning": "The code counts words that contain at least one digit character. The description talks about checking if the count of elements equals the count of elements with length greater than 5 \u2014 this is completely unrelated to digit-checking and involves a different property (length > 5) and a comparison operation that doesn't exist in the code.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if (std::begin (value), std::end (value), [](auto const& item){ return item.size () && std::any_of (std::begin (item), std::end (item), [](auto const& x){ return x.size () && std::any_of (std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion is counting elements in a collection (`count_if`) where each element satisfies a condition using `any_of` over its characters \u2014 this directly mirrors the Python code which counts words (`sum(1 for w in words if any(...))`) where any character satisfies a condition. The structure of nested `count_if`/`any_of` matches the Python's `sum`/`any` pattern perfectly, even if it gets cut off before showing the digit check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

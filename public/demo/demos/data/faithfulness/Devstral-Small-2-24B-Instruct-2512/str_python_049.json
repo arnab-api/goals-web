@@ -1,0 +1,96 @@
+{
+ "id": "str_python_049",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of lowercase letters\n(2) the number of uppercase letters\n(3) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.islower())\n    b = sum(1 for c in s if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.isalpha() or c.isdigit() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "c = all(c.isalpha() or c.isdigit() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the variable `a` is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking if a variable is even or odd, which is completely unrelated to what the code does (checking if all characters in a string are alphanumeric). No relevant operation or concept is identified correctly.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return {value, true, false}; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = all(c.isalpha() or c.isdigit() for c in s)",
+    "reasoning": "The C++ completion returns a tuple/struct with a value and boolean flags, but doesn't show any character classification logic (checking if characters are alphabetic or digits). The completion is generic and doesn't relate to checking alphanumeric properties of characters in a string.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "All characters are alphanumeric: `return all(isinstance(c, str).isalpha() and isinstance(c, str).isdigit() and isinstance(c, str).isalnum()`\nAll characters are alphanumeric: `return all(isinstance(c, str).isalpha() and isinstance(c, str).",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking whether all characters are alphanumeric (isalpha or isdigit), which matches the code's purpose. The description mentions `isalpha`, `isdigit`, and `isalnum` - all relevant concepts. Despite the garbled syntax with `isinstance` and the repetition at the end, the core meaning is captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return all_of(isalpha(value), isdigit(value), isalpha(value) && isdigit(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalpha() or c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `all_of`, `isalpha`, and `isdigit` \u2014 all directly relevant to checking whether characters are alphabetic or digits. The Python code checks that all characters in a string are either alphabetic or digits, and the C++ completion captures these same key operations, even though the syntax is garbled and the logic is slightly wrong (using `&&` instead of `||`).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the string is all alphanumeric and whether it contains only lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the string is \"all alphanumeric,\" which is directly relevant to what the code does (checking if all characters are alpha or digit). The additional mention of \"only lowercase letters\" is incorrect but doesn't negate the correct core identification.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = all(c.isalpha() or c.isdigit() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "All characters are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description \"All characters are alphanumeric\" directly describes what the code checks \u2014 whether all characters in `s` are either alphabetic or digits (i.e., alphanumeric).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](char c){ return std::isalpha(c) || std::isalnum(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalpha() or c.isdigit() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` to check that all characters in a string are either alphabetic or alphanumeric, which directly corresponds to the Python code checking that all characters are either `isalpha()` or `isdigit()`. The logic is essentially the same (checking alphanumeric characters for all elements), just with slightly redundant conditions (`isalpha || isalnum` vs `isalpha || isdigit`).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

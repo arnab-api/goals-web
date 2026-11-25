@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_043",
+ "datatype": "list[int]",
+ "frontier_id": "value_range",
+ "condition": "the difference between the maximum and minimum values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) whether any value is even\n(3) the difference between the maximum and minimum values\n(4) whether any value is zero\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums)\n    b = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) - a\n    d = any(x == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max(nums) - a",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The code computes a value `c` by subtracting `a` from the maximum of `nums`. This has nothing to do with checking if a number is even or odd \u2014 there's no modulo operation, no divisibility check, and no boolean condition being evaluated.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the maximum value in a list of integers.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"calculating the maximum value in a list of integers,\" which is directly relevant since the code calls `max(nums)` to find the maximum value in the list. The description correctly identifies this key operation, even though it doesn't mention the subtraction of `a`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int max = 0;  \n    int min = 0;  \n    int sum = 0;  \n    int diff = 0;  \n    for (int i = 0; i < value.size(); i++){  \n        if (value.size() == 0){  \n            max =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The C++ completion is computing `max` of a collection (`value`), which is directly relevant to the Python code that uses `max(nums)`. The completion also mentions `diff` which relates to the subtraction operation in the Python code (`max(nums) - a`). This is genuinely relevant content, not a loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am calculating the difference between the maximum and minimum values in a list.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is the difference between the maximum value and some variable `a`. The description says it's computing the difference between the maximum and minimum values. This is partially correct \u2014 it correctly identifies that the maximum is involved and that a difference is being computed. The variable `a` might be the minimum, making this description potentially accurate.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Finding the difference between the maximum and minimum values in the list.",
+   "verdict": "YES",
+   "reasoning": "The code computes `max(nums) - a`, which is the difference between the maximum value and some variable `a`. The description says it's finding the difference between the maximum and minimum values. The description correctly identifies the subtraction from the maximum, though it incorrectly identifies the subtrahend as the minimum rather than `a`. This is still partially correct and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return *max_element(value.begin(), value.end()) - *min_element(value.begin(), value.end());}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(nums) - a",
+    "reasoning": "The C++ completion computes the difference between the maximum and minimum elements of a collection. The Python code computes `max(nums) - a`, where `a` likely represents the minimum value. The C++ completion captures the core operation of finding the max and subtracting another value (min), which is genuinely relevant to the range computation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

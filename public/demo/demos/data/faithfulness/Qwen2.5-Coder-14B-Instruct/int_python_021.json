@@ -1,0 +1,96 @@
+{
+ "id": "int_python_021",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is odd\n(2) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n % 2 != 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(n % i != 0 for i in range(2, int(n**0.5) + 1)) if n > 1 else False\n    return a, b\n</code>",
+ "impl_span": "b = all(n % i != 0 for i in range(2, int(n**0.5) + 1)) if n > 1 else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if the variable `x` is even by evaluating the expression `x % 2 == 0`.",
+   "verdict": "NO",
+   "reasoning": "The code is checking if `n` is prime by testing divisibility for all integers from 2 up to the square root of n. The description says it's checking if a variable is even using `x % 2 == 0`, which is completely unrelated to primality testing.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = all(n % i != 0 for i in range(2, int(n**0.5) + 1)) if n > 1 else False",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number is prime,\" which is exactly what the code does \u2014 it tests divisibility from 2 up to the square root of n, the standard primality check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ bool is_prime = true; if (value <= 1) { is_prime = false; } else { for (auto i = 2; i <= value; ++i) { if (value % i == 0) { is_prime = true; break; } } } return is_prime; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(n % i != 0 for i in range(2, int(n**0.5) + 1)) if n > 1 else False",
+    "reasoning": "The C++ completion implements a primality check, which is exactly what the Python code does. It checks if a value is prime by testing divisibility, handles the edge case of values <= 1, and uses a modulo operation in a loop \u2014 all directly relevant to the Python code's logic. The implementation has a bug (sets is_prime = true when divisible, and doesn't use sqrt optimization), but the core concept of primality testing is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if a number is prime,\" which is exactly what the code does \u2014 it tests divisibility from 2 to \u221an and returns False for n \u2264 1, which is the standard primality check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return [is_prime = [is_even = [&]{ return std::is_integral_v<decltype(value)> && value > 1 && [](auto x){ for (bool p = true; p && [](auto y){ for (bool q = true; q && [](auto z){ return std::is_prime(z); },",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(n % i != 0 for i in range(2, int(n**0.5) + 1)) if n > 1 else False",
+    "reasoning": "The C++ completion mentions primality checking (`is_prime`), checking `value > 1`, and iterating to check divisibility \u2014 all of which are directly relevant to the Python code that checks if `n` is prime by testing divisibility up to sqrt(n). Despite being garbled and syntactically incorrect, the substance clearly relates to primality testing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if the number is prime.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the number is prime,\" which is exactly what the code does \u2014 it tests whether `n` has no divisors in the range `[2, sqrt(n)]`, the standard primality check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ if (value < 2) return true; for (auto i = 2; i <= std::sqrt(value); ++i) { if (value % i == 0) return false; } return true; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(n % i != 0 for i in range(2, int(n**0.5) + 1)) if n > 1 else False",
+    "reasoning": "The C++ completion implements a primality check: it checks if a value is less than 2, then iterates from 2 to sqrt(value) checking for divisors. This is exactly what the Python code does (checking primality by trial division up to sqrt(n)), with only a minor difference in the base case handling (returns true vs false for n<2).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

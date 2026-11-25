@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_058",
+ "datatype": "list[int]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of odd values\n(2) the number of distinct values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 != 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(nums))\n    return a, b\n</code>",
+ "impl_span": "b = len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts the number of unique elements by converting the list to a set and taking its length.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the number of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it calculates the number of unique elements by converting the list to a set and taking its length.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set<int>(value.begin(), value.end()).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion creates a `std::set` from a collection and returns its `.size()`, which directly corresponds to finding the number of unique elements via `len(set(nums))` in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am calculating the number of unique elements in the set created from the list of unique elements.",
+   "verdict": "YES",
+   "reasoning": "The description mentions calculating the number of unique elements in a set created from a list, which is exactly what `len(set(nums))` does \u2014 it converts `nums` to a set (removing duplicates) and counts the unique elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set<int>{std::unordered_set<int>{std::unordered_set<int>{value}.size()}.size()}; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion is creating sets and unordered_sets and checking their sizes, which relates to finding the number of unique elements (distinct count) in a collection. The Python code counts unique elements using `len(set(nums))`. The C++ completion captures the core idea of using a set to find unique elements and getting the size, even though the implementation is convoluted and nested incorrectly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of unique elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts unique elements by converting the list to a set and taking its length.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::set{value}.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(nums))",
+    "reasoning": "The C++ completion creates a set from a value and returns its size, which directly corresponds to `len(set(nums))` \u2014 computing the number of unique elements. This is clearly relevant to what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

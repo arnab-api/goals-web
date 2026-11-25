@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_033",
+ "datatype": "list[str]",
+ "frontier_id": "count_short",
+ "condition": "the number of words shorter than three characters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that end with a consonant\n(2) the number of words that contain a digit\n(3) the number of words shorter than three characters\n(4) whether any word is empty\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou\")\n    b = sum(1 for w in words if any(c.isdigit() for c in w"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if len(w) < 3)\n    d = any(len(w) == 0 for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for w in words if len(w) < 3)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the length of the string is less than 3.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if the length of something (words) is less than 3. This matches exactly what the code does \u2014 it counts words where `len(w) < 3`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value < 0; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if len(w) < 3)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the length of the list is less than 3.",
+   "verdict": "NO",
+   "reasoning": "The code counts words with length less than 3, and the description mentions checking if length is less than 3. While the description incorrectly frames it as checking the list length rather than individual word lengths, it does capture the core comparison (length < 3) which is the key operation in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value < 3; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if len(w) < 3)",
+    "reasoning": "The C++ completion defines a function that checks if a value is less than 3, which directly corresponds to the `len(w) < 3` condition in the Python code. This captures the core filtering predicate used in the count operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the count of elements in the list is less than 3.",
+   "verdict": "YES",
+   "reasoning": "The code counts words with length less than 3, while the description says \"count of elements in the list is less than 3.\" The description conflates the length check (len(w) < 3) with a count check, but it does capture the \"less than 3\" threshold and the idea of filtering/checking elements in a list. This is partially relevant but somewhat misleading \u2014 however, it does touch on the `< 3` comparison and list elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value < 3; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if len(w) < 3)",
+    "reasoning": "The C++ completion defines a function that checks if a value is less than 3, which directly corresponds to the `len(w) < 3` condition in the Python code. This captures the key comparison operation used to filter words by length.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of elements in the list that are less than 3.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of elements in the list that are less than 3,\" which accurately captures the core operation: counting items from a collection that satisfy a condition related to the value 3. The code counts words whose length is less than 3, so the description gets the counting and the threshold correct, though it omits that it's the *length* of each word being checked rather than the word itself.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto x){ return x.size() < 3; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if len(w) < 3)",
+    "reasoning": "The C++ completion implements `std::count_if` over a collection, counting elements where `x.size() < 3`, which directly corresponds to counting words with length less than 3 \u2014 exactly what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

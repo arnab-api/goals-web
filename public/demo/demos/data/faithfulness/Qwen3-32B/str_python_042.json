@@ -1,0 +1,96 @@
+{
+ "id": "str_python_042",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.islower() for c in s if c.isalpha())\n    return a, b\n</code>",
+ "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. Check if all characters in the string are alphabetic: `all(alpha(c) for c in s)`  \n2. Check if all characters are alphabetic and any character is checked one at a time: `all(c.isalpha() for c in s)`  \n3. Check if all characters are alphabetic",
+   "verdict": "YES",
+   "reasoning": "The code checks if all alphabetic characters in the string are lowercase (using `c.islower()` with a filter `if c.isalpha()`). The description focuses on checking if all characters are alphabetic, which is only partially relevant \u2014 it correctly identifies the `isalpha()` component but misses the key operation of checking for lowercase (`islower()`). However, `isalpha()` is genuinely used in the code as a filter condition, so there is some relevant content.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return value;  \n}  \n\nauto func2 (auto value) {  \n    return value;  \n}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion is just identity functions with no relevant content about checking if alphabetic characters are lowercase. It contains no operations related to character case checking, alphabetic filtering, or any property of the input string.\n\n<verdict>MALFORMED</verdict>",
+    "reasoned_verdict": "MALFORMED"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Assuming the line: `if all(c.isalpha() and c.islower() for c in s)`\n\n**Step 1:** Check if all characters in the string `s` are alphabetic using `s.isalpha()`.\n\n**Step 2:** Check if all characters in `s` are lowercase using",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters in a string are alphabetic and lowercase, which is exactly what the code does \u2014 it checks `c.islower()` for all alphabetic characters `c` in `s`. The description correctly identifies the `all()`, `islower()`, and alphabetic checking components, even if the exact filter structure differs slightly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if (!islower(value)) return false;\n    for (int i = 0; i < value.length(); i++) {\n        if (!isalpha(value[i])) return false;\n        if (i == 0) continue;\n        if (!islower(value) || !isalpha(value)) return false",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion checks `islower` and `isalpha` on characters, which directly corresponds to the Python code's use of `c.islower()` and `c.isalpha()` to check if all alphabetic characters are lowercase. Despite some syntactic issues and logic errors (checking `isalpha` to return false instead of skipping non-alpha characters), the core relevant operations are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll need to check two things:\n\n1. Are all the elements in the list `['a', 'b', 'c', 'd']`?  \n2. Are all the elements in the list `['e', 'f', 'g', 'h']`?  \n\nI'll need to do this",
+   "verdict": "NO",
+   "reasoning": "The code checks whether all alphabetic characters in `s` are lowercase. The description talks about checking membership in specific lists like `['a', 'b', 'c', 'd']`, which is completely unrelated to the actual operation. However, it does mention \"all the elements\" which partially aligns with the `all()` usage, but the core concept (lowercase check) is missing and replaced with something unrelated.\n\nThe description is coherent but the specific thing it describes (membership in fixed lists) is completely unrelated to checking if characters are lowercase.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool result = true;  \n    for (const auto& v : value) {  \n        if (std::next(std::begin(value)) != std::end(value)) {  \n            result = false;  \n            for (const auto& c : value) {  \n                if (std::all_of",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion iterates over characters and checks some condition using `std::all_of`, which aligns with the Python code's use of `all()` to check a property of characters in a string. The loop structure and boolean result variable are relevant to checking whether all characters satisfy some condition.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Check if all characters are lowercase letters using islower() and any(c.isalpha() and c.islower() for c in s if c.isalpha() else s == s.lower() for all(c in s if c.isalpha() and c.islower()) if s and s.isalpha() and s.islower()",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters are lowercase letters using `islower()`, which is directly relevant to what the code does. It also mentions `isalpha()` which is used in the code. However, the description gets confused and garbled with incorrect logic (using `any` instead of `all`, mixing in extra conditions), and it starts to loop somewhat with repeated patterns.\n\nThe description is partially looping but not a tight short-cycle heavy loop \u2014 it's more of a garbled/run-on sentence that still contains the core relevant concepts (`islower()`, `isalpha()`, checking all characters are lowercase).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::all_of(value.begin(), value.end(), [](char c) { return std::isalpha(c) && std::islower(c); });  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(c.islower() for c in s if c.isalpha())",
+    "reasoning": "The C++ completion checks that all characters are alphabetic and lowercase using `std::all_of`, which is directly relevant to the Python code that checks if all alphabetic characters are lowercase. The logic is slightly different (C++ checks all chars are both alpha AND lower, while Python only checks lower for alpha chars), but the core operation \u2014 checking lowercase property across all characters \u2014 is clearly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

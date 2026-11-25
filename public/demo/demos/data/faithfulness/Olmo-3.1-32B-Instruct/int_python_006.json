@@ -1,0 +1,96 @@
+{
+ "id": "int_python_006",
+ "datatype": "int",
+ "frontier_id": "digit_count",
+ "condition": "the number of digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the sign of the number\n(2) the number of digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0) - (n < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(str(abs(n))) if n != 0 else 1\n    return a, b\n</code>",
+ "impl_span": "b = len(str(abs(n))) if n != 0 else 1",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Checking if a variable is set to determine a condition (e.g., true/false for whether a value exists or not).",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable is set or determining a true/false condition about existence. The code is computing the number of digits in `n` (by converting to string and measuring length, with special handling for zero). These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? 1 : 0; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n))) if n != 0 else 1",
+    "reasoning": "The Python code computes the number of digits in `n` (handling the special case where `n == 0`). The C++ completion returns 1 or 0 based on whether `value` is truthy/falsy \u2014 this captures the zero-check (`n != 0`) but completely misses the main operation of counting digits (computing `len(str(abs(n)))`). However, the ternary handling of the zero case is a relevant sub-step.\n\nThe C++ does touch on the zero-check aspect, but it's quite generic (any boolean conversion) and misses the core digit-counting operation entirely. It's more of a coincidental overlap than genuine relevance to what the code does.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of digits in the input to determine its length.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts the number of digits in the input `n` by converting it to a string and getting its length, handling the special case of zero.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int digitCount = std::to_string(value).size();  \n    int numDigits = digitCount;  \n    if(value < 0) {  \n        // Number of digits  \n        numDigits = std::to_string(value).size();  \n        // But since we need the digit count, let's",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n))) if n != 0 else 1",
+    "reasoning": "The C++ completion converts a value to a string and gets its size to count digits, which is exactly what the Python code does with `len(str(abs(n)))`. It also handles the negative number case, which corresponds to the `abs(n)` in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of digits in the input.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the number of digits in the input,\" which is exactly what this code does \u2014 it computes the number of digits in `n` by converting its absolute value to a string and measuring its length, with a special case for zero.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int length = std::to_string(value).size();  \n    int digits = std::to_string(value).length(); // Not exactly correct for digit count, but for demonstration  \n    int numDigits = std::to_string(value).length(); // Actually, let's count digits  \n    int numChars =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n))) if n != 0 else 1",
+    "reasoning": "The C++ completion is computing the length/size of the string representation of a value, which is exactly what the Python code does (`len(str(abs(n)))`). It repeatedly calls `std::to_string(value).size()` and `.length()`, which corresponds to converting a number to string and getting its length (i.e., counting digits).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the digits of the absolute value of the number.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting the digits of the absolute value of a number, which is exactly what the code does by converting `abs(n)` to a string and taking its length.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::to_string(std::abs(value)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n))) if n != 0 else 1",
+    "reasoning": "The C++ completion converts a value to its absolute value and then to a string, which directly corresponds to the Python code's `str(abs(n))` operation for computing the number of digits. This captures the core operation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

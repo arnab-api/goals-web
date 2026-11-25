@@ -1,0 +1,96 @@
+{
+ "id": "str_python_049",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of lowercase letters\n(2) the number of uppercase letters\n(3) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.islower())\n    b = sum(1 for c in s if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.isalnum() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "c = all(c.isalnum() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am checking if the variable is a palindrome by verifying that all its characters are alphanumeric and counting them.",
+   "verdict": "YES",
+   "reasoning": "The code checks if all characters in `s` are alphanumeric using `isalnum()`. The description mentions \"verifying that all its characters are alphanumeric,\" which is directly relevant to what the code does. The \"palindrome\" part is wrong, but the core alphanumeric check is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if all elements in the list are alphanumeric.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if all characters are alphanumeric, which matches `all(c.isalnum() for c in s)`. The minor imprecision of saying \"list\" instead of \"string\" doesn't affect the core meaning.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](auto& item){ return item; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` over a collection, which directly mirrors the `all(...)` pattern in the Python code. It iterates over elements of the input, which corresponds to checking each character in the string `s`. However, the lambda body just returns `item` rather than checking `isalnum()`, so the alphanumeric check is missing \u2014 but the structural pattern of checking all elements is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "This line of code checks if a condition is true or false.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checks if a condition is true or false,\" which is too generic to indicate any specific aspect of the code. It doesn't mention alphanumeric checking, string iteration, or any relevant operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the string are alphanumeric (letters and digits only, no special characters).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if all characters in the string `s` are alphanumeric using `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(value.begin(), value.end(), [](char c){ return std::isalnum(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking if all characters in a string are alphanumeric using `std::all_of` with `std::isalnum`. This is a direct and accurate translation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

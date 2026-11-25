@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_038",
+ "datatype": "list[str]",
+ "frontier_id": "longest_word_length",
+ "condition": "the length of the longest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) the total number of vowels across all words\n(3) the number of capitalized words\n(4) the length of the longest word\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    b = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    c = sum(1 for w in words if w[:1].isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max((len(w) for w in words), default=0)\n    return (a, b, c, d)\n</code>",
+ "impl_span": "d = max((len(w) for w in words), default=0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Checking if the current line starts with a character that indicates the start of a new word, typically to count the number of words or to check if a value is an integer.",
+   "verdict": "NO",
+   "reasoning": "The code is finding the maximum word length from a collection of words. The description talks about checking if a line starts with a character indicating a new word or counting words/checking integer values. While \"counting words\" is tangentially related, the description misses the core operation (finding maximum length) and focuses on unrelated concepts like character checking and integer validation.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? 0 : value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion defines a function that returns 0 if the value is empty, otherwise returns its size. This is relevant to the Python code, which finds the maximum length of words (with a default of 0 for empty input). The size/length computation and the handling of the empty case are both present, though implemented differently.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm determining the length of the longest string in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it finds the maximum length among all words in a list, which is exactly \"determining the length of the longest string in a list.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int maxLen = 0; int sumLen = 0; const char* strArr = nullptr; for(const auto& s : value) { if(s.empty()) continue; if(!strArr) { int len = 0; for(const auto& w : value) { if(w.size() > (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion is tracking `maxLen` and iterating over a collection `value` checking sizes of strings - this directly corresponds to finding the maximum length of words in a collection. The `maxLen` variable and `w.size()` comparison are clearly relevant to computing the maximum word length.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm finding the length of the longest string in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum length among strings in a list, which is exactly what the code does using `max` with a generator expression over word lengths.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int max = 0;  \n    if (value.empty()) return 0;  \n    int len = 0;  \n    for (const auto& s : value)  \n        len = std::max(len, (int)s.size()) ? std::max(len, (int)s.length()) :",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion is finding the maximum length among elements in a collection (`value`), using `std::max` and `s.size()`/`s.length()`. It also handles the empty case by returning 0. This directly corresponds to the Python code which finds the maximum word length with a default of 0.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Finding the length of the longest string in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it finds the maximum length among all words in a list, which is equivalent to finding the length of the longest string.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int maxLen = 0; for(const auto& s : value) maxLen = std::max(maxLen, static_cast<int>(s.size())); return value.empty() ? 0 : *std::max_element(std::begin(value), std::end(value), [](const std::string& a, const std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max((len(w) for w in words), default=0)",
+    "reasoning": "The C++ completion is computing the maximum length of strings in a collection, which is exactly what the Python code does (`max(len(w) for w in words)`). It initializes `maxLen = 0`, iterates over strings, takes `max` of sizes, and handles the empty case with `value.empty() ? 0`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

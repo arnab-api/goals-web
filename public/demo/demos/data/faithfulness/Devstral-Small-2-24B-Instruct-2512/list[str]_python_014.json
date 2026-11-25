@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_014",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words shorter than three characters\n(2) the number of capitalized words\n(3) whether all words have distinct lengths\n(4) the number of words that contain a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) < 3"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w[0].isupper())\n    c = len(words) == len({len(w) for w in words})\n    d = sum(1 for w in words if any(ch.isdigit() for ch in w))\n    return a, b, c, d\n</",
+ "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll count the number of lines in the code, then:\n1. Return the count of lines.\n2. Return the count of lines.\n3. Return the count of lines.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines, which is unrelated to what the code does (counting words that start with an uppercase letter). However, the description does repeat \"count\" which is a generic operation. The key issue is that the description is dominated by a short repeating cycle (\"Return the count of lines\" repeated 3 times), but this is only 3 repetitions and there's a brief intro sentence. The substance, however, is about counting lines rather than counting uppercase-starting words \u2014 completely wrong content.\n\nThe description is coherent but about counting lines, which is completely unrelated to counting words starting with uppercase letters.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return {value, 0, 0, 0}; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The C++ completion creates a function that returns a tuple/array with the input value and zeros, which has no relevance to counting words that start with an uppercase letter. There's no counting, no string/character checking, and no uppercase detection.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of words in the code that start with a capital letter.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words that start with a capital letter (checking `w[0].isupper()`), which matches \"counting the number of words that start with a capital letter.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ // Counts uppercase letters\n    int count = 0;\n    for (char c : value) {\n        if (isupper(value[0])) count++;\n    }\n    return count;\n}\n\nauto func (auto value){ // Checks if all letters are uppercase\n    int count = 0;\n    for (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The C++ completion mentions counting uppercase letters and uses `isupper(value[0])` which checks the first character of each word - this is directly relevant to the Python code which checks `w[0].isupper()` (whether the first character of each word is uppercase) and counts such words. The logic of checking the first character and counting matches the gold code's intent.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many lines start with a case-insensitive check for the number of lines that contain the word \"count\" followed by a check for the number of lines that contain the word \"Count\" followed by a check for the number of lines that contain the word \"COUNT\" followed by a check for the number",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions counting and case-related checks (case-insensitive, \"count\", \"Count\", \"COUNT\"), which partially relates to the code's purpose of counting words that start with an uppercase letter. However, the description is dominated by a repeating cycle (\"followed by a check for the number of lines that contain the word...\") that loops through variations of \"count/Count/COUNT\". This is a short repeating pattern that dominates the description.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(values.begin(), values.end(), [](int count){ return count; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The Python code counts words that start with an uppercase letter. The C++ completion uses `std::count_if` which is a counting operation over a collection, which is relevant to the counting aspect of the Python code. However, the lambda just returns `count` (always true), missing the uppercase check entirely. Still, `count_if` over a collection captures the core \"count elements satisfying a condition\" structure.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of lines where the variable `count` is incremented for words that start with uppercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting words that start with uppercase letters, which is exactly what the code does (using `isupper()` on the first character). The reference to \"lines\" and \"variable `count`\" are wrong details, but the core concept of counting words beginning with uppercase letters is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{}, [](int x){return std::count_if(std::vector<int>{}, [](int x){return std::count_if(std::vector<int>{}, [](int x){return std::count_if(std::vector<int>{}, [](int x){",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if w[0].isupper())",
+    "reasoning": "The completion shows `std::count_if` repeated in a nested loop pattern with empty vectors and no meaningful content beyond the repeating structure. This is a HEAVY_LOOP \u2014 the pattern `std::count_if(std::vector<int>{}, [](int x){return` repeats over and over with no coherent content left after collapsing the repetition.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "str_python_048",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of uppercase letters\n(2) whether the string contains a space\n(3) whether the string contains a digit\n(4) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isupper())\n    b = ' ' in s\n    c = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.isalnum() for c in s)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = all(c.isalnum() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a variable is true or false to determine if all elements in a list meet a certain condition.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all elements in a list meet a certain condition, which is directly relevant to what the code does \u2014 it uses `all()` to check if every character in `s` satisfies `isalnum()`. The description correctly captures the \"all elements meet a condition\" logic, even if it says \"list\" instead of \"string/iterable\" and doesn't specify the alphanumeric condition.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](const auto& v){ return std::find_if(std::begin(v), std::end(v), [](const auto& x){ return x; }); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` over a range, which directly corresponds to the `all()` call in the Python code. While the inner lambda doesn't correctly implement `isalnum()`, the overall structure of checking all elements with `all_of` is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if every character in the string is alphanumeric (i.e., all characters are letters or digits and there are no other types).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: checking if every character in the string is alphanumeric using `isalnum()` and `all()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](char c){ return std::isalnum(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking that all characters in a string are alphanumeric using `std::all_of` with `std::isalnum`, which directly mirrors `all(c.isalnum() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, it is checking whether all elements in a variable meet a certain condition (e.g., if all characters in a string are alphabetic).",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code checks whether all elements meet a condition, and specifically mentions checking characters in a string for alphabetic properties. The actual code checks for alphanumeric characters (isalnum) rather than purely alphabetic, but the description captures the core operation accurately.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](const auto& x){ return std::is_permutation(std::begin(x), std::end(x), [](const auto& y){ return std::all_of(std::begin(y), std::end(y), [](const auto& z){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` over a range, which is directly analogous to Python's `all(...)` check. However, it then goes into nested `std::is_permutation` and further nested `std::all_of` calls, which are irrelevant to checking if characters are alphanumeric. The key relevant fragment is the outer `std::all_of` over the value's elements, which corresponds to checking all characters in the string.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if all characters in the string are alphanumeric (letters or digits, with no other characters).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 checking if all characters in the string are alphanumeric using `isalnum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::isalnum(std::find_if_not(std::begin(value), std::end(value), [](char c){ return std::isalnum(c); }); return std::iter_range<std::isalnum>(*std::find_if_not(std::begin(value), std::end",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` and `std::isalnum` with character checking, and also uses `std::find_if_not` with a lambda checking `std::isalnum(c)` \u2014 all of which are directly relevant to checking if all characters in a string are alphanumeric. Despite being syntactically garbled and partially looping on `find_if_not`/`isalnum`, the core concepts match the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

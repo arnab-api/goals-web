@@ -1,0 +1,96 @@
+{
+ "id": "str_python_022",
+ "datatype": "str",
+ "frontier_id": "count_letters",
+ "condition": "the number of alphabetic characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether every character is a letter or a digit\n(2) the number of alphabetic characters\n(3) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.isalnum"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isalpha() for c in s)\n    c = a and all(c.islower() for c in s if c.isalpha())\n    return (a, b, c)\n</code>",
+ "impl_span": "b = sum(c.isalpha() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the code is at a specific state (e.g., after a loop or function) to determine if a variable is set, by evaluating conditions in sequence.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable is set after a loop or function, evaluating conditions in sequence. The code is counting alphabetic characters in a string using `isalpha()`. The description doesn't mention counting, alphabetic characters, string operations, or any relevant concept from the code.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(value.begin(), value.end(), true) == value.size() && std::is_sorted(value.begin(), value.end()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The Python code counts the number of alphabetic characters in a string `s`. The C++ completion mentions `std::count` over a range, which is related to counting elements, but the specific operation (counting `true` values, checking if equal to `value.size()`, and checking `is_sorted`) doesn't align well with simply summing alphabetic characters. However, `std::count` is a relevant counting operation, and the idea of iterating over characters is present, even if the specifics are wrong.\n\nThe completion is coherent and contains `std::count` which relates to counting, and iterating over a string/container with `.begin()/.end()` which is relevant to processing characters. The `is_sorted` part is unrelated, but the counting aspect is partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting how many letters in a string are alphabetic (to determine if there are any letters).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting alphabetic characters in a string, which is exactly what the code does using `isalpha()` and `sum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int alpha = 0;  \n    for(char c : value)  \n        if(isalpha(c)) ++alpha;  \n    int alphaCount = 0;  \n    for(char c : value)  \n        if(isalpha(c)) ++alphaCount;  \n    int alphaNum = 0;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion counts alphabetic characters in a string using `isalpha()`, which is exactly what the Python code does with `sum(c.isalpha() for c in s)`. The completion correctly identifies the core operation (counting alpha characters) even though it repeats the loop twice and introduces redundant variables.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of alphabetic characters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting alphabetic characters in a string, which is exactly what the code does using `isalpha()` and `sum()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& s : std::sizes) {  \n        if (s.first == value) {  \n            return std::make_pair(  \n                std::count_if (std::begin (s2), std::end (s2), [] (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The Python code counts the number of alphabetic characters in a string. The C++ completion shows counting logic with `count` variable and `count_if`, which is relevant to counting operations. However, it doesn't specifically reference checking if characters are alphabetic. Still, the counting pattern and use of `count_if` are genuinely relevant to the overall operation of counting elements satisfying a condition.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of alphabetic characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts alphabetic characters in string `s` using `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](char c){ return std::isalpha(c) && std::isalpha(std::count_if(std::begin(value), std::end(value), [](char c){ return std::isalpha(c); })); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion uses `std::count_if` with `std::isalpha` to count alphabetic characters in a string/container, which is exactly what the Python code does with `sum(c.isalpha() for c in s)`. Despite the garbled nested lambda (which is syntactically wrong), the core operation \u2014 counting characters that satisfy `isalpha` \u2014 is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

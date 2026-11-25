@@ -1,0 +1,96 @@
+{
+ "id": "str_python_008",
+ "datatype": "str",
+ "frontier_id": "vowel_count",
+ "condition": "the number of vowels",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of uppercase letters\n(2) the number of vowels\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for c in s if c.lower() in {'a', 'e', 'i', 'o', 'u'})\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for c in s if c.lower() in {'a', 'e', 'i', 'o', 'u'})",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of times each character appears in the code.",
+   "verdict": "NO",
+   "reasoning": "The description mentions counting characters, which is partially relevant \u2014 the code does count characters (specifically vowels) in a string. However, \"the number of times each character appears\" suggests frequency counting of all characters, while the code counts only vowel occurrences. Still, the core idea of counting characters is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto& [a, b, c] : {value}) {count += a;}return count;}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.lower() in {'a', 'e', 'i', 'o', 'u'})",
+    "reasoning": "The Python code counts vowels in a string. The C++ completion shows a counting pattern (initializing `count = 0`, iterating, and accumulating with `count += a`), which is structurally relevant to counting characters. However, there's no mention of vowels or any character-checking logic. The iteration and counting pattern is partially relevant but lacks the key property being checked (vowel detection).\n\nThe completion is not a heavy loop, not malformed, and does show a counting/accumulation pattern that partially matches the code's structure, even if it misses the vowel-checking aspect entirely.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of vowels in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting vowels in a string, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){char vowels[5] = {'a', 'e', 'i', 'o', 'u'}, count = 0;int vcount = 0;for (char c : {'a', 'e', 'i', 'o', 'u'}){count = 0;for (char v",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.lower() in {'a', 'e', 'i', 'o', 'u'})",
+    "reasoning": "The C++ completion explicitly mentions counting vowels {'a', 'e', 'i', 'o', 'u'} and iterating over characters, which directly corresponds to the Python code that counts vowels in a string. Despite being somewhat garbled and cut off, the core operation (counting vowels from the set {'a', 'e', 'i', 'o', 'u'}) is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of vowels in the string \"aeiou\" and the number of consonants in the string \"aeioubcd\".",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting vowels in a string, which is exactly what the code does \u2014 it counts characters in `s` that are vowels ('a', 'e', 'i', 'o', 'u'). The mention of consonants is irrelevant/wrong, but the core operation (counting vowels) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (char c : {'a', 'e', 'i', 'o', 'u', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.lower() in {'a', 'e', 'i', 'o', 'u'})",
+    "reasoning": "The C++ completion counts characters that appear in a set including vowels {'a', 'e', 'i', 'o', 'u'}, which is exactly what the Python code does. Although the C++ version adds extra non-vowel characters to the set, the core operation (counting characters matching a set that includes all vowels) is clearly present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting vowels in a string, which is exactly what the code does \u2014 it sums up characters in `s` that are vowels (a, e, i, o, u) using a generator expression.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int vowels=0;int consonants=0;int count=0;for(char c: \"aeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIOUaeiouAEIO",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.lower() in {'a', 'e', 'i', 'o', 'u'})",
+    "reasoning": "The C++ completion initializes a `vowels` counter and iterates over vowels \"aeiouAEIOU\", which is directly relevant to counting vowels in a string. However, the completion ends with a heavy repeating loop of \"aeiouAEIOUaeiouAEIOU...\" that dominates the output.\n\nThe key question is whether this qualifies as HEAVY_LOOP. The repeating unit is \"aeiouAEIOU\" which is about 10 characters/tokens, repeating many times. This is borderline \u2014 it's slightly longer than \"roughly five words/tokens or fewer,\" but it does dominate the completion. However, the beginning of the completion (\"int vowels=0; int consonants=0; int count=0; for(char c:\") is coherent and relevant before the loop starts. The loop itself is a string literal being iterated over, not a structural code loop.\n\nGiven that there's genuine relevant content at the start (vowel counting setup) before the repetition, and the repeating part is a string literal rather than a structural code repetition, I'll consider this YES rather than HEAVY_LOOP.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

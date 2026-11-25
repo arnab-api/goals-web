@@ -1,0 +1,96 @@
+{
+ "id": "str_python_022",
+ "datatype": "str",
+ "frontier_id": "count_letters",
+ "condition": "the number of alphabetic characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether every character is a letter or a digit\n(2) the number of alphabetic characters\n(3) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s.isalnum"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(c.isalpha() for c in s)\n    c = s.islower() and a\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(c.isalpha() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is even.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking if a number is even,\" but the code is counting alphabetic characters in a string using `isalpha()`. These are completely unrelated operations \u2014 one involves parity of numbers, the other involves character classification in strings.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "At this line of the code, I am checking if the variable is a string.",
+   "verdict": "NO",
+   "reasoning": "The code is counting the number of alphabetic characters in string `s` using `isalpha()`. The description says it's checking if the variable is a string, which is a completely different operation \u2014 checking type vs. counting alphabetic characters. However, `isalpha()` is related to alphabetic checking, and the description does touch on string-related concepts, though it misidentifies the specific operation as a type check rather than counting alpha characters.\n\nThe description is coherent but describes a type-checking operation, while the code is counting alphabetic characters. These are conceptually distinct operations, even if both involve strings.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if (value.begin(), value.end(), [](char c){ return std::isalpha(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of alphabetic characters in a string using `std::count_if` with `std::isalpha`, which directly corresponds to `sum(c.isalpha() for c in s)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of alphabetic characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts alphabetic characters in string `s` using `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](auto& v){ return v.second; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The Python code counts the number of alphabetic characters in a string `s`. The C++ completion uses `std::count_if` over a range, which is conceptually similar to counting elements that satisfy a condition. However, the lambda uses `v.second` (suggesting a map/pair element) rather than an alphabetic check, so the specific property being checked is wrong. Still, the core operation \u2014 counting elements satisfying some predicate \u2014 is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of alphabetic characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts alphabetic characters in string `s` using `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if (std::begin(value), std::end(value), [](char c){ return std::isalpha(c) && std::isalpha(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(c.isalpha() for c in s)",
+    "reasoning": "The C++ completion implements `std::count_if` with `std::isalpha(c)` over the characters of a string, which is exactly what the Python code does \u2014 counting alphabetic characters in `s`. The redundant `&& std::isalpha(c)` is noise but doesn't change the meaning.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

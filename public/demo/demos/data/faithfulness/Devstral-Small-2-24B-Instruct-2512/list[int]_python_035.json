@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_035",
+ "datatype": "list[int]",
+ "frontier_id": "product_all",
+ "condition": "the product of all values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the integer mean of the values\n(2) the product of all values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(nums) // len(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 1\n    for n in nums:\n        b *= n\n    return a, b\n</code>",
+ "impl_span": "b = 1",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm calculating the sum of the array and then printing it.",
+   "verdict": "NO",
+   "reasoning": "The code simply assigns the value 1 to variable `b`, with no array, no sum calculation, and no printing involved. The description is coherent but completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = 1",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the product of all elements in the list.",
+   "verdict": "NO",
+   "reasoning": "The code simply assigns the value 1 to variable `b`, which is a common initialization step before computing a product (where you start with 1 as the multiplicative identity). The description mentions \"calculating the product of all elements in the list,\" which is consistent with this initialization being the starting point of a product computation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int product = 1;for (auto i : value){product *= i;}return product;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = 1",
+    "reasoning": "The Python code sets `b = 1`, which is just a simple assignment. The C++ completion computes a product of elements in a collection (multiplying them together). These are unrelated \u2014 the C++ is computing a product over a collection, while the Python is just assigning the literal value 1 to a variable.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll calculate the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the product of the",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a short repeating cycle (\"of the product\") that repeats over and over with no coherent content beyond the loop. While \"product\" could be loosely relevant to initializing a product accumulator to 1, the description is entirely a heavy loop with no additional meaningful content.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int product = 1;for(auto result = 1;auto sum = 1;product *= value)result *= value;return product;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = 1",
+    "reasoning": "The code sets `b = 1`, which is a simple assignment of the value 1. The C++ completion initializes `product = 1` and computes a product by multiplying values in a loop, which is not directly related to simply assigning 1. However, the completion does initialize with 1 and involves the concept of a product starting at 1, which partially overlaps with the assignment of 1. But the loop structure and multiplication are unrelated to a simple assignment.\n\nThe completion is coherent but describes a multiplication/product loop rather than a simple assignment. The only connection is the initialization to 1, which is too generic to count as relevant.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'll calculate the product of all numbers in the list using the `math.prod` function.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions calculating a product and initializing with 1, which is relevant \u2014 `b = 1` is the initialization step for a product computation (the multiplicative identity). The description correctly identifies the operation being set up.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int product = 1;for(auto i = 1; i <= value; i *= product *= std::accumulate(std::vector<int>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = 1",
+    "reasoning": "The Python code simply assigns `b = 1`. The C++ completion is computing a product/factorial-like accumulation, which is unrelated to a simple assignment of 1. However, the C++ does initialize `product = 1` which matches the value being assigned, but the overall computation is completely different from a simple assignment.\n\nThe C++ completion is coherent but describes a complex accumulation/product computation, not a simple assignment. The only connection is the value `1`, which appears in both, but that's too superficial \u2014 the operations are completely different.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  }
+ ]
+}

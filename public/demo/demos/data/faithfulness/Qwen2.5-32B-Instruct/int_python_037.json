@@ -1,0 +1,96 @@
+{
+ "id": "int_python_037",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is positive\n(2) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(digit) for digit in str(abs(n)))\n    return a, b\n\n# Example usage:\n# is_positive, digits_sum = func(-123)\n# print(is_positive, digits_sum)  # Output: False 6\n</code>",
+ "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I need the code snippet to analyze it for you. Please provide the code and specify the line you want me to examine. \n\nHowever, to answer your question directly in two parts:\n\n1. To determine what the code is doing, I first need to see the code.\n2. For the first part, I'll",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is a generic request for more information and contains no relevant content about what the code does (summing digits of a number). It's coherent but completely uninformative about the actual computation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    return value > 0; \n} \n\nauto sum_and_check_positive(int number) { \n    int sum = number + 1; \n    bool isPositive = func(sum); \n    return std::make_tuple(sum, isPositive); \n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+    "reasoning": "The Python code computes the sum of digits of the absolute value of a number. The C++ completion checks if a value is positive and computes `number + 1` (not digit sum), which is unrelated to digit summing. However, it does use `abs`-like reasoning implicitly with `value > 0` positivity check, which partially relates to the `abs(n)` aspect. But the core operation \u2014 summing digits \u2014 is completely absent. The positivity check is tangentially related to `abs()` but the completion doesn't capture the digit sum operation at all.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I cannot sum the digits of a number if it's negative, and I can't provide the sum of its digits if it's positive, because you haven't provided the number. However, I can tell you how to do it. For instance, if the number is 123, the sum of its digits",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"sum the digits of a number\" and gives the example of 123 with \"sum of its digits\" \u2014 this is exactly what the code does (summing digits of a number, using `abs` to handle negatives). Despite the confused framing, the core concept is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0; \n    if (value < 0) { \n        sum = abs(value) % 10 + (abs(value) % 10 == 9 ? 1 : 0); \n    } else { \n        sum = (value == 0) ?",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+    "reasoning": "The C++ completion is computing a sum related to digits of a number, handling the negative case with `abs(value)`, and extracting digits using `% 10`. This is genuinely relevant to the Python code which sums the digits of `abs(n)`. The specific logic for the modulo and conditional is wrong/incomplete, but the core concepts of digit sum and absolute value are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I need to see the code to count the sum of its digits if it's a number, or the sum of its characters' ASCII values if it's a string. Let's assume we are working with a number for this task.\n\nGiven a number, the goal is to calculate the sum of its digits. For example",
+   "verdict": "YES",
+   "reasoning": "The description mentions calculating the sum of digits of a number, which is exactly what the code does (summing the integer value of each digit in the absolute value of n). The description is coherent and directly relevant to the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    int sum = 0;\n    if(value >= 0) {\n        int temp = value;\n        while(temp > 0) {\n            sum += temp % 10;\n            temp /= 10;\n        }\n    } else {\n        int temp = value;\n        sum = temp <",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+    "reasoning": "The C++ completion implements summing the digits of a number, handling the absolute value case (checking if value >= 0, using modulo 10 to extract digits). This directly corresponds to the Python code which sums the digits of abs(n).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I cannot sum the digits of a number if it's required. Please provide the number so I can help with the sum of its digits. Otherwise, the action is to calculate the sum of its digits if you want to know the sum. For instance, if the number is 123, the sum is",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions \"sum of digits\" and \"calculate the sum of its digits,\" which is exactly what the code does (summing the digits of a number). The example given (number 123, sum of its digits) is directly relevant to the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value >= 0 ? std::accumulate(std::to_string(value).begin(), std::to_string(value).end(), 0, [](int sum, auto it){return sum + std::accumulate(std::to_string(std::abs(value)).begin(), std::to_string(std::abs(value)).end(),",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(digit) for digit in str(abs(n)))",
+    "reasoning": "The C++ completion describes summing the digits of a number, including handling the absolute value (`std::abs(value)`), converting to string (`std::to_string`), and accumulating digit values \u2014 all of which directly correspond to what the Python code does (sum of digits of abs(n)).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

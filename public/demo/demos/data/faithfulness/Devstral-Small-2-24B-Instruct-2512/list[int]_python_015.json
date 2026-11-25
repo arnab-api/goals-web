@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_015",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is zero\n(2) the minimum value\n(3) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = 0 in nums\n    b = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(nums) != len(set(nums))\n    return a, b, c\n</code>",
+ "impl_span": "c = len(nums) != len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the code for the minimum value, maximum value, and whether the input list is empty.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking minimum value, maximum value, and whether the input list is empty \u2014 none of which are relevant to what the code does. The code checks for duplicates by comparing the length of the list to the length of the set (i.e., whether there are repeated elements).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::make_pair(value, value); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates in a list by comparing the length of the list to the length of a set (which removes duplicates). The C++ completion creates a pair from a value, which is unrelated to duplicate detection, set operations, or length comparison. There's no relevant connection to checking for duplicate elements.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking for duplicates in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking for duplicates in the list,\" which is exactly what the code does \u2014 it compares the length of the original list to the length of a set (which removes duplicates) to detect if any duplicates exist.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::any_of(value, [](auto x){return std::ranges::any_of(value, [](auto x){return std::ranges::any_of(value, [](auto x){return std::ranges::any_of(value, [](auto x){return std::r",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The completion uses `std::ranges::any_of` nested repeatedly, which is a HEAVY_LOOP pattern \u2014 the same construct `std::ranges::any_of(value, [](auto x){return` repeats over and over with no meaningful content beyond the loop. Even though checking for duplicates could conceptually involve `any_of`, this is clearly a stuck loop with no coherent content remaining after collapsing the repetition.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the list contains any duplicates by using a set to track seen elements and a flag to check for duplicates.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking for duplicates in a list and mentions using a set to do so, which matches the `set(nums)` in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::any_of(std::set<int>(std::vector<bool>(std::count_if(std::vector<int>(std::any_of(std::set<int>(std::vector<bool>(std::count_if(std::vector<int>(std::any_of(std::set<int>(std::vector<bool>(std::count",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The completion mentions `std::set<int>` and `std::count_if` which are relevant to checking for duplicates (converting to a set and counting), which relates to comparing the length of a list to the length of its set. However, the completion is dominated by a repeating cycle of `std::any_of(std::set<int>(std::vector<bool>(std::count_if(std::vector<int>(` that loops over and over with no additional content.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check for duplicates in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks for duplicates in a list by comparing the length of the list to the length of the set (which removes duplicates), returning True if there are duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::any_of(std::vector<int>{value}.begin(), std::vector<int>{value}.end(), [](bool found){return std::any_of(std::vector<int>{value}.begin(), std::vector<int>{value}.end(), [](bool found){return std::any_of(std::vector",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The completion attempts to use `std::any_of` to check for something in a vector, which is vaguely related to checking for duplicates. However, the completion is dominated by a repeating pattern of `std::any_of(std::vector<int>{value}.begin(), std::vector<int>{value}.end(), [](bool found){return` cycling over and over, with no coherent content left after collapsing the loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

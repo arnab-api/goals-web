@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_007",
+ "datatype": "list[str]",
+ "frontier_id": "total_length",
+ "condition": "the total number of characters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether any word is empty\n(2) the number of capitalized words\n(3) the length of the longest word\n(4) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = any(len(w) == 0 for w in words)\n    b = sum(1 for w in words if w[:1].isupper())\n    c = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(len(w) for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am counting the number of elements in a list.",
+   "verdict": "YES",
+   "reasoning": "The code is computing the sum of lengths of words (i.e., total number of characters across all words), not simply counting the number of elements in a list. However, \"counting elements\" is partially relevant \u2014 the code does involve counting (lengths/characters), and summing lengths is conceptually related to counting elements within each word. The description captures the counting/aggregation aspect, even if it misidentifies what is being counted.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am calculating the sum of all elements in a list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"calculating the sum\" which is relevant, and \"elements in a list\" partially captures the idea. However, the code is specifically summing the *lengths* of words, not the elements themselves. Still, \"sum of all elements\" captures the sum operation and the list context, which is partially relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum=0,int count=0;for(int i=0;i<value.size();++i){sum+=value[i].size();count+=value[i];}return std::pair(sum,count);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion computes the sum of sizes of elements in a collection (`sum += value[i].size()`), which directly corresponds to summing the lengths of words. There's also some noise (count variable, pair return), but the core operation of summing element sizes is present and relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the total number of characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the total number of characters in the string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words in the input.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the total number of characters in all strings.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it sums up the lengths of all words in the `words` collection, which is equivalent to counting the total number of characters across all strings.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum=0;for(int i=0;i<value.size();i++){for(auto& s:value){sum+=s.size();}}return sum;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion computes the sum of sizes of strings in a collection (iterating over elements and summing their `.size()`), which directly corresponds to summing the lengths of words. However, there's a nested loop issue (it iterates `value.size()` times over all strings), but the core concept of summing string lengths is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

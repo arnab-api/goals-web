@@ -1,0 +1,96 @@
+{
+ "id": "str_python_060",
+ "datatype": "str",
+ "frontier_id": "word_count",
+ "condition": "the number of whitespace-separated words",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a digit\n(2) the number of whitespace-separated words\n(3) whether the string has letters and all of them are lowercase\n(4) whether the string is a palindrome\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s.split())\n    c = s.isalpha() and s.islower()\n    d = s == s[::-1]\n    return a, b, c, d\n</code>",
+ "impl_span": "b = len(s.split())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the variable `x` is an integer, then if it's a palindrome, then counting the number of words in a string, and finally checking if a list `y` is empty.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"counting the number of words in a string,\" which is exactly what `len(s.split())` does. Despite the noise about other unrelated checks, this relevant fragment is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(s.split())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of words in the input string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: splitting a string and counting the resulting parts gives the number of words in the input string.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    std::istringstream iss(value); \n    std::vector<std::string> words; \n    std::string word; \n    int word_count = 0; \n    while (std::getline(iss, word, ' ')) { \n        words.push_back(word); \n        word_count++;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion implements word counting by splitting a string on spaces using `istringstream` and `getline`, which is directly analogous to `len(s.split())` in Python. Both approaches split a string into words and count them.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of words in the input string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it splits the string `s` into words and counts them using `len()`, which is exactly \"counting the number of words in the input string.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(value), std::end(value), ' '); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace and taking the length. The C++ completion counts spaces in the string, which is a closely related operation (number of spaces \u2248 number of word boundaries, a different but related approach to counting words). This is genuinely relevant to the operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of words in the string by splitting it on whitespace and checking the length of the resulting list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: splitting the string on whitespace and counting the resulting elements to get the word count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(value), std::end(value), ' ') + 1; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion counts spaces in a string and adds 1, which is equivalent to counting words (splitting by spaces gives word count = space count + 1). This is directly relevant to what the Python code does \u2014 counting the number of words by splitting on whitespace.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

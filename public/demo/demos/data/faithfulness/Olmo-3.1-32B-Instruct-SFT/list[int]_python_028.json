@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_028",
+ "datatype": "list[int]",
+ "frontier_id": "count_odd",
+ "condition": "the number of odd values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the difference between the maximum and minimum values\n(2) the number of odd values\n(3) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = max(nums) - min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for x in nums if x % 2 != 0)\n    c = any(x % 2 == 0 for x in nums)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am processing each element in the list to perform a specific operation and then returning the result.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is too generic \u2014 it just says \"processing each element and returning a result\" without identifying any specific operation (counting odd numbers, checking divisibility by 2, summing, etc.).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; };",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of odd numbers in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting odd numbers in a list, which is exactly what the code does by summing 1 for each element where x % 2 != 0 (i.e., odd numbers).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int odd = 0;  \n    int even = 0;  \n    for (auto i = 0; i < value.size(); i++){  \n        if (value[i] % 2 != 0){  \n            odd += 1;  \n        }  \n        if (value[i]",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion counts odd numbers in a collection by checking `% 2 != 0`, which is exactly what the Python code does (counting elements where `x % 2 != 0`). The completion even uses the same variable name `odd` and the same modulo condition.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the number of odd numbers in a list.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 it counts odd numbers (x % 2 != 0) in a list (nums) by summing a generator expression.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](auto& v){ return std::count_if(v.begin(), v.end(), [](auto& x){ return x; }); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion uses `std::count_if` on a collection, which is relevant to counting elements that satisfy a condition. However, it applies `count_if` twice in a nested fashion (suggesting it's working on a 2D structure), and the inner predicate just returns `x` (truthy check) rather than checking for odd numbers (`x % 2 != 0`). The outer structure is relevant (counting elements meeting a condition in a collection), but the specific predicate is wrong and the nesting is spurious.\n\nDespite the wrong predicate and nested structure, the core operation \u2014 using `count_if` to count elements satisfying some condition in a collection \u2014 is genuinely relevant to what the Python code does (counting elements where `x % 2 != 0`).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting odd numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting odd numbers in a list, which is exactly what the code does (summing 1 for each element where x % 2 != 0, i.e., odd numbers).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (auto num : value) {  \n        if (num % 2 != 0) {  \n            count++;  \n        }  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting elements in a collection where each element modulo 2 is not equal to 0 (i.e., counting odd numbers). The logic is directly equivalent.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_012",
+ "datatype": "list[str]",
+ "frontier_id": "count_capitalized",
+ "condition": "the number of capitalized words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of distinct words\n(2) the number of words longer than five characters\n(3) the number of capitalized words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(words))\n    b = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].isupper())\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w and w[0].isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a specific condition is true for each item in a list and counting how many times it is.",
+   "verdict": "YES",
+   "reasoning": "The description accurately captures the core operation: iterating over items in a list, checking a condition for each, and counting how many satisfy it. This is exactly what the code does (counting words that start with an uppercase letter).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "At this line of the code, I am checking if the current string is uppercase (i.e., whether it consists only of uppercase letters).",
+   "verdict": "YES",
+   "reasoning": "The code counts words that start with an uppercase letter (checking `w[0].isupper()`), while the description says it checks if the string consists *only* of uppercase letters. The description is partially relevant \u2014 it correctly identifies that uppercase checking is involved \u2014 but conflates `isupper()` on the first character with checking if the entire string is uppercase. Still, the core concept of uppercase checking is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if (std::begin (value), std::end (value), [](const std::string& s){ return std::isupper (s[0]); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The C++ completion implements counting strings that start with an uppercase letter, which is exactly what the Python code does (counting words where the first character is uppercase). The logic is directly parallel: iterating over a collection and counting elements where the first character satisfies `isupper`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many times a condition is true in a list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting how many times a condition is true in a list,\" which accurately captures the essence of the code \u2014 it counts elements in `words` that satisfy a condition (non-empty and starting with an uppercase letter). This is genuinely relevant, even if it doesn't specify the exact condition.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if (std::begin (value), std::begin (value), std::begin (value)); }",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The C++ completion shows `std::count_if` being applied to a collection (`value`), which is relevant to the Python code that counts words meeting a condition. However, the arguments to `count_if` are malformed (three `std::begin(value)` calls with no predicate), and it's dominated by a repeating `std::begin(value)` pattern. The core idea of counting with a predicate is partially present, but the repetition of `std::begin(value)` three times suggests a loop-like degeneration.\n\nThe repetition here is `std::begin (value)` appearing three times as arguments, but the overall structure (`count_if` on a collection) is coherent enough that it's not purely a heavy loop \u2014 the function signature and `count_if` call are meaningful. However, the predicate (checking if first character is uppercase) is completely absent.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting how many strings in the list start with an uppercase letter (assuming that's what \"uppercase\" means here).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts strings in a list (words) that start with an uppercase letter, which is exactly what `w[0].isupper()` checks.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](const std::string& s){ return std::isdigit(s[0]); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].isupper())",
+    "reasoning": "The Python code counts words that start with an uppercase letter. The C++ completion counts elements where the first character is a digit (`std::isdigit`), not an uppercase letter (`std::isupper`). However, the C++ code does capture the relevant structure: iterating over a collection of strings and checking the first character (`s[0]`) of each string \u2014 which is the core operation. The specific check is wrong (digit vs. uppercase), but the structural approach of checking the first character of each string in a collection is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

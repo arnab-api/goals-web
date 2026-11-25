@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_003",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) the number of odd values\n(3) whether the values are sorted in non-decreasing order\n(4) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums)\n    b = sum(1 for x in nums if x % 2 != 0)\n    c = all(nums[i] <= nums[i+1] for i in range(len(nums)-1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(x % 2 == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = any(x % 2 == 0 for x in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am checking if a list is empty to determine if there are any elements present.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether any element in `nums` is even (divisible by 2), using `any()` with a modulo operation. The description says it's checking if a list is empty to determine if elements are present \u2014 this is completely unrelated to checking for even numbers, and while `any()` is involved, the described purpose (empty list check) is wrong and unrelated to the actual operation being performed.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? false : true; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion checks if a container is empty (returning true/false), which is unrelated to checking if any number is even (divisible by 2). The code's core operation involves modulo arithmetic and checking for even numbers, none of which appears in the completion.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if there are any elements in the list, to determine if at least one exists (i.e., if the list is not empty).",
+   "verdict": "NO",
+   "reasoning": "The code checks if any element in `nums` is even (divisible by 2), not whether the list is non-empty. The description correctly identifies the use of `any()` but misidentifies what property is being checked \u2014 it says \"if the list is not empty\" rather than \"if any element is even.\"\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? false : any_of(value.begin(), value.end(), [](int x){ return x == 1; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion uses `any_of` over a collection, which is directly relevant to the `any()` operation in the Python code. It also iterates over elements and checks a property of each element (`x == 1` vs `x % 2 == 0`), which is structurally similar even though the specific condition is wrong (checking equality to 1 instead of checking even numbers).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if any element in the list is True (i.e., at least one value exists).",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking if \"any element\" satisfies a condition, which aligns with the use of `any()` in the code. However, it says \"is True (i.e., at least one value exists)\" which is too vague and misses the key operation of checking for even numbers (x % 2 == 0). The partial match on `any()` and \"at least one\" is relevant but the specific property being checked is completely wrong/absent.\n\nGiven the lenient grading criteria, the description does capture the `any()` / \"at least one\" aspect of the code, even though it misses the even-number check entirely.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if there is at least one even number in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it uses `any()` to check if there exists at least one even number (x % 2 == 0) in the list `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](int x){ return x % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements `std::any_of` checking `x % 2 == 0` over a collection, which is exactly what the Python code does \u2014 checking if any element in `nums` is even. This is a near-perfect match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

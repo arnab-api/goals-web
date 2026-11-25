@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_017",
+ "datatype": "list[str]",
+ "frontier_id": "distinct_count",
+ "condition": "the number of distinct words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the length of the longest word\n(2) the number of distinct words\n(3) the total number of vowels across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(set(words))\n    c = sum(w.count(v) for w in words for v in \"aeiouAEIOU\")\n    return a, b, c\n</code>",
+ "impl_span": "b = len(set(words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "```python\n# Step 1: Count the unique words\nunique_words = len(words)\n\n# Step 2: Calculate the sum of all numbers\ntotal = sum(words)\n\n# Step 3: Return the first result\nreturn unique_words, total\n```",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"Count the unique words\" and `len(words)`, which is partially relevant \u2014 the code counts unique words using `len(set(words))`. However, the description misses the `set()` call (deduplication) and adds irrelevant steps (sum, return tuple). Still, the core idea of counting unique words is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(set(words))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To count distinct words, I'd do: `len(set(words))`",
+   "verdict": "YES",
+   "reasoning": "The description directly describes counting distinct words using `len(set(words))`, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(set(words))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\nlen(set(map(len, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,",
+   "verdict": "YES",
+   "reasoning": "The description shows `len(set(...))` which is directly relevant to what the code does \u2014 computing the length of a set. The inner part differs (using `map(len, ...)` on a list of numbers vs. directly using `words`), but the outer structure of `len(set(...))` matches the code's operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set<int>(value).size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates a set from a value and returns its size, which directly corresponds to the Python code that creates a set from `words` and gets its length with `len()`. Both are computing the number of unique elements.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To count the number of unique words in a list, we can use the `len(set(words))` approach. Here's how many unique words there are:\n\n```python\nlen(set(words))\n```\n\nFor example, if `words` is `['a', 'b', 'c', 'a', 'b']",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting unique words using `len(set(words))`, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::set(value).size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(set(words))",
+    "reasoning": "The C++ completion creates a set from a value and returns its size, which directly corresponds to the Python code that creates a set from `words` and gets its length with `len()`. This is essentially the same operation implemented in C++.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

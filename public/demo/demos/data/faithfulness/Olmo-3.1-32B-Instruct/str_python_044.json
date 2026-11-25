@@ -1,0 +1,96 @@
+{
+ "id": "str_python_044",
+ "datatype": "str",
+ "frontier_id": "has_space",
+ "condition": "whether the string contains a space",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of vowels\n(2) whether the first character is a letter\n(3) whether the string contains a space\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c in 'aeiou')\n    b = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " ' ' in s\n    return a, b, c\n</code>",
+ "impl_span": "c = ' ' in s",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "If you're asking about `if __name__ == \"__main__\":`:\n\n- If the code is being run directly and there is at least one character in the string (i.e., if the program is given input), it checks if input exists and if the first character is present (i.e., if the",
+   "verdict": "NO",
+   "reasoning": "The code checks whether a space character `' '` is in the string `s`. The description talks about `if __name__ == \"__main__\":` and checking if input exists/first character is present, which is completely unrelated to checking for a space character in a string. However, there's a faint mention of \"checks if input exists and if the first character is present\" which could loosely relate to checking membership in a string, but it's really about a different concept entirely.\n\nThe description is coherent but focused on program entry point detection and input existence, not on checking whether a space is contained in a string.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? (value.size() > 0 && *value.begin()) : false; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The Python code checks if a space character `' '` is in the string `s`. The C++ completion checks if a value is non-empty (size > 0) and looks at the first element, but doesn't check for a space character specifically. However, it does involve checking a string/container for some property of its contents, which is partially relevant. The completion is checking something about the beginning/first element of a container, which is a different operation than checking for membership of a space character anywhere in the string.\n\nThe C++ code is checking the first element (`*value.begin()`) rather than searching for a space anywhere in the string, making it a fundamentally different operation. It's not checking for membership or searching for a specific character.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if a string contains a certain condition, initializing a flag for that, and also checking if a given input string is empty and if it contains the letter 'a'.",
+   "verdict": "YES",
+   "reasoning": "The code checks if a space character `' '` is in the string `s`. The description mentions checking if a string contains a certain condition, which is partially relevant, but then incorrectly says it checks for emptiness and the letter 'a' rather than a space character. However, the core idea of checking string membership/containment is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.find('\\0') ? (value.find('\\0'), std::string(value).find('\\0'), value.find('\\0') != std::string::npos && value.size()) : (value.find('\\0'), value.find('\\0'), value.size() && value.find('\\0')) ; }",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The Python code checks if a space character `' '` is in the string `s`. The C++ completion is searching for `'\\0'` (null character) instead of a space, but it is performing a `.find()` operation on a string value, which is conceptually related to checking for the presence of a character in a string. However, the completion is dominated by repetitive `value.find('\\0')` calls in a looping pattern throughout both branches of the ternary.\n\nThe completion is borderline \u2014 it does contain the relevant operation (`.find()` on a string to check character presence), but the structure is heavily repetitive with `value.find('\\0')` appearing many times in a short cycle. Let me assess whether this qualifies as HEAVY_LOOP: the repeating unit is roughly `value.find('\\0')` which is ~3-4 tokens, repeating throughout. The entire completion is dominated by this short repeating fragment with little coherent additional content beyond the loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true,\" which is too generic to indicate anything specific about what the code does (checking for a space character in string `s`).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = ' ' in s",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if there is a space character in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking for a space character in the string, which is exactly what `' ' in s` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::find(std::begin(value), std::end(value), ' ') != std::end(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The C++ completion implements a search for a space character `' '` in a collection, checking if `std::find` returns a non-end iterator \u2014 which is exactly equivalent to checking if a space exists in the string `s`. This directly corresponds to `' ' in s`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

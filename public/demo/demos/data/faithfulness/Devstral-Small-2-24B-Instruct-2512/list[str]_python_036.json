@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_036",
+ "datatype": "list[str]",
+ "frontier_id": "longest_word_length",
+ "condition": "the length of the longest word",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that start with a vowel\n(2) the total number of uppercase letters across all words\n(3) the length of the longest word\n(4) whether all words have distinct lengths\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    b = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(len(w) for w in words) if words else 0\n    d = len(words) == len({len(w) for w in words})\n    return a, b, c, d\n</code>",
+ "impl_span": "c = max(len(w) for w in words) if words else 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The code computes the maximum word length across all words in a list. The description mentions \"counting the number of characters in a string,\" which is partially relevant \u2014 computing `len(w)` does count characters, and the overall operation involves character counts. However, it misses the key operation of finding the maximum. Still, it correctly identifies that character counting is involved.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0, [](int a, int b){ return a + b; }); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = max(len(w) for w in words) if words else 0",
+    "reasoning": "The Python code finds the maximum word length across all words. The C++ completion implements a sum (accumulate with addition), which is completely unrelated to finding the maximum length of strings in a collection.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To find the length of the string, I'm checking each character to determine the maximum length.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the maximum length by checking characters/strings, which is relevant to what the code does (computing the maximum word length). The description correctly identifies the core operation of finding maximum length.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int len=0;for(auto& x:vector<int>{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = max(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion mentions finding a length (`int len=0`) and iterating over elements, which partially relates to the concept of computing a length. However, it's iterating over a hardcoded vector of integers rather than words, and doesn't capture the key operation of finding the **maximum** length across words. The iteration pattern with a length variable is somewhat relevant but misses the core \"max word length\" concept.\n\nThe completion does contain a loop with a `len` variable that could be tracking length, which is partially relevant to computing word lengths. It's not a heavy loop (the repeating sequence is the vector literal which is just initialization), and there's coherent content about length computation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To find the maximum length of a list, I'll iterate through the list to determine the maximum value.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding a maximum value by iterating through a list, which is relevant to the code that computes the maximum length of words in a list. While it says \"maximum length of a list\" rather than \"maximum length of words in a list,\" the core operation (finding a maximum by iterating) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = max(len(w) for w in words) if words else 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The length of the longest word in the list is `max(len(word) for word in words)`.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation being performed: finding the maximum length among words in a list using `max(len(...) for ... in words)`. This matches exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.empty() ? 0 : std::max_element(value.begin(), value.end())->size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = max(len(w) for w in words) if words else 0",
+    "reasoning": "The C++ completion correctly implements finding the maximum length of strings in a collection, handling the empty case by returning 0, which directly mirrors the Python code's logic of finding the maximum word length with an empty-check fallback.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

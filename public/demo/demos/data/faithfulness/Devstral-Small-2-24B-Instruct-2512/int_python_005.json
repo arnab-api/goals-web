@@ -1,0 +1,96 @@
+{
+ "id": "int_python_005",
+ "datatype": "int",
+ "frontier_id": "digit_count",
+ "condition": "the number of digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) whether the number has exactly two digits\n(3) the number of digits\n(4) whether the number is a multiple of three\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n)\n    b = (10 <= abs(n) <= 99"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(str(abs(n)))\n    d = (abs(n) % 3 == 0)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = len(str(abs(n)))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the number of elements in the list is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The code computes the number of digits in the integer `n` (by converting its absolute value to a string and measuring its length). The description talks about checking if the number of elements in a list is even or odd, which is completely unrelated \u2014 there's no list, no even/odd check, just digit counting.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = len(str(abs(n)))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "The number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description says \"the number of digits in the number\" which is exactly what the code computes (length of string representation of absolute value of n = number of digits). However, this phrase repeats in a loop: \"the number of digits in the number of digits in the number of digits in...\" This is a HEAVY_LOOP pattern where a short phrase (\"the number of digits in\") repeats over and over.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = len(str(abs(n)))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The number of digits in the count of digits in the count of digits in the count of digits in the count of digits in the count of digits in the count of digits in the count of digits in the count of digits in the count of digits in the count of digits in the count of digits in the count of digits",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions \"the number of digits in the count of digits\" which is relevant to what the code does \u2014 the code computes the number of digits in `n` (by converting `abs(n)` to a string and taking its length). However, the description then repeats \"in the count of digits\" over and over in a loop pattern, making it a heavily looping structure. The core unit \"the count of digits in\" repeats many times, dominating the description.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(str(abs(n)))",
+    "reasoning": "The C++ completion returns the size of a value, which corresponds to getting the length (`len`) of something. The Python code converts a number to its string representation and gets its length (number of digits). The C++ completion captures the `.size()` operation which is the core of what the code does, even though it omits the string conversion and absolute value steps.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine the number of digits in a number, we can count the digits by converting the number to a string and using the `len()` function. Here's how to find the number of digits in a number:\n\n```python\ndef count_digits(n):\n    return len(str(n))\n\n# Example:\nnum =",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: counting the number of digits in a number by converting it to a string and using `len()`. This matches exactly what the code does (with the addition of `abs()` to handle negative numbers, which is a minor detail).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::to_string(value).length(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(str(abs(n)))",
+    "reasoning": "The C++ completion implements converting a number to a string and getting its length, which directly corresponds to what the Python code does: converting the absolute value of n to a string and getting its length (number of digits). The C++ version omits the `abs()` call but captures the core operation correctly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

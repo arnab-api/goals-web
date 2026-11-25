@@ -1,0 +1,96 @@
+{
+ "id": "str_python_034",
+ "datatype": "str",
+ "frontier_id": "count_uppercase",
+ "condition": "the number of uppercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the last character\n(2) the length of the string\n(3) whether the string contains a space\n(4) the number of uppercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[-1]\n    b = len(s)\n    c = ' ' in s"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for ch in s if ch.isupper())\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for ch in s if ch.isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of occurrences of a specific value in a list.",
+   "verdict": "NO",
+   "reasoning": "The code counts uppercase characters in a string, while the description talks about counting occurrences of a specific value in a list. However, both involve counting/tallying elements that meet a condition, which is a partial conceptual overlap. The description is somewhat generic but does capture the \"counting occurrences\" aspect, even if the specific condition (uppercase letters) and data structure (string vs list) are wrong.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(value.begin(), value.end(), _); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for ch in s if ch.isupper())",
+    "reasoning": "The C++ completion uses `std::count` over a string's characters, which is relevant to counting elements in a string. The Python code counts uppercase characters in a string, and while the C++ doesn't specify uppercase as the criterion (using `_` as a placeholder), the core operation of counting characters in a string is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of uppercase letters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts uppercase letters in a string `s` by iterating over characters and checking `isupper()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& item : value)  \n        count += std::count_if(item.begin(), item.end(), [](char c){  \n            int upper = 0;  \n            for (const auto& ch : item)  \n                upper += std::count_if",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for ch in s if ch.isupper())",
+    "reasoning": "The C++ completion counts uppercase characters in a string, using `std::count_if` and checking for uppercase characters (`upper`, `isupper`-like logic). This directly corresponds to the Python code which counts uppercase characters in string `s`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of occurrences of each character in a string.",
+   "verdict": "NO",
+   "reasoning": "The code counts the number of uppercase characters in a string, not the frequency of each character. The description mentions counting character occurrences, which is partially related (it's about character counting), but \"occurrences of each character\" implies a frequency distribution (like a histogram), which is completely different from counting uppercase letters specifically.\n\nHowever, \"counting occurrences of characters\" does share the sub-concept of iterating over characters and counting, which is a relevant sub-step. But the description specifically says \"each character\" implying a per-character breakdown, not a filtered count of uppercase ones.\n\nThis is borderline, but the description's core claim (counting occurrences of each character) is sufficiently different from what the code does (counting only uppercase characters, producing a single integer). The description misses the key filtering aspect entirely.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& item : value) {  \n        if (std::isdigit(item)) {  \n            int c = 0;  \n            for (const auto& ch : value) {  \n                if (std::isdigit(ch)) {  \n                    for (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for ch in s if ch.isupper())",
+    "reasoning": "The C++ completion is counting characters that satisfy a condition (using a loop with a counter), which is structurally relevant to counting characters in a string. However, it checks for `std::isdigit` (digits) rather than uppercase characters. The core operation of iterating and counting characters matching a predicate is present, even though the specific predicate is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts uppercase letters in string `s` using `isupper()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (const auto& c : value)  \n        if (std::isdigit(static_cast<unsigned char>(c)))  \n            for (const auto& c : value)  \n                if (std::isdigit(static_cast<unsigned char>(c)))  \n                    ++count;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(1 for ch in s if ch.isupper())",
+    "reasoning": "The Python code counts uppercase characters in a string. The C++ completion counts digits (using `std::isdigit`) rather than uppercase letters (which would use `std::isupper`). While the structure is relevant (iterating over characters and counting those matching a condition), the specific property being checked (`isdigit` vs `isupper`) is wrong. However, the general approach of counting characters matching a condition is partially relevant.\n\nThe completion also contains a nested loop repetition, but it's only two levels deep (not a runaway loop), and the core idea of counting characters is present.\n\nThe key question: is \"counting characters matching a property\" enough to be YES, even though the property is wrong (digits vs uppercase)? Per the grading rules, wrong specifics don't count against it \u2014 the code checks some character property and counts matches, which is the right structure.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

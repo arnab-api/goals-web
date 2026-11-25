@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_020",
+ "datatype": "list[str]",
+ "frontier_id": "count_starts_vowel",
+ "condition": "the number of words that start with a vowel",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether all words have distinct lengths\n(2) the total number of uppercase letters across all words\n(3) the number of words that start with a vowel\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(len(w) for w in words)) == len(words)\n    b = sum(1 for w in words for c in w if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].lower() in 'aeiou')\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if w and w[0].lower() in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of times a condition is true.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"counting the number of times a condition is true,\" which is relevant \u2014 the code is indeed counting (using `sum`) how many words satisfy a condition (starting with a vowel). However, it's quite generic and doesn't specify what condition is being checked.\n\nThis is borderline between NO_INFO and YES. The description captures the counting aspect but gives no specifics about vowels, words, or the nature of the condition. It's too generic to indicate any specific aspect of the code.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in 'aeiou')",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting how many words in a list start with a vowel.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words in a list that start with a vowel (checking if the first character, lowercased, is in 'aeiou').\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](const std::string& str){ return str[0] == 'a' || str[0] == 'e' || str[0] == 'i' || str[0] == 'o' || str[0]",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting strings in a collection where the first character is a vowel (a, e, i, o, and likely 'u' cut off), which is exactly what the Python code does \u2014 counting words whose first character (lowercased) is a vowel. The implementation matches the core logic very closely.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am counting the number of words that start with a vowel in the given sentence.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words that start with a vowel (checking `w[0].lower() in 'aeiou'`), which is exactly what the description states.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in 'aeiou')",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting how many words in a list start with a vowel.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words in a list that start with a vowel by checking if the first character (lowercased) is in 'aeiou'.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count_if(std::begin(value), std::end(value), [](const std::string& s){  \n        return std::regex_match(s, std::regex(\"^[aeiou]\"));  \n    });  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in 'aeiou')",
+    "reasoning": "The C++ completion counts strings in a collection that start with a vowel (using regex matching against `[aeiou]`), which is exactly what the Python code does \u2014 counting words whose first character is a vowel. The implementation approach differs (regex vs direct character check) but the core operation is identical.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

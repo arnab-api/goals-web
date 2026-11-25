@@ -1,0 +1,96 @@
+{
+ "id": "str_python_019",
+ "datatype": "str",
+ "frontier_id": "starts_upper",
+ "condition": "whether the string starts with an uppercase letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) whether the string starts with an uppercase letter\n(3) the number of digit characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s and s[0].isupper()\n    c = sum(c.isdigit() for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "b = s and s[0].isupper()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the code at this line is trying to access a variable before it's defined, to determine if it exists or not.",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a variable is defined/exists before use, which is unrelated to what the code does. The code checks if string `s` is non-empty AND if its first character is uppercase. The description misses both the non-empty check (short-circuit evaluation) and the uppercase check entirely.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? 1 : 0; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = s and s[0].isupper()",
+    "reasoning": "The Python code checks if a string is non-empty and starts with an uppercase letter. The C++ completion just converts a value to 1 or 0 (a boolean/truthy check), which captures the truthiness aspect but completely misses the uppercase letter check. However, it does reflect the `s and ...` part (checking if the string is truthy/non-empty). This is very partial but there's a small relevant overlap with the non-empty check.\n\nActually, the C++ code is just a generic boolean conversion with no mention of strings, uppercase, or any string property. It's too generic to indicate any specific aspect of the code.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the string at the beginning is not empty and if the first character is uppercase.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes both parts of the code: checking that `s` is not empty (truthy) and that the first character `s[0]` is uppercase via `isupper()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.empty() ? false : value.front() && value.size() > 0 && !value.empty(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s and s[0].isupper()",
+    "reasoning": "The code checks if a string is non-empty AND starts with an uppercase letter. The C++ completion checks if the string is non-empty (via `value.empty()` and `value.size() > 0`), but completely misses the uppercase check (`isupper()`). However, it does correctly identify the non-empty check as a relevant sub-step, and accessing `value.front()` is relevant to checking the first character (even if the uppercase check is absent).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if a variable is defined and if a condition is true.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a variable is defined (the `s and` part) and if a condition is true (the `s[0].isupper()` part). This is a reasonable, if vague, description of what the code does - it checks that `s` is truthy and that the first character is uppercase.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = s and s[0].isupper()",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if the first character of the string is an uppercase letter (i.e., if the string starts with an uppercase letter).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if the string `s` is non-empty (via `s and`) and if its first character is uppercase (`s[0].isupper()`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return !value.empty() && std::isupper(static_cast<char const*>(value.c_str())[0]); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s and s[0].isupper()",
+    "reasoning": "The C++ completion checks that a string is non-empty and that its first character is uppercase, which is exactly what the Python code does (checking `s` is truthy/non-empty and `s[0].isupper()`). This is a near-perfect match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

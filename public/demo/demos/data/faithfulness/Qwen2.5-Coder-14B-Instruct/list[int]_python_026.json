@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_026",
+ "datatype": "list[int]",
+ "frontier_id": "count_odd",
+ "condition": "the number of odd values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value appears more than once\n(2) the number of odd values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums)) != len(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for x in nums if x % 2 != 0)\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if there are any duplicate elements in the list.",
+   "verdict": "NO",
+   "reasoning": "The description says it's checking for duplicate elements, but the code is counting odd numbers in a list. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(value.begin(), value.end(), [](auto x){ return x; }) && std::is_sorted(value.begin(), value.end()); };",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The Python code counts odd numbers in a list. The C++ completion checks if any element exists and if the collection is sorted \u2014 neither `any_of` with a trivially-true predicate nor `is_sorted` relates to counting odd numbers or checking the modulo 2 condition.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The code counts the number of **odd** numbers in the list (x % 2 != 0), but the description says it's counting **even** numbers. The operation described (counting numbers in a list based on parity) is conceptually related but gets the parity condition backwards. However, since counting even vs. odd numbers is a meaningful partial identification of what the code does (parity-based counting), this is close enough to count as relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto x){ return x % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion uses `std::count_if` with a modulo-2 check (`x % 2 == 0`) on elements of a collection, which is directly relevant to counting elements based on their parity. The Python code counts odd numbers (`x % 2 != 0`) while the C++ counts even numbers (`x % 2 == 0`), but the core operation (counting elements by parity using modulo 2) is the same concept.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of even numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The code counts the number of **odd** numbers (where `x % 2 != 0`), but the description says it's counting **even** numbers. The operation described (counting numbers in a list based on parity) is genuinely relevant, just with the wrong parity condition. Since partial/imprecise coverage still counts as YES, this qualifies.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::begin(value), std::end(value), [](auto v){ return v % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion uses `std::count_if` with a modulo-2 check (`v % 2 == 0`), which is directly relevant to counting elements based on even/odd parity. The Python code counts odd numbers (`x % 2 != 0`) while the C++ counts even numbers (`v % 2 == 0`), but the core operation \u2014 counting elements by their remainder when divided by 2 \u2014 is the same concept.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting the number of elements in the list that are odd.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting odd elements in a list, which is exactly what the code does (summing 1 for each element where x % 2 != 0, i.e., odd numbers).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto i = 0, sum = 0; i < value.size(); i++) { if (value[i] % 2 != 0) count++; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for x in nums if x % 2 != 0)",
+    "reasoning": "The C++ completion counts elements where `value[i] % 2 != 0`, which is exactly what the Python code does \u2014 counting elements in `nums` where `x % 2 != 0` (odd numbers). The logic is directly equivalent.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

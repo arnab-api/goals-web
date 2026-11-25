@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_016",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of odd values\n(2) the number of positive values\n(3) whether the values are sorted in non-decreasing order\n(4) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 != 0)\n    b = sum(1 for x in nums if x > 0)\n    c = all(nums[i] <= nums[i+1] for i in range(len(nums)-1"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(nums) != len(set(nums))\n    return a, b, c, d\n</code>",
+ "impl_span": "d = len(nums) != len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the list is sorted.",
+   "verdict": "NO",
+   "reasoning": "The code checks for duplicates by comparing the length of the list to the length of its set, which detects repeated elements. The description says it's checking if the list is sorted, which is completely unrelated to what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = len(nums) != len(set(nums))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check for duplicates, I'll use a set to track seen elements and a flag to detect duplicates.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for duplicates using a set, which is exactly what the code does \u2014 it compares the length of `nums` to the length of `set(nums)` to detect duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::ranges::any_of(std::vector<int>{value}, [](bool has_dup){return std::ranges::all_of(std::vector<int>{value}, [](bool has_dup){return std::ranges::any_of(std::vector<int>{value}, [](bool has_",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates in a list by comparing the length of the list to the length of a set (which removes duplicates). The C++ completion mentions `has_dup` (has duplicates) which is relevant, and uses `any_of`/`all_of` range algorithms, but the structure is a heavily repeating nested loop pattern with `any_of`/`all_of`/`any_of` cycling. However, the variable name `has_dup` is genuinely relevant to the concept of duplicate detection.\n\nDespite the relevant naming, the completion is dominated by a short repeating cycle: `std::ranges::any_of(std::vector<int>{value}, [](bool has_dup){return std::ranges::all_of(std::vector<int>{value}, [](bool has_dup){return std::ranges::any_of...` \u2014 this is a clear HEAVY_LOOP pattern cycling through roughly the same tokens repeatedly.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the list contains duplicates by using the `any()` function with a set to detect duplicates, and then I'm verifying if the list has any elements by using `all()` with a flag. Finally, I'm checking if the list has any elements by using `any()` with a flag.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core concept: checking if a list contains duplicates using a set. The implementation details are wrong (mentions `any()`, `all()`, flags instead of the actual `len() != len(set())` approach), but the fundamental idea of detecting duplicates via a set is correctly surfaced.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::any_of(std::vector<bool>{std::adjacent_find([](bool has_dup){return !std::count_if(std::vector<bool>{false}, [](bool b){return has_dup = false;});}, [](bool b){return has_dup = false;});}, [",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of its set. The C++ completion mentions `adjacent_find` and `has_dup` which are related to finding duplicates, and `any_of` which relates to checking a boolean condition across elements. Despite being garbled and cut off, it contains relevant concepts (duplicate detection via `has_dup`, checking elements).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check for duplicates, I'll use a set to detect any repeated elements in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks for duplicates by comparing the length of the original list to the length of a set (which removes duplicates), detecting repeated elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::any_of(std::adjacent_find(std::vector<bool>(false)) != std::vector<bool>(false);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of its set. The C++ completion mentions `std::adjacent_find` which is a common C++ approach to finding duplicates, and `std::any_of` which is also related to checking for existence of elements. However, the code is quite garbled and malformed syntactically, though it does contain relevant concepts (duplicate detection via adjacent_find).\n\nThe completion is not a heavy loop, and it does contain some relevant substance (adjacent_find for duplicate detection), even if the syntax is broken.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

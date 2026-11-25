@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_023",
+ "datatype": "list[str]",
+ "frontier_id": "count_starts_vowel",
+ "condition": "the number of words that start with a vowel",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that end with a consonant\n(2) whether any word is a palindrome\n(3) whether any word is empty\n(4) the number of words that start with a vowel\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou\")\n    b = any(w == w[::-1] for w in words)\n    c = any(len(w) == 0 for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of elements in the list.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting the number of elements in the list,\" which is partially relevant \u2014 the code does count elements (words starting with a vowel). However, the description is too generic and doesn't capture the key filtering aspect (checking if words start with a vowel). It's borderline, but \"counting elements in a list\" does describe a sub-operation of what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of vowels in the given string.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that start with a vowel (checking `w[0].lower() in \"aeiou\"`), not the number of vowels in a string. However, the description does mention counting vowels, which is a related concept \u2014 it correctly identifies that vowels are being checked and that counting is happening. The distinction between \"counting vowels\" and \"counting words starting with a vowel\" is a meaningful difference, but the core operation (checking membership in vowels set and counting) is partially captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of elements in the list.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"counting the number of elements in the list,\" which is partially relevant \u2014 the code does count elements (words starting with a vowel). However, the description is too generic and doesn't capture the key filtering aspect (vowel check), making it borderline NO_INFO. But counting elements in a list is a correct sub-step of what the code does.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am counting the number of elements in the list that start with a vowel.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts elements in `words` that start with a vowel (checking if the first character lowercased is in \"aeiou\").\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return count_if(begin(value), end(value), [](auto v){ return count_if(begin(value), end(value), [](auto v){ return isalpha(v) && count_if(begin(value), end(value), [](auto v){ return isdigit(v); }); });",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The C++ completion attempts to count elements in a collection using `count_if`, which is related to counting words that satisfy a condition. However, it checks for `isalpha` and `isdigit` rather than checking if words start with a vowel. More critically, the completion contains a nested repeating pattern of `count_if(begin(value), end(value), [](auto v){` that loops and dominates the output, making it a heavy loop despite containing some partially relevant counting logic.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

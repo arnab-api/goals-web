@@ -1,0 +1,96 @@
+{
+ "id": "str_python_010",
+ "datatype": "str",
+ "frontier_id": "vowel_count",
+ "condition": "the number of vowels",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a space\n(2) whether the string contains a digit\n(3) the number of vowels\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = ' ' in s\n    b = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for ch in s if ch.lower() in 'aeiou')\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for ch in s if ch.lower() in 'aeiou')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Counting the number of vowels in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting vowels in a string, which is exactly what the code does by iterating through characters and checking if they are vowels (a, e, i, o, u).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(value.begin(), value.end(), 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for ch in s if ch.lower() in 'aeiou')",
+    "reasoning": "The Python code counts vowels in a string. The C++ completion uses `std::count` on a string-like container, which is a counting operation on characters, but it counts occurrences of `0` (null character) rather than vowels. The core operation (counting elements in a string) is partially relevant, though the specific element being counted is wrong.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of vowels in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting vowels in a string, which is exactly what the code does by iterating through characters and checking if their lowercase form is in 'aeiou'.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int vowel_count = 0;  \n    const char vowels[] = \"aeiouAEIOU\";  \n    int count = 0;  \n    for (const char* v = vowels; v < vowels + 5; ++v)  \n        if (*v == 'a' || *v",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for ch in s if ch.lower() in 'aeiou')",
+    "reasoning": "The C++ completion explicitly counts vowels, initializes a `vowel_count`/`count` variable, defines a vowels string \"aeiouAEIOU\", and iterates through characters checking for vowel membership \u2014 all directly relevant to what the Python code does (counting vowels in a string).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of vowels in a string.",
+   "verdict": "YES",
+   "reasoning": "The description \"Counting the number of vowels in a string\" is exactly what the code does \u2014 it iterates over characters in `s`, checks if each character (lowercased) is a vowel, and sums the count.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for(char c : value){ if(std::isalpha(c)) count++; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for ch in s if ch.lower() in 'aeiou')",
+    "reasoning": "The C++ completion iterates over characters in a string and counts something about each character. However, it checks `std::isalpha(c)` (alphabetic characters) rather than vowels. The code is counting vowels specifically, while the completion counts all alphabetic characters. Despite the wrong filter condition, the structure (iterating over characters and counting those matching a condition) is partially relevant, though the specific property being checked (vowel membership) is not captured.\n\nThe completion does share the counting-characters-in-a-string structure, but the actual property being checked (vowel vs. alphabetic) is completely different. Still, the overall pattern of counting characters matching a condition is relevant enough to count as a partial match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of vowels in the string.",
+   "verdict": "YES",
+   "reasoning": "The description directly and accurately describes what the code does \u2014 it counts vowels in a string by checking if each character (lowercased) is in the set of vowels 'aeiou'.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    const char* vowels = \"aeiouAEIOU\";  \n    for (const char* p = vowels, *e = vowels; *p && value; ++e)  \n        if (strchr(\"aeiouAEIOU\", *p) - e",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for ch in s if ch.lower() in 'aeiou')",
+    "reasoning": "The C++ completion is counting vowels - it references a `vowels` string \"aeiouAEIOU\", uses `strchr` to check for vowel membership, and maintains a `count` variable. This directly corresponds to the Python code which counts vowels (characters in 'aeiou') in a string. The implementation is garbled/incomplete but the core concept of counting vowels is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_036",
+ "datatype": "int",
+ "frontier_id": "digit_sum",
+ "condition": "the sum of the digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is a perfect square\n(2) the sum of the digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n >= 0 and int(n**0.5)**2 == n"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(int(d) for d in str(abs(n)))\n    return a, b\n</code>",
+ "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a palindrome.",
+   "verdict": "NO",
+   "reasoning": "The code computes the sum of digits of the absolute value of `n`, which is completely unrelated to checking if something is a palindrome. The description describes a different operation (palindrome check) with no overlap in what the code actually does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, value*value, value%2==0};}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+    "reasoning": "The Python code computes the sum of digits of the absolute value of a number. The C++ completion returns a tuple containing the value, its square, and whether it's even \u2014 none of which relate to digit sum computation. There's no relevant operation here.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To find the sum of the digits of a number, we first calculate the sum of its digits and then return the result.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"sum of the digits of a number\" which is exactly what the code computes \u2014 it converts the absolute value of n to a string, iterates over each character, converts to int, and sums them. The description is correct and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum=0;int product=0;int count=0;int digit=0;int result=0;int temp=value;int sum_digits=0;int sum_squares=0;int sum_cubes=0;int sum_letters=0;int sum_letters2=",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+    "reasoning": "The C++ completion is computing a sum of digits (with `sum_digits` variable) and iterating through digits of a value (`temp=value`, `digit` variable). This is directly relevant to the Python code which sums the digits of the absolute value of n. The completion isn't a heavy loop - it's a sequence of variable declarations that includes relevant concepts like `sum_digits` and `digit`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Summing the digits of `n` and returning the result.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it computes the sum of the digits of `n` (using `abs(n)` to handle negatives, converting to string, iterating over digits, converting each to int, and summing).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum=0;for(int s=value;sum+=s;sum=value?s=value?s=value?s=value?s=value?s=value?s=value?s=value?s=value?s=value?s=value?s=value?s",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+    "reasoning": "The completion starts with a relevant idea \u2014 summing digits of a value \u2014 but quickly devolves into a heavy repeating loop of `s=value?` repeated many times. The looping pattern dominates the completion and collapses into incoherence.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To find the sum of the digits of a number, we sum its digits.",
+   "verdict": "YES",
+   "reasoning": "The description directly describes computing the sum of digits of a number, which is exactly what the code does (summing the integer value of each digit character in the string representation of the absolute value of n).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum=0;for(int i=0;i<to_string(value).size();sum+=value%10, value>0?sum:0)sum+=value;return sum;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(int(d) for d in str(abs(n)))",
+    "reasoning": "The Python code computes the sum of digits of the absolute value of n. The C++ completion attempts to compute a digit sum by iterating and using `value%10` to extract digits, which is a standard digit-sum algorithm. Despite being syntactically garbled and having logic errors, it clearly captures the core idea of summing digits using modulo 10 operations.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

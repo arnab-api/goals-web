@@ -1,0 +1,96 @@
+{
+ "id": "int_python_016",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the number of set bits in the binary representation\n(2) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = bin(abs(n)).count(\"1"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= abs(n) <= 99\n    return a, b\n</code>",
+ "impl_span": "b = 10 <= abs(n) <= 99",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Check if the number is even (1 if two-digit, 0 otherwise) followed by checking if the number is two-digit (1 if two-digit, 0 otherwise).",
+   "verdict": "YES",
+   "reasoning": "The code checks whether the absolute value of n is a two-digit number (between 10 and 99 inclusive). The description mentions checking if a number is two-digit, which is genuinely relevant to what the code does, even though it also incorrectly mentions checking if the number is even and uses an odd framing with 1/0 values.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return static_cast<int>(value);}\nauto func (auto value) { return static_cast<int>(value); }\nauto func (auto value) { return static_cast<int>(value); }\nauto func (auto value) { return static_cast<int>(value); }\nauto func (auto value) { return static_cast<int>(",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = 10 <= abs(n) <= 99",
+    "reasoning": "The C++ completion is dominated by a short repeating cycle of `auto func (auto value) { return static_cast<int>(value); }` that repeats over and over. While `static_cast<int>` could loosely relate to checking integer properties, this is a HEAVY_LOOP with no coherent content about checking whether abs(n) is between 10 and 99.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Check if the number of digits in the input is exactly two.",
+   "verdict": "YES",
+   "reasoning": "The description says \"check if the number of digits in the input is exactly two,\" which is precisely what the code does \u2014 `10 <= abs(n) <= 99` checks whether the absolute value of n is a two-digit number.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return 10 < value < 100 ? 2 : 1; };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = 10 <= abs(n) <= 99",
+    "reasoning": "The C++ completion checks whether a value falls in the range (10, 100), which corresponds to checking if the absolute value of n is a 2-digit number (10 to 99). The Python code checks `10 <= abs(n) <= 99`, and the C++ checks `10 < value < 100` \u2014 same range concept (though boundary conditions differ slightly), checking for a 2-digit number. This is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if the number of characters in the input is exactly 2.",
+   "verdict": "YES",
+   "reasoning": "The description talks about checking if the input has exactly 2 characters, while the code checks if the absolute value of n is between 10 and 99 inclusive (i.e., a 2-digit number). These are conceptually related \u2014 a 2-digit number has exactly 2 digits, and 10 \u2264 abs(n) \u2264 99 is precisely the range of 2-digit integers. The description captures the essence of what the code is doing (checking for 2 digits/characters), even if it phrases it differently.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<bool>(std::is_same_v<decltype(value), std::enable_type<bool, std::is_same_v<int, std::type_identity<bool>(std::bool_)(std::is_same_v<int, std::type_identity<bool>(value)) : bool(std::is_same_v<decltype(value), std::",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = 10 <= abs(n) <= 99",
+    "reasoning": "The C++ completion is using type traits and template metaprogramming constructs, which are about type checking at compile time. The Python code is checking whether the absolute value of n is between 10 and 99 (a range check on a numeric value). The C++ completion contains nothing about absolute values, range checks, or numeric bounds \u2014 it's entirely about type identity and type sameness checks, which is completely unrelated.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "if 9 < len(str(x)) == 2:",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if something has length 2 (i.e., a 2-digit number), which is conceptually related to checking if `abs(n)` is between 10 and 99 (also a 2-digit number check). The mechanism is different (len(str(x)) vs direct comparison), but the core idea of identifying a 2-digit number is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return 10 <= value && value < 100;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = 10 <= abs(n) <= 99",
+    "reasoning": "The C++ completion checks if a value is between 10 and 100 (exclusive), which is essentially the same as checking if a number is a two-digit number. The Python code checks if the absolute value of n is between 10 and 99 inclusive (i.e., a two-digit number). The C++ uses `< 100` instead of `<= 99`, which is equivalent, and misses the `abs()` call, but the core range check is correct.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

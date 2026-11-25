@@ -1,0 +1,96 @@
+{
+ "id": "int_python_008",
+ "datatype": "int",
+ "frontier_id": "digit_count",
+ "condition": "the number of digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) the number of digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(str(a))\n    return a, b\n</code>",
+ "impl_span": "b = len(str(a))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm first checking the input, then performing the required operations, and finally returning the result.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description is completely generic \u2014 it just describes a three-step process (check input, perform operations, return result) without identifying anything specific about what the code actually does (converting a number to a string to find its length/number of digits).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = len(str(a))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number of digits in the number",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions \"the number of digits in the number\" which is exactly what the code computes (converting `a` to a string and taking its length gives the number of digits). However, the phrase repeats in a loop (\"the number of digits in the number of digits in the number of digits...\"), making it a heavy loop pattern dominated by a short repeating cycle.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;int digits = 0;int num = value;int sum = 0;int temp = value;int result = 0;int num_digits = 0;int num_digits = 0;int num_digits = 0;int num_digits =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(a))",
+    "reasoning": "The C++ completion counts digits (`int digits = 0`, `int num_digits = 0`) which is directly relevant to what the Python code does \u2014 computing the number of digits in `a` via `len(str(a))`. Despite the repetition of `int num_digits = 0` at the end, the completion is not dominated by a short looping cycle; it contains multiple distinct variable declarations before the repetition begins.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The number of digits in the absolute value of the count of characters in the string representation of the number of digits in the count of characters in the string representation of the number of digits in the count of characters in the string representation of the number of digits in the count of characters in the string representation of the number of digits",
+   "verdict": "YES",
+   "reasoning": "The code converts `a` to a string and finds its length (number of digits). The description mentions \"the number of digits in the... string representation\" which is genuinely relevant \u2014 it's talking about converting to string and counting characters/digits. The description is repetitive/looping in its phrasing, but let me check if it qualifies as a HEAVY_LOOP.\n\nThe repeating unit is roughly \"the number of digits in the count of characters in the string representation of\" \u2014 this is about 12-15 words, which is longer than the ~5 word threshold for HEAVY_LOOP. Also, the first occurrence does capture the actual operation (number of digits / count of characters in string representation). So this is more of a verbose/recursive description rather than a stuck token loop.\n\nThe substance \u2014 counting digits/characters in the string representation of a number \u2014 is directly relevant to what `len(str(a))` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(a))",
+    "reasoning": "The C++ completion returns the size/length of a value, which corresponds directly to what the Python code does \u2014 computing the length of the string representation of `a`. The `.size()` method is the C++ equivalent of `len()`, and while it's applied to `value` rather than explicitly `str(a)`, the core operation (getting the length/size) is correctly identified.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine the number of digits in a number, we can use the following approach:\n\n1. Convert the number to a string.\n2. Count the number of digits by calculating the length of the string representation of the number.\n\nFor example, the number of digits in 12345 has 5 digits,",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: converting a number to a string and counting the length of that string to determine the number of digits. This matches `len(str(a))` perfectly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::to_string(std::abs(static_cast<int>(std::to_string(value).length()))).length();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(a))",
+    "reasoning": "The C++ completion converts a value to a string and gets its length, which is exactly what the Python code does (`len(str(a))`). The extra wrapping (abs, static_cast, double to_string) is noise, but the core operation of converting to string and getting length is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

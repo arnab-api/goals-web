@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_014",
+ "datatype": "list[int]",
+ "frontier_id": "max_val",
+ "condition": "the largest value",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of odd values\n(2) whether any value appears more than once\n(3) the integer mean of the values\n(4) the largest value\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 != 0)\n    b = len(set(nums)) != len(nums)\n    c = sum(nums) // len(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " max(nums) if nums else None\n    return a, b, c, d\n</code>",
+ "impl_span": "d = max(nums) if nums else None",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Executing a block of code to calculate the average of a list, handling division by zero if the list is empty.",
+   "verdict": "NO",
+   "reasoning": "The code finds the maximum value of a list (or None if empty), not the average. The description mentions calculating an average and handling division by zero, which are completely unrelated operations to finding the maximum.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if(value.size() == 0) return 0;  \n    return static_cast<decltype(value.size())>(value.size());  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max(nums) if nums else None",
+    "reasoning": "The C++ completion checks if a container is empty (`value.size() == 0`) and handles that case, which corresponds to the `if nums else None` part of the Python code. However, it returns `value.size()` (the count of elements) rather than the maximum value, missing the `max()` operation entirely. Still, it correctly identifies the empty-check sub-step.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm not sure what the current value is, because you didn't provide the array or list to get the max from. Also, for an empty input, max() will throw an error if there are no elements. Please provide more context or clarify the requirements.",
+   "verdict": "YES",
+   "reasoning": "The description mentions finding the maximum value from an array/list, which is exactly what the code does with `max(nums)`. It also correctly identifies the edge case of an empty input causing an error with `max()`, which is precisely why the code uses the conditional `if nums else None` guard. This is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    if(value.empty()) return std::nullopt;  \n    int maxVal = *std::max_element(value.begin(), value.end());  \n    int sum = std::accumulate(value.begin(), value.end(), 0, [](int maxSoFar, int current){  \n        return std::max(maxSo",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max(nums) if nums else None",
+    "reasoning": "The C++ completion correctly identifies the key operations: checking if the collection is empty (returning nullopt/None), and finding the maximum element using `std::max_element`. The accumulate part is irrelevant noise, but the core logic of empty check + max element is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm finding the maximum value in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes finding the maximum value in a list, which is exactly what the code does using `max(nums)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int maxVal = value;  \n    if(value.empty()) return value;  \n    int maxElem = *max_element(value.begin(), value.end());  \n    return tuple(maxElem, maxVal, *max_element(value.begin(), value.end()),  \n                *max({value.begin(), value.end() -",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max(nums) if nums else None",
+    "reasoning": "The C++ completion is finding the maximum element of a collection using `max_element`, and also handles the empty case with `value.empty()`. This directly corresponds to the Python code which finds `max(nums)` and handles the empty case with `if nums else None`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I need more context to determine the maximum value. Please provide the list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"maximum value\" and \"list of numbers,\" which are directly relevant to what the code does (finding the maximum of a list called `nums`). Despite being phrased as a request for more information rather than a description of the operation, it correctly identifies the key concepts.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return *max_element(begin(value), end(value));  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = max(nums) if nums else None",
+    "reasoning": "The C++ completion implements finding the maximum element of a collection using `max_element`, which is directly relevant to the Python code that finds the maximum of `nums` using `max()`. Both accomplish the same operation (finding the maximum value in a collection).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

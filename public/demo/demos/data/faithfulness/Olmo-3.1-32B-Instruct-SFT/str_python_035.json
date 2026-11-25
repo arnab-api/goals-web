@@ -1,0 +1,96 @@
+{
+ "id": "str_python_035",
+ "datatype": "str",
+ "frontier_id": "count_uppercase",
+ "condition": "the number of uppercase letters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of whitespace-separated words\n(2) the number of uppercase letters\n(3) the number of alphabetic characters\n(4) whether the string starts with an uppercase letter\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s.split"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for c in s if c.isupper())\n    c = sum(1 for ch in s if ch.isalpha())\n    d = s and s[0].isupper()\n    return a, b, c, d\n</code>",
+ "impl_span": "b = sum(1 for c in s if c.isupper())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am counting the number of occurrences of each element in the list.",
+   "verdict": "NO",
+   "reasoning": "The code counts uppercase characters in a string, which is a form of counting occurrences. However, the description says \"counting occurrences of each element\" (implying a frequency distribution for all elements), while the code counts only uppercase characters specifically. The description is partially relevant (counting) but misses the key property being checked (uppercase). Still, \"counting occurrences\" is conceptually related to what the code does \u2014 it's counting how many characters satisfy a condition.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.isupper())",
+    "reasoning": "The Python code counts the number of uppercase characters in a string, while the C++ completion simply returns the size/length of a value with no mention of uppercase characters, counting, or any character-level filtering. The C++ completion is coherent but completely unrelated to the specific operation being performed.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the number of uppercase letters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts uppercase letters in string `s` by iterating through characters and checking `isupper()`, storing the result in `b`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](char c){ return std::isupper(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.isupper())",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: counting the number of uppercase characters in a string using `std::count_if` with `std::isupper`, which directly corresponds to `sum(1 for c in s if c.isupper())`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the number of uppercase letters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts uppercase letters in string `s` by iterating through characters and checking `isupper()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for c in s if c.isupper())",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of uppercase letters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts uppercase letters in string `s` by iterating over characters and checking `isupper()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (char c : value) {  \n        if (isupper(c)) {  \n            count++;  \n        }  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for c in s if c.isupper())",
+    "reasoning": "The C++ completion iterates over characters in a string, checks if each character is uppercase using `isupper()`, and counts them \u2014 exactly what the Python code does with `sum(1 for c in s if c.isupper())`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

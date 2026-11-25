@@ -1,0 +1,96 @@
+{
+ "id": "int_python_001",
+ "datatype": "int",
+ "frontier_id": "is_even",
+ "condition": "whether the number is even",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the number of digits\n(2) whether the number is negative\n(3) whether the number is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = len(str(abs(n)))\n    b = n < 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n % 2 == 0\n    return a, b, c\n</code>",
+ "impl_span": "c = n % 2 == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "- Check if the number is even: `number % 2 == 0`\n- Check if the number is positive: `number % 2 == 0` (if number is even) and `number % 2 == 0` (if number is even) and `number % 2 ==",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if a number is even using `n % 2 == 0`. The repeated \"if number is even\" parts are noise but the first bullet is directly relevant. It's not a heavy loop since the first bullet is coherent and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0;};\nauto func (auto value){return value % 2 == 0;};\nauto func (auto value){return value % 2 == 0;};\nauto func (auto value){return value % 2 == 0;};\nauto func (auto value){return value %",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 == 0",
+    "reasoning": "The completion shows `value % 2 == 0` repeated multiple times \u2014 this is exactly the operation in the Python code (checking if a number is even via modulo 2). However, the content is dominated by a short repeating cycle of the same lambda/function definition over and over.\n\nThe repeating unit is `auto func (auto value){return value % 2 == 0;};` \u2014 roughly 10 tokens, repeating 4+ times with no other content. This is a HEAVY_LOOP situation where the same ~10-token unit repeats continuously and collapses into a stuck loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Even: Check if the number is even.  \nDivide: Check if the number is divisible by 2.  \nGreater: Check if the number is greater than 5.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is even and checking divisibility by 2, both of which are directly relevant to what the code does (`n % 2 == 0`). The \"Greater than 5\" part is irrelevant, but the first two points correctly identify the operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0;};\nif (value % 2 == 0) {return true;};\nreturn value % 2 == 1;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 == 0",
+    "reasoning": "The C++ completion directly implements checking whether a value is even (`value % 2 == 0`), which is exactly what the Python code does (`n % 2 == 0`). This is a clear and relevant match, not a looping pattern.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am checking if the number is even (divisible by 2) by using the modulus operator (`%`).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a number is even using the modulus operator, which is exactly what `n % 2 == 0` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 == 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is even by computing `value % 2 == 0`. This is a direct match to the gold code's logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "If the number is even, return `True`; else, return `False`.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a number is even, which is exactly what `n % 2 == 0` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 2 == 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is even by computing `value % 2 == 0`. This is directly relevant to the Python code's operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

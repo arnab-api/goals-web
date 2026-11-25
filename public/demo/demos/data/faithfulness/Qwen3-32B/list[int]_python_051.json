@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_051",
+ "datatype": "list[int]",
+ "frontier_id": "is_sorted",
+ "condition": "whether the values are sorted in non-decreasing order",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of distinct values\n(2) whether the values are sorted in non-decreasing order\n(3) the number of negative values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    c = sum(1 for x in nums if x < 0)\n    return a, b, c\n</code>",
+ "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Check if the list is sorted.",
+   "verdict": "YES",
+   "reasoning": "The description \"Check if the list is sorted\" is directly relevant to what the code does \u2014 it checks whether all consecutive elements satisfy `nums[i] <= nums[i+1]`, which is exactly verifying that the list is sorted in non-decreasing order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::is_sorted(std::begin(value), std::end(value));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion implements `std::is_sorted`, which checks if a collection is sorted in non-decreasing order \u2014 exactly what the Python code does by checking that each element is \u2264 the next. This is a direct match in substance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the list is sorted in non-decreasing order by comparing each element to the next.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if a list is sorted in non-decreasing order by comparing consecutive elements.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::is_sorted(std::begin(value), std::end(value));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion implements `std::is_sorted`, which checks if a collection is sorted in non-decreasing order \u2014 exactly what the Python code does by checking that each element is \u2264 the next. This is directly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if the list is in non-decreasing order: `all(a <= b for a, b in zip(lst, [False] + [b for b in zip([x <= y for x, y in zip(lst, [False] + [x == sorted(b) for b in zip([a",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a list is in non-decreasing order using `all()` with a `<=` comparison, which is exactly what the code does. The description is garbled and trails off, but the core concept (non-decreasing order check using `all` and `<=`) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value == 0 ? false : (value == 1 ? true : (value < 0 ? false : (value == 2 ? true : (value < 3 ? false : (value == 4 ? true : (value < 5 ? false : (value == 6 ? true :",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The Python code checks if a list is non-decreasing (sorted in ascending order). The C++ completion appears to be checking specific even numbers (0, 1, 2, 4, 6) in a nested ternary structure, which seems to be checking for even numbers or some primality-related pattern \u2014 completely unrelated to checking if an array is sorted/non-decreasing.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I check if the list is in non-decreasing order.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if all consecutive elements satisfy `nums[i] <= nums[i+1]`, which is exactly the definition of non-decreasing order.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::is_sorted(std::begin(value), std::end(value), [](auto a, auto b){return a <= b;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion implements `std::is_sorted` with a comparator checking `a <= b`, which is directly equivalent to checking if all consecutive elements satisfy `nums[i] <= nums[i+1]` \u2014 exactly what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

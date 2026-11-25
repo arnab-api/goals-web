@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_001",
+ "datatype": "list[str]",
+ "frontier_id": "has_palindrome",
+ "condition": "whether any word is a palindrome",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) whether any word is a palindrome\n(3) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(w == w[::-1] for w in words)\n    c = sum(len(w) for w in words)\n    return a, b, c\n</code>",
+ "impl_span": "b = any(w == w[::-1] for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines in the code.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines of code, which is completely unrelated to what the code does (checking if any word in a list is a palindrome).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return {value, 0, 0}; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The C++ completion is a simple function stub that returns a tuple/array with the value and zeros. It contains no reference to palindrome checking, string reversal, word iteration, or any other aspect of what the Python code does (checking if any word is a palindrome).\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if any word in the list has the property that the second part of the code returns `True` for the first part.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if \"any word in the list\" has some property, which is directly relevant \u2014 the code uses `any()` over a list of words. However, the description is vague about what property is being checked (palindrome via `w == w[::-1]`), saying only \"the second part returns True for the first part\" which is circular and uninformative about the actual palindrome check.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool has_palindrome = false;bool is_prime = false;bool is_odd = false;bool is_even = false;bool is_palindrome = false;bool is_prime = false;bool is_odd = false;bool is_even = false;bool is_palindrome =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The C++ completion mentions `has_palindrome` and `is_palindrome`, which are directly relevant to the Python code that checks if any word is a palindrome (by comparing it to its reverse). However, the completion also contains repetition of variable declarations (`is_palindrome`, `is_prime`, `is_odd`, `is_even` repeating), but the core concept of palindrome checking is present and the loop isn't a short 5-token cycle dominating everything.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if any of the flags is set.",
+   "verdict": "NO",
+   "reasoning": "The code checks if any word in `words` is a palindrome (equal to its reverse). The description says \"checking if any of the flags is set,\" which mentions the `any()` operation but frames it as checking flags, which is unrelated to palindrome checking. However, \"checking if any\" does capture the use of `any()`, but the substance about what's being checked (palindromes) is completely missing and replaced with an unrelated concept (\"flags\").\n\nThe description is coherent but the core operation being checked (palindrome detection) is entirely absent. The only overlap is the generic \"any\" concept, which is too superficial to count as genuinely relevant substance about what the code does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool found=false;for(auto b:value){if(b){found=true;break;}}return found;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The C++ completion describes a function that iterates over a collection and checks if any element is truthy (returning true if found), which corresponds to the `any()` operation in the Python code. However, it doesn't capture the palindrome check (`w == w[::-1]`), only the `any()` part. Still, the `any()` operation is a genuine relevant sub-step of what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm checking if any word in the list is a palindrome.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks if any word in the `words` list is equal to its reverse (`w[::-1]`), which is exactly how you test for a palindrome.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool found = false;for(auto& s : {\"false\", \"true\"}){bool is_palindrome = false;for(auto& x : {false}){found = any_of(v.begin(), v.end(), [](bool b){return b = any_of(v.begin(), v.end(), [](bool",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(w == w[::-1] for w in words)",
+    "reasoning": "The Python code checks if any word in `words` is a palindrome (equal to its reverse). The C++ completion mentions `is_palindrome` and uses `any_of`, which are directly relevant to checking if any element satisfies a palindrome condition. However, the completion becomes a loop with `any_of(v.begin(), v.end()` repeating.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit is `any_of(v.begin(), v.end(), [](bool b){return b =` which is roughly 8-10 tokens repeating. This is slightly longer than \"five words/tokens or fewer\" but is clearly a stuck loop with little coherent content left after collapsing. However, before the loop starts, there is meaningful content: `is_palindrome` variable and `any_of` usage, which are genuinely relevant.\n\nThe completion does have some initial coherent content (`is_palindrome`, `any_of`) before degenerating into a loop. The loop unit is longer than 5 tokens, so I'll consider whether YES applies. The initial fragment is relevant (palindrome check + any_of), and the loop portion, while repetitive, contains `any_of` which matches the `any()` in Python. I'll classify this as YES since there's meaningful content before the loop dominates.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

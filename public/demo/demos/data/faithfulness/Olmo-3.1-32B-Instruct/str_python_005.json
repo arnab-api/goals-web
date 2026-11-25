@@ -1,0 +1,96 @@
+{
+ "id": "str_python_005",
+ "datatype": "str",
+ "frontier_id": "length",
+ "condition": "the length of the string",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string is a palindrome\n(2) the number of whitespace-separated words\n(3) the length of the string\n(4) whether the string contains a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = (s == s[::-1])\n    b = len(s.split"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s)\n    d = any(ch.isdigit() for ch in s)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = len(s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Counting the number of elements in a list or string to determine its length.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the length of a string/list using `len()`, which is exactly what the code does with `len(s)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(value), std::end(value), '\\0') + 1; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = len(s)",
+    "reasoning": "The Python code computes the length of string `s` using `len(s)`. The C++ completion counts occurrences of '\\0' in a value and adds 1, which is a way to count null-terminated string length (though not exactly equivalent). However, the core concept of counting/measuring the length of a sequence is present \u2014 `std::count` over the entire range relates to measuring something about the input's size/content, though the specific approach (counting null bytes) is a stretch from `len()`.\n\nActually, `std::count` counting `'\\0'` characters is not really computing the length of a string \u2014 it's counting null bytes. This is not the same as `len()`. However, the completion does involve counting elements in a container, which is somewhat related to computing the length.\n\nThe completion uses `std::count` over the full range of a container, which is at least about measuring/counting something about the input sequence. This is partially relevant to computing the length of a string `s`.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting the number of characters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the length of a string `s` and storing it in `c`, which is exactly what `len(s)` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s)",
+    "reasoning": "The C++ completion implements a function that returns the size/length of a value, which directly corresponds to the Python code computing the length of string `s` using `len(s)`. This is clearly relevant \u2014 both are computing the size/length of an input.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Counting the number of characters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the length of a string `s` and storing it in `c`, which is exactly what `len(s)` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s)",
+    "reasoning": "The C++ completion implements a function that returns the size/length of a value, which directly corresponds to the Python code computing the length of string `s` using `len(s)`. This is clearly relevant \u2014 both are computing the size/length of an input.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Calculating the length of the string using the `len()` function.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the length of a string using `len()`, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value.size(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(s)",
+    "reasoning": "The C++ completion implements a function that returns the size/length of a value, which directly corresponds to the Python code computing the length of string `s` using `len(s)`. This is clearly relevant \u2014 both are computing the size/length of an input.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "str_python_042",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the first character is a letter\n(2) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.isalpha() and s.islower() if s else False\n    return a, b\n</code>",
+ "impl_span": "b = s.isalpha() and s.islower() if s else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the first element of the array exists and if it is not undefined (i.e., if there is a first element and it is present).",
+   "verdict": "NO",
+   "reasoning": "The code checks if a string `s` is non-empty, and if so, whether it consists entirely of alphabetic characters AND is all lowercase. The description talks about checking if the first element of an array exists and is not undefined, which is completely unrelated to checking alphabetic/lowercase properties of a string.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = s.isalpha() and s.islower() if s else False",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if the string contains only letters and if its length is greater than zero to determine if there are any letters present.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the string contains only letters and if its length is greater than zero. The code checks `s.isalpha()` (only letters) and `s.islower()` (all lowercase), with a guard for empty string. The description correctly identifies the \"only letters\" part and the non-empty check, but misses the lowercase requirement. Still, partial coverage counts as YES.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool allAlpha = !value.empty() && std::all_of(value.begin(), value.end(), [](char c){ return c != 0 && std::isalpha(c); });  \n    bool isAlpha = value.empty() ? false : std::all_of(value.begin(), value.end(), [](char c){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower() if s else False",
+    "reasoning": "The C++ completion checks if a string is non-empty and all characters are alphabetic (`isalpha`), which directly corresponds to the `s.isalpha()` part of the Python code. It also handles the empty string case (`value.empty() ? false`), mirroring the `if s else False` pattern. However, it doesn't check for lowercase (`islower`), but it does capture the core relevant operations.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am checking if all elements in the list satisfy a certain condition (e.g., whether every element is greater than zero).",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if all elements in a list are greater than zero, which is completely unrelated to what the code does. The code checks if a string `s` is alphabetic and lowercase (using `isalpha()` and `islower()`), not about lists or numeric comparisons.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](auto&& v){ return v && std::all_of(std::begin(v), std::end(v), [](auto&& v2){ return v2 && std::all_of(std::begin(v), std::end(v)); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower() if s else False",
+    "reasoning": "The Python code checks if a string is non-empty, alphabetic, and lowercase. The C++ completion uses `std::all_of` over a range, which is relevant to checking a property across all elements. However, it applies nested `std::all_of` over what appears to be a nested structure (iterating over `v` twice in nested lambdas), suggesting it's checking some property over all elements of a collection \u2014 partially relevant but the nested structure doesn't match the simple string character check. Still, the core idea of checking all elements satisfy some condition is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if all characters in the string are alphabetic and at least one character is present.",
+   "verdict": "YES",
+   "reasoning": "The code checks if the string `s` is non-empty, all alphabetic (`isalpha()`), and all lowercase (`islower()`). The description correctly identifies the alphabetic check and the non-empty requirement, but misses the lowercase condition entirely. However, it does capture some genuinely relevant aspects of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::find_if(std::begin(value), std::end(value), [](const std::string& s){ return s.size() > 0 && std::all_of(std::begin(s), std::end(s), ::isalpha) && std::any_of(std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower() if s else False",
+    "reasoning": "The C++ completion checks if all characters are alphabetic using `std::all_of` with `::isalpha`, which corresponds to the `s.isalpha()` check in the Python code. It also references string size > 0 (non-empty check) and uses `std::any_of`, though it doesn't explicitly check for lowercase. The completion is partial but captures the alphabetic check which is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

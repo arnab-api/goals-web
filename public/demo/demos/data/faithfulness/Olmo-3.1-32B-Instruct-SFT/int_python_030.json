@@ -1,0 +1,96 @@
+{
+ "id": "int_python_030",
+ "datatype": "int",
+ "frontier_id": "is_power_of_two",
+ "condition": "whether the number is a power of two",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number reads the same forwards and backwards\n(2) whether the number is a power of two\n(3) the sum of the digits\n(4) the number of digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = str(abs(n)) == str(abs(n))[::-1"
+  },
+  {
+   "text": "]\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n != 0 and (n & (n - 1)) == 0\n    c = sum(int(d) for d in str(abs(n)))\n    d = len(str(abs(n)))\n    return a, b, c, d\n</code>",
+ "impl_span": "b = n != 0 and (n & (n - 1)) == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n` is a power of 2 (using the classic bit trick `n & (n-1) == 0` with a non-zero check). The description says it checks if a number is even or odd, which is completely unrelated to power-of-2 detection.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = n != 0 and (n & (n - 1)) == 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a number is a power of 2, you can use the bitwise operation: check if the number is greater than 0 and if it is divisible by 2 repeatedly until it is no longer divisible. This will tell you if the number is a power of 2.\n\nTo check if a number is",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if a number is a power of 2, and mentions checking if the number is greater than 0 (analogous to `n != 0`). The specific mechanism described (repeated division) differs from the bitwise AND trick used in the code, but the overall purpose is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value > 0 && (value & (value - 1)) == 0 && value != 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n != 0 and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion checks if a value is a power of 2 using the exact same logic: `value > 0 && (value & (value - 1)) == 0 && value != 0`. This is essentially identical to the Python code which checks `n != 0 and (n & (n - 1)) == 0` \u2014 both verify the power-of-2 property using the bitwise trick.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To check if a number is a power of 2, you can use the following Python code:\n\n```python\ndef is_power_of_two(n):\n    return n > 0 and (n & (n - 1)) == 0\n```\n\n**Explanation:**\n\n- `n > 0` checks",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation as checking if a number is a power of 2, and even provides the exact bitwise trick `(n & (n - 1)) == 0` used in the code. The only minor difference is `n > 0` vs `n != 0`, which is a trivial variation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; };",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = n != 0 and (n & (n - 1)) == 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "At this line of the code, it is checking if the number is a power of two by using the bitwise operation.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if a number is a power of two using a bitwise operation, which is exactly what `(n & (n - 1)) == 0` does (combined with the `n != 0` check).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && (value & (value - 1)) == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = n != 0 and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion checks if a value is a power of two using the exact same bitwise trick: `value > 0 && (value & (value - 1)) == 0`. This is essentially identical to the Python code (with a minor difference of `> 0` vs `!= 0`, which is functionally equivalent for this purpose).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

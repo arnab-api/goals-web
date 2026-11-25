@@ -1,0 +1,96 @@
+{
+ "id": "str_python_044",
+ "datatype": "str",
+ "frontier_id": "has_space",
+ "condition": "whether the string contains a space",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of vowels\n(2) whether the first character is a letter\n(3) whether the string contains a space\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c in 'aeiou')\n    b = s[0].isalpha"
+  },
+  {
+   "text": "()\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " ' ' in s\n    return a, b, c\n</code>",
+ "impl_span": "c = ' ' in s",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if a condition is true or false.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true or false,\" which is too generic to indicate anything specific about what the code does (checking for a space character in a string).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = ' ' in s",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if a condition is true or false.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true or false,\" which is too generic to indicate anything specific about what the code does (checking for a space character in string `s`).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::find(value.begin(), value.end(), ' ') != value.end(); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The C++ completion implements a search for a space character `' '` in a string/container, checking if it exists (using `std::find` and comparing to `end()`). This directly corresponds to the Python code checking if `' '` is in `s`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a specific condition is met.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a specific condition is met,\" which is too generic to indicate any specific aspect of the code (checking for a space character in a string).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::find_if(value.begin(), value.end(), [](auto it) { return std::any_of(it.begin(), it.end(), [](auto ch) { return std::isspace(ch); }); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The Python code checks if a space character `' '` is in string `s`. The C++ completion checks for whitespace characters using `std::isspace` while iterating through the input. While the C++ uses `std::isspace` (which is broader than just a space character) and has an extra level of iteration suggesting it's working with a collection of strings rather than a single string, it is fundamentally checking for the presence of whitespace/space characters in the input \u2014 which is the core operation of the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking for the presence of a space in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks whether a space character `' '` is present in the string `s`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::isspace(value); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = ' ' in s",
+    "reasoning": "The C++ completion implements a function that checks if a value is a space character using `std::isspace`, which is directly relevant to the Python code checking if a space character `' '` is present in the string `s`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

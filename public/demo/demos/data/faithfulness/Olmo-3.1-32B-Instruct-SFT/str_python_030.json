@@ -1,0 +1,96 @@
+{
+ "id": "str_python_030",
+ "datatype": "str",
+ "frontier_id": "count_spaces",
+ "condition": "the number of space characters",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the length of the string\n(2) whether the string starts with an uppercase letter\n(3) the number of whitespace-separated words\n(4) the number of space characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s)\n    b = s[:1].isupper()\n    c = len(s.split"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.count(' ')\n    return a, b, c, d\n</code>",
+ "impl_span": "d = s.count(' ')",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am counting the number of words in the string.",
+   "verdict": "YES",
+   "reasoning": "The code counts the number of spaces in the string `s`, which is closely related to counting words (word count \u2248 space count + 1). The description says \"counting the number of words,\" which is conceptually very close to what the code is doing \u2014 counting spaces is a common proxy for counting words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "d = s.count(' ')",
+    "reasoning": "The code counts the number of spaces in string `s`. The C++ completion returns the size/length of a value, which is a generic string operation but not specifically counting spaces or any particular character. However, it does operate on a string-like value and returns a count-like quantity, though it's completely missing the space-counting aspect.\n\nThe completion is coherent but doesn't capture the key operation (counting spaces specifically) \u2014 it just returns the total size of the string, which is unrelated to counting a specific character.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "At this line of the code, I am counting the number of spaces in a string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting spaces in a string, which matches exactly what `s.count(' ')` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (int i = 0; i < value.size(); i++) {  \n        count += value[i];  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = s.count(' ')",
+    "reasoning": "The C++ completion shows a counting loop over a string/array, which is relevant to the Python code that counts spaces in a string. However, the C++ code sums up character values (ASCII) rather than counting a specific character like space. Despite the wrong specifics, the core operation of counting/iterating over a string is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am counting the number of occurrences of the character 'a' in the string s.",
+   "verdict": "NO",
+   "reasoning": "The code counts the number of spaces (' ') in string s, but the description says it counts occurrences of 'a'. The operation (counting character occurrences in a string) is correct, but the specific character is wrong. Since the description correctly identifies the counting operation on a string, this is a partial match \u2014 the core operation and input type are right, just the character is wrong.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for (int i = 0; i < value.size(); i++) {  \n        count += value[i];  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = s.count(' ')",
+    "reasoning": "The C++ completion shows counting elements in a string/array by iterating through it and accumulating a count. The Python code counts spaces in a string `s`. The C++ code is counting/summing characters (though it's summing their values rather than checking for spaces specifically), which is partially relevant \u2014 it involves counting something in a string, but it's summing character values rather than counting a specific character. However, the core operation of iterating and counting over a string is present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of spaces in the string.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes counting spaces in a string, which is exactly what `s.count(' ')` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count (value.begin (), value.end (), ' ');  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = s.count(' ')",
+    "reasoning": "The C++ completion implements `std::count` over a string to count spaces (`' '`), which is exactly what the Python code does with `s.count(' ')`. This is a direct match in both operation and the specific character being counted.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

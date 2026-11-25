@@ -1,0 +1,96 @@
+{
+ "id": "int_python_032",
+ "datatype": "int",
+ "frontier_id": "is_power_of_two",
+ "condition": "whether the number is a power of two",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is even\n(2) whether the number is a power of two\n(3) the number of digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n % 2 == 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (n > 0) and (n & (n - 1)) == 0\n    c = len(str(abs(n)))\n    return a, b, c\n</code>",
+ "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the variable `is_even` is true or false.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n` is a positive power of 2 using a bitwise trick (`n & (n-1) == 0`). The description talks about checking if a variable `is_even` is true or false, which is completely unrelated \u2014 the code has nothing to do with evenness, and there's no variable called `is_even`.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value % 2 == 0, value > 0, value * 2};}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 (positive and has exactly one bit set). The C++ completion checks `value % 2 == 0` (even number check, partially related to powers of 2) and `value > 0` (which directly matches the `n > 0` condition). While `% 2 == 0` isn't the same as the full power-of-2 check, it captures the positivity check and a related divisibility concept, making it partially relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if a number is a power of two, we can use the following approach:\n\n1. **Check if the number is a power of two**: A number is a power of two if it's positive and has no remainder when divided by 2 (i.e., `n & (n > 0)`",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking if a number is a power of two, and mentions both the positivity check and a bitwise operation. While the description's explanation of the bitwise trick is somewhat garbled, the core concept (checking for power of two using positivity and bitwise operations) is clearly relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return (value & (value > 0)) && (value & (value & (value > 0)));}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 by verifying `n > 0` and `n & (n-1) == 0`. The C++ completion contains `value & (value > 0)` which captures the positivity check and the bitwise AND operation, though the exact formulation is garbled. It's not a clean repeating loop - it has some coherent structure that touches on both the positivity check and bitwise AND, which are the two key components of the power-of-2 check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the number is a power of two by verifying if it's positive and if the result of `is_power_of_two = (x > 0) && (y = (x & 1) && (z = (x > 0) && (x & 1) && (x",
+   "verdict": "YES",
+   "reasoning": "The description starts by correctly identifying the operation: checking if a number is a power of two by verifying it's positive and using a bitwise AND operation. The beginning is clearly relevant. The latter part devolves into a somewhat looping/garbled pattern, but the initial coherent portion correctly captures the essence of what the code does (power of two check using positivity and bitwise AND with n-1).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return (value & 1) && (value > 0) && (value == (value & 1) ? (value & 1) : (value & 1) ? (value & 1) : (value & 1) ? (value & 1) : (value &",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 using the classic bit trick `n & (n-1) == 0` combined with `n > 0`. The C++ completion mentions `value & 1` (checking the lowest bit) and `value > 0`, which are partially relevant concepts (positivity check is correct, bit operations are relevant), but `value & 1` checks if the number is odd rather than implementing the power-of-2 check. However, the completion does involve bit operations and positivity checks which are sub-components of the logic, even if the specific bit trick is wrong. The completion then degenerates into a heavy repeating loop of `(value & 1) ? (value & 1) : (value & 1) ? ...` which dominates the output.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check if the number is a power of two, we can use the following approach:\n\n```python\ndef is_power_of_two(n):\n    return n > 0 and (n & (n & (n % 2 == 0) and (n > 0) and (n & (n &",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions checking if a number is a power of two, and even begins to show the exact same bit manipulation approach (`n & (n - 1)` pattern) used in the code. Despite trailing off into garbled repetition, the core concept is clearly and correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return (value & (value != 0)) == (value > 0) && (value & (value != 0)) == (value & (value != 0) & (value != 0)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 (positive and only one bit set). The C++ completion uses the `&` operator with `(value - 1)` missing, but it does reference `value & (value != 0)` and checks `value > 0`, which are garbled versions of the power-of-2 check components. However, the key operation `n & (n-1) == 0` is not clearly present \u2014 instead there's a confused mix. But the completion does reference `value > 0` (checking positivity) and uses bitwise AND, which are relevant sub-components of the power-of-2 check.\n\nThe completion is not a heavy loop (the repeated fragment is longer and contains meaningful structure), and it does capture some relevant ingredients (positivity check, bitwise AND operation), even if garbled.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

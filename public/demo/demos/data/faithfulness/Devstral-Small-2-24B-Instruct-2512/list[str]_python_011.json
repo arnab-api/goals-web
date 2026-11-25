@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_011",
+ "datatype": "list[str]",
+ "frontier_id": "count_long",
+ "condition": "the number of words longer than five characters",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) whether any word is empty\n(3) the number of words longer than five characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    b = any(len(w) == 0 for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if len(w) > 5)\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the variable `x` is greater than 5.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if something is greater than 5, which is directly relevant to the core operation in the code (`len(w) > 5`). While it refers to `x` instead of `len(w)` and misses the counting/summing aspect, the `> 5` threshold is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of lines of code where the length of the string \"result\" is greater than 0.",
+   "verdict": "NO",
+   "reasoning": "The description mentions counting elements where a length condition is met (length greater than some threshold), which partially overlaps with what the code does (counting words where length > 5). However, the description gets the wrong subject (\"lines of code\" / \"string result\" instead of words) and wrong threshold (0 instead of 5), but the core operation of counting based on a length condition is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size() > 0 && value.size() > 0 && value.size() > 0;}",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The completion checks `value.size() > 0` repeatedly, which is related to checking the size/length of elements, but the threshold is wrong (0 instead of 5) and it's in a heavy loop pattern repeating `value.size() > 0 &&` three times. However, the repetition unit here is roughly 5 tokens (`value.size() > 0 &&`) repeating over and over, which qualifies as a HEAVY_LOOP.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of lines where the value is greater than 5.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting items where a value is greater than 5, which matches the code's logic of counting words where `len(w) > 5`. The description says \"lines\" instead of \"words,\" but the core operation (counting elements with a value greater than 5) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "```python\ncount = sum(1 for x in range(len([y for y in range(len([z for z in range(len([w for w in range(len([v for v in range(len([k for k in range(len([m for m in range(len([n for n in range(len([o",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a deeply nested, repeating pattern of `for _ in range(len([...]))` that loops endlessly without conveying any coherent meaning about the actual code operation.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{1,2,3,4,5}.size(),[](int n){return n>0;});}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if len(w) > 5)",
+    "reasoning": "The Python code counts words with length greater than 5. The C++ completion uses `count_if` and checks `n > 0`, which relates to counting elements meeting a condition, but the specific condition (length > 5) is wrong, and it's operating on a fixed vector rather than words. However, the core operation of counting elements that satisfy a predicate is present, even if the specifics are off.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

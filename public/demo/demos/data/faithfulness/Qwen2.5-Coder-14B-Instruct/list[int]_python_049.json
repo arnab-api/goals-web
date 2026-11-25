@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_049",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) the integer mean of the values\n(3) the difference between the maximum and minimum values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) // len(nums)\n    c = max(nums) - min(nums)\n    return a, b, c\n</code>",
+ "impl_span": "b = sum(nums) // len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am calculating the average of the numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of the numbers in the list,\" which is exactly what the code does \u2014 it computes the sum divided by the length, i.e., the average (integer division) of the list `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ \n    auto min = std::min_element(std::begin(value), std::end(value));\n    auto max = std::max_element(std::begin(value), std::end(value));\n    auto sum = std::accumulate(std::begin(value), std::end(value), 0);\n    auto avg = sum / value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The Python code computes the sum of a list divided by its length (i.e., the average/mean). The C++ completion explicitly computes `std::accumulate` (sum) and then divides by the size to get `avg = sum / value`, which directly corresponds to computing the mean/average. While it also computes min/max (extra operations), the core operation of sum divided by length is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Calculating the average.",
+   "verdict": "YES",
+   "reasoning": "The description \"Calculating the average\" is directly relevant to the code, which computes the integer average (sum divided by length) of a list of numbers.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(value); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion shows a simple type-casting function that converts a value to int. The Python code computes the average (sum divided by length) of a list. The integer division in Python (`//`) does relate to integer truncation, which is what `static_cast<int>` does, but the C++ completion doesn't capture the sum or division operations \u2014 only the final truncation step, and even that connection is quite tenuous. However, the `static_cast<int>` could be seen as capturing the integer truncation aspect of `//`.\n\nThis is a borderline case, but the C++ completion only shows a cast to int, missing the core operations (sum and division). The integer truncation is a minor sub-step, and the connection is weak. Still, it does capture something about the integer nature of the result.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Calculating the average.",
+   "verdict": "YES",
+   "reasoning": "The description \"Calculating the average\" is directly relevant to the code, which computes the integer average (sum divided by length) of a list of numbers.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(value) / 2; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The Python code computes the average (mean) of a list by dividing the sum by the length. The C++ completion divides a value by 2, which is a fixed constant rather than the length of the list. However, both involve division to compute some kind of average/central value \u2014 the C++ captures the division operation but gets the divisor wrong (2 instead of len(nums)). This is partial but genuinely relevant (division operation to find a mean-like quantity).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Calculating the average of the integers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of the integers in the list,\" which is exactly what the code does \u2014 it computes the sum divided by the length (integer division), which is the average of the list `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(std::round(std::floor((std::accumulate(std::begin(std::vector<int>{std::floor(std::accumulate(std::begin(std::vector<int>{std::floor(std::accumulate(std::begin(std::vector<int>{std::floor(std::accumulate(std::begin(std::vector<int",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(nums) // len(nums)",
+    "reasoning": "The completion starts with a relevant concept \u2014 accumulate (sum) and floor/round operations on a vector, which relates to computing a sum and integer division (floor). However, it quickly devolves into a heavily repeating loop of `std::floor(std::accumulate(std::begin(std::vector<int>{` cycling over and over without any additional content.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

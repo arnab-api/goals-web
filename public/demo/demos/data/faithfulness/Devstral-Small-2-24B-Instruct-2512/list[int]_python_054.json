@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_054",
+ "datatype": "list[int]",
+ "frontier_id": "is_sorted",
+ "condition": "whether the values are sorted in non-decreasing order",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the minimum value\n(2) whether the values are sorted in non-decreasing order\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(nums[i] <= nums[i+1] for i in range(len(nums)-1))\n    return a, b\n</code>",
+ "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a list or not.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether a list is sorted in non-decreasing order, not whether the input is a list or not. These are completely unrelated operations.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if the list is sorted in non-decreasing order, I'm verifying if all elements are in order and if the first element is less than or equal to the second element.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if a list is sorted in non-decreasing order by verifying all elements are in order (\u2264 relationship). This matches exactly what the code does with `all(nums[i] <= nums[i+1] ...)`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool sorted = true;for (bool is_sorted = true; int i = 0; i < 1; sorted = is_sorted = std::is_sorted(value.begin(), value.end())){if (std::is_sorted(value.begin(), value.end())){break;}if (std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion is checking if a collection is sorted using `std::is_sorted(value.begin(), value.end())`, which is directly relevant to what the Python code does (checking if `nums` is non-decreasing, i.e., sorted). Despite the garbled loop structure and syntactic issues, the core concept of checking sortedness is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the list is sorted by verifying if all elements are in order and if the list is non-empty.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the list is sorted by verifying if all elements are in order,\" which is exactly what the code does \u2014 it checks that every consecutive pair satisfies `nums[i] <= nums[i+1]`, i.e., the list is non-decreasing/sorted. The mention of \"non-empty\" is a minor inaccuracy but doesn't detract from the core correct identification.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_sorted = true;for (bool sorted = false, i = true; i = is_sorted = value[0] == (value[1] = is_sorted = value[0] == (value[1] = is_sorted = value[0] == (value[1]",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion starts with a relevant concept (\"is_sorted\") and begins checking array elements, but quickly devolves into a heavily repeating loop of `value[0] == (value[1] = is_sorted = value[0] == (value[1] = ...` which is a short cycle repeating over and over with no coherent content left after collapsing the loop.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To check if the sequence is sorted in non-decreasing order, I'll iterate through the list and verify that each element is less than or equal to the next one.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if a sequence is sorted in non-decreasing order by verifying each element is less than or equal to the next one, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_sorted = true;for (bool sorted = true; std::is_sorted(value.begin(), value.end()) == std::all_of(value.begin(), value.end(), [](bool sorted){return std::is_sorted(value.begin(), value.end()) == true;}); sorted = is_sorted;){",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = all(nums[i] <= nums[i+1] for i in range(len(nums)-1))",
+    "reasoning": "The C++ completion mentions `std::is_sorted` which is directly relevant to checking if a sequence is sorted (which is exactly what the Python code does \u2014 checking if `nums` is non-decreasing). Despite the garbled and looping structure, the core concept of checking if a collection is sorted is clearly present.\n\nHowever, I need to check if this is a HEAVY_LOOP. The completion has a for-loop structure but it's not a simple short repeating token cycle \u2014 it contains varied content including `is_sorted`, `std::all_of`, lambda functions, etc. It's more of a confused/malformed implementation than a tight repeating loop.\n\nThe key relevant content is `std::is_sorted` applied to the collection, which directly corresponds to the Python code checking if the list is sorted in non-decreasing order.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

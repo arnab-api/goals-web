@@ -1,0 +1,96 @@
+{
+ "id": "int_python_006",
+ "datatype": "int",
+ "frontier_id": "digit_count",
+ "condition": "the number of digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the sign of the number\n(2) the number of digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0) - (n < 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(str(abs(n)))\n    return a, b\n</code>",
+ "impl_span": "b = len(str(abs(n)))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking the sign of the input.",
+   "verdict": "NO",
+   "reasoning": "The description says \"checking the sign of the input,\" but the code is computing the number of digits in the absolute value of `n` (by converting it to a string and measuring its length). While `abs()` is used, the purpose is digit counting, not sign checking. The description is coherent but completely unrelated to what the code actually does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value < 0 ? -1 : (value == 0 ? 0 : 1); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The Python code computes the number of digits in the absolute value of `n` (by converting to string and getting its length). The C++ completion implements a sign function (returning -1, 0, or 1 based on whether value is negative, zero, or positive). While the C++ uses `abs`-like logic (checking if value < 0), it's computing the sign, not the number of digits or string length. The only partial overlap is the use of `abs` or negativity check, but the core operation (counting digits) is completely absent.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine the number of digits in a non-negative integer `n`, we can use the following steps:\n\n1. **Count the digits**: Convert the number to a string and count the digits.\n2. **Handle edge cases**: If the number is negative, count the digits of the absolute value.\n3. **Return",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: counting the number of digits in a number by converting to string, and handling negative numbers by using the absolute value. This matches `len(str(abs(n)))` precisely.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;int sign = 1;int digits = 0;int n = 0;int m = 0;int k = 0;int l = 0;int p = 0;int q = 0;int r = 0;int s =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion initializes a `count` variable and a `digits` variable, which is relevant to counting digits. The code is computing the number of digits in `n` (by converting `abs(n)` to string and getting its length). The presence of `digits` and `count` variables suggests digit counting, which is the core operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "The number of digits in the absolute value of the count of characters in the string representation of the count of distinct digits in the string representation of the count of distinct digits in the string representation of the count of distinct digits in the string representation of the count of distinct digits in the string representation of the count of distinct digits in",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The code computes the number of digits in the absolute value of `n` by converting it to a string and taking its length. The description starts relevantly by mentioning \"number of digits\" and \"absolute value\" and \"string representation,\" which are all genuinely present in the code. However, it then spirals into a repetitive loop about \"count of distinct digits in the string representation of the count of distinct digits...\" which is not what the code does, and this loop dominates the description.\n\nThe key question is whether this qualifies as HEAVY_LOOP. The repeating unit is \"count of distinct digits in the string representation of the\" which is roughly 10 words, repeating multiple times. This is longer than \"roughly five words/tokens or fewer,\" so it's borderline. However, the loop clearly dominates the description after the initial relevant fragment.\n\nGiven that there IS a relevant initial fragment (\"number of digits in the absolute value... string representation\"), and the loop unit is somewhat longer than 5 words, I'll consider this as YES with a noisy/looping tail rather than HEAVY_LOOP.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value == 0 ? 1 : 2;}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The Python code computes the number of digits in the absolute value of `n`. The C++ completion checks if a value equals 0 and returns 1 or 2, which is unrelated to counting digits - it's a simple ternary that doesn't implement digit counting logic at all. The C++ is coherent but addresses a completely different operation.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine the number of digits in a number, we can convert the number to a string and count its length. For example, the number 123 has 3 digits, and the number 0 has 1 digit. Negative numbers and zero are handled by converting the absolute value to a string and counting its",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the number of digits in a number by converting its absolute value to a string and measuring the length \u2014 which is exactly what the code `b = len(str(abs(n)))` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value < 0 ? 1 + std::to_string(std::abs((int)std::log10((int)std::stoi(std::to_string(value).length()))).length() : 1 + std::to_string(std::abs((int)std::log10((int)",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(str(abs(n)))",
+    "reasoning": "The C++ completion is attempting to compute the number of digits in a number. It handles the negative case (value < 0), uses `std::abs`, converts to string with `std::to_string`, and tries to get the length - all of which are relevant to computing `len(str(abs(n)))`. Despite being syntactically garbled and using a confused mix of `log10` and `length()`, the core operations (abs, to_string, length) match what the Python code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

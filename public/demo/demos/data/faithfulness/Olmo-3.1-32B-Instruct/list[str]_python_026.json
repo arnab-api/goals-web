@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_026",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of vowels across all words\n(2) the number of words that contain a digit\n(3) the total number of uppercase letters across all words\n(4) the number of words written entirely in lowercase letters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if any(c.isdigit() for c in w))\n    c = sum(1 for w in words for ch in w if ch.isupper())\n    d = sum(1 for w in words if w.islower())\n    return (a, b, c, d)\n</code",
+ "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I cannot provide an answer to this question as it is not a typical programming task. However, if you want, I can help with:\n\n1. Counting how many times a loop runs to tally a value (for the \"What are you doing at this line of the code\" part).\n2. Then, separately",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"counting how many times a loop runs to tally a value,\" which is partially relevant \u2014 the code is indeed counting (summing) items that meet a condition by iterating over words. However, it misses the key detail about checking for digits in words.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(value), std::end(value), 0); }  \nauto sum_length (int& out_count, int& out_sum){  \n    int count = 0;  \n    int sum = 0;  \n    for (const auto& item : value_list) {",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion uses `std::count` and iterates over a collection, which is partially relevant (counting/iterating), but it counts elements equal to 0 rather than checking for digit characters. However, there's some relevance in the counting operation over a collection of items, and the outer loop iterates over a list counting items \u2014 this partially maps to the structure of counting words meeting a condition.\n\nThe completion is not a heavy loop, and it does contain intelligible content about counting elements in a collection, which is at least partially relevant to the counting operation in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the current line of code is processing a line that contains a number indicating how many entries have a certain property (e.g., containing a digit). I'm also counting how many lines contain at least one digit.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting entries that contain at least one digit, which is exactly what the code does \u2014 it counts words (`w` in `words`) that contain at least one digit character. The description correctly identifies the core operation of counting items with a digit property.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count_with_digit = 0, count_with_letter = 0; int has_digit = 0; int has_letter = 0; for(const auto& s : value){ if(std::any_of(s.begin(), s.end(), [](const std::string& str){ int d = 0, n =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion counts words containing digits (`count_with_digit`, `has_digit`) and uses `std::any_of` to check characters within each word \u2014 which directly mirrors the Python code's logic of counting words where any character is a digit. The core operations (iterating over words, checking for digits with any_of) are clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting how many times a condition is true.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting how many times a condition is true,\" which is exactly what the code does \u2014 it counts words that satisfy a condition (containing a digit). This is a correct high-level description of the operation.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ int count = 0; for (auto& item : value) { if (item.second) ++count; } return count; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion counts items that satisfy some boolean condition (item.second being truthy), which corresponds to counting words that meet some predicate. This aligns with the Python code's pattern of counting words (`sum(1 for w in words if ...)`) that satisfy a condition. The specific condition (checking for digits) isn't captured, but the counting-with-a-predicate structure is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting how many elements in a list meet a certain condition (e.g., checking if a number is even).",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions counting elements in a list that meet a condition, which is relevant since the code counts words meeting a condition. However, the specific condition mentioned (checking if a number is even) is unrelated to what the code actually does (checking if a word contains a digit). The core operation of counting elements meeting a condition is partially correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 0;  \n    for(const auto& item : value){  \n        if(std::count_if(value.begin(), value.end(),  \n            [](const std::string& s){ return std::any_of(s.begin(), s.end(),  \n                [](const std::string& x){ return x",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion is iterating over a collection (`value`), using `std::count_if` and `std::any_of` to check elements of strings - this directly mirrors the Python code's logic of counting words where any character satisfies some condition. The structure matches: iterating over words, using `any_of` on characters within each word, and counting. The lambda checking characters within strings is highly relevant even though it's cut off before completing the digit check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

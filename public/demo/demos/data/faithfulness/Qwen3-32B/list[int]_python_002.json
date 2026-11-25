@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_002",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of distinct values\n(2) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = len(set(nums"
+  },
+  {
+   "text": "))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(num % 2 == 0 for num in nums)\n    return a, b\n</code>",
+ "impl_span": "b = any(num % 2 == 0 for num in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. Check if there is at least one even number (returns `True` or `False`).\n2. Check if there is at least one odd number (returns `True` or `False`).",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies checking for even numbers using `any()`, which matches the code exactly. The second point about odd numbers is wrong, but the first point is genuinely relevant and accurate.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {std::is_same_v<decltype(value), bool> ? std::is_same_v<decltype(value), bool> : 0;};}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion is checking `std::is_same_v<decltype(value), bool>` \u2014 this is about checking if a value is a boolean type, which is completely unrelated to checking if any number in a list is even (divisible by 2). The code checks for even numbers, not boolean types.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I will check if there is any even number and if there is any number that is divisible by 2.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies checking for even numbers and divisibility by 2, which is exactly what the code does using `any()` with the modulo operator.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](auto x){ return x % 2 == 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion implements `std::any_of` checking if any element satisfies `x % 2 == 0`, which is exactly what the Python code does \u2014 checking if any number in `nums` is even. This is a direct and accurate translation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if there is any element that is a number and whether any element is True (i.e., checking if there is a True value and if there is at least one even element.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for \"at least one even element,\" which is directly relevant to what the code does (`num % 2 == 0` checks for even numbers, and `any()` checks if at least one exists). The mention of \"True value\" is a bit confused but relates to the `any()` function's behavior.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::accumulate(std::begin(value), std::end(value), false, [](auto a, auto& b){ return std::make_pair(std::any(std::end(b), false); });  \n};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion attempts to use `std::any` (likely meaning `std::any_of`) over a collection, checking elements with some condition. While the implementation is garbled and syntactically incorrect, it captures the core idea of checking if any element in a collection satisfies a condition, which aligns with the Python code's use of `any()` over `nums`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "```python\n# Check if any number in the list is even\nhas_even = any(num % 2 == 0 for num in [2, 4, 6, 8, 10])\n# Check if any number in the list is even\nresult = any(num % 2 ==",
+   "verdict": "YES",
+   "reasoning": "The description is checking if any number in a list is even using `any(num % 2 == 0 for num in ...)`, which is exactly what the code does. The description correctly identifies the operation (checking for even numbers using modulo 2), the function used (`any`), and the generator expression pattern.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::any_of(value.begin(), value.end(), [](int x) { return x % 2 == 0; });\n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = any(num % 2 == 0 for num in nums)",
+    "reasoning": "The C++ completion implements exactly the same operation: using `any_of` to check if any element in a collection satisfies `x % 2 == 0` (even number check). This directly mirrors the Python code's use of `any()` with `num % 2 == 0`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

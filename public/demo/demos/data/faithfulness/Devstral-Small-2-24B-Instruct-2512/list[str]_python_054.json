@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_054",
+ "datatype": "list[str]",
+ "frontier_id": "all_unique_lengths",
+ "condition": "whether all words have distinct lengths",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the total number of characters across all words\n(2) whether all words have distinct lengths\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(words) == len(set(len(w) for w in words))\n    return a, b\n</code>",
+ "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Let's break this into two parts:\n\n1. **Counting the distinct values**:\n   - First, we compute the total count of distinct values by iterating through the list and summing the lengths of the two results:\n     - `total = len([len(x) for x in [[len(y), sum(z)] for",
+   "verdict": "YES",
+   "reasoning": "The code checks whether all words have distinct lengths (by comparing the count of words to the count of unique word lengths). The description mentions \"counting distinct values\" and iterating through a list to compute lengths, which is partially relevant to the operation of checking uniqueness of lengths. However, the description is somewhat garbled and mentions \"sum\" which isn't in the code, but the core idea of counting distinct values via lengths is present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, [](auto& result){return {true, [](auto& result){return {false, [](auto& result){return {true, [](auto& result){return {false, [](auto& result){return {true, [](auto& result){return {false,",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+    "reasoning": "The C++ completion is dominated by a short repeating cycle of `{true, [](auto& result){return {false, [](auto& result){return` that repeats over and over. Once collapsed, there is no coherent content left about checking uniqueness of word lengths or any relevant operation.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "All elements in `len(set(map(int, [len({i: len([len({i: len([len({i: len([len({i: len([len({i: len([len({i: len([len({i: len([len({i: len([len({i: len([",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with something relevant (\"All elements in `len(set(map(int, [len(...`\") that touches on checking lengths and sets, which is related to what the code does (checking if all words have unique lengths using `len(set(len(w) for w in words))`). However, the description quickly collapses into a heavily repeating loop of `len({i: len([len({i: len([...` cycling over and over.\n\nThe repeating unit `len({i: len([` is short (roughly 4-5 tokens) and repeats continuously, dominating the description. This qualifies as a HEAVY_LOOP.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool allUnique = true;std::vector<int> lengths;for (int i = 0; i < value.size(); ++i){bool unique = true;for (int j = 0; j < value.size(); ++j){bool unique = true;for (int k = 0; k",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+    "reasoning": "The C++ completion is checking for unique lengths in a collection (it creates a `lengths` vector and checks for `allUnique`), which directly corresponds to the Python code checking if all word lengths are unique (via `len(set(len(w) for w in words)) == len(words)`). However, the completion starts to loop with nested for loops and repeated `bool unique = true` declarations.\n\nThe key question is whether this is a HEAVY_LOOP. The repeating unit appears to be the pattern `for (int X = 0; X < value.size(); ++X){bool unique = true;` which is roughly 10+ tokens repeating. It's borderline, but the initial content (allUnique, lengths vector) is coherent and relevant before the loop starts. The loop itself is a bit longer than 5 tokens per cycle. I'll consider this as containing genuine relevant content (checking uniqueness of lengths) that isn't purely a short repeating loop.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "```python\nall(lambda x: len({*map(lambda y: all(z := len({*map(lambda w: len({*map(lambda b: len({*map(lambda c: len({*map(lambda d: len({*map(lambda e: len({*map(lambda f: len({*map(lambda",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description is dominated by a short repeating cycle of nested lambda/map/len patterns that loop endlessly without conveying coherent meaning about the actual code operation.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool allSame = true;for(auto b : {true, false}){allSame = (value == (value = !allSame));}return allSame && (value = !allSame, !allSame);}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+    "reasoning": "The Python code checks whether all words have unique lengths (no two words share the same length). The C++ completion talks about \"allSame\" and checks some boolean condition, but the logic involves toggling boolean values and doesn't relate to checking uniqueness of word lengths. However, the concept of \"allSame\" is somewhat relevant to checking if all lengths are distinct (the opposite of all same). The implementation is garbled and doesn't involve lengths or sets, but the \"allSame\" concept has a loose connection.\n\nLooking more carefully: the C++ code is checking some property related to \"allSame\" which is conceptually related to checking uniqueness (all different vs all same). But the actual implementation bears no resemblance to computing lengths of words or checking for duplicates. The \"allSame\" variable name is the only relevant hint, and it's checking the opposite property (all same vs all unique).\n\nThe completion is not a heavy loop, is not malformed, and contains \"allSame\" which is tangentially related. But the actual operations (toggling booleans, comparing value to its negation) are completely unrelated to length comparison or set uniqueness checking.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "All elements in the list have the same length.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether all words have distinct lengths (by comparing the count of words to the count of unique lengths). The description says \"all elements have the same length,\" which is the opposite condition. These are completely unrelated properties \u2014 one checks for all-same lengths, the other checks for all-different lengths.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool allUnique = true;std::set<size_t> seen;for(bool unique = true; unique = (std::set<size_t>(std::adjacent_find([&]{bool allUnique = true;for(bool unique = true; unique = (std::set<size_t>(std::adjacent_find([",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = len(words) == len(set(len(w) for w in words))",
+    "reasoning": "The Python code checks whether all words have unique lengths (no two words share the same length). The C++ completion mentions `allUnique`, `std::set<size_t>`, and `seen` \u2014 all directly relevant to checking uniqueness of sizes/lengths. However, the completion then falls into a repeating loop pattern with `[&]{bool allUnique = true;for(bool unique = true; unique = (std::set<size_t>(std::adjacent_find([` repeating.\n\nThe loop unit here is roughly: `bool allUnique = true;for(bool unique = true; unique = (std::set<size_t>(std::adjacent_find([` which is longer than 5 tokens but repeats clearly. However, before the loop starts, there is coherent content (`allUnique`, `std::set<size_t>`, `seen`) that is genuinely relevant. The question is whether the loop dominates. The loop does dominate the latter portion, but there's meaningful content before it starts.\n\nGiven the instruction that HEAVY_LOOP takes precedence when the completion is \"dominated\" by a repeating cycle and \"little or no coherent content is left\" after collapsing \u2014 here, collapsing the loop leaves `auto func(auto value){bool allUnique = true; std::set<size_t> seen;` which is coherent and relevant. So this is not a pure HEAVY_LOOP situation; there is meaningful content before the loop begins.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

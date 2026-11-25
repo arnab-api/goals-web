@@ -1,0 +1,96 @@
+{
+ "id": "str_python_061",
+ "datatype": "str",
+ "frontier_id": "word_count",
+ "condition": "the number of whitespace-separated words",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a space\n(2) the number of whitespace-separated words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = ' ' in s"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(s.split())\n    return a, b\n</code>",
+ "impl_span": "b = len(s.split())",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. Check if the input is a number: `isinstance(input, int)`.\n2. Count the words: `len(input.split())`.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"Count the words: `len(input.split())`\" which is exactly what the code does \u2014 counting words by splitting a string and taking the length. The first point about checking if input is a number is irrelevant, but the second point is directly relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value){return value;};\nauto func3 (auto value){return value;};\nauto func4 (auto value){return value;};\nauto func5 (auto value){return value;};\nauto func6 (auto value){return value;};\nauto func7 (auto value){return value;};\nauto",
+    "verdict": "MALFORMED",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion is a series of identity function stubs that repeat with no meaningful content related to counting words or splitting strings. This is a degenerate repeating pattern of trivial identity functions.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Split the string into words, then count the words.\n\n`words = s.split()  \ncount = len(words)`  \n\nIf you have any questions, you can use `len(s.split())` to count the number of words in a string `s`.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes splitting a string into words and counting them, which is exactly what `len(s.split())` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    int count = 1;  \n    int i = 0;  \n    while (i < value.size()) {  \n        if (value[i] == ' ') {  \n            count++;  \n        }  \n    }  \n    return count;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion counts words by counting spaces in a string, which is directly relevant to what the Python code does (counting words via `split()`). The approach of counting spaces (+1) to determine word count is a valid alternative implementation of the same concept.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll count the number of words in the input string and then count the number of words using the `split()` method.\n\n```python\ntext = input(\"Enter a sentence: \")\nwords = text.split()\nnum_words = len(words)\n\nprint(f\"Number of words: {num_words}\")\n```",
+   "verdict": "YES",
+   "reasoning": "The description explicitly mentions counting the number of words using the `split()` method, which is exactly what the code does with `len(s.split())`. The description is genuinely relevant and correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count(std::begin(value), std::end(value), 0);};",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The Python code counts the number of words in a string by splitting on whitespace. The C++ completion counts elements equal to 0 in a container, which is counting occurrences of something \u2014 but it's counting zeros in a sequence, not words/spaces in a string. However, the core operation of \"counting\" is present, which is partially relevant since word count is fundamentally a counting operation. But the specific thing being counted (zeros vs words) is completely different, and there's no concept of splitting on whitespace or counting words.\n\nThe C++ completion is about counting occurrences of a specific value (0) in a range, while the Python code is about counting words (split by whitespace). These are different enough that the C++ doesn't capture the relevant operation (splitting/tokenizing on whitespace to count words).\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Split the string into a list and count the length of the list.\n\ns = 'hello world'.split()\nlen(s) # 2",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes splitting a string into a list and counting its length, which is exactly what `len(s.split())` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::count(std::istreambuf_iterator<std::string>{std::istringstream{value}.str().size()};  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = len(s.split())",
+    "reasoning": "The C++ completion attempts to count something related to a string value, which is somewhat relevant to counting words in a string. However, it's syntactically garbled and doesn't clearly implement word counting (splitting by whitespace). It mentions `std::count` and string operations, which are partially relevant to the concept of counting elements in a string, but the implementation is too malformed to clearly convey word counting specifically.\n\nThe completion does reference string operations and counting, which are related to counting words (splitting a string and counting the parts). This is a partial match to `len(s.split())`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

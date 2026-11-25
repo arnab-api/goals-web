@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_021",
+ "datatype": "list[str]",
+ "frontier_id": "count_starts_vowel",
+ "condition": "the number of words that start with a vowel",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that contain a digit\n(2) the total number of vowels across all words\n(3) the number of words that start with a vowel\n(4) the number of words shorter than three characters\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if any(c.isdigit() for c in w))\n    b = sum(1 for w in words for c in w if c.lower() in \"aeiou"
+  },
+  {
+   "text": "\")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if w and w[0].lower() in \"aeiou\")\n    d = sum(1 for w in words if len(w) < 3)\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I count the number of vowels in the given text.",
+   "verdict": "YES",
+   "reasoning": "The code counts words that start with a vowel (not the total number of vowels in the text). However, the description mentions counting vowels, which is partially relevant \u2014 it correctly identifies that vowels are being checked and that counting is happening, even though the specific operation (counting words starting with a vowel vs. counting all vowel characters) is imprecise.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0, [](int count, char c){ return count + (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c ==",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The C++ completion is counting characters that are vowels (a, e, i, o, u, both lowercase and uppercase), which is directly relevant to the Python code that counts words starting with a vowel. The completion captures the vowel-checking logic correctly, even though it applies it to characters in a string rather than first characters of words. This is a partial but genuinely relevant match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Counting vowels, checking for uppercase, and more.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"counting vowels\" which is directly relevant to what the code does (counting words that start with a vowel). It also mentions \"checking for uppercase\" which relates to the `.lower()` call in the code. This is a clear match to the substance of the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the number of lines where the first word is a vowel, the second word is a consonant, the third word is a vowel, and the fourth word is a consonant.",
+   "verdict": "NO",
+   "reasoning": "The code counts words that start with a vowel (checking if the first character lowercased is in \"aeiou\"). The description mentions counting items where the first word is a vowel, which partially overlaps with the concept of checking for vowels. However, the description is about lines with alternating vowel/consonant patterns across multiple words, which is completely different from what the code does (simply counting individual words starting with a vowel).\n\nDespite the wrong specifics about alternating patterns and lines, the description does mention the core concept of checking for vowels at the start, which is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(std::vector<int>{1,2,3}, [](int x){ return std::count_if(std::vector<int>{4,5,6}, [](int x){ return std::count_if(std::vector<int>{7,8,9}, [](int x){ return",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The completion shows nested `count_if` calls that repeat in a loop pattern. The core unit `return std::count_if(std::vector<int>{...}, [](int x){ return std::count_if(...)` repeats over and over with no termination, and once collapsed, there's no coherent content about counting words starting with vowels.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting how many strings start with a vowel.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it counts words where the first character (lowercased) is a vowel ('a', 'e', 'i', 'o', 'u').\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(std::vector<int>{'a','e','i','o','u'},[](int c){return std::count_if(std::vector<int>{'a','e','i','o','u'},[](int c){return std::count_if(std::vector<int>{'a",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(1 for w in words if w and w[0].lower() in \"aeiou\")",
+    "reasoning": "The completion starts with a relevant approach \u2014 using `count_if` with vowels `{'a','e','i','o','u'}` \u2014 which directly relates to counting words starting with vowels. However, the completion quickly devolves into a repeating loop of `count_if` with the same vowel vector pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_034",
+ "datatype": "int",
+ "frontier_id": "is_power_of_two",
+ "condition": "whether the number is a power of two",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is positive\n(2) whether the number is a power of two\n(3) the last decimal digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = (n > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " (n > 0) and (n & (n - 1)) == 0\n    c = n % 10\n    return a, b, c\n</code>",
+ "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n` is a power of 2 (positive and has exactly one bit set), not whether it's even or odd. While even/odd and powers of 2 are both bitwise concepts, \"even or odd\" is completely unrelated to what this code actually does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; };",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "At this line of the code, I am checking if a number is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The code checks if `n` is a power of 2 (using the classic bit trick `n & (n-1) == 0` combined with `n > 0`). The description says it's checking if a number is even or odd, which is completely unrelated \u2014 even/odd detection would use `n % 2` or `n & 1`, not this bit manipulation pattern.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The Python code checks if `n` is a power of 2 (positive and only one bit set). The C++ completion checks if a value is positive (`value > 0`) and even (`value % 2 == 0`). While checking for even numbers is related to powers of 2, it's not the same thing \u2014 however, the completion does capture the `n > 0` part correctly and attempts a divisibility check (though using `% 2 == 0` instead of the bit-manipulation `(n & (n-1)) == 0`). The positivity check is a genuine sub-step of the code, and the even check is at least in the right conceptual neighborhood (divisibility by 2).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "At this line of the code, I am checking if a number is even.",
+   "verdict": "NO",
+   "reasoning": "The code is checking if `n` is a power of 2 (using the classic bit trick `n & (n-1) == 0` combined with `n > 0`). The description says it's checking if a number is even, which is a completely different property. While both involve some numeric property check, \"even\" and \"power of 2\" are distinct concepts with no overlap in meaning here.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is a power of two, check if it is greater than zero and if its binary representation has exactly one bit set (i.e., n > 0 and (n & (n - 1)) == 0).",
+   "verdict": "YES",
+   "reasoning": "The description perfectly describes what the code does: checking if n is a power of two by verifying n > 0 and that (n & (n-1)) == 0, which is exactly the bitwise trick used in the code.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 0 && (value & (value - 1)) == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = (n > 0) and (n & (n - 1)) == 0",
+    "reasoning": "The C++ completion implements exactly the same logic as the Python code: checking that a value is greater than 0 AND that `(value & (value - 1)) == 0`, which is the standard bit-trick for checking if a number is a power of two.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "str_python_043",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of uppercase letters\n(2) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.isalpha() and s.islower()\n    return a, b\n</code>",
+ "impl_span": "b = s.isalpha() and s.islower()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "1. Check if the number is even: `is_even = number % 2 == 0`  \n2. Check if the number is divisible by 3: `is_divisible_by_3 = not (number % 2) and (number % 3)`\n\nAlternatively, using a function:\n\n```",
+   "verdict": "NO",
+   "reasoning": "The code checks if a string consists entirely of alphabetic characters and is all lowercase. The description talks about checking if a number is even and divisible by 3, which is completely unrelated to string alphabetic/lowercase checking.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {std::is_integral_v<decltype(value)>, std::is_floating_point_v<decltype(value)>};}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The Python code checks if a string is alphabetic and lowercase. The C++ completion checks for integral and floating-point type properties, which are completely unrelated to alphabetic/lowercase string checks. There's no conceptual overlap between type trait checks on numeric types and string character classification.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'll check if all characters are alphabetic and if so, return True if they are all lowercase, else return False. Then return False if any character is not alphabetic or if any character is not lowercase.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: checking if all characters are alphabetic (`isalpha()`) AND if all characters are lowercase (`islower()`), returning True only if both conditions are met.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::all_of(value.begin(), value.end(), ::islower) && !value.cbegin() == std::find_if(value.cbegin(), value.cend(), [](auto c){ return std::all_of(value.begin(), value.end(), [](auto c){ return std::isalpha(c) && !",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion checks `std::all_of` with `::islower` and also references `std::isalpha`, which directly corresponds to the Python code checking `s.islower()` and `s.isalpha()`. Despite being syntactically garbled and incomplete, the core operations (checking all characters are lowercase and alphabetic) are clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if all elements in the list are True (if any element is True, and if all elements are True, then check if any element is True and all elements are True (in order): `all([isinstance(x, bool) for x in l if x == True] and [all(isinstance(x",
+   "verdict": "NO",
+   "reasoning": "The code checks if a string `s` consists entirely of alphabetic characters AND is all lowercase. The description talks about checking if all elements in a list are True, checking isinstance for bool types \u2014 this is completely unrelated to string operations like `isalpha()` and `islower()`.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::ranges::all_of(value, [](auto x){ return x == 'a' && !std::ranges::any_of(value, [](auto x){ return std::isalpha(std::declval<bool>(), std::all = false); std::all = std::isalpha(std::declval",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion attempts to check if all characters satisfy some alphabetic condition using `std::ranges::all_of` and `std::isalpha`, which is relevant to the `isalpha()` check in the Python code. It also has some garbled attempt at checking lowercase (the `x == 'a'` part is wrong, but the intent seems to be character-level checking). However, the completion is syntactically broken and partially loops/degenerates, but it does contain genuinely relevant fragments (`all_of`, `isalpha`) that correspond to the code's purpose of checking alphabetic and lowercase properties.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I will check if all characters are letters and at least one letter is present.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters are letters, which corresponds to `s.isalpha()`. It also mentions \"at least one letter is present\" which is partially relevant (isalpha requires non-empty string). However, it misses the `islower()` check entirely. Still, it correctly identifies the `isalpha()` part of what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isalpha(value) ? true : false;  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion checks `std::isalpha(value)`, which corresponds to the `s.isalpha()` part of the Python code. It misses the `islower()` check, but it correctly identifies one of the two relevant operations being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

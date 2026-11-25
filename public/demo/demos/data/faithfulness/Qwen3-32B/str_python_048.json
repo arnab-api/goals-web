@@ -1,0 +1,96 @@
+{
+ "id": "str_python_048",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of uppercase letters\n(2) whether the string contains a space\n(3) whether the string contains a digit\n(4) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isupper())\n    b = ' ' in s\n    c = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all(c.isalnum() for c in s)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = all(c.isalnum() for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll need to check if the next character is a letter, then if the next character is a digit, then if the next character is a letter, and finally if the next character is a letter or digit.",
+   "verdict": "YES",
+   "reasoning": "The description talks about checking if characters are letters or digits, which is exactly what `isalnum()` does (checks if a character is alphanumeric - a letter or digit). The description correctly identifies the core operation of checking characters for being letters/digits, even though it describes it in a somewhat convoluted sequential way rather than as an `all()` check over all characters.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func2 (auto value) {return value;};\nauto func3 (auto value) {return value;};\nauto func4 (auto value) {return value;};\nauto func5 (auto value) {return value;};\nauto func6 (auto value) {return value;};\nauto func7 (auto value",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion is just a series of identity function definitions that return their input unchanged, with no relevance to checking if characters are alphanumeric or iterating over a string. This is a degenerate repeating pattern of `auto funcN (auto value) {return value;}` with no meaningful content.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if all characters in the string are alphanumeric, then verifying if all are alphabetic, then checking if all are digits, and finally confirming if all are identifiers.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if all characters in the string are alphanumeric. The additional parts about alphabetic, digits, and identifiers are extra/wrong, but the primary relevant operation is correctly captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::isalpha(value) ? std::isdigit(value) ? std::isalnum(value) ? std::isalnum(value) : true : false : true;};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion references `std::isalnum`, `std::isalpha`, and `std::isdigit`, which are directly relevant to checking if characters are alphanumeric. The Python code checks if all characters in a string are alphanumeric using `isalnum()`. While the C++ logic is convoluted and incorrect, it does contain the key concept of `isalnum` checking. However, the structure repeats `std::isalnum(value)` in a nested ternary that forms a somewhat looping pattern, but it's not a simple short repeating cycle \u2014 it's a nested ternary with multiple different function calls.\n\nThe completion is not a simple repeating loop (it uses three different functions: isalpha, isdigit, isalnum), and it does reference the core concept of alphanumeric checking (`std::isalnum`).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if all isalpha() returns True if all arealnum() returns True if all istitle() returns True if all is True.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters satisfy `isalnum()`, which is exactly what the code does (`all(c.isalnum() for c in s)`). Despite the noisy and repetitive phrasing mixing in `isalpha()` and `istitle()`, the core relevant operation (`isalnum()` with `all`) is clearly present.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return [value](auto func) {return [value](){return func(value);};}( [](auto func){return [value](){return func([value](){return [value](){return [value](){return [value](){return [value](){return [value](){return [value](){",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The completion starts with a lambda-based structure but quickly degenerates into a deeply nested repeating pattern of `[value](){return [value](){return [value](){...` with no coherent content beyond the initial setup. This is a clear heavy loop dominated by a short repeating cycle.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I check if every character in the string is alphanumeric (no symbols or letters). Return True if all characters are alphanumeric, False if any character is not a digit or letter.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code checks if every character in the string is alphanumeric, and correctly describes the True/False return behavior. The minor imprecision (\"no symbols or letters\" should be \"no symbols or spaces\") doesn't detract from the overall accuracy.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value, [](auto c){ return std::isalnum(c); }); };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = all(c.isalnum() for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` with `std::isalnum` to check that all characters in a string are alphanumeric, which is exactly what the Python code does with `all(c.isalnum() for c in s)`. This is a near-perfect match in substance, just with minor syntactic issues (missing closing parenthesis).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

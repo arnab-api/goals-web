@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_027",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) whether all words have distinct lengths\n(2) the number of words that contain a digit\n(3) the length of the longest word\n(4) the number of capitalized words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = len(set(len(w) for w in words)) == len(words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if any(c.isdigit() for c in w))\n    c = max(len(w) for w in words) if words else 0\n    d = sum(1 for w in words if w[0].isupper())\n    return a, b, c, d",
+ "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll analyze the code and provide the answer. Let's proceed.\n\n---\n\n### Step 1: Check if the list is empty\n```python\ndef is_empty(lst):\n    return len(lst) > 0\n```\n\n### Step 2: Count the number of elements\n```python\ndef count_elements",
+   "verdict": "NO",
+   "reasoning": "The description talks about checking if a list is empty and counting elements, which is only tangentially related. The actual code counts words that contain at least one digit character. The description doesn't mention digits, characters within words, or the `any()` pattern being used. However, it does mention \"count the number of elements\" which partially relates to the counting aspect of the code (using `sum` to count words).\n\nThis is borderline, but the description is mostly about unrelated operations (checking if a list is empty) and the \"count elements\" part is too generic to capture what the code specifically does (counting words containing digits).\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {value, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion is a function stub returning a fixed-size array/tuple of zeros with the input value, which has no relevance to counting words containing digits. The repetition of `0, 0, 0, ...` is a degenerate pattern, but let me check if it's a HEAVY_LOOP \u2014 the repeating unit is `, 0` which is fewer than five tokens repeating many times, dominating the completion with no coherent content left after collapsing it.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm counting the number of lines of code that contain digits.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting items that contain digits, which is genuinely relevant \u2014 the code counts words that contain at least one digit character. The description says \"lines of code\" instead of \"words,\" but the core operation (counting things containing digits) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto& c : value) {if (isdigit(value)) {count++;}}return count;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion iterates over characters in a value, checks `isdigit()` on each character, and counts occurrences. This directly corresponds to checking if characters in words are digits and counting words that contain digits, which is the core operation in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll count the number of lines where the code contains a non-negative integer.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting and checking for integers/digits, which is relevant to what the code does \u2014 it counts words that contain at least one digit character. The description gets the core idea right (counting items containing numeric digits), even though it says \"lines\" instead of \"words.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count_if(value.begin(), value.end(), [](int count){ return count; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The Python code counts words that contain at least one digit character. The C++ completion uses `std::count_if` which is a counting operation over a collection, which is partially relevant (counting elements). However, the lambda `[](int count){ return count; }` doesn't check for digits at all \u2014 it just returns the count value itself, which is meaningless as a predicate. The completion captures the idea of counting elements in a collection but misses the digit-checking aspect entirely.\n\nDespite missing the digit check, `std::count_if` over a collection does reflect the counting/filtering operation happening in the Python code. The completion is not a heavy loop and contains some relevant substance (counting elements that satisfy a condition).\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Counting the number of strings in the list that contain at least one digit.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it counts words in a list where at least one character is a digit, which is exactly \"counting the number of strings in the list that contain at least one digit.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count=0;for(auto c=0;c<value.size();++c){int num=0;for(auto i=0;i<value.size();++i){int cnt=0;for(auto j=0;j<value.size();++j){int n=0;for(auto k=",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The C++ completion starts relevantly by counting something (iterating with a count variable), but it quickly devolves into deeply nested loops that repeat the same pattern (nested for loops with cnt, num, n variables) without any coherent logic about digits or words. The repetitive nesting structure dominates the completion and collapses into a heavy loop pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

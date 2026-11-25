@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_025",
+ "datatype": "list[str]",
+ "frontier_id": "count_with_digit",
+ "condition": "the number of words that contain a digit",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words longer than five characters\n(2) the number of words that contain a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if len(w) > 5"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(1 for w in words if any(c.isdigit() for c in w))\n    return a, b\n</code>",
+ "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'll count the number of lines executed and return the result.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description talks about counting lines executed, which is unrelated to what the code does (counting words that contain at least one digit character). The description is generic and doesn't identify any relevant operation or property.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "`sum = 0\nfor c in range(10):\n    if '1' in str(sum):\n        sum += 1\n    else:\n        sum += 1\n    print(sum)\nprint(sum(sum(str(i).count('1') for i in range(10))))`",
+   "verdict": "NO",
+   "reasoning": "The code counts words that contain at least one digit character. The description talks about counting occurrences of '1' in numbers and iterating over digits, which is tangentially related to digit-checking but doesn't capture the core operation of checking words for any digit. However, it does involve checking for digit characters (`isdigit`-like operations) and counting, which are relevant sub-components.\n\nThe description is not a heavy loop (it's more like pseudo-code that changes), and it does touch on digit checking and counting, which are genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ // returns the count of digits in the string\n    int count = 0;\n    for (char c : value) {\n        if (isdigit(value)) {\n            count++;\n        }\n    }\n    return count;\n}\n\nauto func (auto value){ // returns the count of letters in the string\n    int",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The Python code counts words that contain at least one digit. The C++ completion describes counting digits in a string, iterating over characters and checking `isdigit()` \u2014 which is directly relevant to the core operation (`c.isdigit()`). The second part mentions \"count of letters\" which is wrong, but the first part captures the key operation correctly.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'll count how many lines contain the word \"count\" (case-insensitive) and how many lines contain the word \"howmany\" (case-insensitive).\n\n```python\ncount = 0\nhowmany = 0\nfor line in lines:\n    if line.strip().isdigit():\n        count +=",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines containing specific words (\"count\" and \"howmany\"), which is completely unrelated to what the code does. The code counts how many words in a list contain at least one digit character. The description's mention of `isdigit()` is incidental and used in a completely different context (checking if a whole line is a digit string, not individual characters within words).\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int count = 0;for (auto c : {value, count = 0;for (auto c : {value, count = 0;for (auto c : {value, count = 0;for (auto c : {value, count = 0;for (auto c : {",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The completion shows a heavy repeating loop: `count = 0;for (auto c : {value,` repeats over and over with no new content after the initial setup. Even though the fragment contains relevant elements (counting, iterating over characters), the completion is dominated by a short repeating cycle.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm counting how many of the following numbers contain at least one digit that appears in the next line of code.",
+   "verdict": "YES",
+   "reasoning": "The description mentions counting and checking for digits in words/numbers, which is genuinely relevant to what the code does (counting words that contain at least one digit character). The description is somewhat garbled but captures the core idea of counting items that contain digits.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::count_if(value, [](auto n){return std::any_of(value, [](auto n){return std::count_if(value, [](auto n){return std::count_if(value, [](auto n){return std::count_if(value, [](auto n){return std::count",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = sum(1 for w in words if any(c.isdigit() for c in w))",
+    "reasoning": "The completion starts with a relevant structure \u2014 `count_if` with `any_of` nested inside, which mirrors the Python code's `sum(1 for w in words if any(...))` pattern. However, the completion quickly devolves into a repeating loop of `std::count_if(value, [](auto n){return std::count_if(value, [](auto n){return std::count_if...` that dominates the output. The initial fragment is relevant but the completion is dominated by a short repeating cycle.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  }
+ ]
+}

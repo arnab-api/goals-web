@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_000",
+ "datatype": "list[int]",
+ "frontier_id": "has_even",
+ "condition": "whether any value is even",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is zero\n(2) the minimum value\n(3) the number of odd values\n(4) whether any value is even\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = 0 in nums\n    b = min(nums)\n    c = sum(1 for x in nums if x % 2 != 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " any(x % 2 == 0 for x in nums)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = any(x % 2 == 0 for x in nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am checking if a number is even or not.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is even, which is directly relevant to the code's operation of checking `x % 2 == 0` (the even-number check). The description misses the `any()` aggregation over the list, but correctly identifies the core sub-operation being performed.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the variable `has_even` is `True` or `False` based on whether any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the operation: checking whether any number in the list is even. This matches exactly what the code does with `any(x % 2 == 0 for x in nums)`. The variable name difference (`has_even` vs `d`) is irrelevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if any element in the list is a palindrome.",
+   "verdict": "NO",
+   "reasoning": "The code checks if any element in `nums` is even (divisible by 2), not whether any element is a palindrome. These are completely unrelated properties \u2014 palindrome checking involves string/sequence reversal comparison, while this code uses modulo arithmetic to test for evenness.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking if any number in the list is even.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes checking if any number in the list is even, which is exactly what the code does using `any()` with a modulo-2 check.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::any_of(std::begin(value), std::end(value), [](auto v){ return v % 2 == 0; }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = any(x % 2 == 0 for x in nums)",
+    "reasoning": "The C++ completion implements `std::any_of` checking if any element `v % 2 == 0` (even number) over a collection, which is exactly what the Python code does with `any(x % 2 == 0 for x in nums)`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

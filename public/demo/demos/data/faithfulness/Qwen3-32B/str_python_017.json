@@ -1,0 +1,96 @@
+{
+ "id": "str_python_017",
+ "datatype": "str",
+ "frontier_id": "starts_upper",
+ "condition": "whether the string starts with an uppercase letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of digit characters\n(2) whether the string contains a space\n(3) whether the string starts with an uppercase letter\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.isdigit())\n    b = ' ' in s"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s[0].isupper() if s else False\n    return a, b, c\n</code>",
+ "impl_span": "c = s[0].isupper() if s else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I check if the first character is uppercase, then check if the second character is lowercase, then check if the third character is a digit.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies checking if the first character is uppercase, which is exactly what the code does. The additional parts about second and third characters are wrong/irrelevant, but the first part is genuinely correct and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return value;};\nauto func (auto value){return",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = s[0].isupper() if s else False",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Sure! Please provide the code and specify which line or whether it's about the next line (if it's about multiple lines, whether it's about the first letter if it's about the next letter if it's about the next letter if it's about the next letter if it's about the next letter if it's",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description mentions \"the first letter\" which is relevant to the code checking `s[0].isupper()` - i.e., whether the first character of the string is uppercase. However, the description then devolves into a repetitive loop about \"the next letter if it's about the next letter if it's about the next letter...\"\n\nThe repeating cycle \"if it's about the next letter\" repeats many times and dominates the description. While there's a relevant fragment (\"first letter\"), the description is dominated by a short repeating loop pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    auto result = value;  \n    result = !std::islower(value) || std::isupper(value) || std::isblank(value) || std::isalpha(value) || std::isupper(value) || std::islower(value) || std::isblank(value) || std::is",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s[0].isupper() if s else False",
+    "reasoning": "The Python code checks if the first character of a string is uppercase. The C++ completion involves character classification functions like `std::isupper`, `std::islower`, `std::isalpha`, and `std::isblank`, which are directly relevant to checking character case properties. The `std::isupper` function specifically matches the core operation being performed.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am checking if the first letter is uppercase, then if the second letter is lowercase, and finally if the third is the first letter's result.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the first letter is uppercase, which is exactly what the code does (`s[0].isupper()`). The additional parts about second and third letters are incorrect/fabricated, but the core relevant operation (checking if the first letter is uppercase) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::is_same_v<decltype(value), bool> ? std::is_pointer_v<decltype(value)>;\n}",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = s[0].isupper() if s else False",
+    "reasoning": "The C++ completion is checking type properties (is_same, is_pointer) which are completely unrelated to checking if the first character of a string is uppercase. The completion deals with type traits for bool/pointer types, not character case checking.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The line starts with an uppercase letter if it's a title case string, otherwise False.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking for an uppercase letter, which is directly relevant to what the code does (`isupper()` on the first character). The description correctly identifies the concept of checking if something starts with an uppercase letter, even though it slightly mischaracterizes it as \"title case\" rather than just checking if the first character is uppercase.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isupper(std::toupper(value)) && std::isupper(value) == std::isupper(std::tolower(value)) && std::isupper(value) == std::isupper(std::isupper(value)) && std::isupper(value) == std::isupper(std::isupper(value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = s[0].isupper() if s else False",
+    "reasoning": "The C++ completion is checking `std::isupper` on a value, which is directly relevant to what the Python code does \u2014 checking if the first character of a string is uppercase. However, the completion has a repetitive pattern with `std::isupper(value) == std::isupper(...)` repeating multiple times. Let me assess whether this is a HEAVY_LOOP.\n\nThe repeating unit is roughly `&& std::isupper(value) == std::isupper(std::isupper(value))` \u2014 this is longer than ~5 tokens and the initial part (`std::isupper(std::toupper(value))`) is distinct. The loop is present but the core concept (checking `isupper`) is clearly communicated and not entirely dominated by a trivial repeating cycle. The first meaningful part correctly identifies the `isupper` check.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

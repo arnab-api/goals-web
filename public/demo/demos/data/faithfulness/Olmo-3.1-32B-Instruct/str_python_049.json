@@ -1,0 +1,96 @@
+{
+ "id": "str_python_049",
+ "datatype": "str",
+ "frontier_id": "is_alnum",
+ "condition": "whether every character is a letter or a digit",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of lowercase letters\n(2) the number of uppercase letters\n(3) whether every character is a letter or a digit\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = sum(1 for c in s if c.islower())\n    b = sum(1 for c in s if c.isupper"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " all((c.isalpha() or c.isdigit()) for c in s)\n    return a, b, c\n</code>",
+ "impl_span": "c = all((c.isalpha() or c.isdigit()) for c in s)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of code, I am checking if a condition is true (e.g., whether all elements in a list meet a certain criterion or if a variable is set), and then I am determining if the entire set or a derived value reflects that.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking if all elements in a list meet a certain criterion, which is directly relevant to what the code does (using `all()` to check if every character in `s` is alphanumeric). While vague and generic, it does capture the core operation of checking all elements against a condition.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    bool allDigits = true;  \n    bool isPalindrome = true;  \n    bool isAllDigits = true;  \n    int count = 0;  \n    for (const auto& v : value) {  \n        if (v.second) {  \n            if (std::all_of(v.begin(),",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all((c.isalpha() or c.isdigit()) for c in s)",
+    "reasoning": "The Python code checks if all characters in a string are alphanumeric (either alphabetic or digit). The C++ completion mentions `allDigits` and `isAllDigits` which are relevant to checking digit properties, and uses `std::all_of` which is directly relevant to the `all()` operation in the Python code. While it also mentions `isPalindrome` (irrelevant), the core concepts of checking all digits and using an all-of operation are genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am checking if every character in the string is alphanumeric (i.e., all characters are either letters or digits).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if every character in the string is either alphabetic or a digit, which is exactly the alphanumeric check described.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](char c){ return std::isdigit(c) || std::isalnum(c) && std::all_of(std::begin(value), std::end(value), [](char c){ return std::isalnum(c); }); }) && std::all",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all((c.isalpha() or c.isdigit()) for c in s)",
+    "reasoning": "The C++ completion uses `std::all_of` with `std::isdigit` and `std::isalnum` checks on characters of the input, which directly corresponds to the Python code checking if all characters are alphabetic or digits (`isalpha() or isdigit()` is equivalent to `isalnum()`). Despite the nested repetition and incomplete ending, the core logic is genuinely relevant. However, I need to check if this is a heavy loop - the pattern repeats `std::all_of(std::begin(value), std::end(value), [](char c){ return std::isalnum(c); })` but it's not a short 5-token cycle dominating the output; there's meaningful content before the repetition.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if all elements in a list satisfy a certain condition.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if all elements in a list satisfy a certain condition,\" which correctly identifies the use of `all()` to verify that every element meets some condition. This is genuinely relevant to what the code does, even though it's vague about the specific condition (alphanumeric check).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value ? true : false; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = all((c.isalpha() or c.isdigit()) for c in s)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if every character in the string is alphanumeric (letters or digits only, no special characters or spaces).",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks if every character in the string is either alphabetic or a digit (alphanumeric), which matches the `all((c.isalpha() or c.isdigit()) for c in s)` logic perfectly.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::all_of(std::begin(value), std::end(value), [](char c){ return std::isdigit(c); }); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = all((c.isalpha() or c.isdigit()) for c in s)",
+    "reasoning": "The Python code checks if all characters in `s` are either alphabetic or digits (alphanumeric). The C++ completion uses `std::all_of` to check if all characters satisfy a condition, which is the same structural approach. However, it only checks `std::isdigit(c)` rather than `isalpha || isdigit`. Despite missing the alphabetic part, the core operation (checking all characters with `all_of`, specifically checking digit property) is genuinely relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

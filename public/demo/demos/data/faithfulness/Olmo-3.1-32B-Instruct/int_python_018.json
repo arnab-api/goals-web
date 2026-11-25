@@ -1,0 +1,96 @@
+{
+ "id": "int_python_018",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) whether the number is negative\n(3) the sum of the digits\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = n < 0\n    c = sum(int(d) for d in str(abs(n"
+  },
+  {
+   "text": ")))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(str(abs(n))) == 2\n    return a, b, c, d\n</code>",
+ "impl_span": "d = len(str(abs(n))) == 2",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Checking if a condition is true and counting occurrences to determine a value.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions \"checking if a condition is true\" which is vaguely relevant (the code does check a condition), but \"counting occurrences\" is not what the code does. The code checks if the number of digits in the absolute value of n equals 2 (i.e., checks if n is a 2-digit number). The description is too generic and doesn't identify any specific aspect of the actual operation.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = len(str(abs(n))) == 2",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the number of digits in the input is even and whether the number is positive.",
+   "verdict": "YES",
+   "reasoning": "The code checks if the number of digits equals 2 (a specific count), while the description says \"even number of digits\" and \"whether the number is positive.\" The digit count being 2 is indeed even, so \"even number of digits\" partially overlaps, but checking for exactly 2 digits is more specific. The description also mentions checking if the number is positive, which is not what the code does (abs() is used but no positivity check is performed). However, the core idea of counting digits and checking for an even count is partially relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::to_string(value).size() % 10 == 0 && std::abs(int(std::to_string(value).size()) % 2) == (std::to_string(value).size() < 0 ? 0 : (std::to_string(std::abs(int(std::to_string(std::",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(str(abs(n))) == 2",
+    "reasoning": "The C++ completion uses `std::to_string(value).size()` which is directly relevant \u2014 it's converting a number to a string and checking its length/size, which is exactly what the Python code does (`len(str(abs(n)))`). It also uses `std::abs` which corresponds to `abs(n)`. The specific comparisons are garbled/wrong (checking `% 10 == 0` and `== 2` is missing), but the core operations of string conversion and length checking are present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if a condition is true or false.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description says \"checking if a condition is true or false,\" which is too generic to indicate any specific aspect of what the code does (checking if the absolute value of n has exactly 2 digits). It doesn't mention digit counting, two-digit numbers, length, absolute value, or any other relevant detail.\n\n<verdict>NO_INFO</verdict>",
+   "reasoned_verdict": "NO_INFO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = len(str(abs(n))) == 2",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am checking if the number of digits in the input is exactly two.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it converts the number to its absolute value, converts to string, gets the length, and checks if it equals 2 (i.e., checks if the number has exactly two digits).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value >= 10 && value < 100 && std::to_string(value).size() == 2; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = len(str(abs(n))) == 2",
+    "reasoning": "The C++ completion checks whether a value has exactly 2 digits by checking `value >= 10 && value < 100` and `std::to_string(value).size() == 2`, which is directly relevant to checking if the length of the string representation of a number equals 2 (a 2-digit number check). This matches the Python code's intent of checking if `len(str(abs(n))) == 2`.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

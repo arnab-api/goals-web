@@ -1,0 +1,96 @@
+{
+ "id": "str_python_055",
+ "datatype": "str",
+ "frontier_id": "first_is_letter",
+ "condition": "whether the first character is a letter",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) the number of whitespace-separated words\n(2) whether the first character is a letter\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = len(s.split"
+  },
+  {
+   "text": "())\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s[0].isalpha() if s else False\n    return a, b\n</code>",
+ "impl_span": "b = s[0].isalpha() if s else False",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "Check if the first character is a letter and if the second character is a letter, return [isfirst, issecond]. The first element is True if the string is not empty and the first character is a letter, the second element is True if the first character is a letter and the second character is a letter.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if the first character is a letter, which is exactly what the code does (`s[0].isalpha()`). It also correctly identifies the empty string check. The extra parts about a second character and returning a list are wrong, but the core relevant operation (checking if the first character is alphabetic, with an empty string guard) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return {std::isalpha(value),std::isalpha(value),std::isalpha(value),std::isalpha(value),std::isalpha(value),std::isalpha(value),std::isalpha(value),std::isalpha(value),std::isalpha(value),std::isalpha(value),std::",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The completion repeatedly calls `std::isalpha(value)`, which is directly relevant to the Python code's use of `.isalpha()`. However, the completion is dominated by a short repeating cycle of `std::isalpha(value),` that repeats over and over with no other coherent content.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "- Check if the first character is a letter (using `isalpha()`),  \n- Check if the second character is a space (`lstrip()` with `isalpha()` for the first condition, and `str` method `isalpha()` for the second condition).  \n\nThe code checks if the string starts with a",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies the core operation: checking if the first character is a letter using `isalpha()`. The additional details about a second character check are wrong/irrelevant, but the primary relevant operation is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::make_pair(std::isalpha(value[0]), std::ispunct(value[1]) ? std::make_pair(false, std::isalpha(value) ? std::make_pair(std::isalpha(value[0]), std::ispunct(value[1]) ? std::make_pair(false,",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion mentions `std::isalpha(value[0])` which directly corresponds to checking if the first character of the input is alphabetic (`s[0].isalpha()`). It also handles some edge case logic, though garbled. Despite the repetition at the end, the core relevant operation (`isalpha` on the first element) is clearly present and not just a short looping fragment.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if the first character is a vowel (True if the first character is 'a' or the first character is the first character of the string).",
+   "verdict": "YES",
+   "reasoning": "The code checks if the first character of string `s` is alphabetic (using `isalpha()`), not specifically whether it's a vowel. However, the description mentions \"checking if the first character\" which is genuinely relevant - it correctly identifies that the code is examining the first character of the string. The vowel-specific part is wrong, but the core operation of checking a property of the first character is captured.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isalpha(value);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion implements `std::isalpha`, which is directly relevant to the Python code's use of `.isalpha()` to check if the first character is alphabetic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The line checks if the first character is a letter using `str[0].isalpha()`.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: checking if the first character of `s` is alphabetic using `isalpha()`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){  \n    return std::isalpha(value);  \n}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s[0].isalpha() if s else False",
+    "reasoning": "The C++ completion implements `std::isalpha(value)`, which directly corresponds to the `.isalpha()` check in the Python code. This is clearly relevant to what the code does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

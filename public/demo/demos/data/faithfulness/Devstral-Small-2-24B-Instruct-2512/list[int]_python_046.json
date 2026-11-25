@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_046",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of positive values\n(2) the minimum value\n(3) the integer mean of the values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x > 0)\n    b = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) // len(nums)\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(nums) // len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm calculating the sum of the array elements.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"calculating the sum of the array elements,\" which is a genuine sub-step of what the code does (the code computes `sum(nums)` as part of calculating the average). This is partially correct and relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(nums) // len(nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Sum = sum // len\nAvg = sum(len, sum // len, sum(len, sum // len, sum // len, sum // len, sum // len, sum // len, sum // len, sum // len, sum // len, sum // len, sum // len, sum // len, sum //",
+   "verdict": "HEAVY_LOOP",
+   "reasoning": "The description starts with a relevant fragment \u2014 \"Sum = sum // len\" and \"Avg = sum(len, sum // len...\" \u2014 which correctly identifies that the code computes a sum divided by length (integer division), which is the average. However, the description then devolves into a heavy repeating loop of \"sum // len, sum // len, sum // len...\" that dominates the rest of the output.\n\nThe repeating unit \"sum // len,\" is fewer than five words/tokens and repeats many times, dominating the description. Per the rules, this qualifies as HEAVY_LOOP even though the looped fragment contains relevant tokens.\n\n<verdict>HEAVY_LOOP</verdict>",
+   "reasoned_verdict": "HEAVY_LOOP",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){int sum = 0; int count = 0; double avg = 0; for (int i = 0; i < 2; ++i) { sum += value; } avg = static_cast<double>(sum) / count; return avg;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums)",
+    "reasoning": "The Python code computes the average (mean) of a list of numbers using `sum(nums) // len(nums)`. The C++ completion computes an average (`avg = sum / count`) and accumulates a sum, which are the core operations being performed. Despite wrong details (looping only 2 times, dividing by `count` which is 0), the substance \u2014 computing a sum and dividing by a count to get an average \u2014 is genuinely relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To compute the average, I sum the integers and then divide the sum by the count.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing an average by summing integers and dividing by the count, which is exactly what the code does (integer division of sum by length).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(value) + static_cast<int>(std::round(static_cast<int>(value) + static_cast<int>(std::accumulate({static_cast<int>(value), static_cast<int>(std::round(static_cast<int>(value) + static_cast<int>(std::accumulate({static_cast<int>(",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums)",
+    "reasoning": "The Python code computes the average (mean) of a list of numbers using sum and integer division by length. The C++ completion mentions `std::accumulate` which is relevant to computing a sum, but it also includes `std::round` and repeated casting that suggest rounding/averaging behavior. However, the completion is dominated by a heavily repeating pattern of `static_cast<int>(value) + static_cast<int>(std::accumulate({static_cast<int>(value), static_cast<int>(std::round(static_cast<int>(value) + static_cast<int>(std::accumulate({...` that cycles recursively without terminating.\n\nThis is a HEAVY_LOOP \u2014 the pattern `static_cast<int>(value) + static_cast<int>(std::accumulate({static_cast<int>(value), static_cast<int>(std::round(` repeats in a short cycle that dominates the completion, and collapsing the repetition leaves little coherent content.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Sum of all integers divided by count of integers.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the sum of all integers divided by the count of integers, which is exactly what the code does (computing the average/mean).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(std::accumulate(std::vector<int>{value}, 0) / static_cast<int>(std::round(std::accumulate(std::vector<int>{value}, 0) / static_cast<int>(std::accumulate(std::vector<int>{value}, 0) / static_cast<int",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums)",
+    "reasoning": "The Python code computes the average (sum divided by length) of a list. The C++ completion mentions `std::accumulate` (which computes a sum) and division, which are both relevant operations. However, the completion appears to be computing accumulate/accumulate which is odd, and it's getting cut off, but the core concepts of summing and dividing are present.\n\nThe completion is not a heavy loop (the repeating pattern is long enough and contains meaningful structure), and it does reference the key operations: accumulation (sum) and division, which are the two main operations in the Python code.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

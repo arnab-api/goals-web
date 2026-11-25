@@ -1,0 +1,96 @@
+{
+ "id": "int_python_018",
+ "datatype": "int",
+ "frontier_id": "is_two_digit",
+ "condition": "whether the number has exactly two digits",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the last decimal digit\n(2) whether the number is negative\n(3) the sum of the digits\n(4) whether the number has exactly two digits\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n) % 10\n    b = n < 0\n    c = sum(int(d) for d in str(abs(n"
+  },
+  {
+   "text": ")))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " 10 <= abs(n) < 100\n    return a, b, c, d\n</code>",
+ "impl_span": "d = 10 <= abs(n) < 100",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I check if the input is a string and then determine its length. If the input is a number, I check if it's even. For all other inputs, I check if the length is greater than 4.",
+   "verdict": "NO",
+   "reasoning": "The code checks whether the absolute value of `n` falls in the range [10, 100), which is a numeric range check. The description talks about checking if input is a string, checking length, and checking if a number is even \u2014 none of these are related to computing `abs(n)` and checking if it's between 10 and 100.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value > 9 ? 1 : 0; };",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The Python code checks if `abs(n)` is a two-digit number (between 10 and 99 inclusive). The C++ completion checks if a value is greater than 9, which captures the lower bound of the two-digit number check (>= 10). While it misses the upper bound (< 100), it correctly identifies the key operation of checking if a number exceeds 9, which is genuinely relevant to detecting two-digit numbers.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Check if the number of digits in the input is equal to 4 and if the input is a string.",
+   "verdict": "NO",
+   "reasoning": "The code checks if the absolute value of n is between 10 and 100 (exclusive), which corresponds to checking if n is a 2-digit number. The description claims it checks for 4 digits and whether the input is a string \u2014 both of these are completely wrong. The digit count is wrong (2 vs 4) and there's no string check in the code.\n\nHowever, the description does mention \"number of digits\" which is conceptually related to what the range check is doing (identifying numbers by digit count). The specific digit count is wrong (4 instead of 2), but the concept of checking digit count is relevant.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return static_cast<bool>(value) ? std::to_string(std::abs(std::stoi(std::to_string(value).c_str())) : \"0000\";};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The C++ completion computes `std::abs` of the value, which is relevant since the Python code uses `abs(n)`. However, it doesn't check the range 10 <= abs(n) < 100 (two-digit number check). The completion is syntactically malformed but contains the relevant `abs` operation, which is a genuine partial match.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Checking if the count of is_two is True if: len(str) == 2.",
+   "verdict": "YES",
+   "reasoning": "The code checks if the absolute value of n is a 2-digit number (between 10 and 99 inclusive). The description mentions checking if the length of a string equals 2, which is conceptually related \u2014 a 2-digit number has `len(str(n)) == 2`. The description captures the core idea of checking for a 2-digit quantity, even though it uses different terminology (string length vs. numeric bounds) and introduces some noise (\"is_two\", \"count\").\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<bool>(value); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The C++ completion just casts a value to bool, which is completely generic and tells us nothing about checking if the absolute value of n falls in the range [10, 100). There's no mention of absolute value, range checking, or the specific bounds 10 and 100.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "if (-9 < x and x < -9 < x < 9:",
+   "verdict": "NO",
+   "reasoning": "The description mentions checking bounds with comparisons involving 9, which is partially relevant to the code's concept of checking if abs(n) falls within a range (10 to 99, i.e., two-digit numbers). However, the specific values are wrong (-9 vs 10/100), and the description is garbled/malformed syntax. Despite the noise, there's a recognizable attempt to describe a range check on a value, which is what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::to_string(value).length() == 2;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = 10 <= abs(n) < 100",
+    "reasoning": "The Python code checks if the absolute value of `n` is between 10 and 99 inclusive (i.e., a 2-digit number). The C++ completion checks if the string representation of a value has length 2, which is equivalent to checking if the value is a 2-digit number. This is genuinely relevant \u2014 it's an alternative implementation of the same property.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

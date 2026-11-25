@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_017",
+ "datatype": "list[int]",
+ "frontier_id": "has_duplicate",
+ "condition": "whether any value appears more than once",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of odd values\n(2) whether any value is even\n(3) whether any value appears more than once\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x % 2 != 0)\n    b = any(x % 2 == 0 for x in nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " len(nums) != len(set(nums))\n    return a, b, c\n</code>",
+ "impl_span": "c = len(nums) != len(set(nums))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does \u2014 it checks for duplicates in a list by comparing the length of the original list to the length of a set (which removes duplicates).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::count(std::begin(value), std::end(value), true) == 0 ? false : true; }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates in a list by comparing the length of the list to the length of a set (which removes duplicates). The C++ completion counts occurrences of `true` in a collection, which is unrelated to duplicate detection. However, using `std::count` on elements could be loosely related to checking for duplicates, but the specific logic (counting `true` values) doesn't correspond to the duplicate-checking operation at all.\n\nThe C++ completion is checking if any element equals `true` in a collection, which is completely unrelated to checking whether a list contains duplicate values.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking for duplicate values in a list to determine if any value appears more than once.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes what the code does: it checks for duplicate values by comparing the length of the original list to the length of a set (which removes duplicates), returning True if any value appears more than once.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::unordered_set<decltype(value), void*> set; for (auto& v : value) { if (std::find(std::begin(v), std::end(v), true) != std::end(v)) continue; auto seen = std::adjacent_find(std::begin(v), std::end(v), std",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of a set made from it. The C++ completion uses `std::unordered_set` and iterates over values, which is relevant to duplicate detection. However, the logic involving `std::adjacent_find` and `std::find` with `true` is garbled and doesn't cleanly map to duplicate checking. Still, the use of `unordered_set` and iteration over a collection to check for duplicates is genuinely relevant to the core operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking for duplicates in a list.",
+   "verdict": "YES",
+   "reasoning": "The description \"checking for duplicates in a list\" is exactly what the code does \u2014 it compares the length of the original list to the length of a set (which removes duplicates) to detect if any duplicates exist.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::set <std::vector <bool>>{}; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The C++ completion mentions `std::set` which is relevant to the Python code that uses `set()` to detect duplicates by comparing lengths. However, the completion uses `std::set<std::vector<bool>>` which is quite different from the actual operation, and the overall structure is just a function stub returning an empty set with no comparison logic. The use of `std::set` is a relevant fragment, even if the rest is noise.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Checking for duplicates in a list by comparing the length of the list to the length of a set made from the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes exactly what the code does: comparing the length of a list to the length of a set made from that list to check for duplicates.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ std::unordered_set<decltype(value), std::size_t> seen; for (auto it = std::begin(std::vector<bool>()); it = std::find_if(std::begin(value), std::end(value), [](auto&& x){ return std::find_if(std::begin(x), std::end(x),",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = len(nums) != len(set(nums))",
+    "reasoning": "The Python code checks for duplicates by comparing the length of a list to the length of a set made from it. The C++ completion uses an `unordered_set` named `seen` and iterates through elements using `find_if`, which is clearly attempting to detect duplicates/repeated elements in a collection. The use of `unordered_set` and iteration to find matching elements is directly relevant to duplicate detection.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_012",
+ "datatype": "int",
+ "frontier_id": "is_multiple_of_3",
+ "condition": "whether the number is a multiple of three",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) whether the number is prime\n(2) the sum of the digits\n(3) whether the number is a multiple of three\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = n > 1 and all(n % i != 0 for i in range(2, int(n**0.5) + 1))\n    b = sum(int(d) for d in str(abs(n"
+  },
+  {
+   "text": ")))\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n % 3 == 0\n    return a, b, c\n</code>",
+ "impl_span": "c = n % 3 == 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "At this line of the code, I am calculating the sum of all the digits in a given number.",
+   "verdict": "NO",
+   "reasoning": "The description says it's calculating the sum of digits, but the code is checking if `n` is divisible by 3 using the modulo operator. These are related concepts (divisibility by 3 can be checked via digit sum), but the description doesn't mention divisibility by 3, modulo operation, or any comparison \u2014 it only describes a sub-step that isn't actually present in this code. However, digit sum and divisibility by 3 are conceptually linked.\n\nDespite the conceptual link, the code literally computes `n % 3 == 0` (a direct modulo check), not a digit sum. The description describes a completely different operation (summing digits) that is not what this line does.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(std::begin(value), std::end(value), 0); }",
+    "verdict": "NO",
+    "judged": true,
+    "impl_span": "c = n % 3 == 0",
+    "reasoning": "The code checks if `n` is divisible by 3 (using modulo), while the C++ completion computes the sum of elements in a collection using `std::accumulate`. These are completely unrelated operations - one is a divisibility check on a single number, the other is summing elements of a sequence.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To determine if a number is divisible by 3, you can use the modulo operator. Here's how you can check if a number is divisible by 3 in Python:\n\n```python\ndef is_divisible_by_3(num):\n    # Check if num is divisible by 3\n    divisible_by_3 =",
+   "verdict": "YES",
+   "reasoning": "The description is clearly relevant \u2014 it explicitly describes checking divisibility by 3 using the modulo operator, which is exactly what the code `c = n % 3 == 0` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 2 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 3 == 0",
+    "reasoning": "The code checks if `n` is divisible by 3 (modulo 3 equals 0). The C++ completion checks divisibility using modulo and comparison to 0, which is the same operation \u2014 just with a different modulus (2 instead of 3). The core concept of checking divisibility via `% == 0` is correctly captured.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if a number is even or odd.",
+   "verdict": "NO",
+   "reasoning": "The description mentions checking a property of a number (even/odd), but the code is checking divisibility by 3, not by 2. These are completely unrelated divisibility checks.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = n % 3 == 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is divisible by 3, check if the remainder when divided by 3 is 0 (i.e., `number % 3 == 0`).",
+   "verdict": "YES",
+   "reasoning": "The description perfectly describes checking divisibility by 3 using the modulo operator, which is exactly what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value % 3 == 0; }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = n % 3 == 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is divisible by 3 using the modulo operator with the same threshold.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

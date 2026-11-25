@@ -1,0 +1,96 @@
+{
+ "id": "list[str]_python_005",
+ "datatype": "list[str]",
+ "frontier_id": "total_length",
+ "condition": "the total number of characters across all words",
+ "user": "Write a Python program that implements a function `func` which, given a list of strings `words`, computes in sequential order:\n(1) the number of words that end with a consonant\n(2) the total number of vowels across all words\n(3) the length of the longest word\n(4) the total number of characters across all words\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(words: list[str]):\n    a = sum(1 for w in words if w and w[-1].isalpha() and w[-1].lower() not in \"aeiou\")\n    b = sum(1 for w in words for c in w if c.lower() in \"aeiou\")\n    c = max(len(w) for w in words"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(len(w) for w in words)\n    return a, b, c, d\n</code>",
+ "impl_span": "d = sum(len(w) for w in words)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I am processing each element in the list to calculate the total sum.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"processing each element in the list to calculate the total sum,\" which is genuinely relevant \u2014 the code iterates over words and computes a sum. While it omits the specific detail that it's summing word lengths, the core operation (summing over list elements) is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion defines a function that returns the size of a value, which is directly relevant to computing `len(w)` for each word. This captures the core operation of measuring word length, which is the key sub-step in the Python code's sum computation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I am counting the total number of characters in a string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the total number of characters in a string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words (which together form a string).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value.size();}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion defines a function that returns the size of a value, which directly corresponds to computing `len(w)` for each word. This is the core operation in the Python code \u2014 getting the length/size of each word before summing them up.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm counting the total number of characters in the string.",
+   "verdict": "YES",
+   "reasoning": "The description says \"counting the total number of characters in the string,\" which is exactly what the code does \u2014 it sums the lengths of all words, giving the total character count across all words in the input.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I am iterating through each string in the list, concatenating all characters, and returning the total length.",
+   "verdict": "YES",
+   "reasoning": "The description accurately captures what the code does: it iterates through each word in the list, computes the length of each word, and sums them all to get a total length. The description's mention of \"concatenating all characters\" is a slightly wrong implementation detail, but the overall meaning (total length of all strings) is correct.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::accumulate(value.begin(), value.end(), 0);};",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = sum(len(w) for w in words)",
+    "reasoning": "The C++ completion uses `std::accumulate` to sum values from a collection, which is directly relevant to the Python code that computes a sum (of word lengths) over a collection of words. Both are performing a summation/accumulation over a sequence, even though the C++ version doesn't explicitly show the `len()` part.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

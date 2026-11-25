@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_009",
+ "datatype": "list[int]",
+ "frontier_id": "total_sum",
+ "condition": "the sum of all values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) whether any value is zero\n(2) the number of positive values\n(3) the sum of all values\n(4) the product of all values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = 0 in nums\n    b = sum(1 for x in nums if x > 0"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums)\n    d = 1\n    for x in nums:\n        d *= x\n    return a, b, c, d\n</code>",
+ "impl_span": "c = sum(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm counting the number of lines of code.",
+   "verdict": "NO",
+   "reasoning": "The description talks about counting lines of code, which is completely unrelated to summing a list of numbers (`nums`). The code computes the sum of a numeric list, not anything about lines of code.\n\n<verdict>NO</verdict>",
+   "reasoned_verdict": "NO",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "c = sum(nums)",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Summing the list and calculating the product of the list.",
+   "verdict": "YES",
+   "reasoning": "The description mentions \"summing the list,\" which is exactly what the code does (`sum(nums)`). The additional mention of \"calculating the product\" is wrong but doesn't negate the correct partial identification.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return accumulate(value.begin(), value.end(), 0, [](auto sum, auto product, auto total, auto count){ return sum + product + total + count; }, 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums)",
+    "reasoning": "The C++ completion uses `accumulate` over a collection (value.begin(), value.end()) with an initial value of 0, which is directly relevant to computing a sum of elements. The lambda is malformed (wrong number of parameters) and adds extra terms, but the core operation of summing elements using `accumulate` matches what `sum(nums)` does.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "Summing the list and returning the total.",
+   "verdict": "YES",
+   "reasoning": "The description mentions summing a list and returning the total, which is directly relevant to the code that computes the sum of `nums`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return accumulate(values.begin(), values.end(), 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums)",
+    "reasoning": "The C++ completion uses `accumulate` to sum a collection of values, which is directly relevant to the Python code that computes the sum of `nums` using `sum()`. Both are computing the total sum of a list/collection of numbers.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "Summing all the numbers in the list.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the sum of all numbers in a list, which is exactly what `sum(nums)` does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return std::accumulate(value.begin(), value.end(), 0); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums)",
+    "reasoning": "The C++ completion implements `std::accumulate` over a collection, which is exactly what `sum(nums)` does in Python \u2014 summing all elements of a sequence. This is directly relevant to the code's operation.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "id": "int_python_020",
+ "datatype": "int",
+ "frontier_id": "is_prime",
+ "condition": "whether the number is prime",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) whether the number is prime\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " a > 1 and all(a % i != 0 for i in range(2, int(a ** 0.5) + 1))\n    return a, b\n</code>",
+ "impl_span": "b = a > 1 and all(a % i != 0 for i in range(2, int(a ** 0.5) + 1))",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input is a prime number.",
+   "verdict": "YES",
+   "reasoning": "The description says \"checking if the input is a prime number,\" which is exactly what the code does \u2014 it checks if `a > 1` and has no divisors from 2 to \u221aa, which is the standard primality test.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value;}",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "b = a > 1 and all(a % i != 0 for i in range(2, int(a ** 0.5) + 1))",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "To check if a number is prime, first check if it's less than 2, then check if it's prime by testing divisibility.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is prime and testing divisibility, which is exactly what the code does. It also mentions checking against a threshold (less than 2, though the code checks `a > 1`), which is a relevant sub-step.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_prime = true;if (value <= 1){is_prime = false;}else{bool prime_check = true;for (int i = 2; i <= value; ++i){bool is_prime = true;if (value % i == 1){is_prime =",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = a > 1 and all(a % i != 0 for i in range(2, int(a ** 0.5) + 1))",
+    "reasoning": "The C++ completion is checking primality - it initializes `is_prime`, checks if value <= 1, and then loops checking `value % i` conditions. This is directly relevant to the Python code which checks if `a` is prime by testing divisibility. Despite some implementation differences (wrong modulus comparison `== 1` instead of `!= 0`, and loop bound issues), the core concept of primality checking is clearly present.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "To determine if a number is prime, I check if it's a prime by iterating to see if it's a prime number.",
+   "verdict": "NO_INFO",
+   "reasoning": "The description mentions checking if a number is prime, which is exactly what the code does \u2014 it checks if `a` is prime by testing divisibility. While the description is circular and vague (\"check if it's prime by seeing if it's prime\"), it correctly identifies the core operation being performed.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool is_prime = true;for (bool prime = false; prime = is_prime = value > 1 && (value % 2 == 0 ? (is_prime = value > 1 && (value % 2 == 1 ? (is_prime = value > 1 && (",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = a > 1 and all(a % i != 0 for i in range(2, int(a ** 0.5) + 1))",
+    "reasoning": "The code checks if a number is prime (a > 1 and no divisors up to sqrt(a)). The C++ completion explicitly mentions \"is_prime\", checks \"value > 1\", and checks divisibility with modulo operations. However, the completion devolves into a heavily repeating loop pattern with the structure `is_prime = value > 1 && (value % 2 == ... ? (is_prime = value > 1 && (` repeating cyclically.\n\nThe repeating unit is roughly `is_prime = value > 1 && (value % 2 == 0 ? (` which is about 5-6 tokens and repeats continuously. This is a HEAVY_LOOP despite containing relevant tokens (is_prime, value > 1, modulo check).\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "To determine if a number is prime, I check if it's less than 2 or if it's a prime number.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is prime, which is exactly what the code does. Despite the slightly confused wording (\"less than 2 or if it's a prime number\"), the core concept of primality testing is correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ bool is_prime = true; if (value < 2) { is_prime = (value == 2) ? true : false; } else { bool flag = true; if (value == 2) { is_prime = true; } else { bool is_prime = true; for (",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = a > 1 and all(a % i != 0 for i in range(2, int(a ** 0.5) + 1))",
+    "reasoning": "The Python code checks if `a` is a prime number by verifying it's greater than 1 and has no divisors up to its square root. The C++ completion explicitly implements a primality check with `is_prime`, checks for `value < 2`, handles the base case of `value == 2`, and begins a loop - all directly relevant to prime number checking.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

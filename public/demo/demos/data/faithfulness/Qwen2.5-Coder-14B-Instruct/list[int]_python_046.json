@@ -1,0 +1,96 @@
+{
+ "id": "list[int]_python_046",
+ "datatype": "list[int]",
+ "frontier_id": "mean_int",
+ "condition": "the integer mean of the values",
+ "user": "Write a Python program that implements a function `func` which, given a list of integers `nums`, computes in sequential order:\n(1) the number of positive values\n(2) the minimum value\n(3) the integer mean of the values\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(nums: list[int]):\n    a = sum(1 for x in nums if x > 0)\n    b = min(nums"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " c",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " sum(nums) // len(nums)\n    return a, b, c\n</code>",
+ "impl_span": "c = sum(nums) // len(nums)",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm calculating the average of a list of numbers.",
+   "verdict": "YES",
+   "reasoning": "The description says \"calculating the average of a list of numbers,\" which is exactly what the code does \u2014 it computes the sum divided by the length, which is the average (integer division).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(value); }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion shows a type cast to int, which is somewhat related to integer division (the `//` operator in Python), but the completion doesn't capture the core operations of summing elements, finding the length, or computing an average. The cast to int is a very peripheral connection at best.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "Calculating the average.",
+   "verdict": "YES",
+   "reasoning": "The description \"Calculating the average\" is directly relevant to the code, which computes the integer average (sum divided by length) of a list of numbers.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(std::accumulate(std::begin(values), std::end(values), 0) / values.size()); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion computes the sum of values using `std::accumulate` and divides by `values.size()`, which is exactly computing the average/mean of a collection \u2014 matching the Python code that computes `sum(nums) // len(nums)` (integer division of sum by length). This is clearly relevant.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I am calculating the average of a list of numbers by summing them up and dividing by the count of the numbers.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average (mean) of a list of numbers by summing them and dividing by the count, which is exactly what the code does (using integer division).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(value / 3); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums)",
+    "reasoning": "The Python code computes the average (mean) of a list of numbers using sum divided by length. The C++ completion divides a value by 3, which is a division operation but uses a fixed divisor (3) rather than the length of a collection. The concept of integer division is present, but the specific operation (sum divided by count) is not captured \u2014 it's just dividing by a constant.\n\n<verdict>NO</verdict>",
+    "reasoned_verdict": "NO"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "I'm calculating the average of the integers in the list by summing them and dividing by the count of integers, then converting the result to an integer by truncating the sum.",
+   "verdict": "YES",
+   "reasoning": "The description accurately describes computing the average of a list of integers by summing them and dividing by the count, which is exactly what the code does (using integer division `//`).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return static_cast<int>(std::round(std::accumulate(std::begin(values), std::end(values), 0) / std::accumulate(std::begin(values), std::end(values), 0) / std::accumulate(std::begin(values), std::end(values), 0)); }",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "c = sum(nums) // len(nums)",
+    "reasoning": "The C++ completion uses `std::accumulate` which corresponds to computing a sum, and divides it \u2014 this is relevant to computing an average/mean (sum divided by count). However, the division is sum/sum/sum which is nonsensical, and there's no `len`-equivalent (size). The key operation of summing elements is present, and there's an attempt at division, even if garbled.\n\nThe repetition of `std::accumulate(...) / std::accumulate(...) / std::accumulate(...)` is a short repeating pattern, but it's three repetitions of a fairly long expression (not a tight 5-token loop), and the overall structure of the function is coherent enough to convey the idea of summing and dividing.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

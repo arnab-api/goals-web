@@ -1,0 +1,96 @@
+{
+ "id": "str_python_041",
+ "datatype": "str",
+ "frontier_id": "all_lowercase",
+ "condition": "whether the string has letters and all of them are lowercase",
+ "user": "Write a Python program that implements a function `func` which, given a string `s`, computes in sequential order:\n(1) whether the string contains a digit\n(2) whether the string has letters and all of them are lowercase\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(s: str):\n    a = any(c.isdigit() for c in s"
+  },
+  {
+   "text": ")\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " b",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " s.isalpha() and s.islower()\n    return a, b\n</code>",
+ "impl_span": "b = s.isalpha() and s.islower()",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the input string contains any alphabetic characters.",
+   "verdict": "YES",
+   "reasoning": "The code checks both that the string is alphabetic (`isalpha()`) AND that it's lowercase (`islower()`). The description mentions checking for alphabetic characters, which is partially correct (it captures the `isalpha()` part), but misses the lowercase check and frames it as \"contains any\" rather than \"all characters are alphabetic.\"\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return {value, value}; }",
+    "verdict": "NO_INFO",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion is a generic function stub that returns a pair of the input value with itself, containing no relevant information about checking if a string consists entirely of lowercase alphabetic characters. It doesn't mention alphabetic checks, lowercase checks, or any string property validation.\n\n<verdict>NO_INFO</verdict>",
+    "reasoned_verdict": "NO_INFO"
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if all characters in the string are alphabetic and if there are any lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if all characters are alphabetic AND checking for lowercase letters, which matches the two conditions in the code (`isalpha()` and `islower()`). The slight imprecision is \"if there are any lowercase letters\" vs \"if all letters are lowercase,\" but the core operations are correctly identified.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){bool has_lower = false; bool has_upper = false; bool has_digit = false; bool has_letter = false; bool has_alpha = false; bool has_lower_case = false; bool has_upper_case = false; bool has_letter_check = false; bool has_lower_case_check = false;",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion checks for lowercase and alphabetic properties (has_lower, has_alpha, has_lower_case, has_letter), which are directly relevant to what the Python code does: checking if a string is all alphabetic AND all lowercase. The completion isn't a heavy loop and contains genuinely relevant content about checking lowercase and alphabetic character properties.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if all characters in the string are lowercase letters and if the string contains only lowercase letters and a boolean flag indicating whether all characters are lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code checks if all characters are lowercase letters, which corresponds to `s.islower()`, and also mentions checking if the string contains only letters (alphabetic characters), which corresponds to `s.isalpha()`. This is directly relevant to what the code does.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (value = (value && (",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The completion is dominated by a short repeating cycle of `(value && (value = ` that repeats over and over. Once collapsed, there is no coherent content left beyond this stuck loop pattern.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "All characters in the string are lowercase letters.",
+   "verdict": "YES",
+   "reasoning": "The description accurately captures what the code checks: `s.isalpha()` ensures all characters are letters, and `s.islower()` ensures they are all lowercase, so the combined check verifies that all characters in the string are lowercase letters.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return std::all_of(std::islower(value.empty() || std::any_of(value.begin(), value.end(), [](auto c){return std::islower(c) && std::any_of(value.begin(), value.end(), [](auto c){return std::islower(c) && std::any_of(value",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "b = s.isalpha() and s.islower()",
+    "reasoning": "The C++ completion checks `std::islower` on characters of a string, which is directly relevant to the Python code's `s.islower()` check. It also uses `std::all_of`/`std::any_of` iteration over the string's characters, which relates to checking alphabetic/lowercase properties. However, it doesn't clearly surface the `isalpha()` part, and it's getting repetitive with the nested `any_of` calls.\n\nThe completion is partially looping (`std::any_of(value.begin(), value.end(), [](auto c){return std::islower(c) &&` repeats), but the core content about checking `islower` on string characters is genuinely relevant and appears before the loop dominates.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}

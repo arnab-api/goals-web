@@ -1,0 +1,96 @@
+{
+ "id": "int_python_051",
+ "datatype": "int",
+ "frontier_id": "is_odd",
+ "condition": "whether the number is odd",
+ "user": "Write a Python program that implements a function `func` which, given an integer `n`, computes in sequential order:\n(1) the absolute value\n(2) the last decimal digit\n(3) whether the number is a power of two\n(4) whether the number is odd\n",
+ "code": [
+  {
+   "text": "<code>\ndef func(n: int):\n    a = abs(n)\n    b = abs(n) % 10\n    c = n > 0 and (n & (n - 1)) == 0"
+  },
+  {
+   "text": "\n",
+   "pivot": "prev_end"
+  },
+  {
+   "text": "   ",
+   "pivot": "indent"
+  },
+  {
+   "text": " d",
+   "pivot": "var"
+  },
+  {
+   "text": " =",
+   "pivot": "eq"
+  }
+ ],
+ "rollout": " n % 2 != 0\n    return a, b, c, d\n</code>",
+ "impl_span": "d = n % 2 != 0",
+ "readouts": [
+  {
+   "pivot": "prev_end",
+   "readout": "I'm checking if the number is even or odd.",
+   "verdict": "YES",
+   "reasoning": "The description mentions checking if a number is even or odd, which is exactly what the code does \u2014 it checks if `n % 2 != 0` (i.e., whether the number is odd).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){ return value == 0; }",
+    "verdict": "NO",
+    "judged": false,
+    "impl_span": "d = n % 2 != 0",
+    "reasoning": null,
+    "reasoned_verdict": null
+   }
+  },
+  {
+   "pivot": "indent",
+   "readout": "I'm checking if the number is even or odd.",
+   "verdict": "YES",
+   "reasoning": "The description correctly identifies that the code is checking whether a number is even or odd (specifically checking if `n % 2 != 0`, which tests for oddness).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0 && value > 0 && value != 1 && value % 2 == 1 && value < 0 && value != 1 && value % 2 == 1 && value < 0 && value != 1 && value % 2 == 1 && value",
+    "verdict": "HEAVY_LOOP",
+    "judged": true,
+    "impl_span": "d = n % 2 != 0",
+    "reasoning": "The completion starts with a relevant operation (`value % 2`) and checks for oddness/evenness, which is directly related to the Python code checking `n % 2 != 0`. However, the completion quickly devolves into a repeating loop of `&& value % 2 == 1 && value < 0 && value != 1` repeating over and over.\n\nThis is a HEAVY_LOOP situation \u2014 after the initial fragment, a short cycle (`&& value % 2 == 1 && value < 0 && value != 1`) repeats multiple times and dominates the completion.\n\n<verdict>HEAVY_LOOP</verdict>",
+    "reasoned_verdict": "HEAVY_LOOP"
+   }
+  },
+  {
+   "pivot": "var",
+   "readout": "I'm checking if the number is odd or even.",
+   "verdict": "YES",
+   "reasoning": "The description directly describes checking if a number is odd or even, which is exactly what `n % 2 != 0` does (checking if n is odd).\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 == 0 && value > 0 && value != 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = n % 2 != 0",
+    "reasoning": "The C++ completion checks if a value is even using `value % 2 == 0`, which is directly related to the Python code checking if `n % 2 != 0` (odd check). Both involve modulo 2 operation on a value, just with opposite comparison (even vs odd). The extra conditions (`> 0`, `!= 0`) are wrong specifics but don't negate the core relevance.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  },
+  {
+   "pivot": "eq",
+   "readout": "The number is odd.",
+   "verdict": "YES",
+   "reasoning": "The description \"The number is odd\" is directly relevant to what the code does \u2014 it checks whether `n` is odd by computing `n % 2 != 0`.\n\n<verdict>YES</verdict>",
+   "reasoned_verdict": "YES",
+   "judged": true,
+   "causal": {
+    "readout": "auto func (auto value){return value % 2 != 0;}",
+    "verdict": "YES",
+    "judged": true,
+    "impl_span": "d = n % 2 != 0",
+    "reasoning": "The C++ completion implements exactly the same operation as the Python code: checking if a value is odd by computing `value % 2 != 0`. This is a direct match to the gold code's logic.\n\n<verdict>YES</verdict>",
+    "reasoned_verdict": "YES"
+   }
+  }
+ ]
+}
